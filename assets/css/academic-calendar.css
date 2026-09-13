@@ -2,6 +2,7 @@
   margin: 2.5rem 0;
   padding: 1.5rem;
   border: 1px solid rgba(127, 127, 127, 0.18);
+  border-top: 3px solid var(--global-link-color, #176b52);
   border-radius: 1.25rem;
   background: var(--global-bg-color, #fff);
   box-shadow: 0 12px 32px rgba(20, 35, 29, 0.06);
@@ -17,11 +18,11 @@
 
 .academic-calendar__eyebrow {
   margin: 0 0 .35rem;
+  color: var(--global-link-color, #176b52);
   font-size: .78rem;
   font-weight: 700;
   letter-spacing: .08em;
   text-transform: uppercase;
-  opacity: .72;
 }
 
 .academic-calendar__heading h2 {
@@ -36,8 +37,15 @@
 
 .academic-calendar__link {
   white-space: nowrap;
+  color: var(--global-link-color, #176b52);
   font-weight: 600;
   text-decoration: none;
+}
+
+.academic-calendar__link:hover,
+.academic-calendar__link:focus-visible {
+  color: var(--global-link-color-hover, var(--global-link-color, #176b52));
+  text-decoration: underline;
 }
 
 .academic-calendar__grid {
@@ -104,6 +112,7 @@
 }
 
 .academic-calendar__day--today {
+  color: var(--global-link-color, #176b52);
   font-weight: 700;
   outline: 1px solid currentColor;
 }
@@ -115,7 +124,7 @@
   width: .28rem;
   height: .28rem;
   border-radius: 50%;
-  background: currentColor;
+  background: var(--global-link-color, #176b52);
 }
 
 .academic-calendar__today {
@@ -128,10 +137,10 @@
 }
 
 .academic-calendar__today-label {
+  color: var(--global-link-color, #176b52);
   font-size: .78rem;
   font-weight: 700;
   text-transform: uppercase;
-  opacity: .6;
 }
 
 .academic-calendar__events {
