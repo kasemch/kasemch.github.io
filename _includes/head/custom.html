@@ -28,21 +28,40 @@
 {
   "@context": "https://schema.org",
   "@type": "Person",
+  "@id": "https://kasemch.github.io/#person",
   "name": "Asst. Prof. Dr. Kasem Chooratna",
-  "url": "https://kasemch.github.io",
+  "url": "https://kasemch.github.io/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kasemch.github.io/"
+  },
   "image": {{ social_portrait_url | jsonify }},
+  "description": {{ site.description | jsonify }},
   "jobTitle": "Assistant Professor",
-  "affiliation": {
+  "worksFor": {
     "@type": "CollegeOrUniversity",
     "name": "Ramkhamhaeng University"
   },
+  "alumniOf": [
+    {
+      "@type": "CollegeOrUniversity",
+      "name": "Chulalongkorn University"
+    },
+    {
+      "@type": "CollegeOrUniversity",
+      "name": "Srinakharinwirot University"
+    }
+  ],
   "sameAs": ["https://github.com/kasemch"],
   "knowsAbout": [
     "Health Education",
     "Physical Education",
-    "Curriculum Development",
-    "Educational Quality Assurance",
+    "School Health",
     "Health Promotion",
+    "Movement Behaviour",
+    "Curriculum Development",
+    "Assessment and Evaluation",
+    "Educational Quality Assurance",
     "Artificial Intelligence in Education"
   ]
 }
