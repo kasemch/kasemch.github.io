@@ -30,3 +30,11 @@ jobs:
         run: bundle exec jekyll build --strict_front_matter
         env:
           JEKYLL_ENV: production
+
+      - name: Upload built site for visual audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: jekyll-site
+          path: _site
+          if-no-files-found: error
+          retention-days: 3
