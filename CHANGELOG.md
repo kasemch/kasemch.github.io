@@ -60,10 +60,12 @@ Release manifest: `./docs/releases/signature-hybrid-v1.0.0.md`
 - Controlled Google Drive upload runtime with classification, human review, destination capability verification, and explicit upload confirmation.
 - Local academic note composer with clipboard export only.
 - Command Center navigation entry.
+- Approved Formal Portrait 01 asset for the Signature Hybrid homepage Hero.
 
 ### Changed
 - Reconciled `/workspace/` after OAuth activation so Quick Add links now open the live `/add-event/` and `/upload-center/` workflows instead of the earlier local-only placeholders.
 - Converted workspace asset and internal page links to Jekyll `relative_url` paths.
+- Homepage Hero now uses the approved Formal Portrait 01 while preserving the locked Signature Hybrid layout, palette, typography, responsive behavior, and public content structure.
 
 ### Governance
 - No private HEPE data is rendered by the workspace.
