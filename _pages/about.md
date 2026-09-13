@@ -1,37 +1,33 @@
 ---
 permalink: /about/
 title: "About"
-author_profile: true
+author_profile: false
 redirect_from:
   - /about.html
 ---
 
-## Academic Profile
+<link rel="stylesheet" href="../assets/css/signature-pages.css">
+<div class="signature-page">
+  <section class="sp-hero sp-shell">
+    <div class="sp-kicker">Academic Profile</div>
+    <h1>About</h1>
+    <p>Health &amp; Physical Education, curriculum and quality, research, teaching, and responsible academic innovation.</p>
+    <div class="sp-navchips"><a class="sp-chip" href="../teaching/">Teaching</a><a class="sp-chip" href="../research/">Research</a><a class="sp-chip" href="../cv/">Academic CV</a></div>
+  </section>
 
-**Asst. Prof. Dr. Kasem Chooratna** is a university lecturer in the Department of Physical Education, Faculty of Education, Ramkhamhaeng University, Thailand. His academic work spans health education, physical education, school health, curriculum development, teaching and learning, educational assessment, and quality assurance in higher education.
+  <section class="sp-section sp-shell">
+    <div class="sp-grid">
+      <article class="sp-card sp-wide"><div class="sp-eyebrow">Profile</div><h2>Asst. Prof. Dr. Kasem Chooratna</h2><p>University lecturer in the Department of Physical Education, Faculty of Education, Ramkhamhaeng University, Thailand. Academic work spans health education, physical education, school health, curriculum development, teaching and learning, educational assessment, and quality assurance in higher education.</p><p>His work connects classroom practice with programme-level curriculum development and institutional quality improvement. A continuing area of interest is the responsible use of artificial intelligence and digital systems to improve academic workflows, evidence management, curriculum governance, teaching support, and educational services.</p></article>
 
-His work connects classroom practice with programme-level curriculum development and institutional quality improvement. A continuing area of interest is the responsible use of artificial intelligence and digital systems to improve academic workflows, evidence management, curriculum governance, teaching support, and educational services.
+      <article class="sp-card"><div class="sp-eyebrow">Teaching</div><h3>Teaching &amp; Academic Development</h3><p>Teaching focuses on health and physical education in higher education, with attention to active learning, case-based learning, authentic assessment, reflective practice, and alignment among programme outcomes, course outcomes, learning activities, and assessment.</p></article>
+      <article class="sp-card"><div class="sp-eyebrow">Quality</div><h3>Curriculum &amp; Quality Work</h3><p>Academic work includes curriculum design and revision, programme and course learning outcomes, curriculum mapping, programme evaluation, evidence-based quality assurance, and systems that reduce duplicated academic documentation while maintaining traceability and accountability.</p></article>
+    </div>
+  </section>
 
-## Areas of Expertise
+  <section class="sp-section sp-shell">
+    <div class="sp-section-head"><div class="sp-eyebrow">Expertise</div><h2>Areas of Expertise</h2></div>
+    <div class="sp-callout"><span class="sp-tag">Health Education</span><span class="sp-tag">Physical Education</span><span class="sp-tag">School Health &amp; Health Promotion</span><span class="sp-tag">Curriculum Design &amp; Mapping</span><span class="sp-tag">Learning Outcomes &amp; Course Alignment</span><span class="sp-tag">Measurement, Assessment &amp; Evaluation</span><span class="sp-tag">Higher Education Quality Assurance</span><span class="sp-tag">AUN-QA</span><span class="sp-tag">AI &amp; Digital Technology in Education</span></div>
+  </section>
 
-- Health Education
-- Physical Education
-- School Health and Health Promotion
-- Curriculum Design and Curriculum Mapping
-- Learning Outcomes and Course Alignment
-- Educational Measurement, Assessment, and Evaluation
-- Higher Education Quality Assurance
-- AUN-QA and programme-level quality development
-- AI and Digital Technology in Education
-
-## Teaching and Academic Development
-
-Teaching activities focus on health and physical education in higher education, with particular attention to active learning, case-based learning, authentic assessment, reflective practice, and alignment among programme outcomes, course outcomes, learning activities, and assessment.
-
-## Curriculum and Quality Work
-
-Academic work includes curriculum design and revision, programme learning outcomes, course learning outcomes, curriculum mapping, programme evaluation, evidence-based quality assurance, and the development of systems that reduce duplicated academic documentation while maintaining traceability and accountability.
-
-## Academic Innovation
-
-Current academic innovation interests include AI-assisted academic work, digital curriculum governance, evidence management, academic quality systems, and technology-supported community health and educational services. Only projects and information appropriate for public disclosure are presented on this website.
+  <section class="sp-section sp-shell"><article class="sp-card sp-wide"><div class="sp-eyebrow">Innovation</div><h2>Academic Innovation</h2><p>Current academic innovation interests include AI-assisted academic work, digital curriculum governance, evidence management, academic quality systems, and technology-supported community health and educational services.</p><div class="sp-policy">Only projects and information appropriate for public disclosure are presented on this website.</div></article></section>
+</div>
