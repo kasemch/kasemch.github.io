@@ -6,7 +6,7 @@ author_profile: false
 
 <div class="upload-center" data-upload-center>
   <div class="upload-center__notice">
-    <strong>Phase 3A — Local classification only.</strong> Files selected here stay in your browser. Nothing is uploaded or stored until a storage provider is explicitly configured in a later gate.
+    <strong>Phase 3B — Storage boundary ready.</strong> Files are classified locally first. Google Drive upload remains disabled unless an approved Web OAuth Client ID is configured and the destination folder is accessible to that OAuth app.
   </div>
 
   <label class="upload-center__dropzone">
@@ -27,6 +27,13 @@ author_profile: false
     </dl>
 
     <p class="upload-center__reason" data-meta-reason></p>
-    <button type="button" class="upload-center__disabled" disabled>Store document — storage not configured</button>
+
+    {% if site.data.document_storage.upload_enabled and site.data.document_storage.client_id != '' %}
+    <button type="button" class="upload-center__store" data-store-document disabled>Store in Google Drive</button>
+    <p class="upload-center__storage-status" data-storage-status role="status" aria-live="polite">Google Drive storage is available after classification and OAuth approval.</p>
+    {% else %}
+    <button type="button" class="upload-center__disabled" disabled>Store document — OAuth activation pending</button>
+    <p class="upload-center__storage-status">Drive folder structure is provisioned, but runtime upload remains fail-closed.</p>
+    {% endif %}
   </section>
 </div>
