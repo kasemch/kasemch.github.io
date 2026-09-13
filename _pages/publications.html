@@ -1,25 +1,21 @@
 ---
-layout: single
+layout: archive
 title: "Publications"
 permalink: /publications/
 author_profile: true
+excerpt: "Verified academic publications by Asst. Prof. Dr. Kasem Chooratna in health education, health promotion, physical education, and related fields."
 ---
 
-This page is being rebuilt as a verified record of academic publications.
+This page presents publications that have been matched to an authoritative or traceable source. Template records and unverified citations are excluded.
 
-## Publication Policy
+## Verified Journal Articles
 
-Only publications that can be matched to an authoritative or traceable source will be listed here. Template records and unverified citations are intentionally excluded.
+{% include base_path %}
 
-The verified publication list will be organised under the following categories:
+{% for post in site.publications reversed %}
+  {% include archive-single.html %}
+{% endfor %}
 
-- Journal Articles
-- Books and Academic Textbooks
-- Conference Papers and Proceedings
-- Academic and Professional Articles
+## Verification policy
 
-Publication metadata will be checked before release, including author names, title, year, source, volume/issue where applicable, pages, DOI or stable URL when available, and publication status.
-
-## Current Status
-
-**Verification in progress.** No publication should be inferred from the absence of entries on this page. The purpose of this temporary page is to avoid displaying sample or unverified records while the publication register is being checked.
+Publication metadata is checked against journal or DOI records before being listed, including author names, title, year, journal, volume/issue, pages where available, and DOI or stable article URL. The list is a verified working register and may expand as additional records are confirmed.
