@@ -16,6 +16,13 @@
   margin-bottom: 1.25rem;
 }
 
+.academic-calendar__heading-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: .75rem;
+}
+
 .academic-calendar__eyebrow {
   margin: 0 0 .35rem;
   color: var(--global-link-color, #176b52);
@@ -184,6 +191,10 @@
   .academic-calendar__heading {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .academic-calendar__heading-actions {
+    justify-content: flex-start;
   }
 
   .academic-calendar__grid {
