@@ -104,14 +104,15 @@ author_profile: false
 
   <section class="sp-section sp-shell" aria-labelledby="quality-docs-title">
     <div class="sp-section-head">
-      <div class="sp-eyebrow">Course Quality &amp; Assurance</div>
-      <h2 id="quality-docs-title">Course Specification → Course Report → Verification → Improvement</h2>
-      <p class="sp-intro">Only directly located documents are linked. A document being available does not override MR30 offering status, and a working document is not presented as final merely because it exists.</p>
+      <div class="sp-eyebrow">Academic Teaching Portfolio</div>
+      <h2 id="quality-docs-title">Course → Teaching → Assessment → TQF5 → Verification → Improvement</h2>
+      <p class="sp-intro">The matrix links only directly located course documents. Planned assessment architecture is separated from completed outcomes, and document existence never overrides the authoritative MR30 offering status.</p>
     </div>
 
     <div class="sp-metrics" aria-label="Verified course-quality document coverage">
+      <article class="sp-metric"><strong>{{ teaching.summary.direct_quality_evidence_courses }}</strong><span>Courses with direct quality evidence</span></article>
       <article class="sp-metric"><strong>{{ teaching.summary.tqf3_courses_located }}</strong><span>Courses with TQF3 located</span></article>
-      <article class="sp-metric"><strong>{{ teaching.summary.tqf5_courses_located }}</strong><span>Courses with TQF5 located</span></article>
+      <article class="sp-metric"><strong>{{ teaching.summary.tqf5_courses_located }}</strong><span>Courses with TQF5 material located</span></article>
       <article class="sp-metric"><strong>{{ teaching.summary.verification_courses_located }}</strong><span>Courses with verification material located</span></article>
     </div>
 
@@ -120,11 +121,16 @@ author_profile: false
       <article class="sp-card sp-wide">
         <div class="sp-output-year">{{ course.code }} · {{ course.offering_status }}</div>
         <h3>{{ course.title }}</h3>
+        <div class="sp-evidence-note"><strong>Teaching status:</strong> {{ course.teaching_evidence }}</div>
         <div class="sp-grid">
           <article class="sp-card sp-third">
             <div class="sp-eyebrow">Course Specification (TQF3)</div>
             <p>{{ course.tqf3_status }}</p>
             {% if course.tqf3_url %}<a class="sp-link" href="{{ course.tqf3_url }}" rel="noopener">Open TQF3 →</a>{% endif %}
+          </article>
+          <article class="sp-card sp-third">
+            <div class="sp-eyebrow">Assessment Evidence</div>
+            <p>{{ course.assessment_evidence }}</p>
           </article>
           <article class="sp-card sp-third">
             <div class="sp-eyebrow">Course Report (TQF5)</div>
@@ -136,12 +142,29 @@ author_profile: false
             <p>{{ course.verification_status }}</p>
             {% if course.verification_url %}<a class="sp-link" href="{{ course.verification_url }}" rel="noopener">Open verification material →</a>{% endif %}
           </article>
+          <article class="sp-card sp-third">
+            <div class="sp-eyebrow">Improvement</div>
+            <p>{{ course.improvement_evidence }}</p>
+          </article>
         </div>
       </article>
       {% endfor %}
     </div>
 
-    <div class="sp-policy"><strong>Public-document rule.</strong> Linked documents were directly located and reconciled to the relevant course code and academic period where available. Access may depend on the source document's Google Drive sharing permissions.</div>
+    <details class="sp-card sp-wide">
+      <summary><strong>Evidence coverage gaps · {{ teaching.summary.evidence_gap_courses }} courses</strong></summary>
+      <div class="sp-grid" style="margin-top:1rem;">
+        {% for course in teaching.document_search_gaps %}
+        <article class="sp-card sp-third">
+          <div class="sp-output-year">{{ course.code }}</div>
+          <h3>{{ course.title }}</h3>
+          <p>{{ course.search_status }}</p>
+        </article>
+        {% endfor %}
+      </div>
+    </details>
+
+    <div class="sp-policy"><strong>Public-document rule.</strong> Linked documents were directly located and reconciled to the relevant course code and academic period where available. A QA register reference alone does not create a public link. Access may depend on the source document's Google Drive sharing permissions.</div>
   </section>
 
   <section class="sp-section sp-shell" aria-labelledby="hed2503-title">
@@ -187,7 +210,7 @@ author_profile: false
           <li>Central MR30 and official MR30 supplementary notices have priority for offering status.</li>
           <li>Later authoritative notices supersede earlier opening or timetable evidence.</li>
           <li>Teaching-load and course-quality documents provide supporting context but cannot reverse an official cancellation.</li>
-          <li>HEPE validation and inactive records remain reconciliation-only.</li>
+          <li>HEPE validation and AI-assisted verification snapshots remain reconciliation-only.</li>
           <li>Semester 2/2569 remains fail-closed until an authoritative assignment source is found.</li>
         </ul>
       </article>
