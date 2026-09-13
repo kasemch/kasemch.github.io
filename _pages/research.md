@@ -1,6 +1,7 @@
 ---
 permalink: /research/
 title: "Research"
+description: "Research profile of Asst. Prof. Dr. Kasem Chooratna covering Health & Physical Education, movement and health behaviours, curriculum, assessment, and responsible educational innovation."
 author_profile: false
 ---
 
