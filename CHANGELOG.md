@@ -6,6 +6,8 @@ The site uses a controlled versioning model tied to the Signature Hybrid baselin
 
 ## [1.0.0] — 2026-09-13
 
+Release manifest: `./docs/releases/signature-hybrid-v1.0.0.md`
+
 ### Added
 - Signature Hybrid homepage with academic executive hierarchy, Bento portfolio sections, research/teaching emphasis, compact academic calendar integration, responsive behavior, accessibility states, and relative-path compatibility.
 - Signature Hybrid shared secondary-page design system for About, Teaching, Research, Publications, Curriculum & Quality, Innovation & Projects, and CV.
