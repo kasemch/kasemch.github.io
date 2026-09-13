@@ -14,6 +14,9 @@ The site uses a controlled versioning model tied to the Signature Hybrid baselin
 - Public-safe research evidence reconciliation audit documenting publication-boundary decisions without exposing private Drive identifiers.
 - Enriched academic `Person` structured data with a stable person identifier, current university employment, verified education institutions, academic expertise areas, approved portrait, and canonical profile page.
 - Final Research Profile consistency audit covering Research, Publications, CV, English-language display conventions, and output-type boundaries.
+- Academic Year 2569 Teaching Dashboard on `/teaching/` with a verified Semester 1/2569 course register, weekly-slot summary, cross-listed teaching clusters, special-lecture entry, and evidence-status boundaries.
+- Linked HED2503 course-quality chain for TQF3, TQF5, and achievement-verification working documents, with explicit draft/planned status where completion cannot yet be claimed.
+- Teaching AY2569 reconciliation audit documenting the 11 verified regular course codes, 8 weekly teaching slots, cross-listed clusters, source conflicts, and Semester 2 evidence limitation.
 
 ### Changed
 - Added page-specific SEO descriptions to About, Teaching, Research, Curriculum & Quality, Innovation & Projects, and Curriculum Vitae so search/social metadata reflects each page rather than relying only on the site-wide fallback.
@@ -24,6 +27,7 @@ The site uses a controlled versioning model tied to the Signature Hybrid baselin
 - Conference proceedings are reported separately and currently comprise 13 verified records across the 2023 and 2026 proceedings registers.
 - Public-facing Research and Publications titles use English for site consistency while source-language bibliographic metadata is retained internally where needed for traceability.
 - Publications now displays its journal-publication count dynamically from `site.publications`, uses Jekyll `relative_url` local references, and explicitly separates journal publications from conference proceedings and degree research.
+- Teaching now prioritizes verified current-year offerings instead of a static selected-course list, and internal page links use Jekyll `relative_url`.
 - Open Graph descriptions now use the same page-specific `seo_description` chain as standard page metadata, so About, Teaching, Research, Curriculum & Quality, Innovation & Projects, and CV expose page-relevant social descriptions.
 - Theme-generated social `Person` JSON-LD is now emitted only when verified `social.links` are configured, avoiding an empty duplicate Person entity alongside the richer academic profile schema.
 
@@ -32,14 +36,16 @@ The site uses a controlled versioning model tied to the Signature Hybrid baselin
 - Private Drive research reports, proposals, manuscripts, working copies, and conference/proceedings candidates are excluded from journal-publication counts unless independently confirmed by an authoritative public source.
 - Citation counts, h-index, indexing status, journal quartiles, and impact metrics remain excluded until independently verified from authoritative sources.
 - Structured-data `sameAs` remains limited to the verified GitHub profile; ORCID, Google Scholar, Scopus, ResearchGate and other academic-profile links remain excluded until independently verified.
+- Teaching AY2569 public status is limited to Semester 1/2569 until an authoritative Semester 2 teaching record is confirmed.
+- TQF5 and achievement-verification documents are not promoted to final/completed status merely because a working document exists; future-dated verification remains labelled draft/planned.
 
 ### Verified
-- Signature Hybrid visual design and page layouts remain unchanged outside the additive Research dashboard components.
-- No private Google Drive IDs or links are introduced into the public website.
-- No Calendar, Drive, Workspace, OAuth, or navigation runtime files were changed in this patch.
+- Signature Hybrid visual design and page layouts remain unchanged outside the additive Research and Teaching dashboard components.
+- No Calendar, Workspace, OAuth, or navigation runtime files were changed in the Teaching patch.
 - Structured-data identity is consolidated to one rich academic Person entity when no verified theme-level social profile list exists.
 - Page-specific descriptions now propagate consistently to standard SEO, Open Graph, and the custom Twitter summary metadata path.
 - Research output taxonomy is consistent across Research, Publications, and CV: 21 verified journal publications, 13 verified conference proceedings, and 2 degree research works.
+- Teaching Semester 1/2569 register reconciles 11 course codes to 8 weekly teaching slots plus one separate RAM1142 special lecture.
 
 ## [1.1.0] — 2026-09-13
 
