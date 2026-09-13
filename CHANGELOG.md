@@ -12,6 +12,7 @@ The site uses a controlled versioning model tied to the Signature Hybrid baselin
 - Nine additional journal records confirmed against authoritative public journal/issue/article sources after Google Drive research reconciliation.
 - Separate Research Degrees & Theses section for verified 2011 master's and 2015 doctoral research records.
 - Public-safe research evidence reconciliation audit documenting publication-boundary decisions without exposing private Drive identifiers.
+- Enriched academic `Person` structured data with a stable person identifier, current university employment, verified education institutions, academic expertise areas, approved portrait, and canonical profile page.
 
 ### Changed
 - Added page-specific SEO descriptions to About, Teaching, Research, Curriculum & Quality, Innovation & Projects, and Curriculum Vitae so search/social metadata reflects each page rather than relying only on the site-wide fallback.
@@ -19,16 +20,21 @@ The site uses a controlled versioning model tied to the Signature Hybrid baselin
 - Upgraded the Research page from a themes-only overview to an evidence-led academic research profile while preserving the Signature Hybrid visual baseline.
 - Research and publication links now use Jekyll `relative_url` paths for repository-safe GitHub Pages deployment.
 - Expanded the verified publication register from 10 to 19 records; Research metrics remain derived from the collection rather than hard-coded totals.
+- Open Graph descriptions now use the same page-specific `seo_description` chain as standard page metadata, so About, Teaching, Research, Curriculum & Quality, Innovation & Projects, and CV expose page-relevant social descriptions.
+- Theme-generated social `Person` JSON-LD is now emitted only when verified `social.links` are configured, avoiding an empty duplicate Person entity alongside the richer academic profile schema.
 
 ### Governance
 - Research dashboard metrics are derived only from the verified `_publications` collection.
 - Private Drive research reports, proposals, manuscripts, working copies, and conference/proceedings candidates are excluded from journal-publication counts unless independently confirmed by an authoritative public source.
 - Citation counts, h-index, indexing status, journal quartiles, and impact metrics remain excluded until independently verified from authoritative sources.
+- Structured-data `sameAs` remains limited to the verified GitHub profile; ORCID, Google Scholar, Scopus, ResearchGate and other academic-profile links remain excluded until independently verified.
 
 ### Verified
 - Signature Hybrid visual design and page layouts remain unchanged outside the additive Research dashboard components.
 - No private Google Drive IDs or links are introduced into the public website.
 - No Calendar, Drive, Workspace, OAuth, or navigation runtime files were changed in this patch.
+- Structured-data identity is consolidated to one rich academic Person entity when no verified theme-level social profile list exists.
+- Page-specific descriptions now propagate consistently to standard SEO, Open Graph, and the custom Twitter summary metadata path.
 
 ## [1.1.0] — 2026-09-13
 
