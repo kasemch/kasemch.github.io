@@ -81,6 +81,8 @@ Before assigning a release version, check as applicable:
 
 ## Current version
 
-Current locked public design baseline: **Signature Hybrid v1.0.0**.
+Current public release: **Signature Hybrid v1.1.0**.
 
-Changes should remain in `Unreleased` until they are intentionally assigned a patch, minor, or major release number.
+Locked visual design baseline: **Signature Hybrid v1.0.0**.
+
+The v1.1.0 release is additive and does not replace the locked visual baseline. Future changes should remain in `Unreleased` until intentionally assigned a patch, minor, or major release number.
