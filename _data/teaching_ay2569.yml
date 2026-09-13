@@ -1,6 +1,7 @@
 academic_year: "2569"
 verified_scope: "Semester 1/2569"
-source_note: "Verified from the connected RU-HEPE teaching/offering register, the Semester 1/2569 teaching-load report, and course-level Drive records available as of 14 September 2026. Semester 2/2569 is not yet verified."
+official_mr30_url: "https://www.regis.ru.ac.th/index.php/schedule/mr30_central"
+source_note: "The Ramkhamhaeng University central MR30 schedule is the primary timetable authority. Because the official endpoint could not be retrieved by the current audit environment on 14 September 2026, this public snapshot uses the previously reconciled Semester 1/2569 MR30-derived teaching-load evidence and traceable course-level records. HEPE validation datasets are reconciliation-only and are not used as standalone evidence of active curriculum membership or teaching assignment. Semester 2/2569 remains unpublished until authoritative instructor-assignment evidence is confirmed."
 summary:
   course_codes: 11
   weekly_slots: 8
@@ -76,7 +77,7 @@ courses:
     room: "SCB 506"
     mode: "Cross-listed cluster"
     cluster: "HED2503 / RHE3101"
-    note: "Timetable/teaching-load evidence is used for public schedule display. A conflicting day/time appears in one TQF3 draft and is not used here."
+    note: "MR30-derived timetable/teaching-load evidence is used for public schedule display. A conflicting day/time appears in one TQF3 draft and is not used here."
     documents:
       - label: "TQF3 / Course Specification"
         status: "Current working document"
