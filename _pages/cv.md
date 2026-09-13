@@ -9,7 +9,9 @@ redirect_from:
 ---
 
 {% assign publication_count = site.publications | size %}
-{% assign proceeding_count = site.data.conference_proceedings.items | size %}
+{% assign proceeding_count_2023 = site.data.conference_proceedings.items | size %}
+{% assign proceeding_count_2026 = site.data.conference_proceedings_2026.items | size %}
+{% assign proceeding_count = proceeding_count_2023 | plus: proceeding_count_2026 %}
 {% assign now_ts = site.time | date: "%s" | plus: 0 %}
 
 <link rel="stylesheet" href="{{ '/assets/css/signature-pages.css' | relative_url }}">

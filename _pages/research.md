@@ -12,8 +12,11 @@ author_profile: false
 {% assign first_publication = research_pubs | first %}
 {% assign latest_publication = research_pubs | last %}
 {% assign recent_publications = research_pubs | reverse %}
-{% assign proceeding_items = site.data.conference_proceedings.items %}
-{% assign proceeding_count = proceeding_items | size %}
+{% assign proceeding_items_2023 = site.data.conference_proceedings.items %}
+{% assign proceeding_items_2026 = site.data.conference_proceedings_2026.items %}
+{% assign proceeding_count_2023 = proceeding_items_2023 | size %}
+{% assign proceeding_count_2026 = proceeding_items_2026 | size %}
+{% assign proceeding_count = proceeding_count_2023 | plus: proceeding_count_2026 %}
 
 <link rel="stylesheet" href="{{ '/assets/css/signature-pages.css' | relative_url }}">
 <div class="signature-page">
@@ -82,18 +85,32 @@ author_profile: false
   <section class="sp-section sp-shell" aria-labelledby="proceedings-title">
     <div class="sp-section-head">
       <div class="sp-eyebrow">Conference Proceedings</div>
-      <h2 id="proceedings-title">{{ proceeding_count }} verified papers from Healthy Aging 2023</h2>
-      <p class="sp-intro">These works were reconciled against the 2023 CV, the complete proceedings volume, and separate article PDFs. They are presented separately from journal-publication totals.</p>
+      <h2 id="proceedings-title">{{ proceeding_count }} verified papers across two proceedings volumes</h2>
+      <p class="sp-intro">Conference papers are maintained separately from journal publications. Public-facing research titles are displayed in English for consistency across this academic website.</p>
     </div>
-    <article class="sp-card sp-wide">
-      <p><strong>{{ site.data.conference_proceedings.conference }}</strong><br>{{ site.data.conference_proceedings.date | date: "%d %B %Y" }} · Conference proceedings</p>
-      <ol class="sp-list">
-        {% for item in proceeding_items %}
-        <li><strong>{{ item.title }}</strong><br><span>{{ item.authors }}{% if item.pages %} · pp. {{ item.pages }}{% endif %}</span></li>
-        {% endfor %}
-      </ol>
-      <div class="sp-policy"><strong>Evidence boundary.</strong> Public entries summarize the verified bibliographic facts only. Private Google Drive file identifiers and certificate-style verification tokens are not exposed.</div>
-    </article>
+    <div class="sp-grid">
+      <article class="sp-card sp-wide">
+        <div class="sp-output-year">2026 · International conference proceedings</div>
+        <h3>{{ site.data.conference_proceedings_2026.conference }}</h3>
+        <p>{{ site.data.conference_proceedings_2026.theme }} · {{ site.data.conference_proceedings_2026.location }}</p>
+        <ol class="sp-list">
+          {% for item in proceeding_items_2026 %}
+          <li><strong>{{ item.title }}</strong>{% if item.page_start %}<br><span>Proceedings p. {{ item.page_start }}</span>{% endif %}</li>
+          {% endfor %}
+        </ol>
+      </article>
+      <article class="sp-card sp-wide">
+        <div class="sp-output-year">2023 · Conference proceedings</div>
+        <h3>{{ site.data.conference_proceedings.conference }}</h3>
+        <p>{{ site.data.conference_proceedings.date | date: "%d %B %Y" }} · {{ proceeding_count_2023 }} verified papers</p>
+        <ol class="sp-list">
+          {% for item in proceeding_items_2023 %}
+          <li><strong>{{ item.title }}</strong>{% if item.pages %}<br><span>pp. {{ item.pages }}</span>{% endif %}</li>
+          {% endfor %}
+        </ol>
+      </article>
+    </div>
+    <div class="sp-policy"><strong>Evidence boundary.</strong> The 2026 records are verified from the supplied complete TNSUIC proceedings volume. The 2023 records remain traceable to the archived proceedings evidence. Source-language bibliographic metadata is retained internally where needed; only English research titles are presented on this public page.</div>
   </section>
 
   <section class="sp-section sp-shell" aria-labelledby="recent-research-title">
@@ -115,6 +132,6 @@ author_profile: false
   </section>
 
   <section class="sp-section sp-shell">
-    <article class="sp-card sp-wide"><div class="sp-eyebrow">Research Approach</div><h2>Methodological transparency and practical relevance</h2><p>Research projects may use quantitative, qualitative, mixed-methods, instrument-development, evidence-synthesis, and design-oriented approaches depending on the research question. Across projects, emphasis is placed on methodological transparency, traceable evidence, research ethics, and practical relevance.</p><div class="sp-policy"><strong>Evidence policy.</strong> Journal-publication counts and venue profiles on this page are derived only from records in the verified public publication collection. Conference proceedings are maintained in a separate verified register. Research reports, proposals, manuscripts, and private Drive materials are not counted as journal publications unless an authoritative public source confirms publication status. Citation counts, h-index, database indexing, quartiles, and journal-impact metrics are not displayed unless independently verified from an authoritative source.</div></article>
+    <article class="sp-card sp-wide"><div class="sp-eyebrow">Research Approach</div><h2>Methodological transparency and practical relevance</h2><p>Research projects may use quantitative, qualitative, mixed-methods, instrument-development, evidence-synthesis, and design-oriented approaches depending on the research question. Across projects, emphasis is placed on methodological transparency, traceable evidence, research ethics, and practical relevance.</p><div class="sp-policy"><strong>Evidence policy.</strong> Journal-publication counts and venue profiles on this page are derived only from records in the verified public publication collection. Conference proceedings are maintained in separate verified data registers. Research reports, proposals, manuscripts, and private Drive materials are not counted as journal publications unless an authoritative public source confirms publication status. Citation counts, h-index, database indexing, quartiles, and journal-impact metrics are not displayed unless independently verified from an authoritative source.</div></article>
   </section>
 </div>
