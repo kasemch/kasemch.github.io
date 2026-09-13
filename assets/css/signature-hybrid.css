@@ -16,13 +16,15 @@
 
 .signature-home {
   color: var(--sh-ink);
-  font-size: 1rem;
-  line-height: 1.65;
+  font: 400 1rem/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 .signature-home * { box-sizing: border-box; }
 .signature-home a { text-decoration: none; }
 .signature-home img { max-width: 100%; display: block; }
+.signature-home h1,
+.signature-home h2,
+.signature-home h3 { font-family: Georgia, "Times New Roman", serif; }
 
 .signature-home .sh-shell {
   width: min(1180px, calc(100% - 32px));
@@ -42,12 +44,12 @@
 
 .sh-hero-grid {
   display: grid;
-  grid-template-columns: 1.25fr .75fr;
-  min-height: 500px;
+  grid-template-columns: minmax(0, 1.15fr) minmax(320px, .85fr);
+  min-height: 460px;
 }
 
 .sh-hero-copy {
-  padding: clamp(2.2rem, 5vw, 5rem);
+  padding: clamp(2.2rem, 4.5vw, 4.25rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -57,8 +59,8 @@
   display: inline-flex;
   align-items: center;
   gap: .6rem;
-  font-size: .78rem;
-  font-weight: 700;
+  font-size: .76rem;
+  font-weight: 750;
   letter-spacing: .16em;
   text-transform: uppercase;
   color: #ead7ac;
@@ -75,33 +77,34 @@
 .sh-hero h1 {
   margin: 0;
   color: #fff;
-  font-size: clamp(2.45rem, 6vw, 5.1rem);
-  line-height: .98;
-  letter-spacing: -.035em;
+  font-size: clamp(2.35rem, 5.4vw, 4.7rem);
+  line-height: 1.01;
+  letter-spacing: -.025em;
 }
 
 .sh-hero h1 span {
   display: block;
-  margin-top: .55rem;
+  margin-top: .65rem;
   color: #dce8eb;
-  font-size: clamp(1.25rem, 2.2vw, 2rem);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: clamp(1.15rem, 2vw, 1.85rem);
   font-weight: 500;
-  line-height: 1.2;
-  letter-spacing: -.01em;
+  line-height: 1.25;
+  letter-spacing: 0;
 }
 
 .sh-hero-lead {
-  max-width: 720px;
-  margin: 1.35rem 0 0;
+  max-width: 690px;
+  margin: 1.3rem 0 0;
   color: #d7e2e6;
-  font-size: 1.08rem;
+  font-size: 1.05rem;
 }
 
 .sh-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: .85rem;
-  margin-top: 1.75rem;
+  gap: .8rem;
+  margin-top: 1.65rem;
 }
 
 .sh-btn {
@@ -109,54 +112,70 @@
   align-items: center;
   justify-content: center;
   min-height: 46px;
-  padding: .8rem 1.15rem;
+  padding: .78rem 1.15rem;
   border-radius: 999px;
-  font-weight: 700;
+  font-weight: 750;
   transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
 }
 
 .sh-btn:hover { transform: translateY(-2px); }
-.sh-btn-primary { background: var(--sh-gold); color: #142d39 !important; }
+.sh-btn:focus-visible,
+.sh-text-link:focus-visible,
+.sh-bento-card a:focus-visible { outline: 3px solid rgba(184,148,79,.45); outline-offset: 3px; }
+.sh-btn-primary { background: var(--sh-gold); color: #142d39 !important; box-shadow: 0 8px 24px rgba(0,0,0,.12); }
 .sh-btn-secondary { border: 1px solid rgba(255,255,255,.42); color: #fff !important; background: rgba(255,255,255,.06); }
+.sh-btn-ink { background: var(--sh-navy); color: #fff !important; }
 
 .sh-hero-portrait {
   position: relative;
-  min-height: 440px;
+  min-height: 420px;
   background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.16));
+  isolation: isolate;
+}
+
+.sh-hero-portrait::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, transparent 55%, rgba(9,33,45,.24));
+  pointer-events: none;
 }
 
 .sh-hero-portrait img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: 50% 20%;
 }
 
 .sh-quote {
   position: absolute;
-  right: 1.25rem;
-  bottom: 1.25rem;
-  max-width: 250px;
+  z-index: 2;
+  right: 1.2rem;
+  bottom: 1.2rem;
+  max-width: 265px;
   padding: 1rem 1.1rem;
   border: 1px solid rgba(255,255,255,.24);
   border-radius: 18px;
-  background: rgba(11,36,49,.72);
+  background: rgba(11,36,49,.78);
   backdrop-filter: blur(9px);
   color: #f5f2e9;
   font-family: Georgia, serif;
-  font-size: 1.08rem;
-  line-height: 1.35;
+  font-size: 1.02rem;
+  line-height: 1.4;
 }
 
 .sh-section { padding: 1.25rem 0 2.4rem; }
 .sh-section-head { display: flex; justify-content: space-between; gap: 1rem; align-items: end; margin-bottom: 1.15rem; }
-.sh-eyebrow { color: var(--sh-gold); text-transform: uppercase; letter-spacing: .14em; font-weight: 800; font-size: .75rem; }
-.sh-section h2 { margin: .15rem 0 0; color: var(--sh-navy); font-size: clamp(1.7rem, 3vw, 2.45rem); }
+.sh-eyebrow { color: var(--sh-gold); text-transform: uppercase; letter-spacing: .14em; font-weight: 800; font-size: .74rem; }
+.sh-section h2 { margin: .15rem 0 0; color: var(--sh-navy); font-size: clamp(1.7rem, 3vw, 2.35rem); line-height: 1.14; }
 .sh-section-intro { max-width: 760px; color: var(--sh-muted); }
+.sh-text-link { color: var(--sh-navy); font-weight: 800; }
 
 .sh-identity {
   display: grid;
-  grid-template-columns: 1.2fr .8fr;
+  grid-template-columns: 1.15fr .85fr;
   gap: 1rem;
 }
 
@@ -167,9 +186,10 @@
   padding: 1.35rem;
   box-shadow: 0 10px 30px rgba(22,54,70,.06);
 }
+.sh-identity-main { background: linear-gradient(145deg, #fff, #fbfaf7); }
 
 .sh-role-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .8rem; }
-.sh-role { background: var(--sh-cream); border-radius: 16px; padding: 1rem; }
+.sh-role { background: var(--sh-cream); border-radius: 16px; padding: 1rem; border: 1px solid rgba(184,148,79,.08); }
 .sh-role strong { display: block; color: var(--sh-navy); }
 .sh-role span { display: block; margin-top: .2rem; color: var(--sh-muted); font-size: .9rem; }
 
@@ -191,10 +211,10 @@
 
 .sh-bento-card:hover { transform: translateY(-4px); box-shadow: var(--sh-shadow); border-color: #c7d4d7; }
 .sh-bento-card:nth-child(1), .sh-bento-card:nth-child(5) { grid-column: span 6; }
-.sh-bento-card h3 { margin: .5rem 0 .35rem; color: var(--sh-navy); }
+.sh-bento-card h3 { margin: .6rem 0 .35rem; color: var(--sh-navy); font-size: 1.24rem; }
 .sh-bento-card p { margin: 0; color: var(--sh-muted); }
 .sh-bento-card a { display: inline-block; margin-top: 1rem; color: var(--sh-navy); font-weight: 800; }
-.sh-icon { width: 42px; height: 42px; border-radius: 13px; display: grid; place-items: center; background: var(--sh-sage); font-size: 1.25rem; }
+.sh-icon { width: 42px; height: 42px; border-radius: 13px; display: grid; place-items: center; background: var(--sh-sage); color: var(--sh-navy); font: 800 .88rem/1 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; letter-spacing: .08em; box-shadow: inset 0 0 0 1px rgba(95,127,104,.14); }
 
 .sh-featured {
   display: grid;
@@ -207,7 +227,7 @@
 .sh-project:nth-child(2) .sh-project-top { background: linear-gradient(135deg, #e8f0f5, #d5e2ea); }
 .sh-project:nth-child(3) .sh-project-top { background: linear-gradient(135deg, #f5efe2, #ede2c8); }
 .sh-project-body { padding: 1.2rem; }
-.sh-project-body h3 { margin: 0 0 .35rem; color: var(--sh-navy); }
+.sh-project-body h3 { margin: 0 0 .35rem; color: var(--sh-navy); font-size: 1.2rem; }
 .sh-tag { display: inline-flex; padding: .28rem .55rem; border-radius: 999px; background: rgba(15,45,63,.08); font-size: .72rem; font-weight: 700; color: var(--sh-navy); }
 
 .sh-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
@@ -215,10 +235,11 @@
 .sh-list li { padding: .7rem 0; border-bottom: 1px solid var(--sh-line); }
 .sh-list li:last-child { border-bottom: 0; }
 
-.sh-timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: .8rem; }
+.sh-timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: .8rem; margin-top: 1rem; }
 .sh-step { position: relative; padding: 1rem; border-top: 3px solid var(--sh-gold); background: var(--sh-cream); border-radius: 0 0 16px 16px; }
 .sh-step small { color: var(--sh-gold); font-weight: 800; }
 .sh-step strong { display: block; margin-top: .25rem; color: var(--sh-navy); }
+.sh-step span { display: block; margin-top: .25rem; color: var(--sh-muted); }
 
 .sh-cta {
   margin: 1rem auto 2rem;
@@ -233,10 +254,18 @@
 }
 .sh-cta h2 { color: #fff; margin: 0; }
 .sh-cta p { margin: .35rem 0 0; color: #d9e5e8; }
+.sh-cta .sh-actions { margin-top: 0; flex-shrink: 0; }
+
+@media (max-width: 1040px) {
+  .sh-hero-grid { grid-template-columns: 1fr .8fr; }
+  .sh-hero h1 { font-size: clamp(2.25rem, 5vw, 4rem); }
+}
 
 @media (max-width: 900px) {
   .sh-hero-grid, .sh-identity, .sh-two-col { grid-template-columns: 1fr; }
+  .sh-hero-copy { padding-bottom: 2rem; }
   .sh-hero-portrait { min-height: 360px; }
+  .sh-hero-portrait img { object-position: 50% 15%; }
   .sh-bento-card, .sh-bento-card:nth-child(1), .sh-bento-card:nth-child(5) { grid-column: span 6; }
   .sh-featured { grid-template-columns: 1fr; }
   .sh-timeline { grid-template-columns: repeat(2,1fr); }
@@ -244,13 +273,30 @@
 
 @media (max-width: 620px) {
   .signature-home .sh-shell { width: min(100% - 20px, 1180px); }
+  .sh-section { padding-bottom: 1.8rem; }
+  .sh-section-head { align-items: flex-start; flex-direction: column; }
   .sh-hero { border-radius: 22px; margin-top: .75rem; }
-  .sh-hero-copy { padding: 2rem 1.25rem; }
+  .sh-hero-copy { padding: 1.85rem 1.2rem; }
+  .sh-kicker { font-size: .69rem; letter-spacing: .12em; }
+  .sh-kicker::before { width: 28px; }
+  .sh-hero h1 { font-size: clamp(2rem, 10vw, 2.75rem); }
+  .sh-hero-lead { font-size: .98rem; }
   .sh-hero-portrait { min-height: 300px; }
-  .sh-quote { left: 1rem; right: 1rem; max-width: none; }
+  .sh-hero-portrait img { object-position: 50% 12%; }
+  .sh-quote { left: 1rem; right: 1rem; bottom: 1rem; max-width: none; font-size: .95rem; }
+  .sh-actions { width: 100%; }
+  .sh-actions .sh-btn { flex: 1 1 100%; }
   .sh-role-grid { grid-template-columns: 1fr; }
   .sh-bento { grid-template-columns: 1fr; }
-  .sh-bento-card, .sh-bento-card:nth-child(1), .sh-bento-card:nth-child(5) { grid-column: 1; }
+  .sh-bento-card, .sh-bento-card:nth-child(1), .sh-bento-card:nth-child(5) { grid-column: 1; min-height: 0; }
   .sh-timeline { grid-template-columns: 1fr; }
-  .sh-cta { align-items: flex-start; flex-direction: column; }
+  .sh-cta { align-items: flex-start; flex-direction: column; border-radius: 22px; }
+  .sh-cta .sh-actions { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sh-btn,
+  .sh-bento-card { transition: none; }
+  .sh-btn:hover,
+  .sh-bento-card:hover { transform: none; }
 }
