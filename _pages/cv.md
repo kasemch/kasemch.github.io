@@ -1,6 +1,7 @@
 ---
 layout: single
 title: "Curriculum Vitae"
+description: "Academic curriculum vitae of Asst. Prof. Dr. Kasem Chooratna: education, expertise, teaching, research, curriculum and quality assurance, publications, and academic innovation."
 permalink: /cv/
 author_profile: false
 redirect_from:
@@ -18,7 +19,7 @@ redirect_from:
 
   <section class="sp-section sp-shell">
     <div class="sp-grid">
-      <article class="sp-card"><div class="sp-eyebrow">Position</div><h3>Academic Position</h3><p><strong>Assistant Professor, Department of Health and Physical Education</strong><br>Faculty of Education, Ramkhamhaeng University, Bangkok, Thailand</p></article>
+      <article class="sp-card"><div class="sp-eyebrow">Position</div><h3>Academic Position</h3><p><strong>Assistant Professor, Department of Physical Education</strong><br>Faculty of Education, Ramkhamhaeng University, Bangkok, Thailand</p></article>
       <article class="sp-card"><div class="sp-eyebrow">Education</div><h3>Education</h3><ul class="sp-list"><li><strong>Ed.D. in Health Education and Physical Education</strong>, Chulalongkorn University</li><li><strong>M.Ed. in Health Education and Physical Education</strong>, Chulalongkorn University</li><li><strong>B.Sc. in Health Education</strong>, Srinakharinwirot University</li></ul></article>
     </div>
   </section>

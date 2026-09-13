@@ -6,7 +6,14 @@ The site uses a controlled versioning model tied to the Signature Hybrid baselin
 
 ## Unreleased
 
-No unreleased changes recorded after the v1.1.0 release closure.
+### Changed
+- Added page-specific SEO descriptions to About, Teaching, Research, Curriculum & Quality, Innovation & Projects, and Curriculum Vitae so search/social metadata reflects each page rather than relying only on the site-wide fallback.
+- Aligned the CV academic-position wording with the public About page and Ramkhamhaeng University source usage: Department of Physical Education, Faculty of Education.
+
+### Verified
+- Signature Hybrid visual design and page layouts remain unchanged.
+- Publications already retain a verified page-specific excerpt and the homepage continues to use the appropriate site-wide academic description.
+- No Calendar, Drive, Workspace, OAuth, CSS, or navigation runtime files were changed in this patch.
 
 ## [1.1.0] — 2026-09-13
 

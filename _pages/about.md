@@ -1,6 +1,7 @@
 ---
 permalink: /about/
 title: "About"
+description: "Academic profile of Asst. Prof. Dr. Kasem Chooratna covering Health & Physical Education, curriculum, quality assurance, research, teaching, and responsible academic innovation."
 author_profile: false
 redirect_from:
   - /about.html

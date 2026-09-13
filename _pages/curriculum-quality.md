@@ -1,6 +1,7 @@
 ---
 permalink: /curriculum-quality/
 title: "Curriculum & Quality"
+description: "Curriculum and quality work of Asst. Prof. Dr. Kasem Chooratna, including learning outcomes, curriculum mapping, assessment, programme evaluation, AUN-QA, and evidence-informed improvement."
 author_profile: false
 ---
 
