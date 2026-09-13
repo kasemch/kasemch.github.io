@@ -4,7 +4,7 @@
 
 <!-- Academic profile metadata -->
 <meta name="author" content="{{ site.author.name | default: site.name }}">
-{% if page.url == '/workspace/' %}
+{% if page.url == '/workspace/' or page.url == '/upload-center/' %}
 <meta name="robots" content="noindex, nofollow, noarchive">
 {% else %}
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -60,6 +60,10 @@ window.KASEM_GOOGLE_CALENDAR_CONFIG = {
 </script>
 <script src="{{ '/assets/js/google-calendar-direct.js' | relative_url }}" defer></script>
 {% endif %}
+{% endif %}
+{% if page.url == '/upload-center/' %}
+<link rel="stylesheet" href="{{ '/assets/css/upload-center.css' | relative_url }}">
+<script src="{{ '/assets/js/upload-classifier.js' | relative_url }}" defer></script>
 {% endif %}
 {% if page.url == '/workspace/' %}
 <link rel="stylesheet" href="{{ '/assets/css/academic-workspace.css' | relative_url }}">
