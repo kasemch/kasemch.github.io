@@ -1,6 +1,6 @@
 provider: google_drive
-upload_enabled: false
-client_id: ""
+upload_enabled: true
+client_id: "739296612117-ktl6qb94bo6k25v952fcrjlufn44lomq.apps.googleusercontent.com"
 scope: "https://www.googleapis.com/auth/drive.file"
 root_folder_id: "1CqCHLaycsDSvnvEeo5Jc3I6_aqrrKobx"
 folders:
