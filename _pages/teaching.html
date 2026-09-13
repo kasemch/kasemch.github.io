@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "Teaching"
-description: "Teaching profile of Asst. Prof. Dr. Kasem Chooratna with Semester 1/2569 teaching evidence reconciled against official MR30 supplementary opening, change, instructor, and cancellation notices."
+description: "Teaching profile of Asst. Prof. Dr. Kasem Chooratna with Semester 1/2569 status reconciled against official MR30 evidence and linked course-quality documents where directly verified."
 permalink: /teaching/
 author_profile: false
 ---
@@ -13,7 +13,7 @@ author_profile: false
   <section class="sp-hero sp-shell">
     <div class="sp-kicker">Teaching &amp; Learning</div>
     <h1>Teaching</h1>
-    <p>Current teaching information is presented from reconciled academic-year evidence, with official MR30 supplementary notices taking precedence when a later notice changes an earlier teaching-load record.</p>
+    <p>Evidence-informed teaching, curriculum alignment, assessment and continuous improvement.</p>
     <div class="sp-navchips">
       <a class="sp-chip" href="{{ '/research/' | relative_url }}">Research</a>
       <a class="sp-chip" href="{{ '/curriculum-quality/' | relative_url }}">Curriculum &amp; Quality</a>
@@ -24,14 +24,14 @@ author_profile: false
   <section class="sp-section sp-shell" aria-labelledby="teaching-2569-title">
     <div class="sp-section-head">
       <div class="sp-eyebrow">Academic Year {{ teaching.academic_year }}</div>
-      <h2 id="teaching-2569-title">Semester 1/2569 evidence snapshot</h2>
-      <p class="sp-intro">The current verified scope is {{ teaching.verified_scope }}. Semester 2/2569 is not shown until authoritative teaching-assignment evidence becomes available.</p>
+      <h2 id="teaching-2569-title">Semester 1/2569 overview</h2>
+      <p class="sp-intro">The public status is reconciled against the latest authoritative MR30 evidence available in this review. Semester 2/2569 remains unpublished until authoritative teaching-assignment evidence is confirmed.</p>
     </div>
     <div class="sp-metrics" aria-label="Semester 1/2569 teaching summary">
-      <article class="sp-metric"><strong>{{ teaching.summary.scheduled_course_codes }}</strong><span>Initially scheduled codes</span></article>
-      <article class="sp-metric"><strong>{{ teaching.summary.retained_course_codes }}</strong><span>Retained after MR30 reconciliation</span></article>
-      <article class="sp-metric"><strong>{{ teaching.summary.cancelled_course_codes }}</strong><span>Officially cancelled codes</span></article>
-      <article class="sp-metric"><strong>{{ teaching.summary.special_lectures }}</strong><span>Separate special lecture</span></article>
+      <article class="sp-metric"><strong>{{ teaching.summary.initially_scheduled }}</strong><span>Initially scheduled</span></article>
+      <article class="sp-metric"><strong>{{ teaching.summary.retained }}</strong><span>Retained after MR30 reconciliation</span></article>
+      <article class="sp-metric"><strong>{{ teaching.summary.officially_cancelled }}</strong><span>Officially cancelled</span></article>
+      <article class="sp-metric"><strong>{{ teaching.summary.special_teaching }}</strong><span>Special teaching activity</span></article>
     </div>
     <div class="sp-policy">
       <strong>Evidence boundary.</strong> {{ teaching.source_note }}
@@ -41,77 +41,157 @@ author_profile: false
 
   <section class="sp-section sp-shell" aria-labelledby="retained-courses-title">
     <div class="sp-section-head">
-      <div class="sp-eyebrow">Retained Teaching Entries</div>
-      <h2 id="retained-courses-title">Course codes not listed in cancellation round 7</h2>
-      <p class="sp-intro">These entries remain in the reconciled teaching-load evidence and were not found in the official MR30 supplementary cancellation round 7. They are therefore shown separately from cancelled offerings rather than being mixed into one undifferentiated timetable.</p>
+      <div class="sp-eyebrow">Current / Retained Teaching</div>
+      <h2 id="retained-courses-title">Retained in the latest reconciliation</h2>
+      <p class="sp-intro">These course codes were not found in MR30 supplementary cancellation round 7. They are not labelled “officially active” until a central MR30 record, official assignment or equivalent authoritative source confirms that status.</p>
     </div>
     <div class="sp-grid">
-      {% for course in teaching.courses %}
+      {% for course in teaching.retained_courses %}
       <article class="sp-card sp-third">
         <div class="sp-output-year">{{ course.code }} · {{ course.mode }}</div>
         <h3>{{ course.title }}</h3>
         <p><strong>{{ course.day }}</strong> · {{ course.time }}<br>{{ course.room }}</p>
-        <div class="sp-evidence-note"><strong>Status:</strong> {{ course.status }}</div>
-        {% if course.note %}<div class="sp-evidence-note">{{ course.note }}</div>{% endif %}
+        <div class="sp-evidence-note"><strong>Status:</strong> Retained in current reconciliation</div>
+        <div class="sp-evidence-note"><strong>Offering code:</strong> {{ course.offering_status }}</div>
+        {% if course.evidence_note %}<div class="sp-evidence-note">{{ course.evidence_note }}</div>{% endif %}
       </article>
       {% endfor %}
+    </div>
+  </section>
+
+  <section class="sp-section sp-shell" aria-labelledby="history-title">
+    <div class="sp-section-head">
+      <div class="sp-eyebrow">MR30 Status History</div>
+      <h2 id="history-title">Semester 1/2569 offering reconciliation</h2>
+      <p class="sp-intro">The semester register is reconciled against official MR30 supplementary announcements. Later official notices override earlier opening notices while earlier evidence is retained as historical provenance.</p>
+    </div>
+    <div class="sp-grid">
+      <article class="sp-card">
+        <div class="sp-output-year">RETAINED · {{ teaching.summary.retained }}</div>
+        <h3>Not listed in cancellation round 7</h3>
+        <p>RHE4404, RHE2100 and HED1101 remain retained pending final authoritative confirmation.</p>
+      </article>
+      <article class="sp-card">
+        <div class="sp-output-year">CANCELLED · {{ teaching.summary.officially_cancelled }}</div>
+        <h3>Later MR30 notice supersedes earlier scheduling</h3>
+        <p>Eight initially scheduled course codes were later cancelled because no students enrolled.</p>
+      </article>
     </div>
   </section>
 
   <section class="sp-section sp-shell" aria-labelledby="cancelled-courses-title">
     <div class="sp-section-head">
-      <div class="sp-eyebrow">Official MR30 Cancellation</div>
-      <h2 id="cancelled-courses-title">Initially scheduled, later cancelled</h2>
-      <p class="sp-intro">The official Semester 1/2569 supplementary cancellation notice, round 7, lists the following previously scheduled course codes among courses cancelled because no students enrolled. Earlier opening or teaching-load records are therefore treated as superseded for the public Semester 1 teaching view.</p>
+      <div class="sp-eyebrow">Officially Cancelled Offerings</div>
+      <h2 id="cancelled-courses-title">MR30 supplementary cancellation — Round 7</h2>
+      <p class="sp-intro">These items are shown as compact historical records rather than current teaching activity.</p>
     </div>
-    <div class="sp-grid">
-      {% for course in teaching.cancelled_courses %}
-      <article class="sp-card sp-third">
-        <div class="sp-output-year">{{ course.code }} · Cancelled</div>
-        <h3>{{ course.title }}</h3>
-        <p><strong>Earlier timetable:</strong><br>{{ course.day }} · {{ course.time }}<br>{{ course.room }}</p>
-        <div class="sp-evidence-note"><strong>Previous classification:</strong> {{ course.previous_mode }}</div>
-        {% if course.note %}<div class="sp-evidence-note">{{ course.note }}</div>{% endif %}
-      </article>
-      {% endfor %}
-    </div>
+    <details class="sp-card sp-wide">
+      <summary><strong>View {{ teaching.summary.officially_cancelled }} cancelled course codes</strong></summary>
+      <div class="sp-grid" style="margin-top:1rem;">
+        {% for course in teaching.cancelled_courses %}
+        <article class="sp-card sp-third">
+          <div class="sp-output-year">{{ course.code }} · OFFICIALLY_CANCELLED</div>
+          <h3>{{ course.title }}</h3>
+          <p><strong>Earlier timetable:</strong><br>{{ course.day }} · {{ course.time }}<br>{{ course.room }}</p>
+          <div class="sp-evidence-note"><strong>Reason:</strong> No student registration</div>
+          <div class="sp-evidence-note"><strong>Source:</strong> MR30 supplementary cancellation notice — Round 7</div>
+          {% if course.evidence_note %}<div class="sp-evidence-note">{{ course.evidence_note }}</div>{% endif %}
+        </article>
+        {% endfor %}
+      </div>
+    </details>
   </section>
 
   <section class="sp-section sp-shell" aria-labelledby="quality-docs-title">
     <div class="sp-section-head">
-      <div class="sp-eyebrow">Course Quality Documents</div>
-      <h2 id="quality-docs-title">TQF3 → TQF5 → achievement verification</h2>
-      <p class="sp-intro">Course-quality documents are kept traceable even when a Semester 1 offering is later cancelled. Document availability does not override the official MR30 offering status.</p>
+      <div class="sp-eyebrow">Course Quality &amp; Assurance</div>
+      <h2 id="quality-docs-title">Course Specification → Course Report → Verification → Improvement</h2>
+      <p class="sp-intro">Only directly located documents are linked. A document being available does not override MR30 offering status, and a working document is not presented as final merely because it exists.</p>
     </div>
-    <article class="sp-card sp-wide">
-      <div class="sp-output-year">{{ teaching.quality_course.code }} · {{ teaching.quality_course.title }} · Semester 1/2569</div>
-      <h3>Traceable course-quality chain</h3>
-      <div class="sp-policy"><strong>Offering status.</strong> {{ teaching.quality_course.offering_status }}</div>
-      <div class="sp-grid">
-        {% for document in teaching.quality_course.documents %}
-        <article class="sp-card sp-third">
-          <div class="sp-eyebrow">{{ document.label }}</div>
-          <h3>{{ document.status }}</h3>
-          <a class="sp-link" href="{{ document.url }}" rel="noopener">Open document →</a>
-        </article>
-        {% endfor %}
-      </div>
-      <div class="sp-policy"><strong>Public-document rule.</strong> These links are intentionally exposed at the user's request. Visitors may still encounter Google Drive access controls depending on the sharing permissions of the source document.</div>
-    </article>
+
+    <div class="sp-metrics" aria-label="Verified course-quality document coverage">
+      <article class="sp-metric"><strong>{{ teaching.summary.tqf3_courses_located }}</strong><span>Courses with TQF3 located</span></article>
+      <article class="sp-metric"><strong>{{ teaching.summary.tqf5_courses_located }}</strong><span>Courses with TQF5 located</span></article>
+      <article class="sp-metric"><strong>{{ teaching.summary.verification_courses_located }}</strong><span>Courses with verification material located</span></article>
+    </div>
+
+    <div class="sp-grid">
+      {% for course in teaching.course_quality_matrix %}
+      <article class="sp-card sp-wide">
+        <div class="sp-output-year">{{ course.code }} · {{ course.offering_status }}</div>
+        <h3>{{ course.title }}</h3>
+        <div class="sp-grid">
+          <article class="sp-card sp-third">
+            <div class="sp-eyebrow">Course Specification (TQF3)</div>
+            <p>{{ course.tqf3_status }}</p>
+            {% if course.tqf3_url %}<a class="sp-link" href="{{ course.tqf3_url }}" rel="noopener">Open TQF3 →</a>{% endif %}
+          </article>
+          <article class="sp-card sp-third">
+            <div class="sp-eyebrow">Course Report (TQF5)</div>
+            <p>{{ course.tqf5_status }}</p>
+            {% if course.tqf5_url %}<a class="sp-link" href="{{ course.tqf5_url }}" rel="noopener">Open TQF5 →</a>{% endif %}
+          </article>
+          <article class="sp-card sp-third">
+            <div class="sp-eyebrow">Learning Achievement Verification</div>
+            <p>{{ course.verification_status }}</p>
+            {% if course.verification_url %}<a class="sp-link" href="{{ course.verification_url }}" rel="noopener">Open verification material →</a>{% endif %}
+          </article>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+
+    <div class="sp-policy"><strong>Public-document rule.</strong> Linked documents were directly located and reconciled to the relevant course code and academic period where available. Access may depend on the source document's Google Drive sharing permissions.</div>
+  </section>
+
+  <section class="sp-section sp-shell" aria-labelledby="hed2503-title">
+    <div class="sp-section-head">
+      <div class="sp-eyebrow">Temporal Truth Example</div>
+      <h2 id="hed2503-title">HED2503: quality evidence without an active offering claim</h2>
+      <p class="sp-intro">HED2503 was listed in additional opening round 6 with ASST.PROF.DR.KASEM, then cancelled in the later round-7 notice. Its TQF3, TQF5 and verification working documents remain linked as traceable course-quality evidence only.</p>
+    </div>
+    <div class="sp-policy"><strong>Current state:</strong> OFFICIALLY_CANCELLED — Semester 1/2569. The linked TQF5 and verification materials are draft/working or planned and are not presented as completed results.</div>
   </section>
 
   <section class="sp-section sp-shell" aria-labelledby="special-teaching-title">
-    <div class="sp-section-head"><div class="sp-eyebrow">Additional Teaching</div><h2 id="special-teaching-title">Special lecture</h2></div>
+    <div class="sp-section-head"><div class="sp-eyebrow">Additional Teaching</div><h2 id="special-teaching-title">Special teaching activity</h2></div>
     {% for item in teaching.special_teaching %}
-    <article class="sp-card sp-wide"><div class="sp-output-year">{{ item.date }} · {{ item.time }}</div><h3>{{ item.code }} · {{ item.title }}</h3><p>{{ item.location }}</p><div class="sp-evidence-note">{{ item.status }}</div></article>
+    <article class="sp-card sp-wide">
+      <div class="sp-output-year">{{ item.date }} · {{ item.time }}</div>
+      <h3>{{ item.code }} · {{ item.title }}</h3>
+      <p>{{ item.location }}</p>
+      <div class="sp-evidence-note"><strong>Status:</strong> {{ item.offering_status }}</div>
+      <div class="sp-evidence-note">{{ item.evidence_note }}</div>
+    </article>
     {% endfor %}
   </section>
 
   <section class="sp-section sp-shell">
     <div class="sp-grid">
-      <article class="sp-card"><div class="sp-eyebrow">Pedagogy</div><h3>Approach to Teaching</h3><p>Teaching practice emphasises active learning, case-based learning, structured discussion, assessment aligned with learning outcomes, and learning environments that support participation by students with diverse backgrounds and experiences.</p><p>Teaching development is linked to programme learning outcomes (PLOs), course learning outcomes (CLOs), curriculum mapping, assessment design, and continuous improvement.</p></article>
-      <article class="sp-card"><div class="sp-eyebrow">Evidence Governance</div><h3>How teaching status is determined</h3><ul class="sp-list"><li>Central MR30 and official MR30 supplementary notices take precedence for offering status.</li><li>Later opening, change, instructor, and cancellation notices supersede earlier timetable evidence where they conflict.</li><li>Teaching-load and course-quality documents provide supporting context but do not override a later official cancellation.</li><li>HEPE validation datasets are reconciliation-only unless a canonical active record is independently confirmed.</li></ul></article>
+      <article class="sp-card">
+        <div class="sp-eyebrow">Pedagogy</div>
+        <h3>Approach to Teaching</h3>
+        <ul class="sp-list">
+          <li>Active learning and structured discussion</li>
+          <li>Case-based and scenario-based learning</li>
+          <li>Authentic assessment and assessment rubrics</li>
+          <li>CLO/PLO alignment and curriculum mapping</li>
+          <li>Reflective teaching and continuous improvement</li>
+          <li>Responsible use of AI and digital tools</li>
+        </ul>
+      </article>
+      <article class="sp-card">
+        <div class="sp-eyebrow">Evidence Governance</div>
+        <h3>How public teaching status is determined</h3>
+        <ul class="sp-list">
+          <li>Central MR30 and official MR30 supplementary notices have priority for offering status.</li>
+          <li>Later authoritative notices supersede earlier opening or timetable evidence.</li>
+          <li>Teaching-load and course-quality documents provide supporting context but cannot reverse an official cancellation.</li>
+          <li>HEPE validation and inactive records remain reconciliation-only.</li>
+          <li>Semester 2/2569 remains fail-closed until an authoritative assignment source is found.</li>
+        </ul>
+      </article>
     </div>
-    <div class="sp-policy">Student-identifiable records, grades, answer scripts, private learning evidence, and other protected student information are not published on this website.</div>
+    <div class="sp-policy">Teaching information is reconciled against Ramkhamhaeng University MR30 records and traceable academic documents. Student-identifiable records, grades, answer scripts, internal Drive identifiers, private audit metadata and confidential HEPE records are not published on this website.</div>
   </section>
 </div>
