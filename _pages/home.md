@@ -20,7 +20,7 @@ classes: wide
         </div>
       </div>
       <div class="sh-hero-portrait">
-        <img src="./images/profile.jpg" alt="Portrait of Asst. Prof. Dr. Kasem Chooratna">
+        <img src="./images/profile-approved-01.webp" alt="Formal portrait of Asst. Prof. Dr. Kasem Chooratna">
         <div class="sh-quote">Education, movement, evidence and innovation for healthier people and stronger learning communities.</div>
       </div>
     </div>
