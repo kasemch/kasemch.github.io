@@ -1,5 +1,6 @@
+{% assign public_events = site.data.public_calendar.events | where: "visibility", "public" %}
 <section class="academic-calendar" aria-labelledby="academic-calendar-title"
-  data-public-event-dates="{% for event in site.data.public_calendar.events %}{% if event.visibility == 'public' %}{{ event.start | slice: 0, 10 }}|{% endif %}{% endfor %}">
+  data-public-event-dates="{% for event in public_events %}{{ event.start | slice: 0, 10 }}|{% endfor %}">
   <div class="academic-calendar__heading">
     <div>
       <p class="academic-calendar__eyebrow">Academic Calendar</p>
@@ -30,19 +31,19 @@
         <span class="academic-calendar__today-label">Today</span>
         <strong data-calendar-today></strong>
       </div>
+      {% if public_events.size > 0 %}
       <ol class="academic-calendar__events" data-calendar-events>
-        {% assign visible_count = 0 %}
-        {% for event in site.data.public_calendar.events %}
-          {% if event.visibility == 'public' and visible_count < 3 %}
-          <li>
-            <time datetime="{{ event.start }}">{{ event.start | date: "%d %b" }}</time>
-            <div><strong>{{ event.category }}</strong><span>{{ event.title }}</span></div>
-          </li>
-          {% assign visible_count = visible_count | plus: 1 %}
-          {% endif %}
+        {% for event in public_events limit: 3 %}
+        <li>
+          <time datetime="{{ event.start }}">{{ event.start | date: "%d %b" }}</time>
+          <div><strong>{{ event.category }}</strong><span>{{ event.title }}</span></div>
+        </li>
         {% endfor %}
       </ol>
-      <p class="academic-calendar__privacy-note">Only events explicitly marked public are included in this projection.</p>
+      {% else %}
+      <p class="academic-calendar__empty" data-calendar-events role="status">No public academic events have been published yet.</p>
+      {% endif %}
+      <p class="academic-calendar__privacy-note">Only events explicitly approved for public visibility are included in this projection.</p>
     </div>
   </div>
 </section>
