@@ -20,19 +20,19 @@ classes: wide
         </div>
       </div>
       <div class="sh-hero-portrait">
-        <img src="./images/profile.jpg" alt="Asst. Prof. Dr. Kasem Chooratna">
-        <div class="sh-quote">“Education, movement, evidence and innovation for healthier people and stronger learning communities.”</div>
+        <img src="./images/profile.jpg" alt="Portrait of Asst. Prof. Dr. Kasem Chooratna">
+        <div class="sh-quote">Education, movement, evidence and innovation for healthier people and stronger learning communities.</div>
       </div>
     </div>
   </section>
 
   <section class="sh-section sh-shell" aria-labelledby="identity-title">
     <div class="sh-identity">
-      <div class="sh-card">
+      <div class="sh-card sh-identity-main">
         <div class="sh-eyebrow">Academic Identity</div>
         <h2 id="identity-title">Connecting teaching, evidence and educational improvement</h2>
         <p class="sh-section-intro">My academic work brings together Health &amp; Physical Education, curriculum and learning design, quality assurance, research, and carefully governed uses of digital technology and artificial intelligence in higher education.</p>
-        <a class="sh-btn sh-btn-primary" href="./cv/">View Academic CV</a>
+        <a class="sh-btn sh-btn-ink" href="./cv/">View Academic CV</a>
       </div>
       <div class="sh-card">
         <div class="sh-role-grid">
@@ -55,42 +55,42 @@ classes: wide
 
     <div class="sh-bento">
       <article class="sh-bento-card">
-        <div class="sh-icon">🎓</div>
+        <div class="sh-icon" aria-hidden="true">T</div>
         <h3>Teaching &amp; Learning</h3>
         <p>Health education, physical education, school health, learning design, assessment and student development.</p>
         <a href="./teaching/">Explore teaching →</a>
       </article>
 
       <article class="sh-bento-card">
-        <div class="sh-icon">🔬</div>
+        <div class="sh-icon" aria-hidden="true">R</div>
         <h3>Research</h3>
         <p>Health and movement behaviours, physical activity, educational innovation and applied research.</p>
         <a href="./research/">Explore research →</a>
       </article>
 
       <article class="sh-bento-card">
-        <div class="sh-icon">📚</div>
+        <div class="sh-icon" aria-hidden="true">P</div>
         <h3>Publications</h3>
         <p>Selected scholarly outputs, academic writing and evidence-based contributions.</p>
         <a href="./publications/">View publications →</a>
       </article>
 
       <article class="sh-bento-card">
-        <div class="sh-icon">✓</div>
+        <div class="sh-icon" aria-hidden="true">Q</div>
         <h3>Curriculum &amp; Quality</h3>
         <p>Outcome-based curriculum design, PLO/CLO alignment, curriculum mapping, evaluation and quality assurance.</p>
         <a href="./curriculum-quality/">Explore curriculum &amp; quality →</a>
       </article>
 
       <article class="sh-bento-card">
-        <div class="sh-icon">💻</div>
+        <div class="sh-icon" aria-hidden="true">D</div>
         <h3>Digital Innovation</h3>
         <p>Responsible AI and digital systems supporting teaching, academic work, governance and evidence management.</p>
         <a href="./innovation-projects/">Explore innovation →</a>
       </article>
 
       <article class="sh-bento-card">
-        <div class="sh-icon">🤝</div>
+        <div class="sh-icon" aria-hidden="true">C</div>
         <h3>Academic Service &amp; Community</h3>
         <p>Applying academic knowledge to health promotion, professional development and community-oriented educational initiatives.</p>
         <a href="./about/">Learn more →</a>
@@ -104,7 +104,7 @@ classes: wide
         <div class="sh-eyebrow">Selected Directions</div>
         <h2 id="projects-title">Featured areas of current academic development</h2>
       </div>
-      <a href="./innovation-projects/">View all projects →</a>
+      <a class="sh-text-link" href="./innovation-projects/">View all projects →</a>
     </div>
 
     <div class="sh-featured">
@@ -134,7 +134,7 @@ classes: wide
           <li>Health &amp; Physical Education</li>
           <li>Educational innovation and applied research</li>
         </ul>
-        <a href="./publications/">Browse scholarly work →</a>
+        <a class="sh-text-link" href="./publications/">Browse scholarly work →</a>
       </article>
 
       <article class="sh-card">
@@ -146,7 +146,7 @@ classes: wide
           <li>Learning, assessment and curriculum alignment</li>
           <li>Quality assurance and programme improvement</li>
         </ul>
-        <a href="./teaching/">Explore teaching →</a>
+        <a class="sh-text-link" href="./teaching/">Explore teaching →</a>
       </article>
     </div>
   </section>
