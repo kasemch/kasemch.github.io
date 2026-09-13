@@ -47,6 +47,19 @@
 {% if page.url == '/add-event/' %}
 <link rel="stylesheet" href="{{ '/assets/css/calendar-event-builder.css' | relative_url }}">
 <script src="{{ '/assets/js/google-calendar-link.js' | relative_url }}" defer></script>
+{% if site.data.google_calendar.direct_write_enabled and site.data.google_calendar.client_id != '' %}
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+window.KASEM_GOOGLE_CALENDAR_CONFIG = {
+  enabled: true,
+  clientId: {{ site.data.google_calendar.client_id | jsonify }},
+  calendarId: {{ site.data.google_calendar.calendar_id | jsonify }},
+  timezone: {{ site.data.google_calendar.timezone | jsonify }},
+  scope: {{ site.data.google_calendar.scope | jsonify }}
+};
+</script>
+<script src="{{ '/assets/js/google-calendar-direct.js' | relative_url }}" defer></script>
+{% endif %}
 {% endif %}
 {% if page.url == '/workspace/' %}
 <link rel="stylesheet" href="{{ '/assets/css/academic-workspace.css' | relative_url }}">

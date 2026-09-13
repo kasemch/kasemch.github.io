@@ -6,7 +6,7 @@ author_profile: false
 
 <div class="calendar-event-builder" data-calendar-event-builder>
   <div class="calendar-event-builder__notice">
-    <strong>Review-before-save flow.</strong> This form does not write directly to Google Calendar. It prepares an event and opens Google Calendar so you can review and save it yourself.
+    <strong>Review-before-save flow.</strong> This form can always prepare an event for review in Google Calendar. Direct save is shown only when the verified OAuth configuration gate is enabled.
   </div>
 
   <form class="calendar-event-builder__form" data-event-form>
@@ -50,9 +50,15 @@ author_profile: false
 
     <p class="calendar-event-builder__timezone">Timezone: <strong>Asia/Bangkok</strong></p>
     <p class="calendar-event-builder__error" data-event-error role="alert" hidden></p>
+    <p class="calendar-event-builder__success" data-direct-success role="status" hidden></p>
 
-    <button class="calendar-event-builder__submit" type="submit">Review in Google Calendar</button>
+    <div class="calendar-event-builder__actions">
+      <button class="calendar-event-builder__submit" type="submit">Review in Google Calendar</button>
+      {% if site.data.google_calendar.direct_write_enabled and site.data.google_calendar.client_id != '' %}
+      <button class="calendar-event-builder__submit" type="button" data-direct-save hidden>Save directly to Google Calendar</button>
+      {% endif %}
+    </div>
   </form>
 
-  <p class="calendar-event-builder__privacy">Nothing entered in this form is stored by this GitHub Pages site. Direct calendar writes remain disabled until the authenticated integration gate is approved.</p>
+  <p class="calendar-event-builder__privacy">Nothing entered in this form is stored by this GitHub Pages site. Direct write uses a short-lived browser access token only when explicitly enabled; no refresh token or client secret is stored in the repository or browser storage.</p>
 </div>

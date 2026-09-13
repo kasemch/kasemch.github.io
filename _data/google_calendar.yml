@@ -1,0 +1,7 @@
+# Google Calendar direct-write configuration.
+# Safe default: direct write remains disabled until a verified OAuth Web Client ID is supplied.
+direct_write_enabled: false
+client_id: ""
+calendar_id: "primary"
+timezone: "Asia/Bangkok"
+scope: "https://www.googleapis.com/auth/calendar.events.owned"
