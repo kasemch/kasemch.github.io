@@ -2,12 +2,45 @@
 
 <!-- start custom head snippets -->
 
+<!-- Academic profile metadata -->
+<meta name="author" content="{{ site.author.name | default: site.name }}">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="me" href="https://github.com/kasemch">
+{% unless page.header.image or page.header.overlay_image %}
+<meta property="og:image" content="{{ site.url }}{{ site.baseurl }}/images/{{ site.author.avatar }}">
+{% endunless %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Asst. Prof. Dr. Kasem Chooratna",
+  "url": "https://kasemch.github.io",
+  "image": "https://kasemch.github.io/images/profile.jpg",
+  "jobTitle": "Assistant Professor",
+  "affiliation": {
+    "@type": "CollegeOrUniversity",
+    "name": "Ramkhamhaeng University"
+  },
+  "sameAs": [
+    "https://github.com/kasemch"
+  ],
+  "knowsAbout": [
+    "Health Education",
+    "Physical Education",
+    "Curriculum Development",
+    "Educational Quality Assurance",
+    "Health Promotion",
+    "Artificial Intelligence in Education"
+  ]
+}
+</script>
+
 <!-- Support for Academicons -->
 <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css"></noscript>
 
 <!-- Support for Font Awesome -->
- <link rel="preload" href="{{ base_path }}/assets/css/fontawesome.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="preload" href="{{ base_path }}/assets/css/fontawesome.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="{{ base_path }}/assets/css/fontawesome.css"></noscript>
 
 <!-- favicon from https://commons.wikimedia.org/wiki/File:OOjs_UI_icon_academic-progressive.svg -->
