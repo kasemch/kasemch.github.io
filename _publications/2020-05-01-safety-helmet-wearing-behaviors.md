@@ -7,6 +7,6 @@ excerpt: "Study of factors influencing safety-helmet wearing behaviors for motor
 date: 2020-05-01
 venue: "Academic Journal of Thailand National Sports University"
 paperurl: "https://he02.tci-thaijo.org/index.php/TNSUJournal/article/view/244482"
-citation: "Phacharakununya, P., Vorapongsathorn, S., Vorapongsathorn, T., Rodjakpai, Y., & Chooratna, K. (2020). Factors Influencing Safety-Helmet Wearing Behaviors to Prevent Accidents from Motorcycle Riding of Students in the Institute of Physical Education, Chon Buri Campus. <i>Academic Journal of Thailand National Sports University</i>, 226–238."
+citation: "Phacharakununya, P., Vorapongsathorn, S., Vorapongsathorn, T., Rodjakpai, Y., & Chooratna, K. (2020). Factors Influencing Safety-Helmet Wearing Behaviors to Prevent Accidents from Motorcycle Riding of Students in the Institute of Physical Education, Chon Buri Campus. <i>Academic Journal of Thailand National Sports University</i>, 12(2), 226–238."
 ---
 Authoritative source: Academic Journal of Thailand National Sports University / ThaiJO. DOI is not claimed because the supplied ThaiJO export does not provide one.
