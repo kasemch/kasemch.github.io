@@ -25,7 +25,7 @@ author_profile: false
     <div class="sp-section-head">
       <div class="sp-eyebrow">Academic Year {{ teaching.academic_year }}</div>
       <h2 id="teaching-2569-title">Verified teaching snapshot</h2>
-      <p class="sp-intro">The current verified scope is {{ teaching.verified_scope }}. Semester 2/2569 is not shown until authoritative teaching evidence becomes available.</p>
+      <p class="sp-intro">The current verified scope is {{ teaching.verified_scope }}. Semester 2/2569 is not shown until authoritative teaching-assignment evidence becomes available.</p>
     </div>
     <div class="sp-metrics" aria-label="Semester 1/2569 teaching summary">
       <article class="sp-metric"><strong>{{ teaching.summary.course_codes }}</strong><span>Verified course codes</span></article>
@@ -33,7 +33,10 @@ author_profile: false
       <article class="sp-metric"><strong>{{ teaching.summary.cross_listed_clusters }}</strong><span>Cross-listed clusters</span></article>
       <article class="sp-metric"><strong>{{ teaching.summary.special_lectures }}</strong><span>Special lecture</span></article>
     </div>
-    <div class="sp-policy"><strong>Evidence boundary.</strong> {{ teaching.source_note }}</div>
+    <div class="sp-policy">
+      <strong>Evidence boundary.</strong> {{ teaching.source_note }}
+      <br><a class="sp-link" href="{{ teaching.official_mr30_url }}" rel="noopener">Ramkhamhaeng University central MR30 schedule →</a>
+    </div>
   </section>
 
   <section class="sp-section sp-shell" aria-labelledby="current-courses-title">
@@ -73,7 +76,7 @@ author_profile: false
     </div>
     <div class="sp-grid">
       <article class="sp-card"><div class="sp-output-year">Wednesday · 09:30–11:20 · SCB 306</div><h3>Substance-use education cluster</h3><p><strong>HED3502</strong> Drugs and Substance Abuse<br><strong>HED4301</strong> Drugs and Narcotics<br><strong>RHE4103</strong> Drugs and Addictive Substances</p></article>
-      <article class="sp-card"><div class="sp-output-year">Thursday · 09:30–11:20 · SCB 506</div><h3>Sexuality education cluster</h3><p><strong>HED2503</strong> Sexuality Education<br><strong>RHE3101</strong> Sexuality Education</p><div class="sp-evidence-note"><strong>Schedule reconciliation:</strong> the public timetable follows the verified teaching-load/MR30 evidence. One HED2503 TQF3 working document contains a conflicting day/time and is not used as the timetable source.</div></article>
+      <article class="sp-card"><div class="sp-output-year">Thursday · 09:30–11:20 · SCB 506</div><h3>Sexuality education cluster</h3><p><strong>HED2503</strong> Sexuality Education<br><strong>RHE3101</strong> Sexuality Education</p><div class="sp-evidence-note"><strong>Schedule reconciliation:</strong> the public timetable follows the reconciled MR30-derived teaching-load evidence. One HED2503 TQF3 working document contains a conflicting day/time and is not used as the timetable source.</div></article>
     </div>
   </section>
 
