@@ -67,12 +67,37 @@
   margin: 1rem 0;
 }
 
+.upload-center__store,
 .upload-center__disabled {
   width: 100%;
   padding: .8rem 1rem;
   border: 0;
   border-radius: .8rem;
+  font: inherit;
+  font-weight: 700;
+}
+
+.upload-center__store {
+  background: var(--global-link-color, #176b52);
+  color: #fff;
+  cursor: pointer;
+}
+
+.upload-center__store:disabled,
+.upload-center__disabled {
   opacity: .55;
+  cursor: not-allowed;
+}
+
+.upload-center__storage-status {
+  margin: .75rem 0 0;
+  font-size: .85rem;
+  opacity: .72;
+}
+
+.upload-center__storage-status[data-state="error"] {
+  opacity: 1;
+  font-weight: 700;
 }
 
 @media (max-width: 720px) {
