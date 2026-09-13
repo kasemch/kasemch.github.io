@@ -4,7 +4,11 @@
 
 <!-- Academic profile metadata -->
 <meta name="author" content="{{ site.author.name | default: site.name }}">
+{% if page.url == '/workspace/' %}
+<meta name="robots" content="noindex, nofollow, noarchive">
+{% else %}
 <meta name="robots" content="index, follow, max-image-preview:large">
+{% endif %}
 <link rel="me" href="https://github.com/kasemch">
 {% unless page.header.image or page.header.overlay_image %}
 <meta property="og:image" content="{{ site.url }}{{ site.baseurl }}/images/{{ site.author.avatar }}">
@@ -36,9 +40,13 @@
 </script>
 
 <!-- Academic Command Center Phase 1 assets -->
+{% if page.url == '/' or page.url == '/academic-calendar/' %}
 <link rel="stylesheet" href="{{ base_path }}/assets/css/academic-calendar.css">
-<link rel="stylesheet" href="{{ base_path }}/assets/css/academic-workspace.css">
 <script src="{{ base_path }}/assets/js/academic-calendar.js" defer></script>
+{% endif %}
+{% if page.url == '/workspace/' %}
+<link rel="stylesheet" href="{{ base_path }}/assets/css/academic-workspace.css">
+{% endif %}
 
 <!-- Support for Academicons -->
 <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
