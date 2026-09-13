@@ -9,20 +9,25 @@ The site uses a controlled versioning model tied to the Signature Hybrid baselin
 ### Added
 - Research Profile Dashboard on `/research/` with automatically derived verified-publication count, publication-venue count, publication span, venue distribution, annual output timeline, and recent verified publication cards.
 - Evidence-status notes for the four research themes, distinguishing themes already represented in the verified publication register from developing areas awaiting verified public outputs.
+- Nine additional journal records confirmed against authoritative public journal/issue/article sources after Google Drive research reconciliation.
+- Separate Research Degrees & Theses section for verified 2011 master's and 2015 doctoral research records.
+- Public-safe research evidence reconciliation audit documenting publication-boundary decisions without exposing private Drive identifiers.
 
 ### Changed
 - Added page-specific SEO descriptions to About, Teaching, Research, Curriculum & Quality, Innovation & Projects, and Curriculum Vitae so search/social metadata reflects each page rather than relying only on the site-wide fallback.
 - Aligned the CV academic-position wording with the public About page and Ramkhamhaeng University source usage: Department of Physical Education, Faculty of Education.
 - Upgraded the Research page from a themes-only overview to an evidence-led academic research profile while preserving the Signature Hybrid visual baseline.
 - Research and publication links now use Jekyll `relative_url` paths for repository-safe GitHub Pages deployment.
+- Expanded the verified publication register from 10 to 19 records; Research metrics remain derived from the collection rather than hard-coded totals.
 
 ### Governance
-- Research dashboard metrics are derived only from the existing verified `_publications` collection.
+- Research dashboard metrics are derived only from the verified `_publications` collection.
+- Private Drive research reports, proposals, manuscripts, working copies, and conference/proceedings candidates are excluded from journal-publication counts unless independently confirmed by an authoritative public source.
 - Citation counts, h-index, indexing status, journal quartiles, and impact metrics remain excluded until independently verified from authoritative sources.
 
 ### Verified
 - Signature Hybrid visual design and page layouts remain unchanged outside the additive Research dashboard components.
-- Publications already retain a verified page-specific excerpt and the homepage continues to use the appropriate site-wide academic description.
+- No private Google Drive IDs or links are introduced into the public website.
 - No Calendar, Drive, Workspace, OAuth, or navigation runtime files were changed in this patch.
 
 ## [1.1.0] — 2026-09-13
