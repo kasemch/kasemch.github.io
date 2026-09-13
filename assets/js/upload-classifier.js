@@ -54,5 +54,18 @@
     out.confidence.textContent = `${result.confidence}%`;
     out.reason.textContent = result.reason;
     preview.hidden = false;
+
+    window.dispatchEvent(new CustomEvent('kasem:upload-classified', {
+      detail: {
+        file,
+        name: file.name,
+        mimeType: file.type || 'application/octet-stream',
+        size: file.size,
+        category: result.category,
+        code: result.code,
+        confidence: result.confidence,
+        reason: result.reason
+      }
+    }));
   });
 })();
