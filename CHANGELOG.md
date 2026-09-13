@@ -13,13 +13,17 @@ The site uses a controlled versioning model tied to the Signature Hybrid baselin
 - Separate Research Degrees & Theses section for verified 2011 master's and 2015 doctoral research records.
 - Public-safe research evidence reconciliation audit documenting publication-boundary decisions without exposing private Drive identifiers.
 - Enriched academic `Person` structured data with a stable person identifier, current university employment, verified education institutions, academic expertise areas, approved portrait, and canonical profile page.
+- Final Research Profile consistency audit covering Research, Publications, CV, English-language display conventions, and output-type boundaries.
 
 ### Changed
 - Added page-specific SEO descriptions to About, Teaching, Research, Curriculum & Quality, Innovation & Projects, and Curriculum Vitae so search/social metadata reflects each page rather than relying only on the site-wide fallback.
 - Aligned the CV academic-position wording with the public About page and Ramkhamhaeng University source usage: Department of Physical Education, Faculty of Education.
 - Upgraded the Research page from a themes-only overview to an evidence-led academic research profile while preserving the Signature Hybrid visual baseline.
 - Research and publication links now use Jekyll `relative_url` paths for repository-safe GitHub Pages deployment.
-- Expanded the verified publication register from 10 to 19 records; Research metrics remain derived from the collection rather than hard-coded totals.
+- Expanded the verified journal-publication register to 21 records through evidence reconciliation; Research metrics remain derived from the collection rather than hard-coded totals.
+- Conference proceedings are reported separately and currently comprise 13 verified records across the 2023 and 2026 proceedings registers.
+- Public-facing Research and Publications titles use English for site consistency while source-language bibliographic metadata is retained internally where needed for traceability.
+- Publications now displays its journal-publication count dynamically from `site.publications`, uses Jekyll `relative_url` local references, and explicitly separates journal publications from conference proceedings and degree research.
 - Open Graph descriptions now use the same page-specific `seo_description` chain as standard page metadata, so About, Teaching, Research, Curriculum & Quality, Innovation & Projects, and CV expose page-relevant social descriptions.
 - Theme-generated social `Person` JSON-LD is now emitted only when verified `social.links` are configured, avoiding an empty duplicate Person entity alongside the richer academic profile schema.
 
@@ -35,6 +39,7 @@ The site uses a controlled versioning model tied to the Signature Hybrid baselin
 - No Calendar, Drive, Workspace, OAuth, or navigation runtime files were changed in this patch.
 - Structured-data identity is consolidated to one rich academic Person entity when no verified theme-level social profile list exists.
 - Page-specific descriptions now propagate consistently to standard SEO, Open Graph, and the custom Twitter summary metadata path.
+- Research output taxonomy is consistent across Research, Publications, and CV: 21 verified journal publications, 13 verified conference proceedings, and 2 degree research works.
 
 ## [1.1.0] — 2026-09-13
 
