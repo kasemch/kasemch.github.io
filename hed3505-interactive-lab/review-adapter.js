@@ -1,6 +1,17 @@
-// HED3505 BUILD-11 Review Adapter — NON-PRODUCTION
+// HED3505 BUILD-11/16 Review Adapter — NON-PRODUCTION
 // Requires an authenticated Supabase client instance passed to createHED3505ReviewAPI().
 window.createHED3505ReviewAPI = function(sb){
+  const escapeHtml = (value) => String(value ?? '')
+    .replaceAll('&','&amp;')
+    .replaceAll('<','&lt;')
+    .replaceAll('>','&gt;')
+    .replaceAll('"','&quot;')
+    .replaceAll("'",'&#039;');
+  const sanitizeRowsForHtml = (rows) => (rows || []).map(row => {
+    const out = {};
+    for (const [k,v] of Object.entries(row || {})) out[k] = typeof v === 'string' ? escapeHtml(v) : v;
+    return out;
+  });
   return {
     async getMyFeedback(wsId=null){
       const {data,error}=await sb.rpc('hed3505_get_my_feedback',{p_ws_id:wsId});
@@ -20,7 +31,8 @@ window.createHED3505ReviewAPI = function(sb){
     },
     async instructorGetPortfolio(learnerId,wsId=null){
       const {data,error}=await sb.rpc('hed3505_instructor_get_portfolio',{p_learner_id:learnerId,p_ws_id:wsId});
-      if(error) throw error; return data;
+      if(error) throw error;
+      return sanitizeRowsForHtml(data);
     },
     async instructorAddFeedback({learnerId,wsId,criterionId=null,feedbackCode=null,whatsGood=null,fixFirst=null,why=null,nextAction=null,requestRevision=false}){
       const {data,error}=await sb.rpc('hed3505_instructor_add_feedback',{
