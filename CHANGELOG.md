@@ -55,13 +55,18 @@ Release manifest: `./docs/releases/signature-hybrid-v1.0.0.md`
 ## Unreleased
 
 ### Added
-- Academic Command Center static shell at `/workspace/`.
-- Browser-only document classification preview with no upload or persistence.
-- Review-before-save Google Calendar draft generator.
+- Academic Command Center at `/workspace/` with OAuth-aware runtime status.
+- Google Calendar direct-write runtime using a public OAuth Web Client ID and short-lived browser authorization.
+- Controlled Google Drive upload runtime with classification, human review, destination capability verification, and explicit upload confirmation.
 - Local academic note composer with clipboard export only.
 - Command Center navigation entry.
 
+### Changed
+- Reconciled `/workspace/` after OAuth activation so Quick Add links now open the live `/add-event/` and `/upload-center/` workflows instead of the earlier local-only placeholders.
+- Converted workspace asset and internal page links to Jekyll `relative_url` paths.
+
 ### Governance
-- No private HEPE data is rendered by the workspace shell.
-- No Supabase, Google Drive, IAM, or service credentials are embedded in the public repository.
-- No document action can automatically admit evidence, create authority, or mutate canonical teaching assignments.
+- No private HEPE data is rendered by the workspace.
+- No Google client secret, refresh token, service-account key, Supabase service-role key, or other privileged credential is embedded in the public repository.
+- No document action can automatically admit evidence, create authority, create canonical courses, or mutate canonical teaching assignments.
+- Calendar and Drive writes remain user-confirmed actions through browser OAuth.

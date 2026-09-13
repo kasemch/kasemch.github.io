@@ -9,9 +9,10 @@ classes: wide
   <section class="aw-hero aw-shell" aria-labelledby="aw-title">
     <div class="aw-kicker">Academic Command Center</div>
     <h1 id="aw-title">A focused workspace for academic tasks</h1>
-    <p>This static workspace provides safe browser-side tools for preparing document classification, creating a Google Calendar draft, and composing notes. It contains no private database content and no write-capable credentials.</p>
+    <p>This static GitHub Pages workspace now connects to Google Calendar and Google Drive through user-confirmed browser OAuth. It stores no client secret, refresh token, private HEPE record, or privileged Supabase credential in the public site.</p>
     <div class="aw-status" aria-label="Workspace status">
-      <span class="aw-pill">Static / client-side</span>
+      <span class="aw-pill">Google Calendar OAuth ready</span>
+      <span class="aw-pill">Controlled Drive upload ready</span>
       <span class="aw-pill">No secrets embedded</span>
       <span class="aw-pill">No automatic authority changes</span>
     </div>
@@ -21,42 +22,24 @@ classes: wide
     <div class="aw-grid">
       <section class="aw-card aw-card-wide" aria-labelledby="aw-quick-title">
         <h2 id="aw-quick-title">Quick Add</h2>
-        <p class="aw-muted">Use these tools to prepare the next action. Nothing is written to HEPE, Google Drive, or Google Calendar without a separate user-confirmed step.</p>
+        <p class="aw-muted">Calendar writes and Drive uploads occur only after an explicit user action and Google authorization. HEPE evidence admission and authority changes remain separate governed processes.</p>
         <div class="aw-quick-grid">
           <div class="aw-quick">
             <strong>Upload Document</strong>
-            <span>Preview filename-based classification locally before any storage integration.</span>
-            <div class="aw-actions"><button class="aw-btn aw-btn-secondary" type="button" data-aw-open="upload">Classify a file</button></div>
+            <span>Validate, classify, review the destination, and authorize a controlled upload to Google Drive.</span>
+            <div class="aw-actions"><a class="aw-btn aw-btn-secondary" href="{{ '/upload-center/' | relative_url }}">Open Upload Center</a></div>
           </div>
           <div class="aw-quick">
             <strong>Add Calendar Event</strong>
-            <span>Create a pre-filled Google Calendar event draft and confirm it there.</span>
-            <div class="aw-actions"><button class="aw-btn aw-btn-secondary" type="button" data-aw-open="event">Prepare event</button></div>
+            <span>Create an event directly through Google OAuth or use the review-before-save Google Calendar fallback.</span>
+            <div class="aw-actions"><a class="aw-btn aw-btn-secondary" href="{{ '/add-event/' | relative_url }}">Add Calendar Event</a></div>
           </div>
           <div class="aw-quick">
             <strong>Add Academic Note</strong>
-            <span>Draft a short note in the browser and copy it when ready.</span>
-            <div class="aw-actions"><button class="aw-btn aw-btn-secondary" type="button" data-aw-open="note">Write note</button></div>
+            <span>Draft a short note locally in the browser and copy it when ready. It is not automatically transmitted.</span>
+            <div class="aw-actions"><button class="aw-btn aw-btn-secondary" type="button" data-aw-open="note">Write Note</button></div>
           </div>
         </div>
-
-        <section class="aw-panel" data-aw-panel="upload" hidden aria-labelledby="aw-upload-title">
-          <h3 id="aw-upload-title">Local document classification preview</h3>
-          <div class="aw-field"><label for="aw-file">Choose a file</label><input id="aw-file" type="file" aria-describedby="aw-file-help"><small id="aw-file-help">The browser reads only the file name, type and size for this preview. No upload occurs.</small></div>
-          <div id="aw-file-result" class="aw-result" aria-live="polite">No file selected.</div>
-          <div class="aw-actions"><button class="aw-btn aw-btn-secondary" type="button" data-aw-close>Close</button></div>
-        </section>
-
-        <section class="aw-panel" data-aw-panel="event" hidden aria-labelledby="aw-event-title">
-          <h3 id="aw-event-title">Prepare Google Calendar event</h3>
-          <form id="aw-event-form">
-            <div class="aw-field"><label for="aw-event-name">Event title</label><input id="aw-event-name" name="title" type="text" required></div>
-            <div class="aw-field"><label for="aw-event-start">Start</label><input id="aw-event-start" name="start" type="datetime-local" required></div>
-            <div class="aw-field"><label for="aw-event-end">End</label><input id="aw-event-end" name="end" type="datetime-local" required></div>
-            <div class="aw-field"><label for="aw-event-details">Details</label><textarea id="aw-event-details" name="details" placeholder="Optional notes"></textarea></div>
-            <div class="aw-actions"><button class="aw-btn" type="submit">Open Google Calendar draft</button><button class="aw-btn aw-btn-secondary" type="button" data-aw-close>Close</button></div>
-          </form>
-        </section>
 
         <section class="aw-panel" data-aw-panel="note" hidden aria-labelledby="aw-note-title">
           <h3 id="aw-note-title">Academic note</h3>
@@ -66,28 +49,38 @@ classes: wide
         </section>
       </section>
 
-      <section class="aw-card" aria-labelledby="aw-today-title">
-        <h2 id="aw-today-title">Today</h2>
-        <p class="aw-muted">The public site intentionally does not render private meetings, internal evidence, or personal document lists.</p>
+      <section class="aw-card" aria-labelledby="aw-runtime-title">
+        <h2 id="aw-runtime-title">Runtime Status</h2>
         <div class="aw-links">
-          <a class="aw-link" href="../academic-calendar/">Academic Calendar<span>View selected public academic schedule.</span></a>
-          <a class="aw-link" href="../teaching/">Teaching<span>Open teaching and learning profile.</span></a>
-          <a class="aw-link" href="../research/">Research<span>Open research profile and selected work.</span></a>
+          <a class="aw-link" href="{{ '/add-event/' | relative_url }}">Google Calendar<span>OAuth direct-write enabled; human action required.</span></a>
+          <a class="aw-link" href="{{ '/upload-center/' | relative_url }}">Google Drive<span>Controlled upload enabled; review and consent required.</span></a>
+          <a class="aw-link" href="{{ '/academic-calendar/' | relative_url }}">Public Calendar<span>Only explicitly public academic events may be rendered.</span></a>
         </div>
       </section>
 
-      <section class="aw-card" aria-labelledby="aw-docs-title">
-        <h2 id="aw-docs-title">Document Flow</h2>
-        <p class="aw-muted">The current production-safe boundary is prepare → review → authorized storage. HEPE evidence admission and canonical data mutation remain separate governed processes.</p>
-        <div class="aw-safety"><span aria-hidden="true">✓</span><div><strong>Fail-closed by design</strong><p>No file selected here is automatically uploaded, admitted as evidence, or used to create teaching assignments.</p></div></div>
+      <section class="aw-card" aria-labelledby="aw-governance-title">
+        <h2 id="aw-governance-title">Governance Boundary</h2>
+        <p class="aw-muted">Storage does not create institutional truth. HEPE metadata remains governed independently from the public website.</p>
+        <div class="aw-safety"><span aria-hidden="true">✓</span><div><strong>Human authority preserved</strong><p>No upload can automatically create a canonical course, teaching assignment, IAM authority, reconciliation decision, or admitted audit evidence.</p></div></div>
       </section>
 
-      <section class="aw-card aw-card-wide" aria-labelledby="aw-next-title">
-        <h2 id="aw-next-title">Integration roadmap</h2>
-        <p class="aw-muted">This UI shell is ready for later authenticated adapters: Google Calendar OAuth, Google Drive upload/retrieval, and HEPE metadata reconciliation. Those integrations remain outside the public static HTML until their authorization gates are explicitly satisfied.</p>
+      <section class="aw-card" aria-labelledby="aw-today-title">
+        <h2 id="aw-today-title">Academic Links</h2>
+        <p class="aw-muted">The workspace does not expose private meetings, internal evidence, or personal document lists in public HTML.</p>
+        <div class="aw-links">
+          <a class="aw-link" href="{{ '/teaching/' | relative_url }}">Teaching<span>Open teaching and learning profile.</span></a>
+          <a class="aw-link" href="{{ '/research/' | relative_url }}">Research<span>Open research profile and selected work.</span></a>
+          <a class="aw-link" href="{{ '/publications/' | relative_url }}">Publications<span>Open verified public publication records.</span></a>
+        </div>
+      </section>
+
+      <section class="aw-card" aria-labelledby="aw-security-title">
+        <h2 id="aw-security-title">Security</h2>
+        <p class="aw-muted">The browser OAuth Client ID is a public identifier. No client secret, refresh token, service-account key, or Supabase service-role key is stored in the repository.</p>
+        <div class="aw-safety"><span aria-hidden="true">✓</span><div><strong>Fail-safe interaction model</strong><p>Calendar and Drive actions require explicit authorization. If OAuth or an API action fails, the site does not report a false success.</p></div></div>
       </section>
     </div>
   </main>
 </div>
 
-<script src="../assets/js/workspace.js" defer></script>
+<script src="{{ '/assets/js/workspace.js' | relative_url }}" defer></script>
