@@ -1,64 +1,60 @@
 ---
-layout: archive
-title: "CV"
+layout: single
+title: "Curriculum Vitae"
 permalink: /cv/
 author_profile: true
 redirect_from:
   - /resume
 ---
 
-{% include base_path %}
+## Academic Position
 
-Education
-======
-* Ph.D in Version Control Theory, GitHub University, 2018 (expected)
-* M.S. in Jekyll, GitHub University, 2014
-* B.S. in GitHub, GitHub University, 2012
+**Assistant Professor, Department of Health and Physical Education**  
+Faculty of Education, Ramkhamhaeng University, Bangkok, Thailand
 
-Work experience
-======
-* Spring 2024: Academic Pages Collaborator
-  * GitHub University
-  * Duties includes: Updates and improvements to template
-  * Supervisor: The Users
+## Education
 
-* Fall 2015: Research Assistant
-  * GitHub University
-  * Duties included: Merging pull requests
-  * Supervisor: Professor Hub
+- **Ed.D. in Health Education and Physical Education**, Chulalongkorn University
+- **M.Ed. in Health Education and Physical Education**, Chulalongkorn University
+- **B.Sc. in Health Education**, Srinakharinwirot University
 
-* Summer 2015: Research Assistant
-  * GitHub University
-  * Duties included: Tagging issues
-  * Supervisor: Professor Git
-  
-Skills
-======
-* Skill 1
-* Skill 2
-  * Sub-skill 2.1
-  * Sub-skill 2.2
-  * Sub-skill 2.3
-* Skill 3
+## Academic Expertise
 
-Publications
-======
-  <ul>{% for post in site.publications reversed %}
-    {% include archive-single-cv.html %}
-  {% endfor %}</ul>
-  
-Talks
-======
-  <ul>{% for post in site.talks reversed %}
-    {% include archive-single-talk-cv.html  %}
-  {% endfor %}</ul>
-  
-Teaching
-======
-  <ul>{% for post in site.teaching reversed %}
-    {% include archive-single-cv.html %}
-  {% endfor %}</ul>
-  
-Service and leadership
-======
-* Currently signed in to 43 different slack teams
+- Health Education
+- Physical Education
+- School Health
+- Health Promotion
+- Curriculum Design and Learning Outcomes
+- Assessment and Evaluation
+- Educational Quality Assurance and AUN-QA
+- AI and Digital Innovation in Education
+
+## Teaching
+
+Teaching spans undergraduate and graduate-level work in health education, physical education, school health, health promotion, sexuality education, substance-abuse education, mental-health promotion, curriculum, and assessment.
+
+See the [Teaching](/teaching/) page for selected courses and teaching-development priorities.
+
+## Research and Academic Development
+
+Current academic interests include health and physical education, physical activity and movement behaviour, educational assessment, curriculum quality, evidence-informed teaching, and responsible applications of AI in education.
+
+See [Research](/research/) for current areas of work.
+
+## Curriculum and Quality Assurance
+
+Academic work includes programme and curriculum development, programme learning outcomes (PLOs), course learning outcomes (CLOs), curriculum mapping, outcome-based education, programme evaluation, and quality assurance in higher education.
+
+See [Curriculum & Quality](/curriculum-quality/).
+
+## Innovation and Academic Projects
+
+Selected public-facing work includes educational technology, academic workflow design, digital systems supporting curriculum and quality processes, and community-oriented health and wellbeing initiatives.
+
+Only projects suitable for public disclosure are presented on this website. See [Innovation & Projects](/innovation-projects/).
+
+## Publications
+
+A verification-first publication register is currently being prepared. Only traceable and confirmed publications will be listed.
+
+See [Publications](/publications/).
