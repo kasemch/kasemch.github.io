@@ -61,6 +61,7 @@ Release manifest: `./docs/releases/signature-hybrid-v1.0.0.md`
 - Local academic note composer with clipboard export only.
 - Command Center navigation entry.
 - Approved Formal Portrait 01 asset for the Signature Hybrid homepage Hero.
+- JPEG social/avatar fallback derived from the same approved Formal Portrait 01 for broader crawler compatibility.
 
 ### Changed
 - Reconciled `/workspace/` after OAuth activation so Quick Add links now open the live `/add-event/` and `/upload-center/` workflows instead of the earlier local-only placeholders.
@@ -68,6 +69,8 @@ Release manifest: `./docs/releases/signature-hybrid-v1.0.0.md`
 - Homepage Hero now uses the approved Formal Portrait 01 while preserving the locked Signature Hybrid layout, palette, typography, responsive behavior, and public content structure.
 - Removed three demonstration calendar events from the public projection and replaced them with a fail-closed empty state until a real event is explicitly approved for public display.
 - Updated the Academic Calendar policy to reflect Google Calendar as the operational source of truth while keeping the public projection deliberately separate.
+- Author avatar, default Open Graph preview, Twitter summary metadata, and Person structured-data image now use the approved portrait consistently; the Hero continues to use the optimized WebP asset.
+- Added a site-wide Open Graph description while intentionally leaving the theme-level `og_image` unset because this template treats it as an Organization logo rather than a personal portrait.
 
 ### Governance
 - No private HEPE data is rendered by the workspace.
