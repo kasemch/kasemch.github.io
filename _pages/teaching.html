@@ -1,18 +1,112 @@
 ---
 layout: single
 title: "Teaching"
-description: "Teaching profile of Asst. Prof. Dr. Kasem Chooratna, including Health & Physical Education, school health, health promotion, selected courses, and evidence-informed teaching approaches."
+description: "Teaching profile of Asst. Prof. Dr. Kasem Chooratna with verified Semester 1/2569 course offerings, schedule, cross-listed teaching, and linked course-quality documents where evidence is available."
 permalink: /teaching/
 author_profile: false
 ---
 
-<link rel="stylesheet" href="../assets/css/signature-pages.css">
+{% assign teaching = site.data.teaching_ay2569 %}
+
+<link rel="stylesheet" href="{{ '/assets/css/signature-pages.css' | relative_url }}">
 <div class="signature-page">
-  <section class="sp-hero sp-shell"><div class="sp-kicker">Teaching &amp; Learning</div><h1>Teaching</h1><p>Health education, physical education, school health, health promotion, and the design and evaluation of learning in higher education.</p><div class="sp-navchips"><a class="sp-chip" href="../research/">Research</a><a class="sp-chip" href="../curriculum-quality/">Curriculum &amp; Quality</a><a class="sp-chip" href="../about/">About</a></div></section>
+  <section class="sp-hero sp-shell">
+    <div class="sp-kicker">Teaching &amp; Learning</div>
+    <h1>Teaching</h1>
+    <p>Current teaching activity is presented from verified academic-year evidence, with course-quality documents linked only where a traceable source has been confirmed.</p>
+    <div class="sp-navchips">
+      <a class="sp-chip" href="{{ '/research/' | relative_url }}">Research</a>
+      <a class="sp-chip" href="{{ '/curriculum-quality/' | relative_url }}">Curriculum &amp; Quality</a>
+      <a class="sp-chip" href="{{ '/about/' | relative_url }}">About</a>
+    </div>
+  </section>
 
-  <section class="sp-section sp-shell"><div class="sp-section-head"><div class="sp-eyebrow">Teaching Areas</div><h2>Core teaching domains</h2></div><div class="sp-callout"><span class="sp-tag">Health Education &amp; Health Promotion</span><span class="sp-tag">Physical Education</span><span class="sp-tag">School Health</span><span class="sp-tag">Sexuality Education</span><span class="sp-tag">Drugs &amp; Substance Abuse Education</span><span class="sp-tag">Mental Health Promotion</span><span class="sp-tag">Health Programme Planning &amp; Evaluation</span><span class="sp-tag">Curriculum &amp; Learning Outcomes</span><span class="sp-tag">Assessment &amp; Evaluation</span></div></section>
+  <section class="sp-section sp-shell" aria-labelledby="teaching-2569-title">
+    <div class="sp-section-head">
+      <div class="sp-eyebrow">Academic Year {{ teaching.academic_year }}</div>
+      <h2 id="teaching-2569-title">Verified teaching snapshot</h2>
+      <p class="sp-intro">The current verified scope is {{ teaching.verified_scope }}. Semester 2/2569 is not shown until authoritative teaching evidence becomes available.</p>
+    </div>
+    <div class="sp-metrics" aria-label="Semester 1/2569 teaching summary">
+      <article class="sp-metric"><strong>{{ teaching.summary.course_codes }}</strong><span>Verified course codes</span></article>
+      <article class="sp-metric"><strong>{{ teaching.summary.weekly_slots }}</strong><span>Weekly teaching slots</span></article>
+      <article class="sp-metric"><strong>{{ teaching.summary.cross_listed_clusters }}</strong><span>Cross-listed clusters</span></article>
+      <article class="sp-metric"><strong>{{ teaching.summary.special_lectures }}</strong><span>Special lecture</span></article>
+    </div>
+    <div class="sp-policy"><strong>Evidence boundary.</strong> {{ teaching.source_note }}</div>
+  </section>
 
-  <section class="sp-section sp-shell"><div class="sp-section-head"><div class="sp-eyebrow">Selected Courses</div><h2>Undergraduate teaching</h2></div><div class="sp-courses"><div class="sp-course"><strong>HED2503</strong>Sexuality Education</div><div class="sp-course"><strong>HED3502</strong>Drugs and Substance Abuse</div><div class="sp-course"><strong>HED3504</strong>Mental Health Promotion</div><div class="sp-course"><strong>HED1101</strong>Health Promotion for Life</div><div class="sp-course"><strong>PED1101</strong>Principles and Philosophy of Physical Education</div><div class="sp-course"><strong>RHE4404</strong>School Health Program and Evaluation</div></div></section>
+  <section class="sp-section sp-shell" aria-labelledby="current-courses-title">
+    <div class="sp-section-head">
+      <div class="sp-eyebrow">Current Teaching Load</div>
+      <h2 id="current-courses-title">Semester 1/2569 course register</h2>
+      <p class="sp-intro">Courses are grouped by the timetable actually used for teaching. Cross-listed codes therefore share the same day, time, and room.</p>
+    </div>
+    <div class="sp-grid">
+      {% for course in teaching.courses %}
+      <article class="sp-card sp-third">
+        <div class="sp-output-year">{{ course.code }} · {{ course.mode }}</div>
+        <h3>{{ course.title }}</h3>
+        <p><strong>{{ course.day }}</strong> · {{ course.time }}<br>{{ course.room }}</p>
+        {% if course.cluster %}<p><strong>Cross-listed:</strong> {{ course.cluster }}</p>{% endif %}
+        {% if course.note %}<div class="sp-evidence-note">{{ course.note }}</div>{% endif %}
+        {% if course.documents and course.documents.size > 0 %}
+        <div class="sp-evidence-note">
+          <strong>Course quality documents</strong>
+          <ul class="sp-list">
+            {% for document in course.documents %}
+            <li><a class="sp-link" href="{{ document.url }}" rel="noopener">{{ document.label }} →</a><br><span>{{ document.status }}</span></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+      </article>
+      {% endfor %}
+    </div>
+  </section>
 
-  <section class="sp-section sp-shell"><div class="sp-grid"><article class="sp-card"><div class="sp-eyebrow">Pedagogy</div><h3>Approach to Teaching</h3><p>Teaching practice emphasises active learning, case-based learning, structured discussion, assessment aligned with learning outcomes, and learning environments that support participation by students with diverse backgrounds and experiences.</p><p>Teaching development is linked to programme learning outcomes (PLOs), course learning outcomes (CLOs), curriculum mapping, assessment design, and continuous improvement.</p></article><article class="sp-card"><div class="sp-eyebrow">Development</div><h3>Current Teaching Development</h3><ul class="sp-list"><li>Evidence-informed course and lesson design</li><li>Scenario- and case-based learning</li><li>Assessment rubrics and authentic assessment</li><li>Alignment of outcomes, activities and assessment</li><li>Responsible AI and digital tools</li><li>Reflective teaching and professional development</li></ul></article></div><div class="sp-policy">Detailed course materials and student-related records are not published on this public website.</div></section>
+  <section class="sp-section sp-shell" aria-labelledby="cross-listed-title">
+    <div class="sp-section-head">
+      <div class="sp-eyebrow">Cross-listed Teaching</div>
+      <h2 id="cross-listed-title">Two teaching clusters, five course codes</h2>
+      <p class="sp-intro">The cross-listed structure explains why the number of course codes is larger than the number of weekly teaching slots.</p>
+    </div>
+    <div class="sp-grid">
+      <article class="sp-card"><div class="sp-output-year">Wednesday · 09:30–11:20 · SCB 306</div><h3>Substance-use education cluster</h3><p><strong>HED3502</strong> Drugs and Substance Abuse<br><strong>HED4301</strong> Drugs and Narcotics<br><strong>RHE4103</strong> Drugs and Addictive Substances</p></article>
+      <article class="sp-card"><div class="sp-output-year">Thursday · 09:30–11:20 · SCB 506</div><h3>Sexuality education cluster</h3><p><strong>HED2503</strong> Sexuality Education<br><strong>RHE3101</strong> Sexuality Education</p><div class="sp-evidence-note"><strong>Schedule reconciliation:</strong> the public timetable follows the verified teaching-load/MR30 evidence. One HED2503 TQF3 working document contains a conflicting day/time and is not used as the timetable source.</div></article>
+    </div>
+  </section>
+
+  <section class="sp-section sp-shell" aria-labelledby="quality-docs-title">
+    <div class="sp-section-head">
+      <div class="sp-eyebrow">Course Quality Documents</div>
+      <h2 id="quality-docs-title">TQF3 → TQF5 → achievement verification</h2>
+      <p class="sp-intro">The website links only documents that were located and reconciled. A document being available does not automatically mean that its approval or verification process is complete.</p>
+    </div>
+    <article class="sp-card sp-wide">
+      <div class="sp-output-year">HED2503 · Sexuality Education · Semester 1/2569</div>
+      <h3>Traceable course-quality chain</h3>
+      <div class="sp-grid">
+        <article class="sp-card sp-third"><div class="sp-eyebrow">TQF3</div><h3>Course Specification</h3><p>Current working document located in the connected academic Drive.</p><a class="sp-link" href="https://docs.google.com/document/d/1GBGrjXEf8yhJlwRU9lPEIP9f-RoCpYL2E7btPyyrpbU/edit" rel="noopener">Open TQF3 →</a></article>
+        <article class="sp-card sp-third"><div class="sp-eyebrow">TQF5</div><h3>Course Report</h3><p><strong>Status:</strong> Draft / working document. It is not presented as a final post-semester report.</p><a class="sp-link" href="https://docs.google.com/document/d/1Et4FsTQzCY0fhPrGnv9c0ueusLzJ_saE7PW93fv70-U/edit" rel="noopener">Open TQF5 →</a></article>
+        <article class="sp-card sp-third"><div class="sp-eyebrow">Verification</div><h3>Achievement Verification</h3><p><strong>Status:</strong> Draft / planned verification. The document states a verification date of 25 November 2026, which is later than the current evidence-check date.</p><a class="sp-link" href="https://docs.google.com/document/d/1DPHqN3ca8UKTJinPAGeO3ur4gHsKiX9vuEi0IE8YfdQ/edit" rel="noopener">Open working report →</a></article>
+      </div>
+      <div class="sp-policy"><strong>Public-document rule.</strong> These links are intentionally exposed at the user's request. Visitors may still encounter Google Drive access controls depending on the sharing permissions of the source document.</div>
+    </article>
+  </section>
+
+  <section class="sp-section sp-shell" aria-labelledby="special-teaching-title">
+    <div class="sp-section-head"><div class="sp-eyebrow">Additional Teaching</div><h2 id="special-teaching-title">Special lecture</h2></div>
+    {% for item in teaching.special_teaching %}
+    <article class="sp-card sp-wide"><div class="sp-output-year">{{ item.date }} · {{ item.time }}</div><h3>{{ item.code }} · {{ item.title }}</h3><p>{{ item.location }}</p><div class="sp-evidence-note">{{ item.status }}</div></article>
+    {% endfor %}
+  </section>
+
+  <section class="sp-section sp-shell">
+    <div class="sp-grid">
+      <article class="sp-card"><div class="sp-eyebrow">Pedagogy</div><h3>Approach to Teaching</h3><p>Teaching practice emphasises active learning, case-based learning, structured discussion, assessment aligned with learning outcomes, and learning environments that support participation by students with diverse backgrounds and experiences.</p><p>Teaching development is linked to programme learning outcomes (PLOs), course learning outcomes (CLOs), curriculum mapping, assessment design, and continuous improvement.</p></article>
+      <article class="sp-card"><div class="sp-eyebrow">Development</div><h3>Current Teaching Development</h3><ul class="sp-list"><li>Evidence-informed course and lesson design</li><li>Scenario- and case-based learning</li><li>Assessment rubrics and authentic assessment</li><li>Alignment of outcomes, activities and assessment</li><li>Responsible AI and digital tools</li><li>Reflective teaching and professional development</li></ul></article>
+    </div>
+    <div class="sp-policy">Student-identifiable records, grades, answer scripts, private learning evidence, and other protected student information are not published on this website.</div>
+  </section>
 </div>
