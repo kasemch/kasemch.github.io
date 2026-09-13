@@ -107,10 +107,10 @@ author_profile: false
   </section>
 
   <section class="sp-section sp-shell" aria-labelledby="research-degrees-title">
-    <div class="sp-section-head"><div class="sp-eyebrow">Research Degrees &amp; Theses</div><h2 id="research-degrees-title">Degree research in health education</h2><p class="sp-intro">Degree research is shown separately from journal-publication and conference-proceedings counts.</p></div>
+    <div class="sp-section-head"><div class="sp-eyebrow">Research Degrees &amp; Theses</div><h2 id="research-degrees-title">Degree research in health education</h2><p class="sp-intro">Degree research is shown separately from journal-publication and conference-proceedings counts. English titles follow the official parallel titles in the Chulalongkorn University ETD records.</p></div>
     <div class="sp-grid">
-      <article class="sp-card"><div class="sp-output-year">2015 · Doctoral dissertation</div><h3>การนำเสนอรูปแบบการจัดการเรียนรู้สุขศึกษาโดยใช้ทฤษฎีการเรียนรู้แบบร่วมมือและการจัดการความรู้เป็นฐานเพื่อพัฒนาทักษะทางปัญญา</h3><p>Chulalongkorn University · Health Education and Physical Education</p><a class="sp-link" href="https://digital.car.chula.ac.th/chulaetd/36039/" rel="noopener">View Chula ETD record →</a></article>
-      <article class="sp-card"><div class="sp-output-year">2011 · Master's thesis</div><h3>ผลของการจัดการเรียนรู้วิชาสุขศึกษาโดยใช้ปัญหาเป็นฐานที่มีต่อความคิดเชิงวิจารณญาณและผลสัมฤทธิ์ทางการเรียนของนักเรียนประถมศึกษาปีที่ 6</h3><p>Chulalongkorn University · Health Education and Physical Education</p><a class="sp-link" href="https://doi.nrct.go.th/ListDoi/listDetail?Resolve_DOI=10.14457%2FCU.the.2011.862" rel="noopener">View NRCT DOI record →</a></article>
+      <article class="sp-card"><div class="sp-output-year">2015 · Doctoral dissertation</div><h3>A Proposed Model of Health Education Learning Management Using Collaborative Learning and Knowledge Management to Enhance Cognitive Skills</h3><p>Chulalongkorn University · Health Education and Physical Education</p><a class="sp-link" href="https://digital.car.chula.ac.th/chulaetd/36039/" rel="noopener">View Chula ETD record →</a></article>
+      <article class="sp-card"><div class="sp-output-year">2011 · Master's thesis</div><h3>Effects of Health Education Instruction Using Problem-Based Learning on Critical Thinking and Learning Achievement of Sixth Grade Students</h3><p>Chulalongkorn University · Health Education and Physical Education</p><a class="sp-link" href="https://digital.car.chula.ac.th/chulaetd/35116/" rel="noopener">View Chula ETD record →</a></article>
     </div>
   </section>
 

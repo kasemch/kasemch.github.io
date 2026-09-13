@@ -1,5 +1,5 @@
 ---
-title: "ปัจจัยที่มีความสัมพันธ์กับการยึดติดของสารเคลือบหลุมร่องฟันในกลุ่มเด็กวัยเรียนเขตพื้นที่อำเภอควนขนุน จังหวัดพัทลุง"
+title: "Factors Related to Retention of Dental Sealant Among School-Aged Children in Khuan Khanun District, Phatthalung Province"
 collection: publications
 category: manuscripts
 permalink: /publication/2024-12-17-dental-sealant-retention
@@ -7,6 +7,6 @@ excerpt: "Cohort study of dental sealant retention and associated factors among 
 date: 2024-12-17
 venue: "Srinakharinwirot University Dental Journal"
 paperurl: "https://ejournals.swu.ac.th/index.php/swudentj/article/view/16497"
-citation: "คงใหม่, ณ., และ ชูรัตน์, ก. (2024). ปัจจัยที่มีความสัมพันธ์กับการยึดติดของสารเคลือบหลุมร่องฟันในกลุ่มเด็กวัยเรียนเขตพื้นที่อำเภอควนขนุน จังหวัดพัทลุง. <i>วิทยาสารทันตแพทยศาสตร์ มหาวิทยาลัยศรีนครินทรวิโรฒ</i>, 17(2), 86–99."
+citation: "Kongmai, N., & Chooratna, K. (2024). Factors Related to Retention of Dental Sealant Among School-Aged Children in Khuan Khanun District, Phatthalung Province. <i>Srinakharinwirot University Dental Journal</i>, 17(2), 86–99."
 ---
-Authoritative source: Srinakharinwirot University Dental Journal article page; published 2024-12-17.
+Authoritative source: Srinakharinwirot University Dental Journal article page. The journal supplies this English parallel title; published 2024-12-17.
