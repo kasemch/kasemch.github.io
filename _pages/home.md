@@ -22,6 +22,4 @@ Welcome to my academic website. My work focuses on health and physical education
 
 Use the navigation menu to explore **Teaching**, **Research**, **Publications**, **Curriculum & Quality**, **Innovation & Projects**, and my **CV**.
 
-For future authenticated tools, the Phase 1 **Academic Workspace** shell is available at [Workspace]({{ site.baseurl }}/workspace/). It currently contains no private data or write-capable integrations.
-
 > This website presents selected public academic work. Internal, confidential, non-production, or restricted project information is not published here.
