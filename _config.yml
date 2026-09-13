@@ -22,7 +22,7 @@ repository               : "kasemch/kasemch.github.io"
 #               Additional customization can be done by editing /_includes/author-profile.html
 author:
   # Biographic information
-  avatar           : "profile.jpg"
+  avatar           : "profile-approved-01.jpg"
   name             : "Asst. Prof. Dr. Kasem Chooratna"
   pronouns         :
   bio              : "Health & Physical Education | Curriculum & Quality | Academic Innovation"
@@ -141,8 +141,8 @@ facebook:
   username               :
   app_id                 :
   publisher              :
-og_image                 :  # Social media default site image
-og_description           :  # Social media default site image description
+og_image                 :  # Social media default site image intentionally blank; custom head uses the approved person portrait without treating it as an organization logo
+og_description           : "Academic website of Asst. Prof. Dr. Kasem Chooratna: Health & Physical Education, curriculum, quality assurance, research, and academic innovation."
 # For specifying social profiles
 # - https://developers.google.com/structured-data/customize/social-profiles
 social:
