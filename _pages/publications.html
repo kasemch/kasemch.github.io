@@ -6,16 +6,40 @@ author_profile: false
 excerpt: "Verified academic publications by Asst. Prof. Dr. Kasem Chooratna in health education, health promotion, physical education, and related fields."
 ---
 
-<link rel="stylesheet" href="../assets/css/signature-pages.css">
-<div class="signature-page">
-  <section class="sp-hero sp-shell"><div class="sp-kicker">Scholarly Outputs</div><h1>Publications</h1><p>Verified academic publications matched to authoritative or traceable sources. Template records and unverified citations are excluded.</p><div class="sp-navchips"><a class="sp-chip" href="../research/">Research</a><a class="sp-chip" href="../about/">About</a><a class="sp-chip" href="../cv/">Academic CV</a></div></section>
+{% assign publication_count = site.publications | size %}
 
-  <section class="sp-section sp-shell"><div class="sp-section-head"><div class="sp-eyebrow">Verified Journal Articles</div><h2>Scholarly publication register</h2></div><div class="sp-card sp-wide sp-publication-frame">
+<link rel="stylesheet" href="{{ '/assets/css/signature-pages.css' | relative_url }}">
+<div class="signature-page">
+  <section class="sp-hero sp-shell">
+    <div class="sp-kicker">Scholarly Outputs</div>
+    <h1>Publications</h1>
+    <p>{{ publication_count }} verified journal publications matched to authoritative or traceable sources. Public-facing titles are presented in English for consistency across this academic website. Template records and unverified citations are excluded.</p>
+    <div class="sp-navchips">
+      <a class="sp-chip" href="{{ '/research/' | relative_url }}">Research</a>
+      <a class="sp-chip" href="{{ '/about/' | relative_url }}">About</a>
+      <a class="sp-chip" href="{{ '/cv/' | relative_url }}">Academic CV</a>
+    </div>
+  </section>
+
+  <section class="sp-section sp-shell">
+    <div class="sp-section-head">
+      <div class="sp-eyebrow">Verified Journal Articles</div>
+      <h2>{{ publication_count }} records in the scholarly publication register</h2>
+      <p class="sp-intro">Journal publications are reported separately from conference proceedings and degree research so each output type retains its correct academic meaning.</p>
+    </div>
+    <div class="sp-card sp-wide sp-publication-frame">
 {% include base_path %}
 {% for post in site.publications reversed %}
   {% include archive-single.html %}
 {% endfor %}
-</div></section>
+    </div>
+  </section>
 
-  <section class="sp-section sp-shell"><div class="sp-callout"><div class="sp-eyebrow">Verification Policy</div><h2>Traceable metadata before publication</h2><p>Publication metadata is checked against journal or DOI records before being listed, including author names, title, year, journal, volume/issue, pages where available, and DOI or stable article URL. The list is a verified working register and may expand as additional records are confirmed.</p></div></section>
+  <section class="sp-section sp-shell">
+    <div class="sp-callout">
+      <div class="sp-eyebrow">Verification Policy</div>
+      <h2>Traceable metadata before publication</h2>
+      <p>Publication metadata is checked against journal or DOI records before being listed, including author names, title, year, journal, volume/issue, pages where available, and DOI or stable article URL. The list is a verified working register and may expand as additional records are confirmed.</p>
+    </div>
+  </section>
 </div>
