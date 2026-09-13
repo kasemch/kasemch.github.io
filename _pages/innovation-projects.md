@@ -1,6 +1,7 @@
 ---
 permalink: /innovation-projects/
 title: "Innovation & Projects"
+description: "Public-facing academic innovation by Asst. Prof. Dr. Kasem Chooratna across Health & Physical Education, curriculum, quality, AI, digital systems, and community-oriented academic service."
 author_profile: false
 ---
 
