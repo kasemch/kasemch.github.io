@@ -60,6 +60,10 @@ Release manifest: `./docs/releases/signature-hybrid-v1.0.0.md`
 - Review-before-save Google Calendar draft generator.
 - Local academic note composer with clipboard export only.
 - Command Center navigation entry.
+- Approved Formal Portrait 01 asset for the Signature Hybrid homepage Hero.
+
+### Changed
+- Homepage Hero now uses the approved Formal Portrait 01 while preserving the locked Signature Hybrid layout, palette, typography, responsive behavior, and public content structure.
 
 ### Governance
 - No private HEPE data is rendered by the workspace shell.
