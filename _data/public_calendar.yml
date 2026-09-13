@@ -1,0 +1,41 @@
+# Public calendar projection only.
+# Never place private Google Calendar data, credentials, private meeting links,
+# attendee lists, or restricted notes in this file.
+# Source-of-truth integration will project approved public events here in Phase 2C+.
+
+timezone: "Asia/Bangkok"
+last_updated: "2026-09-13"
+
+events:
+  - id: "demo-2026-09-15-teaching"
+    title: "Selected academic activity"
+    start: "2026-09-15T09:00:00+07:00"
+    end: "2026-09-15T10:30:00+07:00"
+    category: "Teaching"
+    visibility: "public"
+    location: ""
+    description: "Demonstration public event for the Phase 2 calendar projection."
+    linked_course: ""
+    linked_project: ""
+
+  - id: "demo-2026-09-17-meeting"
+    title: "Selected academic activity"
+    start: "2026-09-17T13:00:00+07:00"
+    end: "2026-09-17T14:30:00+07:00"
+    category: "Meeting"
+    visibility: "public"
+    location: ""
+    description: "Demonstration public event for the Phase 2 calendar projection."
+    linked_course: ""
+    linked_project: ""
+
+  - id: "demo-2026-09-20-research"
+    title: "Selected academic activity"
+    start: "2026-09-20T10:00:00+07:00"
+    end: "2026-09-20T11:30:00+07:00"
+    category: "Research"
+    visibility: "public"
+    location: ""
+    description: "Demonstration public event for the Phase 2 calendar projection."
+    linked_course: ""
+    linked_project: ""

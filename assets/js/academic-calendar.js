@@ -11,11 +11,12 @@
   const now = new Date();
   let visible = new Date(now.getFullYear(), now.getMonth(), 1);
 
-  const publicEventDates = new Set([
-    '2026-09-15',
-    '2026-09-17',
-    '2026-09-20'
-  ]);
+  const publicEventDates = new Set(
+    (root.dataset.publicEventDates || '')
+      .split('|')
+      .map((value) => value.trim())
+      .filter(Boolean)
+  );
 
   const isoDate = (date) => {
     const y = date.getFullYear();
