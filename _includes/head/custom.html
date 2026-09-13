@@ -39,10 +39,14 @@
 }
 </script>
 
-<!-- Academic Command Center Phase 1 assets -->
+<!-- Academic Command Center assets -->
 {% if page.url == '/' or page.url == '/academic-calendar/' %}
 <link rel="stylesheet" href="{{ '/assets/css/academic-calendar.css' | relative_url }}">
 <script src="{{ '/assets/js/academic-calendar.js' | relative_url }}" defer></script>
+{% endif %}
+{% if page.url == '/add-event/' %}
+<link rel="stylesheet" href="{{ '/assets/css/calendar-event-builder.css' | relative_url }}">
+<script src="{{ '/assets/js/google-calendar-link.js' | relative_url }}" defer></script>
 {% endif %}
 {% if page.url == '/workspace/' %}
 <link rel="stylesheet" href="{{ '/assets/css/academic-workspace.css' | relative_url }}">
