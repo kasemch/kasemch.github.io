@@ -1,18 +1,22 @@
-<section class="academic-calendar" aria-labelledby="academic-calendar-title">
+<section class="academic-calendar" aria-labelledby="academic-calendar-title"
+  data-public-event-dates="{% for event in site.data.public_calendar.events %}{% if event.visibility == 'public' %}{{ event.start | slice: 0, 10 }}|{% endif %}{% endfor %}">
   <div class="academic-calendar__heading">
     <div>
       <p class="academic-calendar__eyebrow">Academic Calendar</p>
       <h2 id="academic-calendar-title">Upcoming academic activities</h2>
       <p class="academic-calendar__intro">A compact view of selected public teaching, research, and academic activities.</p>
     </div>
-    <a class="academic-calendar__link" href="{{ '/academic-calendar/' | relative_url }}">View calendar</a>
+    <div class="academic-calendar__heading-actions">
+      <a class="academic-calendar__link" href="{{ '/academic-calendar/' | relative_url }}">View calendar</a>
+      <a class="academic-calendar__link" href="{{ '/add-event/' | relative_url }}">Add event</a>
+    </div>
   </div>
 
   <div class="academic-calendar__grid">
     <div class="academic-calendar__month" aria-label="Mini calendar">
       <div class="academic-calendar__month-head">
         <button type="button" class="academic-calendar__nav" data-calendar-prev aria-label="Previous month">‹</button>
-        <strong data-calendar-label>September 2026</strong>
+        <strong data-calendar-label></strong>
         <button type="button" class="academic-calendar__nav" data-calendar-next aria-label="Next month">›</button>
       </div>
       <div class="academic-calendar__weekdays" aria-hidden="true">
@@ -27,20 +31,18 @@
         <strong data-calendar-today></strong>
       </div>
       <ol class="academic-calendar__events" data-calendar-events>
-        <li>
-          <time datetime="2026-09-15">15 Sep</time>
-          <div><strong>Teaching</strong><span>Selected academic activity</span></div>
-        </li>
-        <li>
-          <time datetime="2026-09-17">17 Sep</time>
-          <div><strong>Meeting</strong><span>Selected academic activity</span></div>
-        </li>
-        <li>
-          <time datetime="2026-09-20">20 Sep</time>
-          <div><strong>Research</strong><span>Selected academic activity</span></div>
-        </li>
+        {% assign visible_count = 0 %}
+        {% for event in site.data.public_calendar.events %}
+          {% if event.visibility == 'public' and visible_count < 3 %}
+          <li>
+            <time datetime="{{ event.start }}">{{ event.start | date: "%d %b" }}</time>
+            <div><strong>{{ event.category }}</strong><span>{{ event.title }}</span></div>
+          </li>
+          {% assign visible_count = visible_count | plus: 1 %}
+          {% endif %}
+        {% endfor %}
       </ol>
-      <p class="academic-calendar__privacy-note">Only events marked for public display should appear here.</p>
+      <p class="academic-calendar__privacy-note">Only events explicitly marked public are included in this projection.</p>
     </div>
   </div>
 </section>
