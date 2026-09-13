@@ -4,6 +4,50 @@ All notable changes to the public academic website are recorded here.
 
 The site uses a controlled versioning model tied to the Signature Hybrid baseline. Routine content changes should not silently alter the visual or structural baseline.
 
+## Unreleased
+
+No unreleased changes recorded after the v1.1.0 release closure.
+
+## [1.1.0] — 2026-09-13
+
+Release manifest: `./docs/releases/signature-hybrid-v1.1.0.md`
+
+### Added
+- Academic Command Center at `/workspace/` with OAuth-aware runtime status.
+- Google Calendar direct-write runtime using a public OAuth Web Client ID and short-lived browser authorization.
+- Controlled Google Drive upload runtime with classification, human review, destination capability verification, and explicit upload confirmation.
+- Local academic note composer with clipboard export only.
+- Command Center navigation entry.
+- Approved Formal Portrait 01 asset for the Signature Hybrid homepage Hero.
+- JPEG social/avatar fallback derived from the same approved Formal Portrait 01 for broader crawler compatibility.
+
+### Changed
+- Reconciled `/workspace/` after OAuth activation so Quick Add links now open the live `/add-event/` and `/upload-center/` workflows instead of the earlier local-only placeholders.
+- Converted workspace asset and internal page links to Jekyll `relative_url` paths.
+- Homepage Hero now uses the approved Formal Portrait 01 while preserving the locked Signature Hybrid layout, palette, typography, responsive behavior, and public content structure.
+- Removed three demonstration calendar events from the public projection and replaced them with a fail-closed empty state until a real event is explicitly approved for public display.
+- Updated the Academic Calendar policy to reflect Google Calendar as the operational source of truth while keeping the public projection deliberately separate.
+- Author avatar, default Open Graph preview, Twitter summary metadata, and Person structured-data image now use the approved portrait consistently; the Hero continues to use the optimized WebP asset.
+- Added a site-wide Open Graph description while intentionally leaving the theme-level `og_image` unset because this template treats it as an Organization logo rather than a personal portrait.
+
+### Governance
+- Signature Hybrid v1.0.0 remains the locked visual design baseline.
+- No private HEPE data is rendered by the workspace.
+- No Google client secret, refresh token, service-account key, Supabase service-role key, or other privileged credential is embedded in the public repository.
+- No document action can automatically admit evidence, create authority, create canonical courses, or mutate canonical teaching assignments.
+- Calendar and Drive writes remain user-confirmed actions through browser OAuth.
+- Public calendar data remains fail-closed; no private or inferred calendar event is rendered automatically.
+
+### Verified
+- Repository/source integrity: PASS.
+- Signature Hybrid visual baseline: unchanged.
+- Portrait/social metadata consistency: PASS at source level.
+- Calendar/Drive/Workspace coexistence: PASS at source level.
+- Public-disclosure boundary: PASS.
+- Critical confirmed issues: 0.
+- Major confirmed issues: 0.
+- Live pixel-level and third-party social-card cache behavior: not independently verified because the available execution environment could not fetch the live origin.
+
 ## [1.0.1] — 2026-09-13
 
 ### Added
@@ -51,30 +95,3 @@ Release manifest: `./docs/releases/signature-hybrid-v1.0.0.md`
 
 ### Limitation
 - External pixel-level rendering of the live `kasemch.github.io` origin was not independently verified in the final audit because the available execution environment could not resolve the live origin.
-
-## Unreleased
-
-### Added
-- Academic Command Center at `/workspace/` with OAuth-aware runtime status.
-- Google Calendar direct-write runtime using a public OAuth Web Client ID and short-lived browser authorization.
-- Controlled Google Drive upload runtime with classification, human review, destination capability verification, and explicit upload confirmation.
-- Local academic note composer with clipboard export only.
-- Command Center navigation entry.
-- Approved Formal Portrait 01 asset for the Signature Hybrid homepage Hero.
-- JPEG social/avatar fallback derived from the same approved Formal Portrait 01 for broader crawler compatibility.
-
-### Changed
-- Reconciled `/workspace/` after OAuth activation so Quick Add links now open the live `/add-event/` and `/upload-center/` workflows instead of the earlier local-only placeholders.
-- Converted workspace asset and internal page links to Jekyll `relative_url` paths.
-- Homepage Hero now uses the approved Formal Portrait 01 while preserving the locked Signature Hybrid layout, palette, typography, responsive behavior, and public content structure.
-- Removed three demonstration calendar events from the public projection and replaced them with a fail-closed empty state until a real event is explicitly approved for public display.
-- Updated the Academic Calendar policy to reflect Google Calendar as the operational source of truth while keeping the public projection deliberately separate.
-- Author avatar, default Open Graph preview, Twitter summary metadata, and Person structured-data image now use the approved portrait consistently; the Hero continues to use the optimized WebP asset.
-- Added a site-wide Open Graph description while intentionally leaving the theme-level `og_image` unset because this template treats it as an Organization logo rather than a personal portrait.
-
-### Governance
-- No private HEPE data is rendered by the workspace.
-- No Google client secret, refresh token, service-account key, Supabase service-role key, or other privileged credential is embedded in the public repository.
-- No document action can automatically admit evidence, create authority, create canonical courses, or mutate canonical teaching assignments.
-- Calendar and Drive writes remain user-confirmed actions through browser OAuth.
-- Public calendar data remains fail-closed; no private or inferred calendar event is rendered automatically.
