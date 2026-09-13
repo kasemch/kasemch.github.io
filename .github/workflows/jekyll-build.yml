@@ -1,18 +1,16 @@
 name: Jekyll build
 
 on:
-  # Run after bad-pr check
-  workflow_run:
-    workflows: ["Cleanup bad PR"]
-    branches: [main]
-    types:
-      - completed
-      
+  pull_request:
+    branches: [master]
+  push:
+    branches: [master]
+
 permissions:
   contents: read
 
 concurrency:
-  group: jekyll-build-${{ github.ref }}
+  group: jekyll-build-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -32,3 +30,11 @@ jobs:
         run: bundle exec jekyll build --strict_front_matter
         env:
           JEKYLL_ENV: production
+
+      - name: Upload built site for visual audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: jekyll-site
+          path: _site
+          if-no-files-found: error
+          retention-days: 3

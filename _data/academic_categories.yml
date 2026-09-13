@@ -1,0 +1,35 @@
+calendar:
+  - id: teaching
+    label: "Teaching"
+    public_default: false
+  - id: research
+    label: "Research"
+    public_default: false
+  - id: meeting
+    label: "Meeting"
+    public_default: false
+  - id: academic-service
+    label: "Academic Service"
+    public_default: true
+  - id: deadline
+    label: "Deadline"
+    public_default: false
+  - id: personal
+    label: "Personal"
+    public_default: false
+
+documents:
+  - id: teaching
+    label: "Teaching"
+  - id: research
+    label: "Research"
+  - id: publications
+    label: "Publications"
+  - id: curriculum
+    label: "Curriculum"
+  - id: qa
+    label: "Quality Assurance"
+  - id: academic-service
+    label: "Academic Service"
+  - id: other
+    label: "Other"

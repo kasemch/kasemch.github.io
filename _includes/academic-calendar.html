@@ -1,0 +1,46 @@
+<section class="academic-calendar" aria-labelledby="academic-calendar-title">
+  <div class="academic-calendar__heading">
+    <div>
+      <p class="academic-calendar__eyebrow">Academic Calendar</p>
+      <h2 id="academic-calendar-title">Upcoming academic activities</h2>
+      <p class="academic-calendar__intro">A compact view of selected public teaching, research, and academic activities.</p>
+    </div>
+    <a class="academic-calendar__link" href="{{ '/academic-calendar/' | relative_url }}">View calendar</a>
+  </div>
+
+  <div class="academic-calendar__grid">
+    <div class="academic-calendar__month" aria-label="Mini calendar">
+      <div class="academic-calendar__month-head">
+        <button type="button" class="academic-calendar__nav" data-calendar-prev aria-label="Previous month">‹</button>
+        <strong data-calendar-label>September 2026</strong>
+        <button type="button" class="academic-calendar__nav" data-calendar-next aria-label="Next month">›</button>
+      </div>
+      <div class="academic-calendar__weekdays" aria-hidden="true">
+        <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+      </div>
+      <div class="academic-calendar__days" data-calendar-days></div>
+    </div>
+
+    <div class="academic-calendar__upcoming">
+      <div class="academic-calendar__today">
+        <span class="academic-calendar__today-label">Today</span>
+        <strong data-calendar-today></strong>
+      </div>
+      <ol class="academic-calendar__events" data-calendar-events>
+        <li>
+          <time datetime="2026-09-15">15 Sep</time>
+          <div><strong>Teaching</strong><span>Selected academic activity</span></div>
+        </li>
+        <li>
+          <time datetime="2026-09-17">17 Sep</time>
+          <div><strong>Meeting</strong><span>Selected academic activity</span></div>
+        </li>
+        <li>
+          <time datetime="2026-09-20">20 Sep</time>
+          <div><strong>Research</strong><span>Selected academic activity</span></div>
+        </li>
+      </ol>
+      <p class="academic-calendar__privacy-note">Only events marked for public display should appear here.</p>
+    </div>
+  </div>
+</section>
