@@ -6,7 +6,7 @@ author_profile: false
 
 <div class="academic-workspace">
   <div class="academic-workspace__notice">
-    <strong>Phase 1 shell.</strong> This page currently contains no private data, credentials, or write-capable integrations. Authentication and external API actions will be added only after the public/private boundary is verified.
+    <strong>Phase 1 shell.</strong> This route is retained only for development review. It contains no private data, credentials, or write-capable integrations and must not be linked from the public navigation until authentication is implemented.
   </div>
 
   <section class="academic-workspace__card" aria-labelledby="workspace-today">
@@ -17,18 +17,18 @@ author_profile: false
   <section class="academic-workspace__card" aria-labelledby="workspace-quick-add">
     <h2 id="workspace-quick-add">Quick Add</h2>
     <div class="academic-workspace__actions">
-      <a class="academic-workspace__action" href="#upload" aria-disabled="true">
+      <button class="academic-workspace__action" type="button" disabled>
         <strong>Upload Document</strong>
         <span>Storage integration planned for Phase 3.</span>
-      </a>
-      <a class="academic-workspace__action" href="#event" aria-disabled="true">
+      </button>
+      <button class="academic-workspace__action" type="button" disabled>
         <strong>Add Calendar Event</strong>
         <span>Google Calendar integration planned for Phase 2.</span>
-      </a>
-      <a class="academic-workspace__action" href="#note" aria-disabled="true">
+      </button>
+      <button class="academic-workspace__action" type="button" disabled>
         <strong>Add Academic Note</strong>
         <span>Metadata workflow planned for a later phase.</span>
-      </a>
+      </button>
     </div>
   </section>
 
