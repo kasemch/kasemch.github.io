@@ -1,0 +1,16 @@
+conference: "Thailand National Sports University International Conference 2026"
+theme: "The Global Impact of Digital Transformation in Sport and Human Competency: Education, Research, Wellness and Sustainability"
+dates: "2026-07-29 to 2026-07-31"
+location: "Town In Town Hotel, Bangkok, Thailand"
+format: "Conference proceedings"
+verification_note: "Verified against the complete TNSUIC 2026 proceedings volume supplied from Google Drive. Only papers in which Kasem Churat is explicitly listed as an author are included. DOI and ISBN are not claimed because they were not independently confirmed in the supplied source."
+items:
+  - sequence: 1
+    title: "Deciphering NCDs Hotspots and Sedentary Behaviour in Thailand: A Health Big Data Synthesis for Targeted Strategic Planning"
+    authors: "Kasem Churat; Thanida Bhasavanija; Orachulee Nirasrop"
+    page_start: 645
+    role_note: "Kasem Churat is identified as corresponding author in the proceedings."
+  - sequence: 2
+    title: "A Study of the Management of the Physical Fitness Training Center at the Sports Science Center of the Sports Authority of Thailand Based on Organizational Management Criteria"
+    authors: "Phattharanat Deema; Hatthaya Namphitaksuk; Onchulee Niradlo; Nutchita Promrat; Kasem Churat"
+    page_start: 667
