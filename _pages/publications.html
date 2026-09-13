@@ -2,20 +2,20 @@
 layout: archive
 title: "Publications"
 permalink: /publications/
-author_profile: true
+author_profile: false
 excerpt: "Verified academic publications by Asst. Prof. Dr. Kasem Chooratna in health education, health promotion, physical education, and related fields."
 ---
 
-This page presents publications that have been matched to an authoritative or traceable source. Template records and unverified citations are excluded.
+<link rel="stylesheet" href="../assets/css/signature-pages.css">
+<div class="signature-page">
+  <section class="sp-hero sp-shell"><div class="sp-kicker">Scholarly Outputs</div><h1>Publications</h1><p>Verified academic publications matched to authoritative or traceable sources. Template records and unverified citations are excluded.</p><div class="sp-navchips"><a class="sp-chip" href="../research/">Research</a><a class="sp-chip" href="../about/">About</a><a class="sp-chip" href="../cv/">Academic CV</a></div></section>
 
-## Verified Journal Articles
-
+  <section class="sp-section sp-shell"><div class="sp-section-head"><div class="sp-eyebrow">Verified Journal Articles</div><h2>Scholarly publication register</h2></div><div class="sp-card sp-wide sp-publication-frame">
 {% include base_path %}
-
 {% for post in site.publications reversed %}
   {% include archive-single.html %}
 {% endfor %}
+</div></section>
 
-## Verification policy
-
-Publication metadata is checked against journal or DOI records before being listed, including author names, title, year, journal, volume/issue, pages where available, and DOI or stable article URL. The list is a verified working register and may expand as additional records are confirmed.
+  <section class="sp-section sp-shell"><div class="sp-callout"><div class="sp-eyebrow">Verification Policy</div><h2>Traceable metadata before publication</h2><p>Publication metadata is checked against journal or DOI records before being listed, including author names, title, year, journal, volume/issue, pages where available, and DOI or stable article URL. The list is a verified working register and may expand as additional records are confirmed.</p></div></section>
+</div>
