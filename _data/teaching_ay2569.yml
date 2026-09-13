@@ -1,105 +1,332 @@
 academic_year: "2569"
 verified_scope: "Semester 1/2569"
 official_mr30_url: "https://www.regis.ru.ac.th/index.php/schedule/mr30_central"
-source_note: "The Ramkhamhaeng University central MR30 schedule is the primary timetable authority. Supplementary notices were reconciled through round 7. Round 6 independently confirmed HED2503 and HED3502 as additional openings with ASST.PROF.DR.KASEM, but the later round-7 cancellation notice lists both of those courses, together with six other previously scheduled course codes, among courses cancelled because no students enrolled. The public page therefore distinguishes retained teaching-load entries from officially cancelled offerings. HEPE validation datasets remain reconciliation-only and are not used as standalone evidence of active curriculum membership or teaching assignment. Semester 2/2569 remains unpublished until authoritative instructor-assignment evidence is confirmed."
+source_note: "Teaching information is reconciled against Ramkhamhaeng University MR30 records and traceable academic documents. Official MR30 supplementary notices take precedence when a later notice changes an earlier schedule or opening. HEPE validation datasets are reconciliation-only and are not used as standalone evidence of active curriculum membership or teaching assignment. Semester 2/2569 remains fail-closed until authoritative instructor-assignment evidence is confirmed."
 summary:
-  scheduled_course_codes: 11
-  retained_course_codes: 3
-  cancelled_course_codes: 8
-  special_lectures: 1
-courses:
+  initially_scheduled: 11
+  retained: 3
+  officially_cancelled: 8
+  special_teaching: 1
+  tqf3_courses_located: 4
+  tqf5_courses_located: 3
+  verification_courses_located: 2
+
+retained_courses:
   - code: "RHE4404"
     title: "School Health Program and Evaluation in Health Education"
+    academic_year: "2569"
+    semester: "1/2569"
     day: "Monday"
     time: "11:30–13:20"
     room: "SCB 303"
     mode: "Shared teaching"
-    status: "Retained in the reconciled teaching-load evidence; not listed in MR30 supplementary cancellation round 7."
-    note: "Shared with Asst. Prof. Dr. Orachulee Nirasrop; teaching-load evidence records five sessions each."
+    offering_status: "RETAINED_PENDING_FINAL_CONFIRMATION"
+    teaching_status: "SHARED_TEACHING"
+    source_level: "CONTROLLED_RECORD"
+    source_date: "UNKNOWN — notice date not independently extracted"
+    source_type: "Reconciled teaching-load evidence; not listed in MR30 supplementary cancellation round 7"
+    latest_authority: "MR30 supplementary notices reconciled through round 7"
+    evidence_note: "Shared with Asst. Prof. Dr. Orachulee Nirasrop. Not labelled OFFICIAL_ACTIVE until a central MR30 or equivalent authoritative assignment confirms the retained offering."
+    documents:
+      tqf3:
+        label: "Course Specification (TQF3)"
+        status: "Located in combined course-quality package"
+        url: "https://docs.google.com/document/d/140FDcqQkSkquwRRKn-9axW2sEuIBknWme7zRLcatR6E/edit"
+      tqf5:
+        label: "Course Report (TQF5)"
+        status: "Working/template section located; outcome fields remain incomplete"
+        url: "https://docs.google.com/document/d/140FDcqQkSkquwRRKn-9axW2sEuIBknWme7zRLcatR6E/edit"
+      verification:
+        label: "Learning Achievement Verification"
+        status: "Working/template section located; result fields remain incomplete"
+        url: "https://docs.google.com/document/d/140FDcqQkSkquwRRKn-9axW2sEuIBknWme7zRLcatR6E/edit"
+      additional: []
+
   - code: "RHE2100"
     title: "Health and Physical Education Philosophy"
+    academic_year: "2569"
+    semester: "1/2569"
     day: "Monday"
     time: "15:30–17:20"
     room: "SCB 506"
     mode: "Weekly teaching"
-    status: "Retained in the reconciled teaching-load evidence; not listed in MR30 supplementary cancellation round 7."
+    offering_status: "RETAINED_PENDING_FINAL_CONFIRMATION"
+    teaching_status: "VERIFIED_INSTRUCTOR"
+    source_level: "CONTROLLED_RECORD"
+    source_date: "UNKNOWN — notice date not independently extracted"
+    source_type: "Reconciled teaching-load evidence; not listed in MR30 supplementary cancellation round 7"
+    latest_authority: "MR30 supplementary notices reconciled through round 7"
+    evidence_note: "A QA register references TQF3/TQF5/verification for this course, but no direct course-document file was located in this Phase-04 search; therefore no public document link is asserted."
+    documents:
+      tqf3: null
+      tqf5: null
+      verification: null
+      additional: []
+
   - code: "HED1101"
     title: "Health Promotion for Life"
+    academic_year: "2569"
+    semester: "1/2569"
     day: "Wednesday"
     time: "11:30–13:20"
     room: "SBB 502"
     mode: "Shared teaching"
-    status: "Retained in the reconciled teaching-load evidence; not listed in MR30 supplementary cancellation round 7."
-    note: "Teaching-load evidence records shared teaching with two colleagues."
+    offering_status: "RETAINED_PENDING_FINAL_CONFIRMATION"
+    teaching_status: "SHARED_TEACHING"
+    source_level: "CONTROLLED_RECORD"
+    source_date: "UNKNOWN — notice date not independently extracted"
+    source_type: "Reconciled teaching-load evidence; not listed in MR30 supplementary cancellation round 7"
+    latest_authority: "MR30 supplementary notices reconciled through round 7"
+    evidence_note: "Teaching-load evidence records shared teaching with two colleagues. No direct TQF3/TQF5/verification file was located in this Phase-04 search."
+    documents:
+      tqf3: null
+      tqf5: null
+      verification: null
+      additional: []
+
 cancelled_courses:
   - code: "HED2602"
     title: "Statistics and Research Methodology in Health"
+    academic_year: "2569"
+    semester: "1/2569"
     day: "Monday"
     time: "13:30–15:20"
     room: "SCB 306"
     previous_mode: "Weekly teaching"
+    offering_status: "OFFICIALLY_CANCELLED"
+    teaching_status: "VERIFIED_INSTRUCTOR"
+    source_level: "AUTHORITATIVE"
+    source_date: "UNKNOWN — notice date not independently extracted"
+    source_type: "MR30 supplementary cancellation notice — Round 7"
+    latest_authority: "Cancellation round 7"
+    evidence_note: "Cancelled because no students enrolled. A direct TQF3 file was located, but document existence does not override the later official cancellation."
+    documents:
+      tqf3:
+        label: "Course Specification (TQF3)"
+        status: "Direct file located"
+        url: "https://docs.google.com/document/d/1GIp8sdhfbrcZ0YQxUvstZU05uAJGGc4441R7oPFk1Aw/edit"
+      tqf5: null
+      verification: null
+      additional: []
+
   - code: "RHE4101"
     title: "Evaluation in Health Education"
+    academic_year: "2569"
+    semester: "1/2569"
     day: "Tuesday"
     time: "07:30–09:20"
     room: "SCB 303"
     previous_mode: "Weekly teaching"
+    offering_status: "OFFICIALLY_CANCELLED"
+    teaching_status: "VERIFIED_INSTRUCTOR"
+    source_level: "AUTHORITATIVE"
+    source_date: "UNKNOWN — notice date not independently extracted"
+    source_type: "MR30 supplementary cancellation notice — Round 7"
+    latest_authority: "Cancellation round 7"
+    evidence_note: "Cancelled because no students enrolled. Direct TQF3 and TQF5 files exist, but the TQF5 contains post-delivery statements that conflict with the authoritative cancellation; it is therefore treated as a working/conflicted document, not a completed course report."
+    documents:
+      tqf3:
+        label: "Course Specification (TQF3)"
+        status: "Direct file located"
+        url: "https://docs.google.com/document/d/1PvkqfwynfWsNSwnyRBTSGw9nlhbihbbtGfQ23w3ikF4/edit"
+      tqf5:
+        label: "Course Report (TQF5)"
+        status: "Evidence conflict — working document; not accepted as completed delivery evidence"
+        url: "https://docs.google.com/document/d/19uSpFhKOCuDZIWmvBV2-E2igqCjWMsu-EyEc9fsBvNs/edit"
+      verification: null
+      additional: []
+
   - code: "HED3502"
     title: "Drugs and Substance Abuse"
+    academic_year: "2569"
+    semester: "1/2569"
     day: "Wednesday"
     time: "09:30–11:20"
     room: "SCB 306"
     previous_mode: "Cross-listed cluster"
-    note: "Additional opening round 6 had listed ASST.PROF.DR.KASEM; cancellation round 7 supersedes that opening for Semester 1/2569."
+    offering_status: "OFFICIALLY_CANCELLED"
+    teaching_status: "VERIFIED_INSTRUCTOR"
+    source_level: "AUTHORITATIVE"
+    source_date: "UNKNOWN — notice date not independently extracted"
+    source_type: "MR30 supplementary cancellation notice — Round 7"
+    latest_authority: "Cancellation round 7"
+    evidence_note: "Additional opening round 6 listed ASST.PROF.DR.KASEM; cancellation round 7 supersedes that opening for Semester 1/2569. Search results located HED3502 quality packages for Semester 1/2568 only; those historical files are excluded from the 1/2569 public document matrix."
+    documents:
+      tqf3: null
+      tqf5: null
+      verification: null
+      additional: []
+
   - code: "HED4301"
     title: "Drugs and Narcotics"
+    academic_year: "2569"
+    semester: "1/2569"
     day: "Wednesday"
     time: "09:30–11:20"
     room: "SCB 306"
     previous_mode: "Cross-listed cluster"
+    offering_status: "OFFICIALLY_CANCELLED"
+    teaching_status: "VERIFIED_INSTRUCTOR"
+    source_level: "AUTHORITATIVE"
+    source_date: "UNKNOWN — notice date not independently extracted"
+    source_type: "MR30 supplementary cancellation notice — Round 7"
+    latest_authority: "Cancellation round 7"
+    evidence_note: "Cancelled because no students enrolled. The QA register references a course-quality package, but no direct file was located in this Phase-04 search."
+    documents:
+      tqf3: null
+      tqf5: null
+      verification: null
+      additional: []
+
   - code: "RHE4103"
     title: "Drugs and Addictive Substances"
+    academic_year: "2569"
+    semester: "1/2569"
     day: "Wednesday"
     time: "09:30–11:20"
     room: "SCB 306"
     previous_mode: "Cross-listed cluster"
+    offering_status: "OFFICIALLY_CANCELLED"
+    teaching_status: "VERIFIED_INSTRUCTOR"
+    source_level: "AUTHORITATIVE"
+    source_date: "UNKNOWN — notice date not independently extracted"
+    source_type: "MR30 supplementary cancellation notice — Round 7"
+    latest_authority: "Cancellation round 7"
+    evidence_note: "Cancelled because no students enrolled. The QA register references a course-quality package, but no direct file was located in this Phase-04 search."
+    documents:
+      tqf3: null
+      tqf5: null
+      verification: null
+      additional: []
+
   - code: "HED2503"
     title: "Sexuality Education"
+    academic_year: "2569"
+    semester: "1/2569"
     day: "Thursday"
     time: "09:30–11:20"
     room: "SCB 506"
     previous_mode: "Cross-listed cluster"
-    note: "Additional opening round 6 had listed ASST.PROF.DR.KASEM; cancellation round 7 supersedes that opening for Semester 1/2569. Course-quality working documents remain traceable below."
+    offering_status: "OFFICIALLY_CANCELLED"
+    teaching_status: "VERIFIED_INSTRUCTOR"
+    source_level: "AUTHORITATIVE"
+    source_date: "UNKNOWN — notice date not independently extracted"
+    source_type: "MR30 supplementary cancellation notice — Round 7"
+    latest_authority: "Cancellation round 7"
+    evidence_note: "Additional opening round 6 listed ASST.PROF.DR.KASEM; cancellation round 7 supersedes that opening. Course-quality working documents remain linked for traceability only."
+    history:
+      - "Opening round 6: HED2503 listed with ASST.PROF.DR.KASEM, Thursday 09:30–11:20, SCB506."
+      - "Cancellation round 7: offering cancelled because no students enrolled."
+    documents:
+      tqf3:
+        label: "Course Specification (TQF3)"
+        status: "Current working document"
+        url: "https://docs.google.com/document/d/1GBGrjXEf8yhJlwRU9lPEIP9f-RoCpYL2E7btPyyrpbU/edit"
+      tqf5:
+        label: "Course Report (TQF5)"
+        status: "Draft / working document — not a completed post-semester report"
+        url: "https://docs.google.com/document/d/1Et4FsTQzCY0fhPrGnv9c0ueusLzJ_saE7PW93fv70-U/edit"
+      verification:
+        label: "Learning Achievement Verification"
+        status: "Draft / planned verification — not a completed verification result"
+        url: "https://docs.google.com/document/d/1DPHqN3ca8UKTJinPAGeO3ur4gHsKiX9vuEi0IE8YfdQ/edit"
+      additional: []
+
   - code: "RHE3101"
     title: "Sexuality Education"
+    academic_year: "2569"
+    semester: "1/2569"
     day: "Thursday"
     time: "09:30–11:20"
     room: "SCB 506"
     previous_mode: "Cross-listed cluster"
+    offering_status: "OFFICIALLY_CANCELLED"
+    teaching_status: "VERIFIED_INSTRUCTOR"
+    source_level: "AUTHORITATIVE"
+    source_date: "UNKNOWN — notice date not independently extracted"
+    source_type: "MR30 supplementary cancellation notice — Round 7"
+    latest_authority: "Cancellation round 7"
+    evidence_note: "Cancelled because no students enrolled. The QA register references a course-quality package, but no direct file was located in this Phase-04 search."
+    documents:
+      tqf3: null
+      tqf5: null
+      verification: null
+      additional: []
+
   - code: "HED4402"
     title: "Health Education in Mass Community"
+    academic_year: "2569"
+    semester: "1/2569"
     day: "Thursday"
     time: "11:30–13:20"
     room: "SCB 504"
     previous_mode: "Weekly teaching"
-quality_course:
-  code: "HED2503"
-  title: "Sexuality Education"
-  offering_status: "Officially cancelled for Semester 1/2569 in MR30 supplementary cancellation round 7; documents retained here for traceability and course-quality evidence only."
-  documents:
-    - label: "TQF3 / Course Specification"
-      status: "Current working document"
-      url: "https://docs.google.com/document/d/1GBGrjXEf8yhJlwRU9lPEIP9f-RoCpYL2E7btPyyrpbU/edit"
-    - label: "TQF5 / Course Report"
-      status: "Draft / working document"
-      url: "https://docs.google.com/document/d/1Et4FsTQzCY0fhPrGnv9c0ueusLzJ_saE7PW93fv70-U/edit"
-    - label: "Achievement Verification Report"
-      status: "Draft / planned verification — not yet a completed result"
-      url: "https://docs.google.com/document/d/1DPHqN3ca8UKTJinPAGeO3ur4gHsKiX9vuEi0IE8YfdQ/edit"
+    offering_status: "OFFICIALLY_CANCELLED"
+    teaching_status: "VERIFIED_INSTRUCTOR"
+    source_level: "AUTHORITATIVE"
+    source_date: "UNKNOWN — notice date not independently extracted"
+    source_type: "MR30 supplementary cancellation notice — Round 7"
+    latest_authority: "Cancellation round 7"
+    evidence_note: "Cancelled because no students enrolled. The QA register references a course-quality package, but no direct file was located in this Phase-04 search."
+    documents:
+      tqf3: null
+      tqf5: null
+      verification: null
+      additional: []
+
 special_teaching:
   - code: "RAM1142"
     title: "Special Lecture — Chapter 3"
+    academic_year: "2569"
+    semester: "1/2569"
+    offering_status: "SPECIAL_TEACHING"
+    teaching_status: "VERIFIED_INSTRUCTOR"
+    source_level: "CONTROLLED_RECORD"
+    source_date: "25 September 2026"
+    source_type: "Additional teaching-load evidence"
+    latest_authority: "Teaching-load record"
     date: "25 September 2026"
     time: "08:30–11:00"
     location: "Bang Na Campus"
-    status: "Additional teaching-load evidence; not counted among the regular Semester 1/2569 course-code totals."
+    evidence_note: "Separate additional teaching activity; not counted among the 11 regular Semester 1/2569 course codes."
+
+course_quality_matrix:
+  - code: "HED2503"
+    title: "Sexuality Education"
+    offering_status: "OFFICIALLY_CANCELLED"
+    tqf3_status: "Located — working"
+    tqf3_url: "https://docs.google.com/document/d/1GBGrjXEf8yhJlwRU9lPEIP9f-RoCpYL2E7btPyyrpbU/edit"
+    tqf5_status: "Located — draft / working"
+    tqf5_url: "https://docs.google.com/document/d/1Et4FsTQzCY0fhPrGnv9c0ueusLzJ_saE7PW93fv70-U/edit"
+    verification_status: "Located — draft / planned"
+    verification_url: "https://docs.google.com/document/d/1DPHqN3ca8UKTJinPAGeO3ur4gHsKiX9vuEi0IE8YfdQ/edit"
+
+  - code: "RHE4404"
+    title: "School Health Program and Evaluation in Health Education"
+    offering_status: "RETAINED_PENDING_FINAL_CONFIRMATION"
+    tqf3_status: "Located in combined quality package"
+    tqf3_url: "https://docs.google.com/document/d/140FDcqQkSkquwRRKn-9axW2sEuIBknWme7zRLcatR6E/edit"
+    tqf5_status: "Located — working/template section"
+    tqf5_url: "https://docs.google.com/document/d/140FDcqQkSkquwRRKn-9axW2sEuIBknWme7zRLcatR6E/edit"
+    verification_status: "Located — working/template section"
+    verification_url: "https://docs.google.com/document/d/140FDcqQkSkquwRRKn-9axW2sEuIBknWme7zRLcatR6E/edit"
+
+  - code: "HED2602"
+    title: "Statistics and Research Methodology in Health"
+    offering_status: "OFFICIALLY_CANCELLED"
+    tqf3_status: "Located"
+    tqf3_url: "https://docs.google.com/document/d/1GIp8sdhfbrcZ0YQxUvstZU05uAJGGc4441R7oPFk1Aw/edit"
+    tqf5_status: "Not directly located"
+    tqf5_url: null
+    verification_status: "Not directly located"
+    verification_url: null
+
+  - code: "RHE4101"
+    title: "Evaluation in Health Education"
+    offering_status: "OFFICIALLY_CANCELLED"
+    tqf3_status: "Located"
+    tqf3_url: "https://docs.google.com/document/d/1PvkqfwynfWsNSwnyRBTSGw9nlhbihbbtGfQ23w3ikF4/edit"
+    tqf5_status: "Located — evidence conflict; not accepted as completed delivery evidence"
+    tqf5_url: "https://docs.google.com/document/d/19uSpFhKOCuDZIWmvBV2-E2igqCjWMsu-EyEc9fsBvNs/edit"
+    verification_status: "Not directly located"
+    verification_url: null

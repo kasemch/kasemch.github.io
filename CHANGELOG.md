@@ -18,6 +18,8 @@ The site uses a controlled versioning model tied to the Signature Hybrid baselin
 - Linked HED2503 course-quality chain for TQF3, TQF5, and achievement-verification working documents, with explicit draft/planned status where completion cannot yet be claimed.
 - Teaching AY2569 reconciliation audit documenting the 11 verified regular course codes, 8 weekly teaching slots, cross-listed clusters, source conflicts, and Semester 2 evidence limitation.
 - Teaching source-of-truth policy that prioritizes the official Ramkhamhaeng University central MR30 schedule and explicitly excludes HEPE validation datasets from standalone public inference.
+- Final AY2569 Teaching evidence-reconciliation audit with course-by-course disposition, direct document discovery, evidence-conflict handling, and fail-closed Semester 2 policy.
+- Course Quality & Assurance matrix linking directly located TQF3, TQF5, and verification material for HED2503, RHE4404, HED2602, and RHE4101 without treating document existence as proof of an active offering.
 
 ### Changed
 - Added page-specific SEO descriptions to About, Teaching, Research, Curriculum & Quality, Innovation & Projects, and Curriculum Vitae so search/social metadata reflects each page rather than relying only on the site-wide fallback.
@@ -29,6 +31,8 @@ The site uses a controlled versioning model tied to the Signature Hybrid baselin
 - Public-facing Research and Publications titles use English for site consistency while source-language bibliographic metadata is retained internally where needed for traceability.
 - Publications now displays its journal-publication count dynamically from `site.publications`, uses Jekyll `relative_url` local references, and explicitly separates journal publications from conference proceedings and degree research.
 - Teaching now prioritizes verified current-year offerings instead of a static selected-course list, uses Jekyll `relative_url` for internal paths, and exposes the official central MR30 page as the primary timetable reference.
+- Teaching Semester 1/2569 now uses a temporal status architecture: 11 initially scheduled codes are separated into 3 retained pending final confirmation and 8 officially cancelled by MR30 supplementary cancellation round 7.
+- HED2503 quality documents remain available as traceable evidence after cancellation, while RHE4101 TQF5 is explicitly flagged as an evidence conflict rather than accepted as completed delivery evidence.
 - Open Graph descriptions now use the same page-specific `seo_description` chain as standard page metadata, so About, Teaching, Research, Curriculum & Quality, Innovation & Projects, and CV expose page-relevant social descriptions.
 - Theme-generated social `Person` JSON-LD is now emitted only when verified `social.links` are configured, avoiding an empty duplicate Person entity alongside the richer academic profile schema.
 
@@ -39,8 +43,10 @@ The site uses a controlled versioning model tied to the Signature Hybrid baselin
 - Structured-data `sameAs` remains limited to the verified GitHub profile; ORCID, Google Scholar, Scopus, ResearchGate and other academic-profile links remain excluded until independently verified.
 - Teaching AY2569 public status is limited to Semester 1/2569 until an authoritative Semester 2 teaching record is confirmed.
 - Central MR30 is the primary timetable authority; reconciled MR30-derived teaching-load evidence is used only as an operational fallback when the live registrar endpoint cannot be retrieved by the audit environment.
+- Later authoritative MR30 notices supersede earlier opening/timetable evidence while historical provenance remains preserved; absence from a cancellation list does not by itself establish `OFFICIAL_ACTIVE` status.
 - HEPE `SOURCEB-VALIDATION` / inactive validation records are reconciliation-only and cannot independently establish active curriculum membership or a public teaching assignment.
 - TQF5 and achievement-verification documents are not promoted to final/completed status merely because a working document exists; future-dated verification remains labelled draft/planned.
+- Direct course-document links are published only when the file itself was located and reconciled to the relevant course/period; QA-register references without a located file do not create placeholder links.
 
 ### Verified
 - Signature Hybrid visual design and page layouts remain unchanged outside the additive Research and Teaching dashboard components.
@@ -48,7 +54,8 @@ The site uses a controlled versioning model tied to the Signature Hybrid baselin
 - Structured-data identity is consolidated to one rich academic Person entity when no verified theme-level social profile list exists.
 - Page-specific descriptions now propagate consistently to standard SEO, Open Graph, and the custom Twitter summary metadata path.
 - Research output taxonomy is consistent across Research, Publications, and CV: 21 verified journal publications, 13 verified conference proceedings, and 2 degree research works.
-- Teaching Semester 1/2569 register reconciles 11 course codes to 8 weekly teaching slots plus one separate RAM1142 special lecture.
+- Teaching Semester 1/2569 data integrity is reconciled as 11 initially scheduled = 3 retained pending final confirmation + 8 officially cancelled, plus one separate RAM1142 special teaching activity.
+- PED1101 is excluded from public HEPE curriculum inference because the previously encountered record was an inactive validation record rather than canonical active evidence.
 
 ## [1.1.0] — 2026-09-13
 
