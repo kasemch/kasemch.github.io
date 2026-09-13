@@ -5,13 +5,15 @@ description: "Public-facing academic innovation by Asst. Prof. Dr. Kasem Choorat
 author_profile: false
 ---
 
-<link rel="stylesheet" href="../assets/css/signature-pages.css">
+{% assign ru_hepe = site.data.ru_hepe_learning %}
+
+<link rel="stylesheet" href="{{ '/assets/css/signature-pages.css' | relative_url }}">
 <div class="signature-page">
   <section class="sp-hero sp-shell">
     <div class="sp-kicker">Innovation · Systems · Public Impact</div>
     <h1>Innovation &amp; Projects</h1>
     <p>Selected public-facing academic innovation connecting health and physical education, curriculum and quality, digital technology, artificial intelligence and community-oriented academic service.</p>
-    <div class="sp-navchips"><a class="sp-chip" href="../research/">Research</a><a class="sp-chip" href="../curriculum-quality/">Curriculum &amp; Quality</a><a class="sp-chip" href="../about/">About</a></div>
+    <div class="sp-navchips"><a class="sp-chip" href="{{ '/research/' | relative_url }}">Research</a><a class="sp-chip" href="{{ '/curriculum-quality/' | relative_url }}">Curriculum &amp; Quality</a><a class="sp-chip" href="{{ '/about/' | relative_url }}">About</a></div>
   </section>
 
   <section class="sp-section sp-shell">
@@ -23,11 +25,37 @@ author_profile: false
     </div>
   </section>
 
+  <section class="sp-section sp-shell" aria-labelledby="ru-hepe-learning-title">
+    <div class="sp-section-head">
+      <div class="sp-eyebrow">Teaching Innovation · GitHub Organization</div>
+      <h2 id="ru-hepe-learning-title">{{ ru_hepe.name }}</h2>
+      <p class="sp-intro">A public GitHub-based teaching-and-learning workspace supporting course hubs, reusable learning structures and student portfolio workflows for Health Education and Physical Education activities.</p>
+    </div>
+    <div class="sp-metrics" aria-label="RU HEPE Learning public repository summary">
+      <article class="sp-metric"><strong>{{ ru_hepe.public_repository_count }}</strong><span>Public repositories verified</span></article>
+      <article class="sp-metric"><strong>GitHub</strong><span>Learning workspace</span></article>
+      <article class="sp-metric"><strong>HEPE</strong><span>Health &amp; Physical Education</span></article>
+      <article class="sp-metric"><strong>Public</strong><span>Selected learning resources</span></article>
+    </div>
+    <div class="sp-grid">
+      {% for repo in ru_hepe.repositories %}
+      <article class="sp-card sp-third">
+        <div class="sp-output-year">PUBLIC REPOSITORY</div>
+        <h3>{{ repo.label }}</h3>
+        <p>{{ repo.purpose }}</p>
+        <a class="sp-link" href="{{ repo.url }}" rel="noopener">View {{ repo.name }} on GitHub →</a>
+      </article>
+      {% endfor %}
+    </div>
+    <p class="sp-all-publications"><a class="sp-link" href="{{ ru_hepe.organization_url }}" rel="noopener">Explore {{ ru_hepe.name }} on GitHub →</a></p>
+    <div class="sp-policy"><strong>Institutional-status note.</strong> {{ ru_hepe.disclaimer }}</div>
+  </section>
+
   <section class="sp-section sp-shell">
     <article class="sp-card sp-wide"><div class="sp-eyebrow">Disclosure Principle</div><h2>Public-safe by design</h2><p>Only information appropriate for public release is published here.</p><div class="sp-policy">Internal architecture, credentials, restricted data, non-production implementation details, confidential governance materials and other protected project information are intentionally excluded.</div></article>
   </section>
 
   <section class="sp-section sp-shell">
-    <article class="sp-callout"><div class="sp-eyebrow">Selected Projects</div><h2>Evidence-checked project pages</h2><p>Individual public project pages will be added only after project identity, evidence status, publication readiness, permissions and confidentiality have been reviewed.</p></article>
+    <article class="sp-callout"><div class="sp-eyebrow">Selected Projects</div><h2>Evidence-checked project pages</h2><p>Individual public project pages are added only after project identity, evidence status, publication readiness, permissions and confidentiality have been reviewed.</p></article>
   </section>
 </div>

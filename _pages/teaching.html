@@ -7,6 +7,7 @@ author_profile: false
 ---
 
 {% assign teaching = site.data.teaching_ay2569 %}
+{% assign ru_hepe = site.data.ru_hepe_learning %}
 
 <link rel="stylesheet" href="{{ '/assets/css/signature-pages.css' | relative_url }}">
 <div class="signature-page">
@@ -187,6 +188,26 @@ author_profile: false
       <div class="sp-evidence-note">{{ item.evidence_note }}</div>
     </article>
     {% endfor %}
+  </section>
+
+  <section class="sp-section sp-shell" aria-labelledby="digital-learning-title">
+    <div class="sp-section-head">
+      <div class="sp-eyebrow">Digital Learning Infrastructure</div>
+      <h2 id="digital-learning-title">{{ ru_hepe.name }}</h2>
+      <p class="sp-intro">A public GitHub-based learning workspace used to organize selected course resources, reusable learning structures and portfolio-oriented student workflows.</p>
+    </div>
+    <div class="sp-grid">
+      {% for repo in ru_hepe.repositories %}
+      <article class="sp-card sp-third">
+        <div class="sp-output-year">GITHUB · PUBLIC</div>
+        <h3>{{ repo.label }}</h3>
+        <p>{{ repo.purpose }}</p>
+        <a class="sp-link" href="{{ repo.url }}" rel="noopener">Open repository →</a>
+      </article>
+      {% endfor %}
+    </div>
+    <p class="sp-all-publications"><a class="sp-link" href="{{ ru_hepe.organization_url }}" rel="noopener">Explore {{ ru_hepe.name }} on GitHub →</a></p>
+    <div class="sp-policy"><strong>Institutional-status note.</strong> {{ ru_hepe.disclaimer }}</div>
   </section>
 
   <section class="sp-section sp-shell">
