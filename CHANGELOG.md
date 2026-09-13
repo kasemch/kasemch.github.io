@@ -54,4 +54,14 @@ Release manifest: `./docs/releases/signature-hybrid-v1.0.0.md`
 
 ## Unreleased
 
-Use this section for approved changes that have not yet been assigned a release version.
+### Added
+- Academic Command Center static shell at `/workspace/`.
+- Browser-only document classification preview with no upload or persistence.
+- Review-before-save Google Calendar draft generator.
+- Local academic note composer with clipboard export only.
+- Command Center navigation entry.
+
+### Governance
+- No private HEPE data is rendered by the workspace shell.
+- No Supabase, Google Drive, IAM, or service credentials are embedded in the public repository.
+- No document action can automatically admit evidence, create authority, or mutate canonical teaching assignments.
