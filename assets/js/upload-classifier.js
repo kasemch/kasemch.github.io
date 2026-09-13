@@ -15,6 +15,7 @@
   };
 
   const rules = [
+    { category: 'Teaching', test: /\b(HEPE[-_ ]?COURSE[-_ ]?(VERIFY|VERIFICATION)|COURSE[-_ ]?VERIFICATION)\b/i, confidence: 93, reason: 'Teaching-course verification record detected.' },
     { category: 'Teaching', test: /\b(HED|PED|EDU|RHE)\d{4}\b/i, confidence: 95, reason: 'Recognized course code in filename.' },
     { category: 'Research', test: /\b(MOVE24|RESEARCH|PROPOSAL|ETHICS|IRB)\b/i, confidence: 90, reason: 'Research/project keyword detected.' },
     { category: 'Publications', test: /\b(PUBLICATION|MANUSCRIPT|ARTICLE|JOURNAL|PAPER)\b/i, confidence: 85, reason: 'Publication/manuscript keyword detected.' },

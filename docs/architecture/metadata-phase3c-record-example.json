@@ -1,0 +1,16 @@
+{
+  "record_type": "controlled_handoff_record",
+  "report_id": "EXAMPLE-REPORT-ID",
+  "version": "1.0",
+  "environment": "NON-PRODUCTION",
+  "title": "Example Controlled Handoff Record",
+  "drive_file_id": "DRIVE_FILE_ID_AFTER_PRIVATE_STORAGE",
+  "sha256": "SHA256_AFTER_LOCAL_HASH",
+  "category": "Teaching",
+  "visibility": "private",
+  "evidence_status": "AI_ASSISTED_VERIFICATION",
+  "verification_date": "YYYY-MM-DD",
+  "official_institutional_certification": false,
+  "open_reconciliation_items": [],
+  "source_document_name": "example.pdf"
+}
