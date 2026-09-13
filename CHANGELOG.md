@@ -17,6 +17,7 @@ The site uses a controlled versioning model tied to the Signature Hybrid baselin
 - Academic Year 2569 Teaching Dashboard on `/teaching/` with a verified Semester 1/2569 course register, weekly-slot summary, cross-listed teaching clusters, special-lecture entry, and evidence-status boundaries.
 - Linked HED2503 course-quality chain for TQF3, TQF5, and achievement-verification working documents, with explicit draft/planned status where completion cannot yet be claimed.
 - Teaching AY2569 reconciliation audit documenting the 11 verified regular course codes, 8 weekly teaching slots, cross-listed clusters, source conflicts, and Semester 2 evidence limitation.
+- Teaching source-of-truth policy that prioritizes the official Ramkhamhaeng University central MR30 schedule and explicitly excludes HEPE validation datasets from standalone public inference.
 
 ### Changed
 - Added page-specific SEO descriptions to About, Teaching, Research, Curriculum & Quality, Innovation & Projects, and Curriculum Vitae so search/social metadata reflects each page rather than relying only on the site-wide fallback.
@@ -27,7 +28,7 @@ The site uses a controlled versioning model tied to the Signature Hybrid baselin
 - Conference proceedings are reported separately and currently comprise 13 verified records across the 2023 and 2026 proceedings registers.
 - Public-facing Research and Publications titles use English for site consistency while source-language bibliographic metadata is retained internally where needed for traceability.
 - Publications now displays its journal-publication count dynamically from `site.publications`, uses Jekyll `relative_url` local references, and explicitly separates journal publications from conference proceedings and degree research.
-- Teaching now prioritizes verified current-year offerings instead of a static selected-course list, and internal page links use Jekyll `relative_url`.
+- Teaching now prioritizes verified current-year offerings instead of a static selected-course list, uses Jekyll `relative_url` for internal paths, and exposes the official central MR30 page as the primary timetable reference.
 - Open Graph descriptions now use the same page-specific `seo_description` chain as standard page metadata, so About, Teaching, Research, Curriculum & Quality, Innovation & Projects, and CV expose page-relevant social descriptions.
 - Theme-generated social `Person` JSON-LD is now emitted only when verified `social.links` are configured, avoiding an empty duplicate Person entity alongside the richer academic profile schema.
 
@@ -37,6 +38,8 @@ The site uses a controlled versioning model tied to the Signature Hybrid baselin
 - Citation counts, h-index, indexing status, journal quartiles, and impact metrics remain excluded until independently verified from authoritative sources.
 - Structured-data `sameAs` remains limited to the verified GitHub profile; ORCID, Google Scholar, Scopus, ResearchGate and other academic-profile links remain excluded until independently verified.
 - Teaching AY2569 public status is limited to Semester 1/2569 until an authoritative Semester 2 teaching record is confirmed.
+- Central MR30 is the primary timetable authority; reconciled MR30-derived teaching-load evidence is used only as an operational fallback when the live registrar endpoint cannot be retrieved by the audit environment.
+- HEPE `SOURCEB-VALIDATION` / inactive validation records are reconciliation-only and cannot independently establish active curriculum membership or a public teaching assignment.
 - TQF5 and achievement-verification documents are not promoted to final/completed status merely because a working document exists; future-dated verification remains labelled draft/planned.
 
 ### Verified
