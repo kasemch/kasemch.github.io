@@ -10,8 +10,19 @@
 <meta name="robots" content="index, follow, max-image-preview:large">
 {% endif %}
 <link rel="me" href="https://github.com/kasemch">
+{% assign social_portrait = site.author.avatar | default: 'profile-approved-01.jpg' %}
+{% assign social_portrait_url = site.url | append: site.baseurl | append: '/images/' | append: social_portrait %}
 {% unless page.header.image or page.header.overlay_image %}
-<meta property="og:image" content="{{ site.url }}{{ site.baseurl }}/images/{{ site.author.avatar }}">
+<meta property="og:image" content="{{ social_portrait_url }}">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="600">
+<meta property="og:image:height" content="750">
+<meta property="og:image:alt" content="Formal portrait of Asst. Prof. Dr. Kasem Chooratna">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="{{ page.title | default: site.title | markdownify | strip_html | strip_newlines | escape_once }}">
+<meta name="twitter:description" content="{{ page.description | default: page.excerpt | default: site.description | markdownify | strip_html | strip_newlines | escape_once }}">
+<meta name="twitter:image" content="{{ social_portrait_url }}">
+<meta name="twitter:image:alt" content="Formal portrait of Asst. Prof. Dr. Kasem Chooratna">
 {% endunless %}
 <script type="application/ld+json">
 {
@@ -19,7 +30,7 @@
   "@type": "Person",
   "name": "Asst. Prof. Dr. Kasem Chooratna",
   "url": "https://kasemch.github.io",
-  "image": "https://kasemch.github.io/images/profile.jpg",
+  "image": {{ social_portrait_url | jsonify }},
   "jobTitle": "Assistant Professor",
   "affiliation": {
     "@type": "CollegeOrUniversity",
