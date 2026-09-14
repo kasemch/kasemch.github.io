@@ -11,6 +11,8 @@
 {% endif %}
 <link rel="me" href="https://github.com/kasemch">
 {% assign social_portrait = site.author.avatar | default: 'profile-approved-01.jpg' %}
+{% assign site_public_url = site.url | append: site.baseurl | append: '/' %}
+{% assign person_id_url = site.url | append: site.baseurl | append: '/#person' %}
 {% assign social_portrait_url = site.url | append: site.baseurl | append: '/images/' | append: social_portrait %}
 {% unless page.header.image or page.header.overlay_image %}
 <meta property="og:image" content="{{ social_portrait_url }}">
@@ -28,12 +30,12 @@
 {
   "@context": "https://schema.org",
   "@type": "Person",
-  "@id": "https://kasemch.github.io/#person",
+  "@id": {{ person_id_url | jsonify }},
   "name": "Asst. Prof. Dr. Kasem Chooratna",
-  "url": "https://kasemch.github.io/",
+  "url": {{ site_public_url | jsonify }},
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://kasemch.github.io/"
+    "@id": {{ site_public_url | jsonify }}
   },
   "image": {{ social_portrait_url | jsonify }},
   "description": {{ site.description | jsonify }},
