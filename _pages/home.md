@@ -32,7 +32,7 @@ classes: wide
 
       <div class="ae-portrait-stage">
         <div class="ae-portrait-glow" aria-hidden="true"></div>
-        <img class="ae-portrait" src="{{ '/images/profile-approved-01.webp' | relative_url }}" alt="Formal portrait of Asst. Prof. Dr. Kasem Chooratna" width="800" height="1000" decoding="async">
+        <img class="ae-portrait" src="{{ '/images/profile-selected-2026.webp' | relative_url }}" alt="Formal portrait of Asst. Prof. Dr. Kasem Chooratna" width="480" height="600" decoding="async">
         <div class="ae-portrait-axis" aria-label="Academic focus">
           <span>Education</span><span>Research</span><span>Community</span><span>Impact</span>
         </div>
