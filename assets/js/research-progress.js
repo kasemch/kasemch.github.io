@@ -133,7 +133,7 @@
     projects.forEach((p) => statusLabels.set(p.status, p.statusLabel));
 
     filters.innerHTML = [...statusLabels.entries()].map(([key, label], index) => `
-      <button class="rpc-filter ${index === 0 ? 'is-active' : ''}" type="button" data-filter="${escapeHtml(key)}">${escapeHtml(label)}</button>`
+      <button class="rpc-filter ${index === 0 ? 'is-active' : ''}" type="button" data-filter="${escapeHtml(key)}" aria-pressed="${index === 0 ? 'true' : 'false'}">${escapeHtml(label)}</button>`
     ).join('');
 
     filters.addEventListener('click', (event) => {
@@ -141,7 +141,11 @@
       if (!button) return;
       const selected = button.dataset.filter;
 
-      filters.querySelectorAll('.rpc-filter').forEach((item) => item.classList.toggle('is-active', item === button));
+      filters.querySelectorAll('.rpc-filter').forEach((item) => {
+        const active = item === button;
+        item.classList.toggle('is-active', active);
+        item.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
       grid.querySelectorAll('.rpc-project-card').forEach((card) => {
         card.hidden = selected !== 'all' && card.dataset.status !== selected;
       });
