@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "Teaching"
-description: "Teaching profile of Asst. Prof. Dr. Kasem Chooratna with Semester 1/2569 status reconciled against official MR30 evidence and linked course-quality documents where directly verified."
+description: "Teaching profile of Asst. Prof. Dr. Kasem Chooratna with Semester 1/2569 status reconciled against official MR30 evidence and course-quality metadata where directly verified."
 permalink: /teaching/
 author_profile: false
 ---
@@ -107,7 +107,7 @@ author_profile: false
     <div class="sp-section-head">
       <div class="sp-eyebrow">Academic Teaching Portfolio</div>
       <h2 id="quality-docs-title">Course → Teaching → Assessment → TQF5 → Verification → Improvement</h2>
-      <p class="sp-intro">The matrix links only directly located course documents. Planned assessment architecture is separated from completed outcomes, and document existence never overrides the authoritative MR30 offering status.</p>
+      <p class="sp-intro">The matrix reports directly verified course-quality metadata. Restricted source documents are not linked publicly until their sharing status is explicitly approved and verified. Planned assessment architecture is separated from completed outcomes, and document existence never overrides authoritative MR30 offering status.</p>
     </div>
 
     <div class="sp-metrics" aria-label="Verified course-quality document coverage">
@@ -127,7 +127,7 @@ author_profile: false
           <article class="sp-card sp-third">
             <div class="sp-eyebrow">Course Specification (TQF3)</div>
             <p>{{ course.tqf3_status }}</p>
-            {% if course.tqf3_url %}<a class="sp-link" href="{{ course.tqf3_url }}" rel="noopener">Open TQF3 →</a>{% endif %}
+            {% if course.tqf3_url %}<a class="sp-link" href="{{ course.tqf3_url }}" rel="noopener">Open TQF3 →</a>{% elsif course.tqf3_access == 'RESTRICTED_SOURCE' %}<div class="sp-evidence-note">Restricted source · metadata verified</div>{% endif %}
           </article>
           <article class="sp-card sp-third">
             <div class="sp-eyebrow">Assessment Evidence</div>
@@ -136,12 +136,12 @@ author_profile: false
           <article class="sp-card sp-third">
             <div class="sp-eyebrow">Course Report (TQF5)</div>
             <p>{{ course.tqf5_status }}</p>
-            {% if course.tqf5_url %}<a class="sp-link" href="{{ course.tqf5_url }}" rel="noopener">Open TQF5 →</a>{% endif %}
+            {% if course.tqf5_url %}<a class="sp-link" href="{{ course.tqf5_url }}" rel="noopener">Open TQF5 →</a>{% elsif course.tqf5_access == 'RESTRICTED_SOURCE' %}<div class="sp-evidence-note">Restricted source · metadata verified</div>{% endif %}
           </article>
           <article class="sp-card sp-third">
             <div class="sp-eyebrow">Learning Achievement Verification</div>
             <p>{{ course.verification_status }}</p>
-            {% if course.verification_url %}<a class="sp-link" href="{{ course.verification_url }}" rel="noopener">Open verification material →</a>{% endif %}
+            {% if course.verification_url %}<a class="sp-link" href="{{ course.verification_url }}" rel="noopener">Open verification material →</a>{% elsif course.verification_access == 'RESTRICTED_SOURCE' %}<div class="sp-evidence-note">Restricted source · metadata verified</div>{% endif %}
           </article>
           <article class="sp-card sp-third">
             <div class="sp-eyebrow">Improvement</div>
@@ -165,16 +165,16 @@ author_profile: false
       </div>
     </details>
 
-    <div class="sp-policy"><strong>Public-document rule.</strong> Linked documents were directly located and reconciled to the relevant course code and academic period where available. A QA register reference alone does not create a public link. Access may depend on the source document's Google Drive sharing permissions.</div>
+    <div class="sp-policy"><strong>Public-document rule.</strong> {{ teaching.public_evidence_policy }} A QA register reference alone does not create a public link.</div>
   </section>
 
   <section class="sp-section sp-shell" aria-labelledby="hed2503-title">
     <div class="sp-section-head">
       <div class="sp-eyebrow">Temporal Truth Example</div>
       <h2 id="hed2503-title">HED2503: quality evidence without an active offering claim</h2>
-      <p class="sp-intro">HED2503 was listed in additional opening round 6 with ASST.PROF.DR.KASEM, then cancelled in the later round-7 notice. Its TQF3, TQF5 and verification working documents remain linked as traceable course-quality evidence only.</p>
+      <p class="sp-intro">HED2503 was listed in additional opening round 6 with ASST.PROF.DR.KASEM, then cancelled in the later round-7 notice. Its TQF3, TQF5 and verification working documents remain represented as traceable metadata evidence while source access is restricted.</p>
     </div>
-    <div class="sp-policy"><strong>Current state:</strong> OFFICIALLY_CANCELLED — Semester 1/2569. The linked TQF5 and verification materials are draft/working or planned and are not presented as completed results.</div>
+    <div class="sp-policy"><strong>Current state:</strong> OFFICIALLY_CANCELLED — Semester 1/2569. The TQF5 and verification materials are draft/working or planned and are not presented as completed results.</div>
   </section>
 
   <section class="sp-section sp-shell" aria-labelledby="special-teaching-title">
@@ -231,11 +231,12 @@ author_profile: false
           <li>Central MR30 and official MR30 supplementary notices have priority for offering status.</li>
           <li>Later authoritative notices supersede earlier opening or timetable evidence.</li>
           <li>Teaching-load and course-quality documents provide supporting context but cannot reverse an official cancellation.</li>
+          <li>Restricted source documents are represented as metadata only until public sharing is explicitly approved.</li>
           <li>HEPE validation and AI-assisted verification snapshots remain reconciliation-only.</li>
           <li>Semester 2/2569 remains fail-closed until an authoritative assignment source is found.</li>
         </ul>
       </article>
     </div>
-    <div class="sp-policy">Teaching information is reconciled against Ramkhamhaeng University MR30 records and traceable academic documents. Student-identifiable records, grades, answer scripts, internal Drive identifiers, private audit metadata and confidential HEPE records are not published on this website.</div>
+    <div class="sp-policy">Teaching information is reconciled against Ramkhamhaeng University MR30 records and traceable academic documents. Student-identifiable records, grades, answer scripts, restricted Drive identifiers, private audit metadata and confidential HEPE records are not published on this website.</div>
   </section>
 </div>
