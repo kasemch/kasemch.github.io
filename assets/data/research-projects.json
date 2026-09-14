@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "1.2",
+  "schemaVersion": "1.3",
   "lastVerified": "2026-09-14",
   "evidencePolicy": "Only public-safe fields supported by authoritative or controlled project records are displayed. Draft-only or unbound research candidates are never promoted to Verified Active. Candidate records may be counted or displayed only when their candidate status itself is supported by a public-safe controlled record.",
   "portfolioClasses": [
@@ -55,6 +55,28 @@
       "lastVerified": "2026-09-14",
       "featured": true,
       "visibility": "public-summary",
+      "detailPath": "../research-project/?id=bmo",
+      "researchFocus": "Movement opportunity, time poverty, and 24-hour movement behaviour among working-age adults in Bangkok, with emphasis on structural inequality and measurement development.",
+      "publicOutputs": [
+        {
+          "label": "Approved project core reference",
+          "state": "verified"
+        },
+        {
+          "label": "Measurement-domain baseline",
+          "state": "verified"
+        },
+        {
+          "label": "Existing-instrument comparison",
+          "state": "active"
+        }
+      ],
+      "publicEvidenceBinding": {
+        "status": "verified-controlled",
+        "label": "Controlled evidence binding verified",
+        "note": "The project is bound to an authoritative project vault and governed continuation register. Private Drive records are not exposed on this public site.",
+        "explorerPath": "../evidence-explorer/"
+      },
       "themes": [
         "Movement Opportunity",
         "Time Poverty",
