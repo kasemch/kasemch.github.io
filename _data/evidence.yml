@@ -1,0 +1,41 @@
+records:
+  - id: "EVID-PUB-2024-01"
+    title: "Dental sealant retention study"
+    domain: "Publications"
+    claim: "A 2024 journal article on dental sealant retention among school-aged children in Khuan Khanun District is listed in the public publication register."
+    evidence_type: "Publication"
+    source_label: "Srinakharinwirot University Dental Journal"
+    source_url: "https://ejournals.swu.ac.th/index.php/swudentj/article/view/16497"
+    evidence_status: "VERIFIED"
+    verification_date: "2024-12-17"
+    related_page: "/publications/"
+    related_record: "/publication/2024-12-17-dental-sealant-retention"
+    public: true
+    featured: true
+
+  - id: "EVID-PUB-2024-02"
+    title: "Melioidosis prevention behaviour study"
+    domain: "Publications"
+    claim: "A 2024 original article on melioidosis-prevention behaviours among village health volunteers in Yan Ta Khao District is listed in the public publication register."
+    evidence_type: "Publication"
+    source_label: "Thai Health Promotion Journal / ThaiJO"
+    source_url: "https://so14.tci-thaijo.org/index.php/thpjournal/article/view/3040"
+    evidence_status: "VERIFIED"
+    verification_date: "2024-06-30"
+    related_page: "/publications/"
+    related_record: "/publication/2024-06-30-melioidosis-prevention-vhv"
+    public: true
+    featured: true
+
+  - id: "EVID-TEACH-2569-01"
+    title: "Semester 1/2569 teaching evidence boundary"
+    domain: "Teaching"
+    claim: "Public teaching status for Semester 1/2569 is reconciled against Ramkhamhaeng University central MR30 records, with later official notices taking precedence over earlier scheduling evidence."
+    evidence_type: "Official public schedule source"
+    source_label: "Ramkhamhaeng University central MR30 schedule"
+    source_url: "https://www.regis.ru.ac.th/index.php/schedule/mr30_central"
+    evidence_status: "PUBLIC_SOURCE"
+    verification_date: "2026-09-14"
+    related_page: "/teaching/"
+    public: true
+    featured: true
