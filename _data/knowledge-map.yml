@@ -2,42 +2,42 @@ nodes:
   - id: health-education
     label: Health Education
     description: Teaching, research and service focused on health knowledge, behaviour and promotion.
-    url: ./teaching/
+    url: ../teaching/
     public: true
   - id: physical-education
     label: Physical Education
     description: Teaching and academic work connecting movement, learning, wellbeing and professional preparation.
-    url: ./teaching/
+    url: ../teaching/
     public: true
   - id: school-health
     label: School Health
     description: School-based health promotion, programme evaluation and related teaching and research.
-    url: ./research/
+    url: ../research/
     public: true
   - id: teaching
     label: Teaching
     description: Evidence-informed teaching, assessment, learning design and continuous improvement.
-    url: ./teaching/
+    url: ../teaching/
     public: true
   - id: research
     label: Research
     description: Public research outputs and academic inquiry across health, movement and education.
-    url: ./research/
+    url: ../research/
     public: true
   - id: curriculum-qa
     label: Curriculum & QA
     description: Curriculum alignment, learning outcomes, assessment and academic quality improvement.
-    url: ./curriculum-quality/
+    url: ../curriculum-quality/
     public: true
   - id: evidence
     label: Evidence
     description: Traceable public sources supporting selected academic claims on this site.
-    url: ./evidence-explorer/
+    url: ../evidence-explorer/
     public: true
   - id: innovation
     label: Digital Innovation
     description: Public-facing academic uses of digital systems and responsible AI.
-    url: ./innovation-projects/
+    url: ../innovation-projects/
     public: true
 
 edges:
