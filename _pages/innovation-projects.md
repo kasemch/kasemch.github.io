@@ -27,27 +27,28 @@ author_profile: false
 
   <section class="sp-section sp-shell" aria-labelledby="ru-hepe-learning-title">
     <div class="sp-section-head">
-      <div class="sp-eyebrow">Teaching Innovation · GitHub Organization</div>
+      <div class="sp-eyebrow">Teaching Innovation · Course Ecosystem</div>
       <h2 id="ru-hepe-learning-title">{{ ru_hepe.name }}</h2>
-      <p class="sp-intro">A public GitHub-based teaching-and-learning workspace supporting course hubs, reusable learning structures and student portfolio workflows for Health Education and Physical Education activities.</p>
+      <p class="sp-intro">A public GitHub-based teaching-and-learning workspace supporting course hubs, reusable assignment and portfolio structures, and selected course repositories for Health Education and Physical Education activities.</p>
     </div>
     <div class="sp-metrics" aria-label="RU HEPE Learning public repository summary">
       <article class="sp-metric"><strong>{{ ru_hepe.public_repository_count }}</strong><span>Public repositories verified</span></article>
-      <article class="sp-metric"><strong>GitHub</strong><span>Learning workspace</span></article>
-      <article class="sp-metric"><strong>HEPE</strong><span>Health &amp; Physical Education</span></article>
-      <article class="sp-metric"><strong>Public</strong><span>Selected learning resources</span></article>
+      <article class="sp-metric"><strong>1</strong><span>Pilot course workspace</span></article>
+      <article class="sp-metric"><strong>2</strong><span>Reusable templates</span></article>
+      <article class="sp-metric"><strong>Public</strong><span>Selected learning infrastructure</span></article>
     </div>
     <div class="sp-grid">
       {% for repo in ru_hepe.repositories %}
       <article class="sp-card sp-third">
-        <div class="sp-output-year">PUBLIC REPOSITORY</div>
+        <div class="sp-output-year">{{ repo.role }}</div>
         <h3>{{ repo.label }}</h3>
         <p>{{ repo.purpose }}</p>
         <a class="sp-link" href="{{ repo.url }}" rel="noopener">View {{ repo.name }} on GitHub →</a>
       </article>
       {% endfor %}
     </div>
-    <p class="sp-all-publications"><a class="sp-link" href="{{ ru_hepe.organization_url }}" rel="noopener">Explore {{ ru_hepe.name }} on GitHub →</a></p>
+    <p class="sp-all-publications"><a class="sp-link" href="{{ ru_hepe.profile_path | relative_url }}">Explore the RU HEPE Learning course ecosystem →</a></p>
+    <p class="sp-all-publications"><a class="sp-link" href="{{ ru_hepe.organization_url }}" rel="noopener">Open {{ ru_hepe.name }} on GitHub →</a></p>
     <div class="sp-policy"><strong>Institutional-status note.</strong> {{ ru_hepe.disclaimer }}</div>
   </section>
 
