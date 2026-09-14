@@ -19,13 +19,49 @@
 
   const render = (project, data) => {
     const themes = (project.themes || []).map((item) => `<span class="rpd-chip">${escapeHtml(item)}</span>`).join('');
-    const milestones = (project.milestones || []).map((item, index) => `
-      <li class="rpd-timeline-item" data-state="${escapeHtml(item.state)}">
-        <span class="rpd-timeline-index">${String(index + 1).padStart(2, '0')}</span>
-        <div><strong>${escapeHtml(item.label)}</strong><span>${escapeHtml(stateLabel(item.state))}</span></div>
-      </li>`).join('');
+    const outputsById = new Map((project.publicOutputs || []).map((item) => [item.id, item]));
+
+    const milestones = (project.milestones || []).map((item, index) => {
+      const linked = (item.linkedOutputIds || []).map((id) => outputsById.get(id)).filter(Boolean);
+      const linkedSummary = linked.length
+        ? linked.map((output) => escapeHtml(output.label)).join(' · ')
+        : 'No verified public-safe output binding';
+      return `
+        <li class="rpd-timeline-item" data-state="${escapeHtml(item.state)}">
+          <span class="rpd-timeline-index">${String(index + 1).padStart(2, '0')}</span>
+          <div>
+            <strong>${escapeHtml(item.label)}</strong>
+            <span>${escapeHtml(stateLabel(item.state))}</span>
+            <span class="rpd-binding-line">Output binding: ${linkedSummary}</span>
+          </div>
+        </li>`;
+    }).join('');
+
     const outputs = (project.publicOutputs || []).map((item) => `
-      <article class="rpd-output"><strong>${escapeHtml(item.label)}</strong><span>${escapeHtml(stateLabel(item.state))}</span></article>`).join('') || '<p class="rpd-muted">No public-safe output record is available.</p>';
+      <article class="rpd-output">
+        <strong>${escapeHtml(item.label)}</strong>
+        <span>${escapeHtml(item.type || 'Project output')}</span>
+        <span>${escapeHtml(stateLabel(item.state))}</span>
+        <span>${item.publicSourceAvailable ? 'Public source available' : 'Controlled source; public file not exposed'}</span>
+      </article>`).join('') || '<p class="rpd-muted">No public-safe output record is available.</p>';
+
+    const traceabilityRows = (project.milestones || []).map((item) => {
+      const linked = (item.linkedOutputIds || []).map((id) => outputsById.get(id)).filter(Boolean);
+      const publicationCount = (item.publicationIds || []).length;
+      return `
+        <tr>
+          <td>${escapeHtml(item.label)}</td>
+          <td><span class="rpd-state rpd-state-${escapeHtml(item.state)}">${escapeHtml(stateLabel(item.state))}</span></td>
+          <td>${linked.length ? linked.map((output) => escapeHtml(output.label)).join('<br>') : '—'}</td>
+          <td>${publicationCount ? `${publicationCount} verified` : 'None verified'}</td>
+        </tr>`;
+    }).join('');
+
+    const publications = project.publicationBindings || [];
+    const publicationBlock = publications.length
+      ? publications.map((item) => `<article class="rpd-publication"><strong>${escapeHtml(item.title)}</strong><span>${escapeHtml(item.status || 'Verified link')}</span></article>`).join('')
+      : `<article class="rpd-publication rpd-publication-empty"><strong>No verified BMO publication binding yet</strong><p>${escapeHtml(project.publicationBindingNote || 'No publication has been verified as a project output.')}</p></article>`;
+
     const evidence = project.publicEvidenceBinding || {};
 
     root.innerHTML = `
@@ -51,16 +87,25 @@
         </div>
       </section>
 
-      <section class="rpd-section"><p class="rpd-eyebrow">Lifecycle</p><h2>Verified public timeline</h2><p class="rpd-muted">Unverified stages remain explicitly unconfirmed; this timeline is not a completion-percentage estimate.</p><ol class="rpd-timeline">${milestones}</ol></section>
+      <section class="rpd-section"><p class="rpd-eyebrow">Lifecycle</p><h2>Verified public timeline</h2><p class="rpd-muted">Each stage is linked only to outputs whose relationship to that milestone is itself controlled and verified. Unverified stages remain unconfirmed.</p><ol class="rpd-timeline">${milestones}</ol></section>
+
+      <section class="rpd-section"><p class="rpd-eyebrow">Traceability</p><h2>Milestone → Output → Publication</h2>
+        <div class="rpd-table-wrap"><table class="rpd-trace-table"><thead><tr><th>Milestone</th><th>Status</th><th>Bound output</th><th>Publication</th></tr></thead><tbody>${traceabilityRows}</tbody></table></div>
+      </section>
 
       <section class="rpd-section"><p class="rpd-eyebrow">Outputs</p><h2>Public-safe project outputs</h2><div class="rpd-output-grid">${outputs}</div></section>
+
+      <section class="rpd-section"><p class="rpd-eyebrow">Publication binding</p><h2>Verified publications linked to this project</h2><div class="rpd-publication-grid">${publicationBlock}</div>
+        <div class="rpd-actions"><a class="rpd-btn" href="${escapeHtml(project.publicationRegisterPath || '../publications/')}">Open publication register</a></div>
+      </section>
 
       <section class="rpd-section"><p class="rpd-eyebrow">Evidence binding</p><h2>Traceability without exposing private records</h2>
         <article class="rpd-evidence">
           <strong>${escapeHtml(evidence.label || project.verificationStatus || 'Controlled evidence status')}</strong>
           <p>${escapeHtml(evidence.note || project.evidenceNote)}</p>
           <p><strong>Project-publication link:</strong> ${project.publicationLinked ? 'Verified' : 'Not yet verified'}</p>
-          <div class="rpd-actions"><a class="rpd-btn rpd-btn-primary" href="${escapeHtml(evidence.explorerPath || '../evidence-explorer/')}">Open Evidence Explorer</a><a class="rpd-btn" href="../research-progress/">Research Command Center</a></div>
+          <p><strong>Public evidence register:</strong> BMO-specific controlled source files are not published there unless a suitable public source becomes available.</p>
+          <div class="rpd-actions"><a class="rpd-btn rpd-btn-primary" href="${escapeHtml(evidence.explorerPath || '../evidence-explorer/')}">Browse public Evidence Explorer</a><a class="rpd-btn" href="../research-progress/">Research Command Center</a></div>
         </article>
       </section>
 

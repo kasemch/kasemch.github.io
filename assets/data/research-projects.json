@@ -1,7 +1,7 @@
 {
-  "schemaVersion": "1.3",
+  "schemaVersion": "1.4",
   "lastVerified": "2026-09-14",
-  "evidencePolicy": "Only public-safe fields supported by authoritative or controlled project records are displayed. Draft-only or unbound research candidates are never promoted to Verified Active. Candidate records may be counted or displayed only when their candidate status itself is supported by a public-safe controlled record.",
+  "evidencePolicy": "Only public-safe fields supported by authoritative or controlled project records are displayed. Draft-only or unbound research candidates are never promoted to Verified Active. Candidate records may be counted or displayed only when their candidate status itself is supported by a public-safe controlled record. Milestone-to-output and project-to-publication links are shown only when the relationship itself is verified.",
   "portfolioClasses": [
     {"id":"verified-active","label":"Verified Active","description":"An ongoing research project with an authoritative or controlled project identity and a verified current lifecycle state."},
     {"id":"candidate","label":"Candidate","description":"A research concept or proposal with a controlled candidate record but not yet verified as an active governed project."},
@@ -10,11 +10,53 @@
   ],
   "pipeline":["Project Core","Protocol","Ethics","Instrument","Data Collection","Analysis","Manuscript","Publication"],
   "projects":[{
-    "id":"bmo","shortTitle":"BMO","title":"Inequalities in Movement Opportunity, Time Poverty, and 24-Hour Movement Behaviours among Working-Age Adults in Bangkok, Thailand","titleTh":"ความเหลื่อมล้ำด้านโอกาสในการเคลื่อนไหว ภาวะขาดแคลนเวลา และพฤติกรรมการเคลื่อนไหวตลอด 24 ชั่วโมงของประชากรวัยทำงานในกรุงเทพมหานคร","portfolioClass":"verified-active","portfolioClassLabel":"Verified Active","publicationLinked":false,"status":"active","statusLabel":"Active · Instrument development","stage":"Instrument","stageIndex":3,"currentPhase":"Measurement development and existing-instrument evidence comparison","currentWorkstream":"Existing instrument comparison for the Movement Opportunity measurement model","nextEvidenceGate":"Complete Adopt / Adapt / Develop decisions before candidate-item development","verificationStatus":"Authoritative research binding and governed continuation state verified","sourceAsOf":"2026-09-07","lastVerified":"2026-09-14","featured":true,"visibility":"public-summary","detailPath":"../research-project/?id=bmo","researchFocus":"Movement opportunity, time poverty, and 24-hour movement behaviour among working-age adults in Bangkok, with emphasis on structural inequality and measurement development.",
-    "publicOutputs":[{"label":"Approved project core reference","state":"verified"},{"label":"Measurement-domain baseline","state":"verified"},{"label":"Existing-instrument comparison","state":"active"}],
-    "publicEvidenceBinding":{"status":"verified-controlled","label":"Controlled evidence binding verified","note":"The project is bound to an authoritative project vault and governed continuation register. Private Drive records are not exposed on this public site.","explorerPath":"../evidence-explorer/"},
+    "id":"bmo",
+    "shortTitle":"BMO",
+    "title":"Inequalities in Movement Opportunity, Time Poverty, and 24-Hour Movement Behaviours among Working-Age Adults in Bangkok, Thailand",
+    "titleTh":"ความเหลื่อมล้ำด้านโอกาสในการเคลื่อนไหว ภาวะขาดแคลนเวลา และพฤติกรรมการเคลื่อนไหวตลอด 24 ชั่วโมงของประชากรวัยทำงานในกรุงเทพมหานคร",
+    "portfolioClass":"verified-active",
+    "portfolioClassLabel":"Verified Active",
+    "publicationLinked":false,
+    "publicationBindingStatus":"none-verified",
+    "publicationBindingNote":"No publication in the public publication register is currently verified as an output of BMO. Publications are not linked by topic similarity alone.",
+    "publicationRegisterPath":"../publications/",
+    "status":"active",
+    "statusLabel":"Active · Instrument development",
+    "stage":"Instrument",
+    "stageIndex":3,
+    "currentPhase":"Measurement development and existing-instrument evidence comparison",
+    "currentWorkstream":"Existing instrument comparison for the Movement Opportunity measurement model",
+    "nextEvidenceGate":"Complete Adopt / Adapt / Develop decisions before candidate-item development",
+    "verificationStatus":"Authoritative research binding and governed continuation state verified",
+    "sourceAsOf":"2026-09-07",
+    "lastVerified":"2026-09-14",
+    "featured":true,
+    "visibility":"public-summary",
+    "detailPath":"../research-project/?id=bmo",
+    "researchFocus":"Movement opportunity, time poverty, and 24-hour movement behaviour among working-age adults in Bangkok, with emphasis on structural inequality and measurement development.",
+    "publicOutputs":[
+      {"id":"bmo-core","label":"Approved project core reference","type":"Project governance output","state":"verified","milestoneId":"project-core","publicSourceAvailable":false},
+      {"id":"bmo-measurement-baseline","label":"Measurement-domain baseline","type":"Measurement architecture output","state":"verified","milestoneId":"instrument","publicSourceAvailable":false},
+      {"id":"bmo-existing-instrument-comparison","label":"Existing-instrument comparison","type":"Evidence comparison workstream","state":"active","milestoneId":"instrument","publicSourceAvailable":false}
+    ],
+    "publicEvidenceBinding":{
+      "status":"verified-controlled",
+      "label":"Controlled evidence binding verified",
+      "note":"The project is bound to an authoritative project vault and governed continuation register. The underlying controlled records are not public sources and private Drive records are not exposed on this site.",
+      "explorerPath":"../evidence-explorer/"
+    },
     "themes":["Movement Opportunity","Time Poverty","24-Hour Movement Behaviour","Working-Age Adults"],
     "evidenceNote":"The authoritative research registry confirms BMO as the active governed research project. The approved project core and measurement-domain baseline are in place, and the current authorized workstream is an existing-instrument comparison. Protocol, ethics, data collection, analysis, manuscript, and publication stages are not presented as completed unless separately verified.",
-    "milestones":[{"label":"Project identity and core reference","state":"verified"},{"label":"Protocol stage","state":"not-publicly-confirmed"},{"label":"Ethics stage","state":"not-publicly-confirmed"},{"label":"Instrument development and evidence comparison","state":"active"},{"label":"Data collection","state":"not-publicly-confirmed"},{"label":"Analysis","state":"not-publicly-confirmed"},{"label":"Manuscript","state":"not-publicly-confirmed"},{"label":"Publication","state":"not-publicly-confirmed"}]
+    "milestones":[
+      {"id":"project-core","label":"Project identity and core reference","state":"verified","linkedOutputIds":["bmo-core"],"publicationIds":[]},
+      {"id":"protocol","label":"Protocol stage","state":"not-publicly-confirmed","linkedOutputIds":[],"publicationIds":[]},
+      {"id":"ethics","label":"Ethics stage","state":"not-publicly-confirmed","linkedOutputIds":[],"publicationIds":[]},
+      {"id":"instrument","label":"Instrument development and evidence comparison","state":"active","linkedOutputIds":["bmo-measurement-baseline","bmo-existing-instrument-comparison"],"publicationIds":[]},
+      {"id":"data-collection","label":"Data collection","state":"not-publicly-confirmed","linkedOutputIds":[],"publicationIds":[]},
+      {"id":"analysis","label":"Analysis","state":"not-publicly-confirmed","linkedOutputIds":[],"publicationIds":[]},
+      {"id":"manuscript","label":"Manuscript","state":"not-publicly-confirmed","linkedOutputIds":[],"publicationIds":[]},
+      {"id":"publication","label":"Publication","state":"not-publicly-confirmed","linkedOutputIds":[],"publicationIds":[]}
+    ],
+    "publicationBindings":[]
   }]
 }
