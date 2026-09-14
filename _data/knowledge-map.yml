@@ -24,6 +24,11 @@ nodes:
     description: Public research outputs and academic inquiry across health, movement and education.
     url: ../research/
     public: true
+  - id: research-status
+    label: Research Status
+    description: Public-safe lifecycle, milestone and evidence-boundary views for governed research work.
+    url: ../research-progress/
+    public: true
   - id: curriculum-qa
     label: Curriculum & QA
     description: Curriculum alignment, learning outcomes, assessment and academic quality improvement.
@@ -38,6 +43,11 @@ nodes:
     label: Digital Innovation
     description: Public-facing academic uses of digital systems and responsible AI.
     url: ../innovation-projects/
+    public: true
+  - id: professional-development
+    label: Professional Development
+    description: Verified public professional learning records in research ethics, integrity and continuing academic development.
+    url: ../professional-development/
     public: true
 
 edges:
@@ -63,8 +73,14 @@ edges:
     target: curriculum-qa
     relationship: Learning outcomes and assessment alignment
   - source: research
+    target: research-status
+    relationship: Ongoing project lifecycle and milestone tracking
+  - source: research
     target: evidence
     relationship: Publications and traceable public sources
+  - source: research-status
+    target: evidence
+    relationship: Public-safe evidence boundaries for governed research status
   - source: teaching
     target: evidence
     relationship: Public evidence boundary and verified metadata
@@ -77,3 +93,9 @@ edges:
   - source: innovation
     target: evidence
     relationship: Responsible evidence management
+  - source: professional-development
+    target: evidence
+    relationship: Verified public professional learning records
+  - source: professional-development
+    target: teaching
+    relationship: Continuing development supporting academic practice
