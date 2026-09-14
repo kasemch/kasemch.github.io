@@ -1,0 +1,79 @@
+nodes:
+  - id: health-education
+    label: Health Education
+    description: Teaching, research and service focused on health knowledge, behaviour and promotion.
+    url: /teaching/
+    public: true
+  - id: physical-education
+    label: Physical Education
+    description: Teaching and academic work connecting movement, learning, wellbeing and professional preparation.
+    url: /teaching/
+    public: true
+  - id: school-health
+    label: School Health
+    description: School-based health promotion, programme evaluation and related teaching and research.
+    url: /research/
+    public: true
+  - id: teaching
+    label: Teaching
+    description: Evidence-informed teaching, assessment, learning design and continuous improvement.
+    url: /teaching/
+    public: true
+  - id: research
+    label: Research
+    description: Public research outputs and academic inquiry across health, movement and education.
+    url: /research/
+    public: true
+  - id: curriculum-qa
+    label: Curriculum & QA
+    description: Curriculum alignment, learning outcomes, assessment and academic quality improvement.
+    url: /curriculum-quality/
+    public: true
+  - id: evidence
+    label: Evidence
+    description: Traceable public sources supporting selected academic claims on this site.
+    url: /evidence-explorer/
+    public: true
+  - id: innovation
+    label: Digital Innovation
+    description: Public-facing academic uses of digital systems and responsible AI.
+    url: /innovation-projects/
+    public: true
+
+edges:
+  - source: health-education
+    target: teaching
+    relationship: Core teaching domain
+  - source: health-education
+    target: research
+    relationship: Research domain
+  - source: physical-education
+    target: teaching
+    relationship: Core teaching domain
+  - source: physical-education
+    target: research
+    relationship: Movement and wellbeing inquiry
+  - source: school-health
+    target: teaching
+    relationship: Teaching and programme evaluation
+  - source: school-health
+    target: research
+    relationship: School-based health inquiry
+  - source: teaching
+    target: curriculum-qa
+    relationship: Learning outcomes and assessment alignment
+  - source: research
+    target: evidence
+    relationship: Publications and traceable public sources
+  - source: teaching
+    target: evidence
+    relationship: Public evidence boundary and verified metadata
+  - source: curriculum-qa
+    target: evidence
+    relationship: Evidence-informed improvement
+  - source: innovation
+    target: teaching
+    relationship: Digital support for learning
+  - source: innovation
+    target: evidence
+    relationship: Responsible evidence management
