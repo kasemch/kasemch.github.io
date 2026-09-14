@@ -27,6 +27,48 @@ records:
     public: true
     featured: true
 
+  - id: "EVID-PUB-2024-03"
+    title: "Smoking cessation motivation study"
+    domain: "Publications"
+    claim: "A 2024 journal article on smoking-cessation motivation among clients attending a smoking cessation clinic at Sikao Hospital is listed in the public publication register."
+    evidence_type: "Publication"
+    source_label: "Journal of Faculty of Physical Education / ThaiJO"
+    source_url: "https://he03.tci-thaijo.org/index.php/peswuJ/article/view/2890"
+    evidence_status: "VERIFIED"
+    verification_date: "2024-12-30"
+    related_page: "/publications/"
+    related_record: "/publication/2024-12-30-smoking-cessation-motivation"
+    public: true
+    featured: true
+
+  - id: "EVID-PUB-2024-04"
+    title: "Stroke prevention behaviour study"
+    domain: "Publications"
+    claim: "A 2024 journal article on factors associated with stroke-prevention behaviour among patients with hypertension in Krabi Province is listed in the public publication register."
+    evidence_type: "Publication"
+    source_label: "Thai Journal of Public Health and Health Sciences / ThaiJO"
+    source_url: "https://he02.tci-thaijo.org/index.php/tjph/article/view/269479"
+    evidence_status: "VERIFIED"
+    verification_date: "2024-06-18"
+    related_page: "/publications/"
+    related_record: "/publication/2024-06-18-stroke-prevention-hypertension"
+    public: true
+    featured: false
+
+  - id: "EVID-PUB-2020-01"
+    title: "Health promotion behaviours among hospital staff"
+    domain: "Publications"
+    claim: "A 2020 journal article on health-promotion behaviours among staff members at Bangpakok 1 Hospital is listed in the public publication register."
+    evidence_type: "Publication"
+    source_label: "Academic Journal of Thailand National Sports University / ThaiJO"
+    source_url: "https://he02.tci-thaijo.org/index.php/TNSUJournal/article/view/244485"
+    evidence_status: "VERIFIED"
+    verification_date: "2020-05-01"
+    related_page: "/publications/"
+    related_record: "/publication/2020-05-01-health-promotion-bangpakok"
+    public: true
+    featured: false
+
   - id: "EVID-TEACH-2569-01"
     title: "Semester 1/2569 teaching evidence boundary"
     domain: "Teaching"
