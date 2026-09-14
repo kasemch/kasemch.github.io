@@ -5,131 +5,126 @@ author_profile: false
 classes: wide
 ---
 
-{% assign ru_hepe = site.data.ru_hepe_learning %}
+{% assign teaching = site.data.teaching_ay2569 %}
 {% assign publication_count = site.publications | size %}
+{% assign proceeding_count_2023 = site.data.conference_proceedings.items | size %}
+{% assign proceeding_count_2026 = site.data.conference_proceedings_2026.items | size %}
+{% assign proceeding_count = proceeding_count_2023 | plus: proceeding_count_2026 %}
+{% assign scholarly_total = publication_count | plus: proceeding_count | plus: 2 %}
 
-<link rel="stylesheet" href="./assets/css/option-17a.css">
-<link rel="stylesheet" href="./assets/css/static-ai-v2.css">
+<link rel="stylesheet" href="{{ '/assets/css/academic-executive.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/static-ai-v2.css' | relative_url }}">
 
-<div class="option17a">
-  <div class="oa-shell">
-    <section class="oa-hero" aria-labelledby="home-title">
-      <div class="oa-profile">
-        <div class="oa-portrait-wrap">
-          <img class="oa-portrait" src="./images/profile-approved-01.webp" alt="Formal portrait of Asst. Prof. Dr. Kasem Chooratna" width="800" height="1000" decoding="async">
-          <div class="oa-badge">Health Education · Physical Education</div>
+<div class="academic-executive option17a">
+  <section class="ae-hero" aria-labelledby="home-title">
+    <div class="ae-shell ae-hero-grid">
+      <div class="ae-hero-copy">
+        <div class="ae-kicker">Healthier People · Stronger Societies</div>
+        <h1 id="home-title">Asst. Prof. Dr.<br>Kasem Chooratna</h1>
+        <p class="ae-role">Health Education and Physical Education · Ramkhamhaeng University</p>
+        <p class="ae-lead">Academic work connecting teaching, research, curriculum development, quality assurance, community engagement and responsible digital innovation for healthier people and stronger communities.</p>
+        <div class="ae-actions">
+          <a class="ae-btn ae-btn-gold" href="{{ '/about/' | relative_url }}">Explore Profile</a>
+          <a class="ae-btn ae-btn-ghost" href="{{ '/workspace/' | relative_url }}">Academic Dashboard</a>
         </div>
-        <div>
-          <div class="oa-kicker">Academic Digital Hub</div>
-          <h1 class="oa-title" id="home-title">Asst. Prof. Dr. Kasem Chooratna<span>Teaching · Research · Curriculum · Quality · Innovation</span></h1>
-          <p class="oa-lead">An academic profile connecting health and physical education, evidence-informed teaching, curriculum development, quality assurance, research, academic service, and responsible digital innovation.</p>
-          <div class="oa-actions">
-            <a class="oa-btn oa-btn-primary" href="./about/">Explore Profile</a>
-            <a class="oa-btn oa-btn-soft" href="./publications/">View Publications</a>
-          </div>
-        </div>
+        <blockquote class="ae-quote">“Education, movement and evidence can work together to improve health, learning and society.”</blockquote>
       </div>
 
-      <aside class="oa-ai-panel" aria-labelledby="ask-ai-title">
-        <div class="oa-ai-label">AI Academic Assistant · Static-first v2</div>
-        <h2 id="ask-ai-title">Ask about my academic work</h2>
-        <p>Search a local index of public academic areas on this website. Results route only to public, evidence-aware content and do not generate new claims.</p>
-        <div class="oa-search" role="search">
-          <input type="search" data-oa-search aria-label="Search public academic records" placeholder="Try: research ethics, school health, curriculum, publications…">
-          <button type="button" data-oa-search-button>Search</button>
+      <div class="ae-portrait-stage">
+        <div class="ae-portrait-glow" aria-hidden="true"></div>
+        <img class="ae-portrait" src="{{ '/images/profile-approved-01.webp' | relative_url }}" alt="Formal portrait of Asst. Prof. Dr. Kasem Chooratna" width="800" height="1000" decoding="async">
+        <div class="ae-portrait-axis" aria-label="Academic focus">
+          <span>Education</span><span>Research</span><span>Community</span><span>Impact</span>
         </div>
-        <div class="oa-suggestions" aria-label="Suggested searches">
-          <button type="button" data-oa-suggestion="research">Research</button>
-          <button type="button" data-oa-suggestion="teaching">Teaching</button>
-          <button type="button" data-oa-suggestion="curriculum quality">Curriculum &amp; QA</button>
-          <button type="button" data-oa-suggestion="evidence">Evidence</button>
-          <button type="button" data-oa-suggestion="professional development">Professional Development</button>
-        </div>
-        <div class="oa-ai-response" aria-live="polite">
-          <div class="oa-ai-status" data-oa-ai-status>Search the verified public academic index.</div>
-          <div class="oa-ai-results" data-oa-ai-results></div>
-        </div>
-        <div class="oa-ai-note">Evidence-first: this assistant uses a local public index only. It does not call an external AI service, access private files, or generate new biographical or academic claims.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ae-pillars" aria-label="Academic portfolio pillars">
+    <div class="ae-shell ae-pillar-grid">
+      <a href="{{ '/teaching/' | relative_url }}"><strong>Teaching</strong><span>Evidence-informed learning and course development</span></a>
+      <a href="{{ '/research/' | relative_url }}"><strong>Research</strong><span>Health, movement, education and wellbeing</span></a>
+      <a href="{{ '/curriculum-quality/' | relative_url }}"><strong>Curriculum &amp; QA</strong><span>Alignment, evaluation and continuous improvement</span></a>
+      <a href="{{ '/innovation-projects/' | relative_url }}"><strong>Academic Innovation</strong><span>Responsible digital systems and AI-enabled practice</span></a>
+    </div>
+  </section>
+
+  <section class="ae-section">
+    <div class="ae-shell ae-about-grid">
+      <article>
+        <div class="ae-eyebrow">Academic Profile</div>
+        <h2>Knowledge in service of learning, health and society</h2>
+        <p>Academic work spans Health Education, Physical Education, School Health, curriculum and learning-outcome design, assessment and evaluation, educational quality assurance, research, community engagement and responsible AI in education.</p>
+        <div class="ae-inline-links"><a href="{{ '/about/' | relative_url }}">About →</a><a href="{{ '/cv/' | relative_url }}">Academic CV →</a></div>
+      </article>
+      <aside class="ae-snapshot" aria-label="Verified academic snapshot">
+        <div><span>Verified journal publications</span><strong>{{ publication_count }}</strong></div>
+        <div><span>Conference proceedings</span><strong>{{ proceeding_count }}</strong></div>
+        <div><span>Degree research works</span><strong>2</strong></div>
+        <div><span>AY2569 retained teaching records</span><strong>{{ teaching.summary.retained }}</strong></div>
       </aside>
-    </section>
+    </div>
+  </section>
 
-    <nav class="oa-metrics" aria-label="Academic hub quick access">
-      <a class="oa-metric" href="./publications/"><span><strong>Publications</strong><span>Scholarly outputs on this site</span></span><b>{{ publication_count }}</b></a>
-      <a class="oa-metric" href="./teaching/"><span><strong>Teaching</strong><span>Courses &amp; learning practice</span></span><b>→</b></a>
-      <a class="oa-metric" href="./curriculum-quality/"><span><strong>Curriculum &amp; QA</strong><span>Alignment &amp; improvement</span></span><b>→</b></a>
-      <a class="oa-metric" href="./evidence-explorer/"><span><strong>Evidence</strong><span>Traceable public sources</span></span><b>→</b></a>
-    </nav>
-  </div>
-
-  <section class="oa-section" id="academic-hub" aria-labelledby="hub-title">
-    <div class="oa-shell">
-      <div class="oa-section-head">
-        <div><div class="oa-eyebrow">Academic Portfolio</div><h2 id="hub-title">Explore connected areas of work</h2></div>
-        <p class="oa-section-intro">The homepage is organized as a working academic hub: each area leads to a dedicated evidence-based section rather than functioning as a decorative portfolio card.</p>
-      </div>
-      <div class="oa-grid">
-        <article class="oa-card oa-card-wide" data-oa-card data-keywords="teaching learning health education physical education school health assessment courses"><div class="oa-card-icon">T</div><h3>Teaching &amp; Learning</h3><p>Health Education, Physical Education, School Health, assessment, learning design and student development.</p><a href="./teaching/">Explore teaching →</a></article>
-        <article class="oa-card oa-card-wide" data-oa-card data-keywords="research publications health movement physical activity wellbeing evidence"><div class="oa-card-icon">R</div><h3>Research &amp; Publications</h3><p>Public academic outputs and research directions across health, movement, education and applied inquiry.</p><a href="./research/">Explore research →</a></article>
-        <article class="oa-card" data-oa-card data-keywords="curriculum quality qa plo clo mapping aun quality assurance"><div class="oa-card-icon">Q</div><h3>Curriculum &amp; Quality</h3><p>Outcome-based curriculum design, learning-outcome alignment, evaluation and continuous improvement.</p><a href="./curriculum-quality/">Explore curriculum &amp; QA →</a></article>
-        <article class="oa-card" data-oa-card data-keywords="innovation ai digital systems academic technology github learning"><div class="oa-card-icon">AI</div><h3>Digital Innovation</h3><p>Responsible AI and digital systems supporting academic work, learning and evidence management.</p><a href="./innovation-projects/">Explore innovation →</a></article>
-        <article class="oa-card" data-oa-card data-keywords="evidence sources verified traceable academic"><div class="oa-card-icon">E</div><h3>Evidence Explorer</h3><p>Selected public academic claims connected to traceable evidence and source records.</p><a href="./evidence-explorer/">Explore evidence →</a></article>
-        <article class="oa-card" data-oa-card data-keywords="knowledge map connected domains health education physical education"><div class="oa-card-icon">K</div><h3>Academic Knowledge Map</h3><p>Explore relationships among public academic domains represented on this website.</p><a href="./knowledge-map/">Explore knowledge map →</a></article>
-        <article class="oa-card" data-oa-card data-keywords="professional development credential certificate research ethics integrity training"><div class="oa-card-icon">P</div><h3>Professional Development</h3><p>Selected verified professional learning and research ethics or integrity credentials suitable for public disclosure.</p><a href="./professional-development/">Explore professional development →</a></article>
-        <article class="oa-card" data-oa-card data-keywords="community academic service health promotion outreach"><div class="oa-card-icon">S</div><h3>Academic Service &amp; Community</h3><p>Academic knowledge applied to health promotion, professional development and community-oriented initiatives.</p><a href="./about/">View profile &amp; service →</a></article>
+  <section class="ae-section ae-section-dark" aria-labelledby="expertise-title">
+    <div class="ae-shell">
+      <div class="ae-section-head"><div><div class="ae-eyebrow">Expertise</div><h2 id="expertise-title">Connected academic domains</h2></div><a href="{{ '/knowledge-map/' | relative_url }}">Open Knowledge Map →</a></div>
+      <div class="ae-expertise-grid">
+        <article><span>01</span><h3>Health Education</h3><p>Health promotion, school health, health literacy and learning for healthier lives.</p></article>
+        <article><span>02</span><h3>Physical Education</h3><p>Movement, physical activity, pedagogy and wellbeing across educational contexts.</p></article>
+        <article><span>03</span><h3>Curriculum &amp; Quality</h3><p>PLO/CLO alignment, curriculum mapping, assessment, evaluation and AUN-QA.</p></article>
+        <article><span>04</span><h3>Academic Innovation</h3><p>Responsible AI, digital workflows and evidence architecture for academic work.</p></article>
       </div>
     </div>
   </section>
 
-  <section class="oa-section" aria-labelledby="evidence-title">
-    <div class="oa-shell oa-evidence">
-      <article class="oa-panel">
-        <div class="oa-eyebrow">Evidence Explorer</div><h2 id="evidence-title">From academic area to traceable evidence</h2>
-        <p class="oa-section-intro">Follow selected public academic claims to traceable publication and teaching sources in the public-safe evidence register.</p>
-        <ul class="oa-list">
-          <li><strong>Research &amp; Publications</strong><span class="oa-pill">Public collection</span></li>
-          <li><strong>Teaching Portfolio</strong><span class="oa-pill">Verified where documented</span></li>
-          <li><strong>Curriculum &amp; Quality</strong><span class="oa-pill">Evidence-first</span></li>
-          <li><strong>Professional Development</strong><span class="oa-pill">Verified records</span></li>
-        </ul>
-        <a class="oa-btn oa-btn-soft" href="./evidence-explorer/">Open Evidence Explorer →</a>
-      </article>
-      <article class="oa-panel">
-        <div class="oa-eyebrow">Knowledge Map</div><h2>One profile, connected domains</h2>
-        <div class="oa-map">
-          <div class="oa-node"><strong>Health Education</strong><span>Teaching · research · service</span></div>
-          <div class="oa-node"><strong>Physical Education</strong><span>Movement · learning · wellbeing</span></div>
-          <div class="oa-node"><strong>Curriculum &amp; QA</strong><span>Alignment · evaluation · improvement</span></div>
-          <div class="oa-node"><strong>Digital Innovation</strong><span>Responsible AI · academic systems</span></div>
-        </div>
-        <a class="oa-btn oa-btn-soft" href="./knowledge-map/">Open Knowledge Map →</a>
-      </article>
-    </div>
-  </section>
-
-  <section class="oa-section" aria-labelledby="directions-title">
-    <div class="oa-shell">
-      <div class="oa-section-head"><div><div class="oa-eyebrow">Current Directions</div><h2 id="directions-title">Teaching, research and academic development</h2></div><a class="oa-btn oa-btn-soft" href="./innovation-projects/">View innovation projects</a></div>
-      <div class="oa-grid">
-        <article class="oa-card" data-oa-card data-keywords="health movement wellbeing research physical activity"><div class="oa-card-icon">01</div><h3>Movement &amp; Wellbeing Research</h3><p>Research connecting daily-life contexts, physical activity, wellbeing and healthier living.</p><a href="./research/">Research area →</a></article>
-        <article class="oa-card" data-oa-card data-keywords="curriculum academic quality learning outcomes qa"><div class="oa-card-icon">02</div><h3>Curriculum &amp; Academic Quality</h3><p>Programme design, learning outcomes, curriculum alignment and evidence-informed improvement.</p><a href="./curriculum-quality/">Curriculum &amp; QA →</a></article>
-        <article class="oa-card" data-oa-card data-keywords="teaching innovation github ru hepe learning {{ ru_hepe.public_repository_count }} repositories"><div class="oa-card-icon">03</div><h3>RU HEPE Learning</h3><p>A public GitHub-based learning ecosystem connecting course hubs, pilot workspaces, assignments and portfolio structures.</p><a href="./ru-hepe-learning/">Explore RU HEPE Learning →</a></article>
+  <section class="ae-section" aria-labelledby="outputs-title">
+    <div class="ae-shell">
+      <div class="ae-section-head"><div><div class="ae-eyebrow">Scholarly Output</div><h2 id="outputs-title">Verified outputs at a glance</h2></div><a href="{{ '/publications/' | relative_url }}">View Publications →</a></div>
+      <div class="ae-output-grid">
+        <article class="ae-chart-card">
+          <h3>Scholarly output mix</h3>
+          <p class="ae-muted">Output types are kept separate so their academic meaning is preserved.</p>
+          <div class="ae-stack" aria-label="Output mix chart">
+            <span class="ae-stack-journal" style="flex-grow:{{ publication_count }}"></span>
+            <span class="ae-stack-proceeding" style="flex-grow:{{ proceeding_count }}"></span>
+            <span class="ae-stack-degree" style="flex-grow:2"></span>
+          </div>
+          <div class="ae-legend"><span><i class="journal"></i>Journal {{ publication_count }}</span><span><i class="proceeding"></i>Proceedings {{ proceeding_count }}</span><span><i class="degree"></i>Degree research 2</span></div>
+          <div class="ae-big-number"><strong>{{ scholarly_total }}</strong><span>verified scholarly records across the three public categories</span></div>
+        </article>
+        <article class="ae-flow-card">
+          <h3>Academic impact flow</h3>
+          <div class="ae-flow" aria-label="Teaching research and impact flow">
+            <div><b>Teach</b><span>Knowledge &amp; skills</span></div><em>→</em>
+            <div><b>Research</b><span>Evidence &amp; inquiry</span></div><em>→</em>
+            <div><b>Improve</b><span>Curriculum &amp; quality</span></div><em>→</em>
+            <div><b>Serve</b><span>Community &amp; society</span></div>
+          </div>
+        </article>
       </div>
     </div>
   </section>
 
-  <section class="oa-section" aria-labelledby="calendar-title">
-    <div class="oa-shell">
-      <div class="oa-section-head"><div><div class="oa-eyebrow">Academic Calendar</div><h2 id="calendar-title">Upcoming schedule at a glance</h2></div></div>
-      <div class="oa-calendar">{% include academic-calendar.html %}</div>
+  <section class="ae-section" aria-labelledby="featured-title">
+    <div class="ae-shell">
+      <div class="ae-section-head"><div><div class="ae-eyebrow">Selected Work</div><h2 id="featured-title">Teaching, research and public evidence</h2></div></div>
+      <div class="ae-card-grid">
+        <article class="ae-card"><span>Teaching</span><h3>AY2569 Teaching Portfolio</h3><p>MR30-reconciled offering status, course-quality evidence coverage and public-safe teaching records.</p><a href="{{ '/teaching/' | relative_url }}">Open Teaching →</a></article>
+        <article class="ae-card"><span>Research</span><h3>Research Command Center</h3><p>Evidence-first public status of active research activity without exposing confidential protocols or participant data.</p><a href="{{ '/research-progress/' | relative_url }}">Open Research Status →</a></article>
+        <article class="ae-card"><span>Evidence</span><h3>Evidence Explorer</h3><p>Selected public claims connected to traceable academic sources and evidence boundaries.</p><a href="{{ '/evidence-explorer/' | relative_url }}">Open Evidence Explorer →</a></article>
+      </div>
     </div>
   </section>
 
-  <div class="oa-shell">
-    <section class="oa-cta" aria-labelledby="connect-title">
-      <div><h2 id="connect-title">Explore the full academic profile</h2><p>Move from the overview to verified teaching, research, publications, curriculum, quality and professional information.</p></div>
-      <div class="oa-actions"><a class="oa-btn oa-btn-primary" href="./about/">About</a><a class="oa-btn oa-btn-soft" href="./cv/">Academic CV</a></div>
-    </section>
-  </div>
+  <section class="ae-section" aria-labelledby="assistant-title">
+    <div class="ae-shell ae-assistant">
+      <div><div class="ae-eyebrow">Academic Assistant</div><h2 id="assistant-title">Ask about public academic work</h2><p class="ae-muted">Searches the local public index only. It does not access private files or generate unsupported claims.</p></div>
+      <div class="ae-assistant-search" role="search"><input type="search" data-oa-search aria-label="Search public academic records" placeholder="Research, teaching, curriculum, evidence…"><button type="button" data-oa-search-button>Search</button></div>
+      <div class="ae-suggestions"><button type="button" data-oa-suggestion="research">Research</button><button type="button" data-oa-suggestion="teaching">Teaching</button><button type="button" data-oa-suggestion="curriculum quality">Curriculum &amp; QA</button><button type="button" data-oa-suggestion="evidence">Evidence</button></div>
+      <div class="oa-ai-response" aria-live="polite"><div class="oa-ai-status" data-oa-ai-status>Search the verified public academic index.</div><div class="oa-ai-results" data-oa-ai-results></div></div>
+    </div>
+  </section>
 </div>
 
-<script src="./assets/js/option-17a.js" defer></script>
+<script src="{{ '/assets/js/option-17a.js' | relative_url }}" defer></script>
