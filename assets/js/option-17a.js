@@ -1,4 +1,4 @@
-/* Option 17A static-first academic search. No external API; filters visible hub cards only. */
+/* Option 17A-08 — Static AI Academic Assistant v2. Public local index only; no external API. */
 (() => {
   const root = document.querySelector('.option17a');
   if (!root) return;
@@ -6,36 +6,74 @@
   const input = root.querySelector('[data-oa-search]');
   const button = root.querySelector('[data-oa-search-button]');
   const suggestions = [...root.querySelectorAll('[data-oa-suggestion]')];
-  const cards = [...root.querySelectorAll('[data-oa-card]')];
-  const empty = root.querySelector('[data-oa-empty]');
-
+  const results = root.querySelector('[data-oa-ai-results]');
+  const status = root.querySelector('[data-oa-ai-status]');
   const normalize = (value = '') => value.toLowerCase().trim();
+  let index = [];
+
+  const indexUrl = './assets/data/academic-index.json';
+  fetch(indexUrl)
+    .then((response) => response.ok ? response.json() : Promise.reject(new Error('Index unavailable')))
+    .then((data) => { index = Array.isArray(data) ? data : []; })
+    .catch(() => { index = []; });
+
+  const scoreRecord = (record, terms) => {
+    const title = normalize(record.title);
+    const type = normalize(record.type);
+    const domain = normalize(record.domain);
+    const keywords = normalize((record.keywords || []).join(' '));
+    const summary = normalize(record.summary);
+    return terms.reduce((score, term) => {
+      if (title.includes(term)) score += 5;
+      if (type.includes(term) || domain.includes(term)) score += 4;
+      if (keywords.includes(term)) score += 3;
+      if (summary.includes(term)) score += 1;
+      return score;
+    }, 0);
+  };
+
+  const render = (matches, query) => {
+    if (!results || !status) return;
+    results.innerHTML = '';
+    if (!query) {
+      status.textContent = 'Search the verified public academic index.';
+      return;
+    }
+    if (!matches.length) {
+      status.textContent = 'No matching public academic content was found. Try a broader term or use the main navigation.';
+      return;
+    }
+    status.textContent = `I found ${matches.length} public academic record${matches.length === 1 ? '' : 's'} matching “${query}”.`;
+    matches.slice(0, 6).forEach(({ record }) => {
+      const item = document.createElement('a');
+      item.className = 'oa-ai-result';
+      item.href = record.url;
+      const meta = document.createElement('span');
+      meta.className = 'oa-ai-result-meta';
+      meta.textContent = `${record.type} · ${record.evidence_status}`;
+      const title = document.createElement('strong');
+      title.textContent = record.title;
+      const summary = document.createElement('span');
+      summary.textContent = record.summary;
+      item.append(meta, title, summary);
+      results.appendChild(item);
+    });
+  };
 
   function runSearch(rawQuery) {
     const query = normalize(rawQuery);
-    let visible = 0;
-
-    cards.forEach((card) => {
-      const haystack = normalize([
-        card.dataset.keywords,
-        card.textContent
-      ].join(' '));
-      const match = !query || haystack.includes(query);
-      card.hidden = !match;
-      if (match) visible += 1;
-    });
-
-    if (empty) empty.classList.toggle('is-visible', visible === 0);
-
-    const target = root.querySelector('#academic-hub');
-    if (query && target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const terms = query.split(/\s+/).filter(Boolean);
+    const matches = index
+      .map((record) => ({ record, score: scoreRecord(record, terms) }))
+      .filter((item) => item.score > 0)
+      .sort((a, b) => b.score - a.score || a.record.title.localeCompare(b.record.title));
+    render(matches, query);
   }
 
   button?.addEventListener('click', () => runSearch(input?.value));
   input?.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') runSearch(input.value);
   });
-
   suggestions.forEach((item) => {
     item.addEventListener('click', () => {
       const query = item.dataset.oaSuggestion || item.textContent;
