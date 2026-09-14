@@ -3,6 +3,14 @@
   const root = document.querySelector('.option17a');
   if (!root) return;
 
+  if (!document.querySelector('link[data-static-ai-v2]')) {
+    const style = document.createElement('link');
+    style.rel = 'stylesheet';
+    style.href = './assets/css/static-ai-v2.css';
+    style.dataset.staticAiV2 = 'true';
+    document.head.appendChild(style);
+  }
+
   const input = root.querySelector('[data-oa-search]');
   const button = root.querySelector('[data-oa-search-button]');
   const suggestions = [...root.querySelectorAll('[data-oa-suggestion]')];
