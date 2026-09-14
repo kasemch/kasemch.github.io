@@ -94,6 +94,7 @@
     const currentWorkstream = project.currentWorkstream || project.currentPhase || 'Not publicly confirmed';
     const nextEvidenceGate = project.nextEvidenceGate || 'Not publicly confirmed';
     const verificationStatus = project.verificationStatus || 'Controlled public-safe record';
+    const detailPath = project.detailPath || `../research-project/?id=${encodeURIComponent(project.id)}`;
 
     mount.innerHTML = `
       <article class="rpc-feature-card">
@@ -131,26 +132,33 @@
           <p><strong>Verification:</strong> ${escapeHtml(verificationStatus)}</p>
           <p><strong>Evidence note:</strong> ${escapeHtml(project.evidenceNote)}</p>
         </div>
+        <div class="rpc-actions">
+          <a class="rpc-btn rpc-btn-primary" href="${escapeHtml(detailPath)}">View project detail</a>
+        </div>
       </article>`;
   };
 
-  const projectCard = (project) => `
-    <article class="rpc-project-card" data-class="${escapeHtml(project.portfolioClass || '')}" data-publication-linked="${project.publicationLinked === true ? 'true' : 'false'}">
-      <div class="rpc-feature-top">
-        <span class="rpc-project-code">${escapeHtml(project.shortTitle)}</span>
-        <span class="rpc-badge">${escapeHtml(project.portfolioClassLabel || project.statusLabel)}</span>
-      </div>
-      <h3>${escapeHtml(project.title)}</h3>
-      <p><strong>Research status:</strong> ${escapeHtml(project.statusLabel)}</p>
-      <p><strong>Latest verified public stage:</strong> ${escapeHtml(project.stage)}</p>
-      <p>${escapeHtml(project.currentPhase)}</p>
-      ${project.currentWorkstream ? `<p><strong>Current workstream:</strong> ${escapeHtml(project.currentWorkstream)}</p>` : ''}
-      ${project.nextEvidenceGate ? `<p><strong>Next evidence gate:</strong> ${escapeHtml(project.nextEvidenceGate)}</p>` : ''}
-      <div class="rpc-project-footer">
-        <span>Verified ${escapeHtml(formatDate(project.lastVerified))}</span>
-        <span>${project.publicationLinked ? 'Publication-linked' : 'No verified publication link'}</span>
-      </div>
-    </article>`;
+  const projectCard = (project) => {
+    const detailPath = project.detailPath || `../research-project/?id=${encodeURIComponent(project.id)}`;
+    return `
+      <article class="rpc-project-card" data-class="${escapeHtml(project.portfolioClass || '')}" data-publication-linked="${project.publicationLinked === true ? 'true' : 'false'}">
+        <div class="rpc-feature-top">
+          <span class="rpc-project-code">${escapeHtml(project.shortTitle)}</span>
+          <span class="rpc-badge">${escapeHtml(project.portfolioClassLabel || project.statusLabel)}</span>
+        </div>
+        <h3>${escapeHtml(project.title)}</h3>
+        <p><strong>Research status:</strong> ${escapeHtml(project.statusLabel)}</p>
+        <p><strong>Latest verified public stage:</strong> ${escapeHtml(project.stage)}</p>
+        <p>${escapeHtml(project.currentPhase)}</p>
+        ${project.currentWorkstream ? `<p><strong>Current workstream:</strong> ${escapeHtml(project.currentWorkstream)}</p>` : ''}
+        ${project.nextEvidenceGate ? `<p><strong>Next evidence gate:</strong> ${escapeHtml(project.nextEvidenceGate)}</p>` : ''}
+        <div class="rpc-actions"><a class="rpc-btn" href="${escapeHtml(detailPath)}">View project</a></div>
+        <div class="rpc-project-footer">
+          <span>Verified ${escapeHtml(formatDate(project.lastVerified))}</span>
+          <span>${project.publicationLinked ? 'Publication-linked' : 'No verified publication link'}</span>
+        </div>
+      </article>`;
+  };
 
   const renderProjects = (data) => {
     const projects = data.projects || [];
