@@ -25,19 +25,28 @@
       if (status) status.textContent = 'The public academic index is temporarily unavailable. Please use the main navigation.';
     });
 
-  const scoreRecord = (record, terms) => {
+  const scoreRecord = (record, query, terms) => {
     const title = normalize(record.title);
     const type = normalize(record.type);
     const domain = normalize(record.domain);
     const keywords = normalize((record.keywords || []).join(' '));
     const summary = normalize(record.summary);
-    return terms.reduce((score, term) => {
-      if (title.includes(term)) score += 5;
-      if (type.includes(term) || domain.includes(term)) score += 4;
-      if (keywords.includes(term)) score += 3;
-      if (summary.includes(term)) score += 1;
-      return score;
-    }, 0);
+    let score = 0;
+
+    if (query) {
+      if (title.includes(query)) score += 12;
+      if (type.includes(query) || domain.includes(query)) score += 10;
+      if (keywords.includes(query)) score += 9;
+      if (summary.includes(query)) score += 5;
+    }
+
+    return terms.reduce((total, term) => {
+      if (title.includes(term)) total += 5;
+      if (type.includes(term) || domain.includes(term)) total += 4;
+      if (keywords.includes(term)) total += 3;
+      if (summary.includes(term)) total += 1;
+      return total;
+    }, score);
   };
 
   const render = (matches, query) => {
@@ -76,7 +85,7 @@
     }
     const terms = query.split(/\s+/).filter(Boolean);
     const matches = index
-      .map((record) => ({ record, score: scoreRecord(record, terms) }))
+      .map((record) => ({ record, score: scoreRecord(record, query, terms) }))
       .filter((item) => item.score > 0)
       .sort((a, b) => b.score - a.score || a.record.title.localeCompare(b.record.title));
     render(matches, query);
