@@ -1,7 +1,7 @@
 /* Option 17A-03 teaching dashboard enhancement. No external API. */
 (() => {
   const root = document.querySelector('.signature-page');
-  if (!root || location.pathname.replace(/\/+$/, '/') !== '/teaching/') return;
+  if (!root) return;
 
   const hero = root.querySelector('.sp-hero');
   if (!hero) return;
