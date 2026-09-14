@@ -78,13 +78,14 @@ classes: wide
     <div class="oa-shell oa-evidence">
       <article class="oa-panel">
         <div class="oa-eyebrow">Evidence Explorer</div><h2 id="evidence-title">From academic area to traceable evidence</h2>
-        <p class="oa-section-intro">The next development layer will connect public claims to verified publications, teaching evidence, curriculum work and professional records.</p>
+        <p class="oa-section-intro">Follow selected public academic claims to traceable publication and teaching sources in the public-safe evidence register.</p>
         <ul class="oa-list">
           <li><strong>Research &amp; Publications</strong><span class="oa-pill">Public collection</span></li>
           <li><strong>Teaching Portfolio</strong><span class="oa-pill">Verified where documented</span></li>
           <li><strong>Curriculum &amp; Quality</strong><span class="oa-pill">Evidence-first</span></li>
           <li><strong>Innovation Projects</strong><span class="oa-pill">Public-safe only</span></li>
         </ul>
+        <a class="oa-btn oa-btn-soft" href="./evidence-explorer/">Open Evidence Explorer →</a>
       </article>
       <article class="oa-panel">
         <div class="oa-eyebrow">Knowledge Map</div><h2>One profile, connected domains</h2>
