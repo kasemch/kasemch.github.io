@@ -17,7 +17,7 @@ author_profile: false
         <div class="rpc-actions">
           <a class="rpc-btn rpc-btn-primary" href="../research/">Research profile</a>
           <a class="rpc-btn" href="../publications/">Verified publications</a>
-          <a class="rpc-btn" href="../evidence/">Evidence Explorer</a>
+          <a class="rpc-btn" href="../evidence-explorer/">Evidence Explorer</a>
         </div>
       </div>
       <aside class="rpc-hero-note" aria-label="Evidence policy">
