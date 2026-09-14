@@ -117,6 +117,11 @@ window.KASEM_DOCUMENT_STORAGE_CONFIG = {
 <link rel="stylesheet" href="{{ '/assets/css/academic-workspace.css' | relative_url }}">
 {% endif %}
 
+{% if page.url == '/teaching/' %}
+<link rel="stylesheet" href="{{ '/assets/css/teaching-dashboard.css' | relative_url }}">
+<script src="{{ '/assets/js/teaching-dashboard.js' | relative_url }}" defer></script>
+{% endif %}
+
 <!-- Support for Academicons -->
 <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css"></noscript>
