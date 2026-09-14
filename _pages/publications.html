@@ -3,12 +3,15 @@ layout: archive
 title: "Publications"
 permalink: /publications/
 author_profile: false
+description: "Searchable register of verified academic publications by Asst. Prof. Dr. Kasem Chooratna, with publication year, venue and traceable source links."
 excerpt: "Verified academic publications by Asst. Prof. Dr. Kasem Chooratna in health education, health promotion, physical education, and related fields."
 ---
 
 {% assign publication_count = site.publications | size %}
 {% assign publication_years = site.publications | group_by_exp: "item", "item.date | date: '%Y'" | sort: "name" | reverse %}
 {% assign publication_venues = site.publications | group_by: "venue" | sort: "name" %}
+{% assign publication_venue_count = 0 %}
+{% for group in publication_venues %}{% if group.name and group.name != "" %}{% assign publication_venue_count = publication_venue_count | plus: 1 %}{% endif %}{% endfor %}
 
 <link rel="stylesheet" href="{{ '/assets/css/publications-dashboard.css' | relative_url }}">
 
@@ -21,7 +24,7 @@ excerpt: "Verified academic publications by Asst. Prof. Dr. Kasem Chooratna in h
       <div class="pd-metrics" aria-label="Publication summary">
         <div class="pd-metric"><b>{{ publication_count }}</b><span>verified records currently published on this site</span></div>
         <div class="pd-metric"><b>{{ publication_years | size }}</b><span>publication years represented in the current register</span></div>
-        <div class="pd-metric"><b>{{ publication_venues | size }}</b><span>journal or publication venues represented</span></div>
+        <div class="pd-metric"><b>{{ publication_venue_count }}</b><span>journal or publication venues represented</span></div>
       </div>
     </div>
   </section>
