@@ -1,0 +1,11 @@
+/* Option 17A-08 — Static AI Academic Assistant v2 */
+.oa-ai-response{position:relative;z-index:2;margin-top:1rem;padding:.9rem;border:1px solid rgba(255,255,255,.14);border-radius:18px;background:rgba(255,255,255,.06)}
+.oa-ai-status{font-size:.82rem;color:#d8e9f7}
+.oa-ai-results{display:grid;gap:.55rem;margin-top:.65rem;max-height:20rem;overflow:auto}
+.oa-ai-result{display:grid;gap:.16rem;padding:.72rem .8rem;border-radius:14px;background:rgba(255,255,255,.1);color:#fff!important;border:1px solid rgba(255,255,255,.12)}
+.oa-ai-result:hover{background:rgba(255,255,255,.15)}
+.oa-ai-result strong{font-size:.94rem;color:#fff}
+.oa-ai-result>span:last-child{font-size:.8rem;line-height:1.45;color:#d4e5f5}
+.oa-ai-result-meta{font-size:.68rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:#aee7f4}
+.oa-ai-result:focus-visible{outline:3px solid rgba(177,236,247,.65);outline-offset:2px}
+@media(max-width:640px){.oa-ai-results{max-height:24rem}.oa-ai-result{padding:.68rem .72rem}}
