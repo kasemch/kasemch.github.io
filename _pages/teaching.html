@@ -199,14 +199,15 @@ author_profile: false
     <div class="sp-grid">
       {% for repo in ru_hepe.repositories %}
       <article class="sp-card sp-third">
-        <div class="sp-output-year">GITHUB · PUBLIC</div>
+        <div class="sp-output-year">{{ repo.role }}</div>
         <h3>{{ repo.label }}</h3>
         <p>{{ repo.purpose }}</p>
         <a class="sp-link" href="{{ repo.url }}" rel="noopener">Open repository →</a>
       </article>
       {% endfor %}
     </div>
-    <p class="sp-all-publications"><a class="sp-link" href="{{ ru_hepe.organization_url }}" rel="noopener">Explore {{ ru_hepe.name }} on GitHub →</a></p>
+    <p class="sp-all-publications"><a class="sp-link" href="{{ ru_hepe.profile_path | relative_url }}">Explore the RU HEPE Learning course ecosystem →</a></p>
+    <p class="sp-all-publications"><a class="sp-link" href="{{ ru_hepe.organization_url }}" rel="noopener">Open {{ ru_hepe.name }} on GitHub →</a></p>
     <div class="sp-policy"><strong>Institutional-status note.</strong> {{ ru_hepe.disclaimer }}</div>
   </section>
 
