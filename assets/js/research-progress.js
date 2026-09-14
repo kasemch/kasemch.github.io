@@ -67,8 +67,11 @@
     }
 
     const themes = (project.themes || []).map((theme) => `<span class="rpc-theme">${escapeHtml(theme)}</span>`).join('');
-    const verifiedMilestones = (project.milestones || []).filter((item) => item.state === 'verified').length;
+    const documentedMilestones = (project.milestones || []).filter((item) => ['verified', 'active'].includes(item.state)).length;
     const totalMilestones = (project.milestones || []).length;
+    const currentWorkstream = project.currentWorkstream || project.currentPhase || 'Not publicly confirmed';
+    const nextEvidenceGate = project.nextEvidenceGate || 'Not publicly confirmed';
+    const verificationStatus = project.verificationStatus || 'Controlled public-safe record';
 
     mount.innerHTML = `
       <article class="rpc-feature-card">
@@ -91,16 +94,19 @@
             <strong>${escapeHtml(project.currentPhase)}</strong>
           </div>
           <div class="rpc-meta-box">
-            <span>Verified milestone records</span>
-            <strong>${verifiedMilestones} of ${totalMilestones}</strong>
+            <span>Documented lifecycle points</span>
+            <strong>${documentedMilestones} of ${totalMilestones}</strong>
           </div>
         </div>
 
         <div class="rpc-theme-list" aria-label="Research themes">${themes}</div>
 
         <div class="rpc-evidence-box">
-          <strong>Evidence note</strong>
-          <p>${escapeHtml(project.evidenceNote)}</p>
+          <strong>Current governed workstream</strong>
+          <p>${escapeHtml(currentWorkstream)}</p>
+          <p><strong>Next evidence gate:</strong> ${escapeHtml(nextEvidenceGate)}</p>
+          <p><strong>Verification:</strong> ${escapeHtml(verificationStatus)}</p>
+          <p><strong>Evidence note:</strong> ${escapeHtml(project.evidenceNote)}</p>
         </div>
       </article>`;
   };
@@ -114,6 +120,8 @@
       <h3>${escapeHtml(project.title)}</h3>
       <p><strong>Latest verified public stage:</strong> ${escapeHtml(project.stage)}</p>
       <p>${escapeHtml(project.currentPhase)}</p>
+      ${project.currentWorkstream ? `<p><strong>Current workstream:</strong> ${escapeHtml(project.currentWorkstream)}</p>` : ''}
+      ${project.nextEvidenceGate ? `<p><strong>Next evidence gate:</strong> ${escapeHtml(project.nextEvidenceGate)}</p>` : ''}
       <div class="rpc-project-footer">
         <span>Verified ${escapeHtml(formatDate(project.lastVerified))}</span>
         <span>${escapeHtml(project.visibility === 'public-summary' ? 'Public summary' : project.visibility)}</span>
