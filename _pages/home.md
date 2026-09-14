@@ -9,6 +9,7 @@ classes: wide
 {% assign publication_count = site.publications | size %}
 
 <link rel="stylesheet" href="./assets/css/option-17a.css">
+<link rel="stylesheet" href="./assets/css/static-ai-v2.css">
 
 <div class="option17a">
   <div class="oa-shell">
