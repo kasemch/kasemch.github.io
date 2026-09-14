@@ -1,7 +1,29 @@
 {
-  "schemaVersion": "1.1",
+  "schemaVersion": "1.2",
   "lastVerified": "2026-09-14",
-  "evidencePolicy": "Only public-safe fields supported by authoritative or controlled project records are displayed. Draft-only or unbound research candidates are not promoted to active public projects, and unverified stages are not inferred.",
+  "evidencePolicy": "Only public-safe fields supported by authoritative or controlled project records are displayed. Draft-only or unbound research candidates are never promoted to Verified Active. Candidate records may be counted or displayed only when their candidate status itself is supported by a public-safe controlled record.",
+  "portfolioClasses": [
+    {
+      "id": "verified-active",
+      "label": "Verified Active",
+      "description": "An ongoing research project with an authoritative or controlled project identity and a verified current lifecycle state."
+    },
+    {
+      "id": "candidate",
+      "label": "Candidate",
+      "description": "A research concept or proposal with a controlled candidate record but not yet verified as an active governed project."
+    },
+    {
+      "id": "completed",
+      "label": "Completed",
+      "description": "A research project whose completion is supported by a controlled completion or final-report record."
+    },
+    {
+      "id": "publication-linked",
+      "label": "Publication-linked",
+      "description": "A project with at least one verified publication explicitly linked to the project record."
+    }
+  ],
   "pipeline": [
     "Project Core",
     "Protocol",
@@ -18,6 +40,9 @@
       "shortTitle": "BMO",
       "title": "Inequalities in Movement Opportunity, Time Poverty, and 24-Hour Movement Behaviours among Working-Age Adults in Bangkok, Thailand",
       "titleTh": "ความเหลื่อมล้ำด้านโอกาสในการเคลื่อนไหว ภาวะขาดแคลนเวลา และพฤติกรรมการเคลื่อนไหวตลอด 24 ชั่วโมงของประชากรวัยทำงานในกรุงเทพมหานคร",
+      "portfolioClass": "verified-active",
+      "portfolioClassLabel": "Verified Active",
+      "publicationLinked": false,
       "status": "active",
       "statusLabel": "Active · Instrument development",
       "stage": "Instrument",

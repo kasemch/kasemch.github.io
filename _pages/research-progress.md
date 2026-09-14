@@ -1,7 +1,7 @@
 ---
 permalink: /research-progress/
 title: "Research in Progress"
-description: "Evidence-first status dashboard for current research projects, milestones, research stages, and public-safe project updates."
+description: "Evidence-first status dashboard for current research projects, portfolio classes, milestones, research stages, and public-safe project updates."
 author_profile: false
 ---
 
@@ -13,17 +13,18 @@ author_profile: false
       <div>
         <p class="rpc-kicker">Research Command Center</p>
         <h1 id="rpc-title">Research in Progress</h1>
-        <p class="rpc-lead">A public, evidence-first view of current research activity. Project stages are shown only when supported by verified project records; private research documents and participant-level information are never exposed here.</p>
+        <p class="rpc-lead">A public, evidence-first view of current research activity. Projects are classified separately as Verified Active, Candidate, Completed, or Publication-linked only when the relevant status is supported by controlled evidence.</p>
         <div class="rpc-actions">
           <a class="rpc-btn rpc-btn-primary" href="../research/">Research profile</a>
           <a class="rpc-btn" href="../publications/">Verified publications</a>
+          <a class="rpc-btn" href="../evidence-explorer/">Evidence Explorer</a>
         </div>
       </div>
       <aside class="rpc-hero-note" aria-label="Evidence policy">
         <span class="rpc-status-dot" aria-hidden="true"></span>
         <div>
           <strong>Evidence-first status</strong>
-          <p>Unknown or unverified milestones remain explicitly unconfirmed rather than being estimated.</p>
+          <p>Unknown, draft-only, or unbound work is never promoted to Verified Active merely because a proposal file exists.</p>
         </div>
       </aside>
     </div>
@@ -34,18 +35,29 @@ author_profile: false
       <div class="rpc-section-head">
         <div>
           <p class="rpc-eyebrow">Portfolio overview</p>
-          <h2 id="rpc-overview-title">Current research status at a glance</h2>
+          <h2 id="rpc-overview-title">Research portfolio at a glance</h2>
         </div>
         <p class="rpc-muted" id="rpc-last-refresh">Loading verified public records…</p>
       </div>
       <div class="rpc-metrics" id="rpc-metrics" aria-live="polite"></div>
     </section>
 
+    <section class="rpc-section" aria-labelledby="rpc-registry-title">
+      <div class="rpc-section-head">
+        <div>
+          <p class="rpc-eyebrow">Portfolio registry</p>
+          <h2 id="rpc-registry-title">How research records are classified</h2>
+        </div>
+        <p class="rpc-muted">Classification is evidence status, not a subjective score of importance or quality.</p>
+      </div>
+      <div class="rpc-boundary-grid" id="rpc-registry-classes" aria-live="polite"></div>
+    </section>
+
     <section class="rpc-section" aria-labelledby="rpc-pipeline-title">
       <div class="rpc-section-head">
         <div>
           <p class="rpc-eyebrow">Research pipeline</p>
-          <h2 id="rpc-pipeline-title">Where active projects sit in the research lifecycle</h2>
+          <h2 id="rpc-pipeline-title">Where verified projects sit in the research lifecycle</h2>
         </div>
         <p class="rpc-muted">Stage placement reflects the latest public-safe verified record, not an estimated completion percentage.</p>
       </div>
@@ -66,9 +78,9 @@ author_profile: false
       <div class="rpc-section-head rpc-section-head-wrap">
         <div>
           <p class="rpc-eyebrow">Project register</p>
-          <h2 id="rpc-projects-title">Current projects</h2>
+          <h2 id="rpc-projects-title">Public-safe research records</h2>
         </div>
-        <div class="rpc-filters" id="rpc-filters" aria-label="Filter projects"></div>
+        <div class="rpc-filters" id="rpc-filters" aria-label="Filter research portfolio"></div>
       </div>
       <div class="rpc-project-grid" id="rpc-project-grid"></div>
     </section>
@@ -80,9 +92,9 @@ author_profile: false
           <h2 id="rpc-boundary-title">What this dashboard does — and does not — claim</h2>
         </div>
         <div class="rpc-boundary-grid">
-          <div><strong>Displayed</strong><p>Verified project identity, public-safe research themes, documented status labels, and dates supported by controlled records.</p></div>
-          <div><strong>Not displayed</strong><p>Participant data, confidential protocols, unpublished findings, reviewer correspondence, private Drive links, or inferred completion percentages.</p></div>
-          <div><strong>When evidence is incomplete</strong><p>The interface shows “Not publicly confirmed” instead of filling gaps with assumptions.</p></div>
+          <div><strong>Displayed</strong><p>Verified project identity, public-safe research themes, portfolio class, documented lifecycle stage, publication linkage status, and evidence-supported dates.</p></div>
+          <div><strong>Not displayed</strong><p>Participant data, confidential protocols, unpublished findings, reviewer correspondence, private Drive links, or internal candidate details without a public-safe controlled record.</p></div>
+          <div><strong>When evidence is incomplete</strong><p>The interface reports zero, “Not publicly confirmed,” or omits the record rather than filling gaps with assumptions.</p></div>
         </div>
       </article>
     </section>
