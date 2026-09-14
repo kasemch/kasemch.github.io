@@ -1,0 +1,72 @@
+{
+  "schemaVersion": "1.0",
+  "lastVerified": "2026-08-25",
+  "evidencePolicy": "Only public-safe fields supported by controlled project records are displayed. Unverified stages are not inferred.",
+  "pipeline": [
+    "Project Core",
+    "Protocol",
+    "Ethics",
+    "Instrument",
+    "Data Collection",
+    "Analysis",
+    "Manuscript",
+    "Publication"
+  ],
+  "projects": [
+    {
+      "id": "bmo",
+      "shortTitle": "BMO",
+      "title": "Inequalities in Movement Opportunity, Time Poverty, and 24-Hour Movement Behaviours among Working-Age Adults in Bangkok, Thailand",
+      "titleTh": "ความเหลื่อมล้ำด้านโอกาสในการเคลื่อนไหว ภาวะขาดแคลนเวลา และพฤติกรรมการเคลื่อนไหวตลอด 24 ชั่วโมงของประชากรวัยทำงานในกรุงเทพมหานคร",
+      "status": "active",
+      "statusLabel": "Active research development",
+      "stage": "Project Core",
+      "stageIndex": 0,
+      "currentPhase": "Project core and research architecture",
+      "lastVerified": "2026-08-25",
+      "featured": true,
+      "visibility": "public-summary",
+      "themes": [
+        "Movement Opportunity",
+        "Time Poverty",
+        "24-Hour Movement Behaviour",
+        "Working-Age Adults"
+      ],
+      "evidenceNote": "Project identity and core conceptual framing are supported by an approved controlled project core reference dated 25 August 2026. Later lifecycle stages are not shown as completed unless separately verified.",
+      "milestones": [
+        {
+          "label": "Project identity and core reference",
+          "state": "verified"
+        },
+        {
+          "label": "Protocol stage",
+          "state": "not-publicly-confirmed"
+        },
+        {
+          "label": "Ethics stage",
+          "state": "not-publicly-confirmed"
+        },
+        {
+          "label": "Instrument stage",
+          "state": "not-publicly-confirmed"
+        },
+        {
+          "label": "Data collection",
+          "state": "not-publicly-confirmed"
+        },
+        {
+          "label": "Analysis",
+          "state": "not-publicly-confirmed"
+        },
+        {
+          "label": "Manuscript",
+          "state": "not-publicly-confirmed"
+        },
+        {
+          "label": "Publication",
+          "state": "not-publicly-confirmed"
+        }
+      ]
+    }
+  ]
+}
