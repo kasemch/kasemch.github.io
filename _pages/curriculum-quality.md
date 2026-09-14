@@ -5,26 +5,61 @@ description: "Curriculum and quality work of Asst. Prof. Dr. Kasem Chooratna, in
 author_profile: false
 ---
 
-<link rel="stylesheet" href="../assets/css/signature-pages.css">
-<div class="signature-page">
-  <section class="sp-hero sp-shell">
-    <div class="sp-kicker">Curriculum · Evidence · Improvement</div>
-    <h1>Curriculum &amp; Quality</h1>
-    <p>Connecting programme intentions, learning outcomes, course design, assessment, evidence and continuous improvement into a coherent academic quality system.</p>
-    <div class="sp-navchips"><a class="sp-chip" href="../teaching/">Teaching</a><a class="sp-chip" href="../research/">Research</a><a class="sp-chip" href="../cv/">Academic CV</a></div>
-  </section>
-
-  <section class="sp-section sp-shell">
-    <div class="sp-section-head"><div class="sp-eyebrow">Academic Quality</div><h2>From curriculum intent to traceable evidence</h2></div>
-    <div class="sp-grid">
-      <article class="sp-card"><h3>Curriculum Design</h3><p>Programme learning outcomes, course learning outcomes, curriculum mapping, constructive alignment, curriculum review and revision, and the design of evidence that demonstrates how learning outcomes are developed and assessed across a programme.</p></article>
-      <article class="sp-card"><h3>Assessment &amp; Programme Evaluation</h3><p>Assessment design, rubric development, course-level and programme-level evaluation, interpretation of learning evidence, and the use of evaluation findings to improve teaching and curriculum decisions.</p></article>
-      <article class="sp-card"><h3>Quality Assurance</h3><p>Programme-level quality development, evidence management, internal review, continuous improvement, and the application of higher-education quality frameworks, including AUN-QA where appropriate.</p></article>
-      <article class="sp-card"><h3>Evidence &amp; Traceability</h3><p>Academic quality should be supported by clear, traceable evidence rather than duplicated documentation. Digital approaches can connect curriculum decisions, learning outcomes, assessment evidence, review findings and improvement actions while preserving academic accountability.</p></article>
+<link rel="stylesheet" href="{{ '/assets/css/curriculum-quality-hub.css' | relative_url }}">
+<div class="curriculum-quality-hub">
+  <section class="cq-hero">
+    <div class="cq-shell">
+      <div class="cq-kicker">Curriculum · Evidence · Improvement</div>
+      <h1>Curriculum &amp; Academic Quality Hub</h1>
+      <p class="cq-lead">A public-facing overview of curriculum design, learning-outcome alignment, assessment, quality assurance and evidence-informed improvement. Internal governance records and restricted implementation evidence remain excluded.</p>
+      <nav class="cq-nav" aria-label="Curriculum and quality related pages">
+        <a href="{{ '/teaching/' | relative_url }}">Teaching</a>
+        <a href="{{ '/research/' | relative_url }}">Research</a>
+        <a href="{{ '/publications/' | relative_url }}">Publications</a>
+        <a href="{{ '/cv/' | relative_url }}">Academic CV</a>
+      </nav>
     </div>
   </section>
 
-  <section class="sp-section sp-shell">
-    <article class="sp-card sp-wide"><div class="sp-eyebrow">Public Materials</div><h2>Public-facing resources only</h2><p>Selected curriculum-development examples, quality-assurance resources, teaching-development materials and public presentations may be added after review for accuracy, permissions and confidentiality.</p><div class="sp-policy">Internal governance records, restricted evidence and confidential implementation details are intentionally excluded from this public website.</div></article>
+  <section class="cq-section" aria-labelledby="flow-title">
+    <div class="cq-shell">
+      <div class="cq-eyebrow">Traceable Academic Quality</div>
+      <h2 id="flow-title">From programme intent to improvement</h2>
+      <p class="cq-lead">The architecture below shows how curriculum and quality evidence should connect conceptually. It is a public explanatory model, not a disclosure of restricted programme records.</p>
+      <div class="cq-flow" aria-label="Curriculum and quality evidence flow">
+        <div class="cq-step">Program</div>
+        <div class="cq-step">PLO</div>
+        <div class="cq-step">Course</div>
+        <div class="cq-step">CLO</div>
+        <div class="cq-step">Learning</div>
+        <div class="cq-step">Assessment</div>
+        <div class="cq-step">Evidence</div>
+        <div class="cq-step">Improvement</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cq-section" aria-labelledby="domains-title">
+    <div class="cq-shell">
+      <div class="cq-eyebrow">Academic Quality Domains</div>
+      <h2 id="domains-title">Explore the public-facing areas</h2>
+      <div class="cq-tabs" aria-label="Filter curriculum and quality domains">
+        <button type="button" data-cq-filter="all" aria-pressed="true">All</button>
+        <button type="button" data-cq-filter="curriculum" aria-pressed="false">Curriculum</button>
+        <button type="button" data-cq-filter="assessment" aria-pressed="false">Assessment</button>
+        <button type="button" data-cq-filter="qa" aria-pressed="false">Quality Assurance</button>
+        <button type="button" data-cq-filter="evidence" aria-pressed="false">Evidence</button>
+      </div>
+      <div class="cq-grid">
+        <article class="cq-card" data-cq-domain="curriculum evidence"><div class="cq-eyebrow">Curriculum</div><h3>Curriculum Design</h3><p>Programme learning outcomes, course learning outcomes, curriculum mapping, constructive alignment, curriculum review and revision.</p></article>
+        <article class="cq-card" data-cq-domain="curriculum assessment"><div class="cq-eyebrow">Alignment</div><h3>PLO / CLO / Course Connection</h3><p>Connecting programme intentions to course-level learning outcomes, learning activities and assessment evidence in a coherent structure.</p></article>
+        <article class="cq-card" data-cq-domain="assessment evidence"><div class="cq-eyebrow">Assessment</div><h3>Assessment &amp; Evaluation</h3><p>Assessment design, rubric development, course-level and programme-level evaluation, and interpretation of learning evidence for improvement.</p></article>
+        <article class="cq-card" data-cq-domain="qa evidence"><div class="cq-eyebrow">Quality Assurance</div><h3>Quality &amp; Continuous Improvement</h3><p>Programme-level quality development, internal review, evidence management and application of higher-education quality frameworks, including AUN-QA where appropriate.</p></article>
+        <article class="cq-card" data-cq-domain="evidence qa"><div class="cq-eyebrow">Traceability</div><h3>Evidence &amp; Accountability</h3><p>Connecting decisions, learning outcomes, assessment evidence, review findings and improvement actions while preserving academic accountability.</p></article>
+        <article class="cq-card" data-cq-domain="qa curriculum"><div class="cq-eyebrow">Governance</div><h3>Academic Governance Boundary</h3><p>This public hub presents principles and public-safe examples only. Restricted committee records, confidential programme evidence and internal implementation details are not published here.</p></article>
+      </div>
+      <div class="cq-policy"><strong>Public evidence rule.</strong> Public-facing materials are added only after review for accuracy, permissions and confidentiality. Absence from this page does not imply absence of internal academic work or evidence.</div>
+    </div>
   </section>
 </div>
+<script src="{{ '/assets/js/curriculum-quality-hub.js' | relative_url }}" defer></script>
