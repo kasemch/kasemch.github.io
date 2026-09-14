@@ -2,6 +2,12 @@
 
 <!-- start custom head snippets -->
 
+<!-- Academic Executive visual baseline -->
+<link rel="stylesheet" href="{{ '/assets/css/academic-executive-nav.css' | relative_url }}">
+{% if page.url == '/research/' or page.url == '/teaching/' or page.url == '/publications/' %}
+<link rel="stylesheet" href="{{ '/assets/css/academic-executive-pages.css' | relative_url }}">
+{% endif %}
+
 <!-- Academic profile metadata -->
 <meta name="author" content="{{ site.author.name | default: site.name }}">
 {% if page.url == '/workspace/' or page.url == '/upload-center/' %}
