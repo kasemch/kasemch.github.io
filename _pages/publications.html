@@ -7,39 +7,68 @@ excerpt: "Verified academic publications by Asst. Prof. Dr. Kasem Chooratna in h
 ---
 
 {% assign publication_count = site.publications | size %}
+{% assign publication_years = site.publications | group_by_exp: "item", "item.date | date: '%Y'" | sort: "name" | reverse %}
+{% assign publication_venues = site.publications | group_by: "venue" | sort: "name" %}
 
-<link rel="stylesheet" href="{{ '/assets/css/signature-pages.css' | relative_url }}">
-<div class="signature-page">
-  <section class="sp-hero sp-shell">
-    <div class="sp-kicker">Scholarly Outputs</div>
-    <h1>Publications</h1>
-    <p>{{ publication_count }} verified journal publications matched to authoritative or traceable sources. Public-facing titles are presented in English for consistency across this academic website. Template records and unverified citations are excluded.</p>
-    <div class="sp-navchips">
-      <a class="sp-chip" href="{{ '/research/' | relative_url }}">Research</a>
-      <a class="sp-chip" href="{{ '/about/' | relative_url }}">About</a>
-      <a class="sp-chip" href="{{ '/cv/' | relative_url }}">Academic CV</a>
+<link rel="stylesheet" href="{{ '/assets/css/publications-dashboard.css' | relative_url }}">
+
+<div class="publications-dashboard">
+  <section class="pd-hero">
+    <div class="pd-shell">
+      <div class="pd-kicker">Option 17A · Research &amp; Publications Dashboard</div>
+      <h1>Publications</h1>
+      <p class="pd-lead">A searchable public register of verified scholarly outputs. Titles, dates, venues and source links are drawn directly from the publication collection used by this website.</p>
+      <div class="pd-metrics" aria-label="Publication summary">
+        <div class="pd-metric"><b>{{ publication_count }}</b><span>verified records currently published on this site</span></div>
+        <div class="pd-metric"><b>{{ publication_years | size }}</b><span>publication years represented in the current register</span></div>
+        <div class="pd-metric"><b>{{ publication_venues | size }}</b><span>journal or publication venues represented</span></div>
+      </div>
     </div>
   </section>
 
-  <section class="sp-section sp-shell">
-    <div class="sp-section-head">
-      <div class="sp-eyebrow">Verified Journal Articles</div>
-      <h2>{{ publication_count }} records in the scholarly publication register</h2>
-      <p class="sp-intro">Journal publications are reported separately from conference proceedings and degree research so each output type retains its correct academic meaning.</p>
+  <main class="pd-shell" aria-labelledby="publication-register-title">
+    <div class="pd-controls" aria-label="Publication filters">
+      <input class="pd-input" type="search" data-pd-search aria-label="Search publications" placeholder="Search title, topic, venue or citation…">
+      <select class="pd-select" data-pd-year aria-label="Filter by year">
+        <option value="">All years</option>
+        {% for group in publication_years %}<option value="{{ group.name }}">{{ group.name }} ({{ group.items | size }})</option>{% endfor %}
+      </select>
+      <select class="pd-select" data-pd-venue aria-label="Filter by venue">
+        <option value="">All venues</option>
+        {% for group in publication_venues %}{% if group.name and group.name != "" %}<option value="{{ group.name | escape }}">{{ group.name }} ({{ group.items | size }})</option>{% endif %}{% endfor %}
+      </select>
     </div>
-    <div class="sp-card sp-wide sp-publication-frame">
-{% include base_path %}
-{% for post in site.publications reversed %}
-  {% include archive-single.html %}
-{% endfor %}
-    </div>
-  </section>
 
-  <section class="sp-section sp-shell">
-    <div class="sp-callout">
-      <div class="sp-eyebrow">Verification Policy</div>
-      <h2>Traceable metadata before publication</h2>
-      <p>Publication metadata is checked against journal or DOI records before being listed, including author names, title, year, journal, volume/issue, pages where available, and DOI or stable article URL. The list is a verified working register and may expand as additional records are confirmed.</p>
+    <div class="pd-eyebrow">Verified Publication Register</div>
+    <h2 id="publication-register-title"><span data-pd-visible-count>{{ publication_count }}</span> records shown</h2>
+    <p>Journal publications remain separate from conference proceedings, degree research and other output types so each record retains its correct academic meaning.</p>
+
+    <div class="pd-list">
+      {% assign sorted_publications = site.publications | sort: "date" | reverse %}
+      {% for post in sorted_publications %}
+      <article class="pd-card" data-pd-card data-year="{{ post.date | date: '%Y' }}" data-venue="{{ post.venue | escape }}">
+        <div class="pd-meta">
+          <span class="pd-pill">{{ post.date | date: "%Y" }}</span>
+          {% if post.venue %}<span class="pd-pill">{{ post.venue }}</span>{% endif %}
+          <span class="pd-pill pd-pill-verified">Verified public record</span>
+        </div>
+        <h2><a class="pd-link" href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
+        {% if post.excerpt %}<p>{{ post.excerpt | strip_html }}</p>{% endif %}
+        <div class="pd-card-actions">
+          <a class="pd-link" href="{{ post.url | relative_url }}">View record →</a>
+          {% if post.paperurl %}<a class="pd-link" href="{{ post.paperurl }}" rel="noopener">Authoritative / traceable source ↗</a>{% endif %}
+        </div>
+      </article>
+      {% endfor %}
+      <div class="pd-empty" data-pd-empty role="status" aria-live="polite">No matching public publication record was found. Try a broader search or clear one of the filters.</div>
     </div>
-  </section>
+
+    <section class="pd-policy" aria-labelledby="verification-policy-title">
+      <div class="pd-eyebrow">Verification Policy</div>
+      <h2 id="verification-policy-title">Traceable metadata before publication</h2>
+      <p>Public records are listed only when publication metadata has a traceable source. The register may expand as additional records are confirmed; unverified citations are not promoted to the public list.</p>
+    </section>
+  </main>
 </div>
+
+<script src="{{ '/assets/js/publications-dashboard.js' | relative_url }}" defer></script>
