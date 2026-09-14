@@ -1,7 +1,7 @@
 {
-  "schemaVersion": "1.0",
-  "lastVerified": "2026-08-25",
-  "evidencePolicy": "Only public-safe fields supported by controlled project records are displayed. Unverified stages are not inferred.",
+  "schemaVersion": "1.1",
+  "lastVerified": "2026-09-14",
+  "evidencePolicy": "Only public-safe fields supported by authoritative or controlled project records are displayed. Draft-only or unbound research candidates are not promoted to active public projects, and unverified stages are not inferred.",
   "pipeline": [
     "Project Core",
     "Protocol",
@@ -19,11 +19,15 @@
       "title": "Inequalities in Movement Opportunity, Time Poverty, and 24-Hour Movement Behaviours among Working-Age Adults in Bangkok, Thailand",
       "titleTh": "ความเหลื่อมล้ำด้านโอกาสในการเคลื่อนไหว ภาวะขาดแคลนเวลา และพฤติกรรมการเคลื่อนไหวตลอด 24 ชั่วโมงของประชากรวัยทำงานในกรุงเทพมหานคร",
       "status": "active",
-      "statusLabel": "Active research development",
-      "stage": "Project Core",
-      "stageIndex": 0,
-      "currentPhase": "Project core and research architecture",
-      "lastVerified": "2026-08-25",
+      "statusLabel": "Active · Instrument development",
+      "stage": "Instrument",
+      "stageIndex": 3,
+      "currentPhase": "Measurement development and existing-instrument evidence comparison",
+      "currentWorkstream": "Existing instrument comparison for the Movement Opportunity measurement model",
+      "nextEvidenceGate": "Complete Adopt / Adapt / Develop decisions before candidate-item development",
+      "verificationStatus": "Authoritative research binding and governed continuation state verified",
+      "sourceAsOf": "2026-09-07",
+      "lastVerified": "2026-09-14",
       "featured": true,
       "visibility": "public-summary",
       "themes": [
@@ -32,7 +36,7 @@
         "24-Hour Movement Behaviour",
         "Working-Age Adults"
       ],
-      "evidenceNote": "Project identity and core conceptual framing are supported by an approved controlled project core reference dated 25 August 2026. Later lifecycle stages are not shown as completed unless separately verified.",
+      "evidenceNote": "The authoritative research registry confirms BMO as the active governed research project. The approved project core and measurement-domain baseline are in place, and the current authorized workstream is an existing-instrument comparison. Protocol, ethics, data collection, analysis, manuscript, and publication stages are not presented as completed unless separately verified.",
       "milestones": [
         {
           "label": "Project identity and core reference",
@@ -47,8 +51,8 @@
           "state": "not-publicly-confirmed"
         },
         {
-          "label": "Instrument stage",
-          "state": "not-publicly-confirmed"
+          "label": "Instrument development and evidence comparison",
+          "state": "active"
         },
         {
           "label": "Data collection",
