@@ -15,7 +15,7 @@ classes: wide
     <section class="oa-hero" aria-labelledby="home-title">
       <div class="oa-profile">
         <div class="oa-portrait-wrap">
-          <img class="oa-portrait" src="./images/profile-approved-01.webp" alt="Formal portrait of Asst. Prof. Dr. Kasem Chooratna">
+          <img class="oa-portrait" src="./images/profile-approved-01.webp" alt="Formal portrait of Asst. Prof. Dr. Kasem Chooratna" width="800" height="1000" decoding="async">
           <div class="oa-badge">Health Education · Physical Education</div>
         </div>
         <div>
@@ -30,21 +30,25 @@ classes: wide
       </div>
 
       <aside class="oa-ai-panel" aria-labelledby="ask-ai-title">
-        <div class="oa-ai-label">AI Academic Assistant · Static-first</div>
+        <div class="oa-ai-label">AI Academic Assistant · Static-first v2</div>
         <h2 id="ask-ai-title">Ask about my academic work</h2>
-        <p>Search the public academic areas available on this website. This first version uses verified site content and does not generate new claims.</p>
+        <p>Search a local index of public academic areas on this website. Results route only to public, evidence-aware content and do not generate new claims.</p>
         <div class="oa-search" role="search">
-          <input type="search" data-oa-search aria-label="Search academic areas" placeholder="Try: research, teaching, curriculum, quality, innovation…">
+          <input type="search" data-oa-search aria-label="Search public academic records" placeholder="Try: research ethics, school health, curriculum, publications…">
           <button type="button" data-oa-search-button>Search</button>
         </div>
         <div class="oa-suggestions" aria-label="Suggested searches">
           <button type="button" data-oa-suggestion="research">Research</button>
           <button type="button" data-oa-suggestion="teaching">Teaching</button>
-          <button type="button" data-oa-suggestion="curriculum">Curriculum &amp; QA</button>
-          <button type="button" data-oa-suggestion="innovation">Innovation</button>
-          <button type="button" data-oa-suggestion="community">Academic Service</button>
+          <button type="button" data-oa-suggestion="curriculum quality">Curriculum &amp; QA</button>
+          <button type="button" data-oa-suggestion="evidence">Evidence</button>
+          <button type="button" data-oa-suggestion="professional development">Professional Development</button>
         </div>
-        <div class="oa-ai-note">Evidence-first: results are limited to public website content and navigation metadata in this release.</div>
+        <div class="oa-ai-response" aria-live="polite">
+          <div class="oa-ai-status" data-oa-ai-status>Search the verified public academic index.</div>
+          <div class="oa-ai-results" data-oa-ai-results></div>
+        </div>
+        <div class="oa-ai-note">Evidence-first: this assistant uses a local public index only. It does not call an external AI service, access private files, or generate new biographical or academic claims.</div>
       </aside>
     </section>
 
@@ -52,7 +56,7 @@ classes: wide
       <a class="oa-metric" href="./publications/"><span><strong>Publications</strong><span>Scholarly outputs on this site</span></span><b>{{ publication_count }}</b></a>
       <a class="oa-metric" href="./teaching/"><span><strong>Teaching</strong><span>Courses &amp; learning practice</span></span><b>→</b></a>
       <a class="oa-metric" href="./curriculum-quality/"><span><strong>Curriculum &amp; QA</strong><span>Alignment &amp; improvement</span></span><b>→</b></a>
-      <a class="oa-metric" href="./innovation-projects/"><span><strong>Innovation</strong><span>Digital academic projects</span></span><b>→</b></a>
+      <a class="oa-metric" href="./evidence-explorer/"><span><strong>Evidence</strong><span>Traceable public sources</span></span><b>→</b></a>
     </nav>
   </div>
 
@@ -67,9 +71,10 @@ classes: wide
         <article class="oa-card oa-card-wide" data-oa-card data-keywords="research publications health movement physical activity wellbeing evidence"><div class="oa-card-icon">R</div><h3>Research &amp; Publications</h3><p>Public academic outputs and research directions across health, movement, education and applied inquiry.</p><a href="./research/">Explore research →</a></article>
         <article class="oa-card" data-oa-card data-keywords="curriculum quality qa plo clo mapping aun quality assurance"><div class="oa-card-icon">Q</div><h3>Curriculum &amp; Quality</h3><p>Outcome-based curriculum design, learning-outcome alignment, evaluation and continuous improvement.</p><a href="./curriculum-quality/">Explore curriculum &amp; QA →</a></article>
         <article class="oa-card" data-oa-card data-keywords="innovation ai digital systems academic technology github learning"><div class="oa-card-icon">AI</div><h3>Digital Innovation</h3><p>Responsible AI and digital systems supporting academic work, learning and evidence management.</p><a href="./innovation-projects/">Explore innovation →</a></article>
-        <article class="oa-card" data-oa-card data-keywords="community academic service health promotion professional development outreach"><div class="oa-card-icon">S</div><h3>Academic Service &amp; Community</h3><p>Academic knowledge applied to health promotion, professional development and community-oriented initiatives.</p><a href="./about/">View profile &amp; service →</a></article>
-        <article class="oa-card" data-oa-card data-keywords="professional development certificate psf standards leadership academic"><div class="oa-card-icon">P</div><h3>Professional Development</h3><p>Professional learning, academic leadership and continuing development connected to teaching and quality.</p><a href="./cv/">View academic CV →</a></article>
-        <div class="oa-empty" data-oa-empty role="status" aria-live="polite">No matching public academic content was found. Try a broader term or use the main navigation.</div>
+        <article class="oa-card" data-oa-card data-keywords="evidence sources verified traceable academic"><div class="oa-card-icon">E</div><h3>Evidence Explorer</h3><p>Selected public academic claims connected to traceable evidence and source records.</p><a href="./evidence-explorer/">Explore evidence →</a></article>
+        <article class="oa-card" data-oa-card data-keywords="knowledge map connected domains health education physical education"><div class="oa-card-icon">K</div><h3>Academic Knowledge Map</h3><p>Explore relationships among public academic domains represented on this website.</p><a href="./knowledge-map/">Explore knowledge map →</a></article>
+        <article class="oa-card" data-oa-card data-keywords="professional development credential certificate research ethics integrity training"><div class="oa-card-icon">P</div><h3>Professional Development</h3><p>Selected verified professional learning and research ethics or integrity credentials suitable for public disclosure.</p><a href="./professional-development/">Explore professional development →</a></article>
+        <article class="oa-card" data-oa-card data-keywords="community academic service health promotion outreach"><div class="oa-card-icon">S</div><h3>Academic Service &amp; Community</h3><p>Academic knowledge applied to health promotion, professional development and community-oriented initiatives.</p><a href="./about/">View profile &amp; service →</a></article>
       </div>
     </div>
   </section>
@@ -83,7 +88,7 @@ classes: wide
           <li><strong>Research &amp; Publications</strong><span class="oa-pill">Public collection</span></li>
           <li><strong>Teaching Portfolio</strong><span class="oa-pill">Verified where documented</span></li>
           <li><strong>Curriculum &amp; Quality</strong><span class="oa-pill">Evidence-first</span></li>
-          <li><strong>Innovation Projects</strong><span class="oa-pill">Public-safe only</span></li>
+          <li><strong>Professional Development</strong><span class="oa-pill">Verified records</span></li>
         </ul>
         <a class="oa-btn oa-btn-soft" href="./evidence-explorer/">Open Evidence Explorer →</a>
       </article>
@@ -95,6 +100,7 @@ classes: wide
           <div class="oa-node"><strong>Curriculum &amp; QA</strong><span>Alignment · evaluation · improvement</span></div>
           <div class="oa-node"><strong>Digital Innovation</strong><span>Responsible AI · academic systems</span></div>
         </div>
+        <a class="oa-btn oa-btn-soft" href="./knowledge-map/">Open Knowledge Map →</a>
       </article>
     </div>
   </section>
