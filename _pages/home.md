@@ -69,7 +69,7 @@ classes: wide
         <article class="oa-card" data-oa-card data-keywords="innovation ai digital systems academic technology github learning"><div class="oa-card-icon">AI</div><h3>Digital Innovation</h3><p>Responsible AI and digital systems supporting academic work, learning and evidence management.</p><a href="./innovation-projects/">Explore innovation →</a></article>
         <article class="oa-card" data-oa-card data-keywords="community academic service health promotion professional development outreach"><div class="oa-card-icon">S</div><h3>Academic Service &amp; Community</h3><p>Academic knowledge applied to health promotion, professional development and community-oriented initiatives.</p><a href="./about/">View profile &amp; service →</a></article>
         <article class="oa-card" data-oa-card data-keywords="professional development certificate psf standards leadership academic"><div class="oa-card-icon">P</div><h3>Professional Development</h3><p>Professional learning, academic leadership and continuing development connected to teaching and quality.</p><a href="./cv/">View academic CV →</a></article>
-        <div class="oa-empty" data-oa-empty>No matching academic area was found on this homepage. Try a broader term or use the main navigation.</div>
+        <div class="oa-empty" data-oa-empty role="status" aria-live="polite">No matching public academic content was found. Try a broader term or use the main navigation.</div>
       </div>
     </div>
   </section>
@@ -104,7 +104,7 @@ classes: wide
       <div class="oa-grid">
         <article class="oa-card" data-oa-card data-keywords="health movement wellbeing research physical activity"><div class="oa-card-icon">01</div><h3>Movement &amp; Wellbeing Research</h3><p>Research connecting daily-life contexts, physical activity, wellbeing and healthier living.</p><a href="./research/">Research area →</a></article>
         <article class="oa-card" data-oa-card data-keywords="curriculum academic quality learning outcomes qa"><div class="oa-card-icon">02</div><h3>Curriculum &amp; Academic Quality</h3><p>Programme design, learning outcomes, curriculum alignment and evidence-informed improvement.</p><a href="./curriculum-quality/">Curriculum &amp; QA →</a></article>
-        <article class="oa-card" data-oa-card data-keywords="teaching innovation github ru hepe learning {{ ru_hepe.public_repository_count }} repositories"><div class="oa-card-icon">03</div><h3>RU HEPE Learning</h3><p>A public GitHub-based learning ecosystem connecting course hubs, pilot workspaces, assignments and portfolio structures.</p><a href="{{ '/ru-hepe-learning/' | relative_url }}">Explore RU HEPE Learning →</a></article>
+        <article class="oa-card" data-oa-card data-keywords="teaching innovation github ru hepe learning {{ ru_hepe.public_repository_count }} repositories"><div class="oa-card-icon">03</div><h3>RU HEPE Learning</h3><p>A public GitHub-based learning ecosystem connecting course hubs, pilot workspaces, assignments and portfolio structures.</p><a href="./ru-hepe-learning/">Explore RU HEPE Learning →</a></article>
       </div>
     </div>
   </section>
