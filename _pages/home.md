@@ -5,6 +5,8 @@ author_profile: false
 classes: wide
 ---
 
+{% assign ru_hepe = site.data.ru_hepe_learning %}
+
 <link rel="stylesheet" href="./assets/css/signature-hybrid.css">
 
 <div class="signature-home">
@@ -76,7 +78,7 @@ classes: wide
     <div class="sh-featured">
       <article class="sh-card sh-project"><div class="sh-project-top"><span class="sh-tag">Health &amp; Movement</span></div><div class="sh-project-body"><h3>Movement &amp; Wellbeing Research</h3><p>Research connecting daily-life contexts, physical activity, wellbeing and healthier living.</p></div></article>
       <article class="sh-card sh-project"><div class="sh-project-top"><span class="sh-tag">Education &amp; Quality</span></div><div class="sh-project-body"><h3>Curriculum &amp; Academic Quality</h3><p>Programme design, learning outcomes, curriculum alignment and evidence-informed quality improvement.</p></div></article>
-      <article class="sh-card sh-project"><div class="sh-project-top"><span class="sh-tag">Digital Innovation</span></div><div class="sh-project-body"><h3>Academic Digital Systems</h3><p>Exploring responsible technology and AI to support teaching, evidence, academic services and governance.</p></div></article>
+      <article class="sh-card sh-project"><div class="sh-project-top"><span class="sh-tag">Teaching Innovation · {{ ru_hepe.public_repository_count }} Public Repositories</span></div><div class="sh-project-body"><h3>RU HEPE Learning</h3><p>A public GitHub-based course ecosystem connecting the course hub, HED3505 pilot workspace, assignment templates and student portfolio structures.</p><a class="sh-text-link" href="{{ '/ru-hepe-learning/' | relative_url }}">Explore the learning ecosystem →</a></div></article>
     </div>
   </section>
 
