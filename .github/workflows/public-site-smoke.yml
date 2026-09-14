@@ -1,0 +1,78 @@
+name: Public site smoke check
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 1 * * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: public-site-smoke
+  cancel-in-progress: true
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Verify public routes and markers
+        shell: bash
+        run: |
+          set -euo pipefail
+          base="https://kasemch.github.io"
+          tmp="$(mktemp -d)"
+          trap 'rm -rf "$tmp"' EXIT
+
+          routes=(
+            "/"
+            "/about/"
+            "/teaching/"
+            "/research/"
+            "/research-progress/"
+            "/publications/"
+            "/curriculum-quality/"
+            "/innovation-projects/"
+            "/professional-development/"
+            "/evidence-explorer/"
+            "/knowledge-map/"
+            "/ru-hepe-learning/"
+            "/cv/"
+          )
+
+          printf '## Public site smoke check\n\n' >> "$GITHUB_STEP_SUMMARY"
+          printf '| Route | Result |\n|---|---|\n' >> "$GITHUB_STEP_SUMMARY"
+
+          for route in "${routes[@]}"; do
+            file="$tmp/$(echo "$route" | tr '/?' '__').html"
+            curl --fail --location --silent --show-error \
+              --retry 4 --retry-delay 5 --retry-all-errors \
+              --connect-timeout 15 --max-time 45 \
+              "$base$route" -o "$file"
+            test -s "$file"
+            printf '| `%s` | PASS |\n' "$route" >> "$GITHUB_STEP_SUMMARY"
+          done
+
+          grep -Fq "AI Academic Assistant" "$tmp/_.html"
+          grep -Fq "Evidence Explorer" "$tmp/_evidence-explorer_.html"
+          grep -Fq "Academic Knowledge Map" "$tmp/_knowledge-map_.html"
+          grep -Fq "Professional Development" "$tmp/_professional-development_.html"
+
+          curl --fail --location --silent --show-error \
+            --retry 4 --retry-delay 5 --retry-all-errors \
+            "$base/assets/data/academic-index.json" -o "$tmp/academic-index.json"
+
+          python - "$tmp/academic-index.json" <<'PY'
+          import json, sys
+          path = sys.argv[1]
+          data = json.load(open(path, encoding='utf-8'))
+          assert isinstance(data, list) and data, 'academic index must be a non-empty list'
+          urls = {item.get('url') for item in data}
+          required = {'./research-progress/', './evidence-explorer/', './knowledge-map/', './professional-development/'}
+          missing = required - urls
+          assert not missing, f'missing required public index destinations: {sorted(missing)}'
+          print(f'Validated {len(data)} academic-index records')
+          PY
+
+          printf '\nMarker and local-index checks: **PASS**\n' >> "$GITHUB_STEP_SUMMARY"
