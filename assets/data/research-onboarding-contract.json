@@ -1,7 +1,8 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "1.1",
   "lastVerified": "2026-09-15",
   "purpose": "Public-safe onboarding contract for adding additional research projects to the static Research Command Center without project-specific renderer changes.",
+  "reconciliationPath": "../assets/data/research-candidate-reconciliation.json",
   "requiredProjectFields": [
     "id",
     "matrixProjectId",
@@ -33,6 +34,7 @@
   "allowedMilestoneStates": ["verified", "active", "not-publicly-confirmed"],
   "onboardingGates": [
     "Project identity is supported by an authoritative or controlled record.",
+    "Canonical version and project scope are reconciled before lifecycle classification.",
     "Public classification and lifecycle status are independently supportable.",
     "Every public matrix row resolves to an existing project and milestone.",
     "Every non-null outputId resolves to an output owned by the same project and milestone.",
@@ -41,6 +43,7 @@
     "Unknown status is represented as not-publicly-confirmed rather than inferred.",
     "Validator returns zero blocking errors before a project is exposed as public-summary."
   ],
-  "secondProjectStatus": "not-onboarded",
-  "secondProjectNote": "No second project is included by this contract. A new project must pass the evidence and validation gates before being added to the public registry."
+  "secondProjectStatus": "reconciliation-hold",
+  "secondProjectCandidate": "ncd-synthesis",
+  "secondProjectNote": "NCD evidence synthesis is the strongest current candidate, but onboarding remains blocked because multiple final-report variants use materially different titles and scopes and no canonical authoritative version has yet been bound."
 }
