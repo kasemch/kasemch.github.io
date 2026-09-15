@@ -1,0 +1,54 @@
+last_reviewed: "2026-09-15"
+public_boundary: "Public-safe development status only. This registry does not expose manuscript text, private drafts, reviewer correspondence, internal approval records, or unsupported completion claims."
+journey:
+  - id: align
+    label: "Align"
+    description: "Verify course and curriculum foundations."
+  - id: architect
+    label: "Architect"
+    description: "Build conceptual and chapter architecture."
+  - id: evidence
+    label: "Evidence"
+    description: "Build source, evidence and citation readiness."
+  - id: write
+    label: "Write"
+    description: "Develop and refine textbook chapters."
+  - id: review
+    label: "Review"
+    description: "Editorial, academic and quality review."
+  - id: publication
+    label: "Publication"
+    description: "Submission or publication only when independently verified."
+projects:
+  - id: "HED3505"
+    course_code: "HED3505"
+    title: "School Health Program & Evaluation"
+    public_status: "Pre-writing / Conceptual Architecture"
+    current_step: "architect"
+    current_focus: "Course alignment, conceptual structure, and evidence architecture preparation."
+    next_gate: "Evidence Architecture + Chapter Evidence Matrix readiness."
+    evidence_note: "Course and curriculum foundations are available for development, while chapter writing remains closed until the evidence-architecture gate is passed."
+    steps:
+      align: "verified"
+      architect: "active"
+      evidence: "next"
+      write: "locked"
+      review: "locked"
+      publication: "locked"
+    public: true
+  - id: "HED3502"
+    course_code: "HED3502"
+    title: "Drugs and Substance Abuse"
+    public_status: "Pre-writing / Alignment & Blueprint Verification"
+    current_step: "align"
+    current_focus: "Curriculum and course verification, academic landscape, terminology, and conceptual-architecture planning."
+    next_gate: "Verified conceptual architecture and evidence-matrix readiness before chapter writing."
+    evidence_note: "Verified course documentation supports textbook development, but a completed manuscript, submission, or publication-ready status is not claimed."
+    steps:
+      align: "active"
+      architect: "next"
+      evidence: "future"
+      write: "locked"
+      review: "locked"
+      publication: "locked"
+    public: true
