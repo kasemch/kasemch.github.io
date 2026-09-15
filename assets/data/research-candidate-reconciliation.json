@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "1.0",
+  "lastVerified": "2026-09-15",
+  "purpose": "Public-safe reconciliation register for candidate research projects considered for onboarding into the Research Command Center.",
+  "policy": "Candidate reconciliation does not create a public project record. Promotion requires canonical identity, controlled status, public-safe lifecycle classification, and zero blocking validation errors.",
+  "candidates": [
+    {
+      "id": "ncd-synthesis",
+      "label": "NCD evidence synthesis research",
+      "candidateClass": "completed-candidate",
+      "identityStatus": "partially-verified",
+      "authorityStatus": "not-authoritatively-bound",
+      "versionStatus": "conflict",
+      "lifecycleStatus": "completion-claimed-by-final-report",
+      "publicSafetyStatus": "summary-safe",
+      "onboardingDecision": "hold",
+      "priority": 1,
+      "reason": "Multiple files identify themselves as final research reports but use materially different project titles and scopes. A canonical final version must be selected before the project can be classified as Completed.",
+      "nextGate": "Resolve canonical final title, scope, and version; then bind the selected version to a controlled project identity before public onboarding."
+    },
+    {
+      "id": "digital-health-students",
+      "label": "Digital health behavior profiling of university students",
+      "candidateClass": "proposal-candidate",
+      "identityStatus": "document-verified",
+      "authorityStatus": "not-authoritatively-bound",
+      "versionStatus": "single-proposal-observed",
+      "lifecycleStatus": "proposal-only",
+      "publicSafetyStatus": "summary-safe",
+      "onboardingDecision": "hold",
+      "priority": 2,
+      "reason": "A research proposal is available, but no authoritative or controlled research binding was verified and proposal existence alone is insufficient to promote the work to an active governed project.",
+      "nextGate": "Verify a controlled candidate or active-project record and confirm current lifecycle status."
+    },
+    {
+      "id": "move24",
+      "label": "MOVE24 research program",
+      "candidateClass": "identity-reconciliation",
+      "identityStatus": "unresolved-against-bmo",
+      "authorityStatus": "not-separately-verified",
+      "versionStatus": "unresolved",
+      "lifecycleStatus": "not-publicly-confirmed",
+      "publicSafetyStatus": "summary-safe",
+      "onboardingDecision": "hold",
+      "priority": 3,
+      "reason": "No separate authoritative binding was verified that safely distinguishes MOVE24 from the governed BMO research identity. The projects must not be conflated.",
+      "nextGate": "Establish whether MOVE24 is a separate project, a predecessor, or a related workstream, and verify its authoritative identity before onboarding."
+    }
+  ],
+  "recommendedNextCandidate": "ncd-synthesis",
+  "recommendedDecision": "hold-for-version-reconciliation",
+  "promotionCount": 0
+}
