@@ -171,25 +171,42 @@ exclude:
   - .github
   - .jekyll-assets-cache
   - .sass-cache
-  - assets/js/_main.js
-  - assets/js/plugins
-  - assets/js/vendor
+  - AGENTS.md
   - CHANGELOG
+  - CHANGELOG.md
   - Capfile
   - config
   - Dockerfile
+  - docker-compose.yaml
+  - docs
   - Gemfile
   - Gruntfile.js
   - gulpfile.js
   - LICENSE
   - local
   - log
+  - markdown_generator
   - node_modules
   - package.json*
   - Rakefile
   - README
+  - scripts
+  - talkmap
+  - talkmap.py
+  - talkmap.ipynb
+  - talkmap_out.ipynb
   - tmp
   - vendor
+  - assets/js/_main.js
+  - assets/js/plugins
+  - assets/js/vendor
+  - assets/js/auth
+  - assets/js/calendar
+  - assets/js/upload
+  - assets/js/google-calendar-direct.js
+  - assets/js/google-drive-upload.js
+  - assets/js/upload-classifier.js
+  - assets/js/workspace.js
 keep_files:
   - .git
   - .svn

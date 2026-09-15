@@ -1,7 +1,7 @@
-# Google Calendar direct-write configuration.
-# OAuth Web Client ID is a public browser identifier, not a client secret.
-direct_write_enabled: true
-client_id: "739296612117-ktl6qb94bo6k25v952fcrjlufn44lomq.apps.googleusercontent.com"
-calendar_id: "primary"
+# Public Hub boundary configuration.
+# Direct-write capability is intentionally disabled on the public site.
+direct_write_enabled: false
+client_id: ""
+calendar_id: ""
 timezone: "Asia/Bangkok"
-scope: "https://www.googleapis.com/auth/calendar.events.owned"
+scope: ""

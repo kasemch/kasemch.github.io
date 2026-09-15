@@ -1,5 +1,5 @@
-# Master navigation for the academic website
-# Approved structure for Asst. Prof. Dr. Kasem Chooratna
+# Master navigation for the AWOS Public Hub
+# Public navigation exposes read-only academic content only.
 
 main:
   - title: "Home"
@@ -23,7 +23,7 @@ main:
   - title: "Publications"
     url: /publications/
 
-  - title: "Dashboard"
+  - title: "Academic Dashboard"
     url: /workspace/
 
   - title: "Curriculum & Quality"

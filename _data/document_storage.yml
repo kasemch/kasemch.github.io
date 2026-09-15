@@ -1,17 +1,19 @@
+# Public Hub boundary configuration.
+# Document write/upload capability is intentionally disabled on the public site.
 provider: google_drive
-upload_enabled: true
-client_id: "739296612117-ktl6qb94bo6k25v952fcrjlufn44lomq.apps.googleusercontent.com"
-scope: "https://www.googleapis.com/auth/drive.file"
-root_folder_id: "1CqCHLaycsDSvnvEeo5Jc3I6_aqrrKobx"
+upload_enabled: false
+client_id: ""
+scope: ""
+root_folder_id: ""
 folders:
-  inbox: "1y2LaMubYF3Agu0fKAe7Z67wi0yLEiE0J"
-  teaching: "1uIIfmNqxkPSUAf1ZPlUdbIC3At1aYVs_"
-  research: "1FuHe5l3BgZhkMjMK2vEnU84fIvs6Zgkj"
-  publications: "1CMKN9djZKAU1Vugb8nb0tMlfNsvzmicx"
-  curriculum_quality: "1n3eQCo8GdXR5D0Te5COFgUXtooGOQL4L"
-  academic_service: "1_doDUxuyALcajaX3pGTATIynke6lf5Zb"
-  projects: "1suoph8369ZoSB8a__0HCsyWMjGRX4y2B"
-  archive: "1tX3QOaiGzImYQj3Wsy00KcSEE5pyvmdr"
+  inbox: ""
+  teaching: ""
+  research: ""
+  publications: ""
+  curriculum_quality: ""
+  academic_service: ""
+  projects: ""
+  archive: ""
 metadata:
   provider: supabase
   enabled: false

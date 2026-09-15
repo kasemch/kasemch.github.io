@@ -10,7 +10,7 @@
 
 <!-- Academic profile metadata -->
 <meta name="author" content="{{ site.author.name | default: site.name }}">
-{% if page.url == '/workspace/' or page.url == '/upload-center/' %}
+{% if page.url == '/upload-center/' or page.url == '/add-event/' %}
 <meta name="robots" content="noindex, nofollow, noarchive">
 {% else %}
 <meta name="robots" content="index, follow, max-image-preview:large">
@@ -75,48 +75,19 @@
 }
 </script>
 
-<!-- Academic Command Center assets -->
+<!-- Public Academic Hub assets -->
 {% if page.url == '/' or page.url == '/academic-calendar/' %}
 <link rel="stylesheet" href="{{ '/assets/css/academic-calendar.css' | relative_url }}">
 <script src="{{ '/assets/js/academic-calendar.js' | relative_url }}" defer></script>
 {% endif %}
 
+<!-- Legacy operational routes are fail-closed on the Public Hub. -->
 {% if page.url == '/add-event/' %}
 <link rel="stylesheet" href="{{ '/assets/css/calendar-event-builder.css' | relative_url }}">
-<script src="{{ '/assets/js/google-calendar-link.js' | relative_url }}" defer></script>
-{% if site.data.google_calendar.direct_write_enabled and site.data.google_calendar.client_id != '' %}
-<script src="https://accounts.google.com/gsi/client" async defer></script>
-<script>
-window.KASEM_GOOGLE_CALENDAR_CONFIG = {
-  enabled: true,
-  clientId: {{ site.data.google_calendar.client_id | jsonify }},
-  calendarId: {{ site.data.google_calendar.calendar_id | jsonify }},
-  timezone: {{ site.data.google_calendar.timezone | jsonify }},
-  scope: {{ site.data.google_calendar.scope | jsonify }}
-};
-</script>
-<script src="{{ '/assets/js/auth/google-auth.js' | relative_url }}" defer></script>
-<script src="{{ '/assets/js/calendar/calendar-direct-write.js' | relative_url }}" defer></script>
-{% endif %}
 {% endif %}
 
 {% if page.url == '/upload-center/' %}
 <link rel="stylesheet" href="{{ '/assets/css/upload-center.css' | relative_url }}">
-<script src="{{ '/assets/js/upload/classifier.js' | relative_url }}" defer></script>
-{% if site.data.document_storage.upload_enabled and site.data.document_storage.client_id != '' %}
-<script src="https://accounts.google.com/gsi/client" async defer></script>
-<script>
-window.KASEM_DOCUMENT_STORAGE_CONFIG = {
-  enabled: true,
-  clientId: {{ site.data.document_storage.client_id | jsonify }},
-  scope: {{ site.data.document_storage.scope | jsonify }},
-  rootFolderId: {{ site.data.document_storage.root_folder_id | jsonify }},
-  folders: {{ site.data.document_storage.folders | jsonify }}
-};
-</script>
-<script src="{{ '/assets/js/auth/google-auth.js' | relative_url }}" defer></script>
-<script src="{{ '/assets/js/upload/drive-upload.js' | relative_url }}" defer></script>
-{% endif %}
 {% endif %}
 
 {% if page.url == '/workspace/' %}
