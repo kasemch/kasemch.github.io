@@ -37,19 +37,21 @@
       matrixRowsByMilestone.get(row.milestoneId).push(row);
     });
 
-    const milestones = (project.milestones || []).map((item, index) => {
+    const milestoneItems = project.milestones || [];
+    const milestones = milestoneItems.map((item, index) => {
       const rows = matrixRowsByMilestone.get(item.id) || [];
       const boundOutputs = rows.map((row) => row.outputId && outputsById.get(row.outputId)).filter(Boolean);
       const linkedSummary = boundOutputs.length
         ? boundOutputs.map((output) => escapeHtml(output.label)).join(' · ')
         : 'No verified public-safe output binding';
+      const nodeMark = item.state === 'verified' ? '✓' : String(index + 1).padStart(2, '0');
       return `
-        <li class="rpd-timeline-item" data-state="${escapeHtml(item.state)}">
-          <span class="rpd-timeline-index">${String(index + 1).padStart(2, '0')}</span>
-          <div>
+        <li class="rpd-milestone" data-state="${escapeHtml(item.state)}">
+          <div class="rpd-milestone-node" aria-hidden="true">${nodeMark}</div>
+          <div class="rpd-milestone-copy">
             <strong>${escapeHtml(item.label)}</strong>
-            <span>${escapeHtml(stateLabel(item.state))}</span>
-            <span class="rpd-binding-line">Matrix binding: ${linkedSummary}</span>
+            <span class="rpd-milestone-state">${escapeHtml(stateLabel(item.state))}</span>
+            <span class="rpd-milestone-binding">${linkedSummary}</span>
           </div>
         </li>`;
     }).join('');
@@ -114,7 +116,16 @@
         </div>
       </section>
 
-      <section class="rpd-section rpd-section-wide"><p class="rpd-eyebrow">Lifecycle</p><h2>Verified public timeline</h2><p class="rpd-muted rpd-readable-copy">Lifecycle bindings are resolved from the public research evidence matrix. Unverified stages remain unconfirmed.</p><ol class="rpd-timeline">${milestones}</ol></section>
+      <section class="rpd-section rpd-section-wide rpd-lifecycle-section">
+        <div class="rpd-lifecycle-head">
+          <div><p class="rpd-eyebrow">Lifecycle</p><h2>Verified milestone map</h2></div>
+          <div class="rpd-milestone-legend" aria-label="Milestone status legend"><span data-state="verified">Verified</span><span data-state="active">Active</span><span data-state="not-publicly-confirmed">Not publicly confirmed</span></div>
+        </div>
+        <p class="rpd-muted rpd-readable-copy">Each milestone is displayed only from the public research registry and evidence matrix. A future node remains unconfirmed until supporting evidence is verified.</p>
+        <div class="rpd-milestone-scroll" role="region" aria-label="Research milestone map" tabindex="0">
+          <ol class="rpd-milestone-map" style="--rpd-steps:${Math.max(milestoneItems.length, 1)}">${milestones}</ol>
+        </div>
+      </section>
 
       <section class="rpd-section rpd-section-full"><p class="rpd-eyebrow">Research evidence matrix</p><h2>Project × Milestone × Evidence × Output × Publication</h2><p class="rpd-muted rpd-readable-copy">This matrix is relationship-level metadata only. Controlled source files remain outside the public repository.</p>${matrixBlock}</section>
 
