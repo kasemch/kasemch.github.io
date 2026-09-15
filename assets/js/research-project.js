@@ -24,7 +24,7 @@
 
   const humanize = (value = '') => String(value).replaceAll('-', ' ');
 
-  const render = (project, data, matrix) => {
+  const render = (project, data, matrix, validation) => {
     const themes = (project.themes || []).map((item) => `<span class="rpd-chip">${escapeHtml(item)}</span>`).join('');
     const outputsById = new Map((project.publicOutputs || []).map((item) => [item.id, item]));
     const milestonesById = new Map((project.milestones || []).map((item) => [item.id, item]));
@@ -87,6 +87,9 @@
       : `<article class="rpd-publication rpd-publication-empty"><strong>No verified ${escapeHtml(project.shortTitle)} publication binding yet</strong><p>${escapeHtml(project.publicationBindingNote || 'No publication has been verified as a project output.')}</p></article>`;
 
     const evidence = project.publicEvidenceBinding || {};
+    const warningText = validation.warnings.length
+      ? `${validation.warnings.length} non-blocking warning${validation.warnings.length === 1 ? '' : 's'}`
+      : '0 warnings';
 
     root.innerHTML = `
       <section class="rpd-hero">
@@ -114,6 +117,10 @@
       <section class="rpd-section"><p class="rpd-eyebrow">Lifecycle</p><h2>Verified public timeline</h2><p class="rpd-muted">Lifecycle bindings are resolved from the public research evidence matrix. Unverified stages remain unconfirmed.</p><ol class="rpd-timeline">${milestones}</ol></section>
 
       <section class="rpd-section"><p class="rpd-eyebrow">Research evidence matrix</p><h2>Project × Milestone × Evidence × Output × Publication</h2><p class="rpd-muted">This matrix is relationship-level metadata only. Controlled source files remain outside the public repository.</p>${matrixBlock}</section>
+
+      <section class="rpd-section"><p class="rpd-eyebrow">Validation</p><h2>Registry integrity gate</h2>
+        <article class="rpd-evidence"><strong>PASS · 0 blocking errors</strong><p>The project registry and evidence matrix passed referential-integrity validation before this page was rendered.</p><p><strong>Validator:</strong> ${escapeHtml(warningText)}. New public projects must also pass the onboarding contract.</p></article>
+      </section>
 
       <section class="rpd-section"><p class="rpd-eyebrow">Outputs</p><h2>Public-safe project outputs</h2><div class="rpd-output-grid">${outputs}</div></section>
 
@@ -146,22 +153,27 @@
       const registryResponse = await fetch(DATA_URL, { cache: 'no-store' });
       if (!registryResponse.ok) throw new Error(`Registry HTTP ${registryResponse.status}`);
       const data = await registryResponse.json();
+
+      const matrixResponse = await fetch(data.matrixPath || DEFAULT_MATRIX_URL, { cache: 'no-store' });
+      if (!matrixResponse.ok) throw new Error(`Matrix HTTP ${matrixResponse.status}`);
+      const matrix = await matrixResponse.json();
+
+      const validator = window.ResearchRegistryValidator;
+      if (!validator?.validate) return failClosed('The research validation layer is unavailable, so the page will not render unvalidated relationship data.');
+      const validation = validator.validate(data, matrix);
+      if (!validation.ok) {
+        console.error('Research Registry Validation:', validation.errors);
+        return failClosed(`Research registry validation failed with ${validation.errors.length} blocking integrity error${validation.errors.length === 1 ? '' : 's'}. Relationship data has been withheld.`);
+      }
+      if (validation.warnings.length) console.warn('Research Registry Validation warnings:', validation.warnings);
+
       const project = (data.projects || []).find((item) => item.id === projectId);
       if (!project || project.visibility !== 'public-summary') return failClosed('No public-safe verified project record matches this identifier.');
 
-      let matrix = { rows: [], lastVerified: null };
-      try {
-        const matrixResponse = await fetch(data.matrixPath || DEFAULT_MATRIX_URL, { cache: 'no-store' });
-        if (!matrixResponse.ok) throw new Error(`Matrix HTTP ${matrixResponse.status}`);
-        matrix = await matrixResponse.json();
-      } catch (matrixError) {
-        console.error('Research Evidence Matrix:', matrixError);
-      }
-
-      render(project, data, matrix);
+      render(project, data, matrix, validation);
     } catch (error) {
       console.error('Research Project Detail:', error);
-      failClosed('The verified research register could not be loaded. The page failed closed rather than displaying stale or fabricated information.');
+      failClosed('The verified research register or matrix could not be loaded. The page failed closed rather than displaying stale or fabricated information.');
     }
   };
 
