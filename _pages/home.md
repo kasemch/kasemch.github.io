@@ -15,6 +15,7 @@ classes: wide
 <link rel="stylesheet" href="{{ '/assets/css/academic-executive.css' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/css/static-ai-v2.css' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/css/signature-mark.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/home-academic-axis.css' | relative_url }}">
 
 <div class="academic-executive option17a">
   <section class="ae-hero" aria-labelledby="home-title">
