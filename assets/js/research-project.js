@@ -107,28 +107,28 @@
         <article><span>Evidence verified</span><strong>${escapeHtml(formatDate(project.lastVerified))}</strong></article>
       </section>
 
-      <section class="rpd-section"><p class="rpd-eyebrow">Current gate</p><h2>Where the project is now</h2>
+      <section class="rpd-section rpd-section-wide"><p class="rpd-eyebrow">Current gate</p><h2>Where the project is now</h2>
         <div class="rpd-grid rpd-two">
           <article class="rpd-card"><span>Current workstream</span><strong>${escapeHtml(project.currentWorkstream || project.currentPhase)}</strong></article>
           <article class="rpd-card"><span>Next evidence gate</span><strong>${escapeHtml(project.nextEvidenceGate || 'Not publicly confirmed')}</strong></article>
         </div>
       </section>
 
-      <section class="rpd-section"><p class="rpd-eyebrow">Lifecycle</p><h2>Verified public timeline</h2><p class="rpd-muted">Lifecycle bindings are resolved from the public research evidence matrix. Unverified stages remain unconfirmed.</p><ol class="rpd-timeline">${milestones}</ol></section>
+      <section class="rpd-section rpd-section-wide"><p class="rpd-eyebrow">Lifecycle</p><h2>Verified public timeline</h2><p class="rpd-muted rpd-readable-copy">Lifecycle bindings are resolved from the public research evidence matrix. Unverified stages remain unconfirmed.</p><ol class="rpd-timeline">${milestones}</ol></section>
 
-      <section class="rpd-section"><p class="rpd-eyebrow">Research evidence matrix</p><h2>Project × Milestone × Evidence × Output × Publication</h2><p class="rpd-muted">This matrix is relationship-level metadata only. Controlled source files remain outside the public repository.</p>${matrixBlock}</section>
+      <section class="rpd-section rpd-section-full"><p class="rpd-eyebrow">Research evidence matrix</p><h2>Project × Milestone × Evidence × Output × Publication</h2><p class="rpd-muted rpd-readable-copy">This matrix is relationship-level metadata only. Controlled source files remain outside the public repository.</p>${matrixBlock}</section>
 
-      <section class="rpd-section"><p class="rpd-eyebrow">Validation</p><h2>Registry integrity gate</h2>
+      <section class="rpd-section rpd-section-readable"><p class="rpd-eyebrow">Validation</p><h2>Registry integrity gate</h2>
         <article class="rpd-evidence"><strong>PASS · 0 blocking errors</strong><p>The project registry and evidence matrix passed referential-integrity validation before this page was rendered.</p><p><strong>Validator:</strong> ${escapeHtml(warningText)}. New public projects must also pass the onboarding contract.</p></article>
       </section>
 
-      <section class="rpd-section"><p class="rpd-eyebrow">Outputs</p><h2>Public-safe project outputs</h2><div class="rpd-output-grid">${outputs}</div></section>
+      <section class="rpd-section rpd-section-wide"><p class="rpd-eyebrow">Outputs</p><h2>Public-safe project outputs</h2><div class="rpd-output-grid">${outputs}</div></section>
 
-      <section class="rpd-section"><p class="rpd-eyebrow">Publication binding</p><h2>Verified publications linked to this project</h2><div class="rpd-publication-grid">${publicationBlock}</div>
+      <section class="rpd-section rpd-section-wide"><p class="rpd-eyebrow">Publication binding</p><h2>Verified publications linked to this project</h2><div class="rpd-publication-grid">${publicationBlock}</div>
         <div class="rpd-actions"><a class="rpd-btn" href="${escapeHtml(project.publicationRegisterPath || '../publications/')}">Open publication register</a></div>
       </section>
 
-      <section class="rpd-section"><p class="rpd-eyebrow">Evidence binding</p><h2>Traceability without exposing private records</h2>
+      <section class="rpd-section rpd-section-readable"><p class="rpd-eyebrow">Evidence binding</p><h2>Traceability without exposing private records</h2>
         <article class="rpd-evidence">
           <strong>${escapeHtml(evidence.label || project.verificationStatus || 'Controlled evidence status')}</strong>
           <p>${escapeHtml(evidence.note || project.evidenceNote)}</p>
@@ -138,7 +138,7 @@
         </article>
       </section>
 
-      <section class="rpd-section rpd-boundary"><p><strong>Public evidence boundary.</strong> This page does not expose private Drive links, participant data, confidential protocols, unpublished findings, reviewer correspondence, or inferred milestones. Portfolio evidence last verified: ${escapeHtml(formatDate(data.lastVerified))}.</p></section>`;
+      <section class="rpd-section rpd-section-readable rpd-boundary"><p><strong>Public evidence boundary.</strong> This page does not expose private Drive links, participant data, confidential protocols, unpublished findings, reviewer correspondence, or inferred milestones. Portfolio evidence last verified: ${escapeHtml(formatDate(data.lastVerified))}.</p></section>`;
   };
 
   const failClosed = (message) => {
