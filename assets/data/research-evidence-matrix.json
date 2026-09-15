@@ -1,0 +1,56 @@
+{
+  "schemaVersion": "1.0",
+  "lastVerified": "2026-09-15",
+  "policy": "This public matrix contains only public-safe relationship metadata. Controlled source files, private Drive URLs, participant data, confidential protocols, reviewer correspondence, and unpublished findings are excluded. A relationship is included only when the link itself is verified or explicitly marked unverified.",
+  "columns": ["projectId", "milestoneId", "evidenceClass", "evidenceStatus", "outputId", "publicationId", "relationshipStatus"],
+  "rows": [
+    {
+      "id": "bmo-project-core",
+      "projectId": "bmo",
+      "milestoneId": "project-core",
+      "evidenceClass": "controlled-governance",
+      "evidenceStatus": "verified",
+      "outputId": "bmo-core",
+      "publicationId": null,
+      "relationshipStatus": "verified",
+      "publicSourceAvailable": false,
+      "note": "Project identity and approved project core are bound through controlled governance records."
+    },
+    {
+      "id": "bmo-instrument-baseline",
+      "projectId": "bmo",
+      "milestoneId": "instrument",
+      "evidenceClass": "controlled-measurement",
+      "evidenceStatus": "verified",
+      "outputId": "bmo-measurement-baseline",
+      "publicationId": null,
+      "relationshipStatus": "verified",
+      "publicSourceAvailable": false,
+      "note": "The measurement-domain baseline is verified as an output of the Instrument milestone."
+    },
+    {
+      "id": "bmo-instrument-comparison",
+      "projectId": "bmo",
+      "milestoneId": "instrument",
+      "evidenceClass": "controlled-workstream",
+      "evidenceStatus": "active",
+      "outputId": "bmo-existing-instrument-comparison",
+      "publicationId": null,
+      "relationshipStatus": "verified-current-workstream",
+      "publicSourceAvailable": false,
+      "note": "Existing-instrument comparison is the current governed Instrument-stage workstream."
+    },
+    {
+      "id": "bmo-publication-unverified",
+      "projectId": "bmo",
+      "milestoneId": "publication",
+      "evidenceClass": "publication-link",
+      "evidenceStatus": "not-publicly-confirmed",
+      "outputId": null,
+      "publicationId": null,
+      "relationshipStatus": "none-verified",
+      "publicSourceAvailable": false,
+      "note": "No publication is currently verified as a BMO output. Topic similarity is not sufficient to create a publication binding."
+    }
+  ]
+}
