@@ -1,25 +1,27 @@
 {
-  "schemaVersion": "1.1",
+  "schemaVersion": "1.2",
   "lastVerified": "2026-09-15",
   "purpose": "Public-safe reconciliation register for candidate research projects considered for onboarding into the Research Command Center.",
   "policy": "Candidate reconciliation does not create a public project record. Promotion requires canonical identity, controlled status, public-safe lifecycle classification, and zero blocking validation errors.",
   "canonicalReconciliationPath": "../assets/data/research-ncd-canonical-reconciliation.json",
+  "authorityPublicationReconciliationPath": "../assets/data/research-ncd-authority-publication-reconciliation.json",
   "candidates": [
     {
       "id": "ncd-synthesis",
       "label": "NCD evidence synthesis research",
       "candidateClass": "completed-candidate",
       "identityStatus": "canonical-title-and-scope-resolved",
-      "authorityStatus": "authoritative-final-pending",
-      "versionStatus": "canonical-content-candidate-selected",
+      "authorityStatus": "authoritative-final-not-verified",
+      "versionStatus": "canonical-report-candidate-supported",
       "lifecycleStatus": "completion-claimed-by-final-report",
       "publicSafetyStatus": "summary-safe",
+      "publicationBindingStatus": "none-verified",
       "onboardingDecision": "hold",
       "priority": 1,
       "canonicalTitleTh": "ถอดรหัสพื้นที่วิกฤต (Hotspots) กลุ่มโรค NCDs และภาวะเนือยนิ่งในประเทศไทย: การสังเคราะห์บิ๊กดาต้าสาธารณสุขสู่ยุทธศาสตร์มุ่งเป้า",
       "canonicalTitleEn": "Deciphering NCDs Hotspots and Sedentary Behavior in Thailand: A Health Big Data Synthesis for Targeted Strategic Planning",
-      "reason": "Cross-document reconciliation supports the Hotspots title and scope as the strongest canonical identity because the same English title appears in an academic-conference manuscript. The authoritative final-report version remains unresolved because chronology alone does not establish formal authority and a later variant differs in research-team composition.",
-      "nextGate": "Verify an approval-level or controlled record that designates the authoritative final-report version; then evaluate Completed onboarding and any project-publication binding."
+      "reason": "The three-researcher Hotspots report is now the strongest canonical report candidate because its title and author form align with a citation found in the 2026 conference proceedings. No approval-level or controlled lifecycle record was found that explicitly designates it as the authoritative final report. A withdrawal notice exists for the conference manuscript, so the project is not treated as publication-linked merely because the report is cited in the proceedings.",
+      "nextGate": "Obtain an authority-level record explicitly designating the canonical final report. Separately verify direct proceedings-paper inclusion or another publication receipt before creating any project-publication binding."
     },
     {
       "id": "digital-health-students",
@@ -51,6 +53,6 @@
     }
   ],
   "recommendedNextCandidate": "ncd-synthesis",
-  "recommendedDecision": "hold-for-authoritative-final-designation",
+  "recommendedDecision": "hold-for-authoritative-final-and-direct-publication-binding",
   "promotionCount": 0
 }
