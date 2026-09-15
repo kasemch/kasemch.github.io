@@ -48,6 +48,21 @@ author_profile: false
     </div>
   </section>
 
+  <section class="cq-section" aria-labelledby="contribution-title">
+    <div class="cq-shell">
+      <div class="cq-eyebrow">Verified Programme-Level Contribution</div>
+      <h2 id="contribution-title">Public-safe contribution scope</h2>
+      <p class="cq-lead">Verified portfolio evidence supports programme-level contribution across curriculum and academic quality work. This section describes contribution domains only; it does not assert an administrative title, disclose restricted records, or reproduce internal programme evidence.</p>
+      <div class="cq-grid">
+        <article class="cq-card" data-cq-domain="curriculum"><div class="cq-eyebrow">Design &amp; Review</div><h3>Curriculum Development</h3><p>Contributing to curriculum design and review, including programme and course structures, intended learning outcomes, curriculum mapping and alignment across the programme.</p></article>
+        <article class="cq-card" data-cq-domain="curriculum assessment"><div class="cq-eyebrow">Alignment</div><h3>PLO / CLO Coherence</h3><p>Connecting programme learning outcomes with course learning outcomes, learning activities, assessment approaches and evidence used for academic review.</p></article>
+        <article class="cq-card" data-cq-domain="assessment evidence"><div class="cq-eyebrow">Evaluation</div><h3>Assessment &amp; Programme Evaluation</h3><p>Using course- and programme-level assessment evidence to support evaluation, interpretation and improvement decisions.</p></article>
+        <article class="cq-card" data-cq-domain="qa evidence"><div class="cq-eyebrow">Quality</div><h3>Evidence-Informed Quality Development</h3><p>Supporting programme-level quality development, evidence management and continuous improvement through higher-education quality frameworks, including AUN-QA where appropriate.</p></article>
+      </div>
+      <div class="cq-policy"><strong>Portfolio boundary.</strong> Public content is limited to verified contribution domains. Committee records, internal SAR evidence, student data, restricted implementation details and unverified leadership titles remain outside the public website.</div>
+    </div>
+  </section>
+
   <section class="cq-section" aria-labelledby="domains-title">
     <div class="cq-shell">
       <div class="cq-eyebrow">Academic Quality Domains</div>
