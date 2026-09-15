@@ -53,9 +53,9 @@ classes: wide
       </article>
 
       <article class="sp-card">
-        <div class="sp-eyebrow">Digital Academic Innovation · Ongoing</div>
-        <h3>Responsible Digital Academic Systems</h3>
-        <p>Selected public descriptions cover responsible AI-supported workflows, evidence management, digital teaching support and academic-system prototypes while intentionally withholding protected implementation details.</p>
+        <div class="sp-eyebrow">AI in Education · Prototype</div>
+        <h3>AI-Assisted Reflective Curriculum Improvement Lab</h3>
+        <p>A limited educator-led prototype exploring responsible AI support for reflective curriculum improvement, rubric-informed review and reusable teaching cases. Public presentation excludes identifiable learner data and non-public implementation details.</p>
         <a class="sp-link" href="{{ '/innovation-projects/' | relative_url }}">Open Innovation &amp; Projects →</a>
       </article>
 
