@@ -1,7 +1,10 @@
 {
-  "schemaVersion": "1.5",
+  "schemaVersion": "1.6",
   "lastVerified": "2026-09-15",
   "matrixPath": "../assets/data/research-evidence-matrix.json",
+  "validatorPath": "../assets/js/research-registry-validator.js",
+  "onboardingContractPath": "../assets/data/research-onboarding-contract.json",
+  "validationPolicy": "Public project rendering is fail-closed when registry-to-matrix referential integrity fails. New projects must pass the public-safe onboarding contract before exposure as public-summary.",
   "evidencePolicy": "Only public-safe fields supported by authoritative or controlled project records are displayed. Draft-only or unbound research candidates are never promoted to Verified Active. Candidate records may be counted or displayed only when their candidate status itself is supported by a public-safe controlled record. Milestone-to-output and project-to-publication links are shown only when the relationship itself is verified. Relationship-level traceability is stored in a separate public evidence matrix so additional projects can be added without changing the renderer.",
   "portfolioClasses": [
     {"id":"verified-active","label":"Verified Active","description":"An ongoing research project with an authoritative or controlled project identity and a verified current lifecycle state."},
