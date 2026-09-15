@@ -46,18 +46,36 @@ jobs:
 
           for route in "${routes[@]}"; do
             file="$tmp/$(echo "$route" | tr '/?' '__').html"
-            curl --fail --location --silent --show-error \
+            if ! curl --fail --location --silent --show-error \
               --retry 4 --retry-delay 5 --retry-all-errors \
               --connect-timeout 15 --max-time 45 \
-              "$base$route" -o "$file"
-            test -s "$file"
+              "$base$route" -o "$file"; then
+              echo "Smoke route failed: $route" >&2
+              printf '| `%s` | FAIL |\n' "$route" >> "$GITHUB_STEP_SUMMARY"
+              exit 1
+            fi
+            if [ ! -s "$file" ]; then
+              echo "Smoke route returned an empty body: $route" >&2
+              printf '| `%s` | FAIL (empty body) |\n' "$route" >> "$GITHUB_STEP_SUMMARY"
+              exit 1
+            fi
             printf '| `%s` | PASS |\n' "$route" >> "$GITHUB_STEP_SUMMARY"
           done
 
-          grep -Fq "AI Academic Assistant" "$tmp/_.html"
-          grep -Fq "Evidence Explorer" "$tmp/_evidence-explorer_.html"
-          grep -Fq "Academic Knowledge Map" "$tmp/_knowledge-map_.html"
-          grep -Fq "Professional Development" "$tmp/_professional-development_.html"
+          check_marker() {
+            marker="$1"
+            file="$2"
+            label="$3"
+            if ! grep -Fq "$marker" "$file"; then
+              echo "Smoke marker missing: $label -> $marker" >&2
+              exit 1
+            fi
+          }
+
+          check_marker "Academic Assistant" "$tmp/_.html" "home"
+          check_marker "Evidence Explorer" "$tmp/_evidence-explorer_.html" "evidence-explorer"
+          check_marker "Academic Knowledge Map" "$tmp/_knowledge-map_.html" "knowledge-map"
+          check_marker "Professional Development" "$tmp/_professional-development_.html" "professional-development"
 
           curl --fail --location --silent --show-error \
             --retry 4 --retry-delay 5 --retry-all-errors \
