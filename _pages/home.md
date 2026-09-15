@@ -16,6 +16,7 @@ classes: wide
 <link rel="stylesheet" href="{{ '/assets/css/static-ai-v2.css' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/css/signature-mark.css' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/css/home-academic-axis.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/academic-writing-home.css' | relative_url }}">
 
 <div class="academic-executive option17a">
   <section class="ae-hero" aria-labelledby="home-title">
@@ -111,10 +112,11 @@ classes: wide
 
   <section class="ae-section" aria-labelledby="featured-title">
     <div class="ae-shell">
-      <div class="ae-section-head"><div><div class="ae-eyebrow">Selected Work</div><h2 id="featured-title">Teaching, research and public evidence</h2></div></div>
+      <div class="ae-section-head"><div><div class="ae-eyebrow">Selected Work</div><h2 id="featured-title">Teaching, research, writing and public evidence</h2></div></div>
       <div class="ae-card-grid">
         <article class="ae-card"><span>Teaching</span><h3>AY2569 Teaching Portfolio</h3><p>MR30-reconciled offering status, course-quality evidence coverage and public-safe teaching records.</p><a href="{{ '/teaching/' | relative_url }}">Open Teaching →</a></article>
         <article class="ae-card"><span>Research</span><h3>Research Command Center</h3><p>Evidence-first public status of active research activity without exposing confidential protocols or participant data.</p><a href="{{ '/research-progress/' | relative_url }}">Open Research Status →</a></article>
+        <article class="ae-card ae-card-academic-writing"><span>Academic Writing</span><h3>Textbook Development</h3><p>Public-safe Book Journey status for current textbook projects, from alignment and architecture through evidence readiness and later writing gates.</p><a href="{{ '/academic-writing/' | relative_url }}">Open Academic Writing →</a></article>
         <article class="ae-card"><span>Evidence</span><h3>Evidence Explorer</h3><p>Selected public claims connected to traceable academic sources and evidence boundaries.</p><a href="{{ '/evidence-explorer/' | relative_url }}">Open Evidence Explorer →</a></article>
       </div>
     </div>
@@ -123,8 +125,8 @@ classes: wide
   <section class="ae-section" aria-labelledby="assistant-title">
     <div class="ae-shell ae-assistant">
       <div><div class="ae-eyebrow">Academic Assistant</div><h2 id="assistant-title">Ask about public academic work</h2><p class="ae-muted">Searches the local public index only. It does not access private files or generate unsupported claims.</p></div>
-      <div class="ae-assistant-search" role="search"><input type="search" data-oa-search aria-label="Search public academic records" placeholder="Research, teaching, curriculum, evidence…"><button type="button" data-oa-search-button>Search</button></div>
-      <div class="ae-suggestions"><button type="button" data-oa-suggestion="research">Research</button><button type="button" data-oa-suggestion="teaching">Teaching</button><button type="button" data-oa-suggestion="curriculum quality">Curriculum &amp; QA</button><button type="button" data-oa-suggestion="evidence">Evidence</button></div>
+      <div class="ae-assistant-search" role="search"><input type="search" data-oa-search aria-label="Search public academic records" placeholder="Research, teaching, academic writing, curriculum, evidence…"><button type="button" data-oa-search-button>Search</button></div>
+      <div class="ae-suggestions"><button type="button" data-oa-suggestion="research">Research</button><button type="button" data-oa-suggestion="teaching">Teaching</button><button type="button" data-oa-suggestion="academic writing textbook">Academic Writing</button><button type="button" data-oa-suggestion="curriculum quality">Curriculum &amp; QA</button><button type="button" data-oa-suggestion="evidence">Evidence</button></div>
       <div class="oa-ai-response" aria-live="polite"><div class="oa-ai-status" data-oa-ai-status>Search the verified public academic index.</div><div class="oa-ai-results" data-oa-ai-results></div></div>
     </div>
   </section>
