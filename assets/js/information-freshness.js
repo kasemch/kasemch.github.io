@@ -5,11 +5,14 @@
   const registryUrl = script?.dataset?.registryUrl;
   if (!registryUrl) return;
 
-  const target = document.querySelector('.academic-executive .ae-pillars') || document.querySelector('.academic-workspace .aw-dashboard-head');
+  const homeTarget = document.querySelector('.academic-executive .ae-pillars');
+  const workspaceTarget = document.querySelector('.academic-workspace .aw-dashboard-head');
+  const target = homeTarget || workspaceTarget;
   if (!target) return;
 
   const baseRoot = registryUrl.includes('/assets/data/') ? registryUrl.split('/assets/data/')[0] : '.';
   const researchUrl = `${baseRoot}/assets/data/research-projects.json`;
+  const localPrefix = workspaceTarget ? '../' : './';
 
   const escapeHtml = (value) => String(value ?? '').replace(/[&<>'"]/g, (char) => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char]));
   const formatDate = (value) => {
@@ -18,7 +21,7 @@
     if (Number.isNaN(parsed.getTime())) return value;
     return new Intl.DateTimeFormat('en-GB', { day:'2-digit', month:'short', year:'numeric', timeZone:'UTC' }).format(parsed);
   };
-  const safeHref = (value) => `${baseRoot}/${String(value || '').replace(/^\.\//, '').replace(/^\//, '')}`;
+  const safeHref = (value) => `${localPrefix}${String(value || '').replace(/^\.\//, '').replace(/^\//, '')}`;
 
   const mount = document.createElement('section');
   mount.className = 'freshness-layer';
