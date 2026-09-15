@@ -7,6 +7,9 @@
 {% if page.url == '/research/' or page.url == '/teaching/' or page.url == '/publications/' or page.url == '/about/' or page.url == '/curriculum-quality/' or page.url == '/innovation-projects/' or page.url == '/professional-development/' or page.url == '/cv/' %}
 <link rel="stylesheet" href="{{ '/assets/css/academic-executive-pages.css' | relative_url }}">
 {% endif %}
+{% if page.url == '/' or page.url == '/workspace/' or page.url == '/research/' or page.url == '/teaching/' or page.url == '/curriculum-quality/' or page.url == '/research-progress/' %}
+<link rel="stylesheet" href="{{ '/assets/css/academic-executive-data-viz.css' | relative_url }}">
+{% endif %}
 
 <!-- Academic profile metadata -->
 <meta name="author" content="{{ site.author.name | default: site.name }}">
