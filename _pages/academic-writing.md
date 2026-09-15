@@ -9,6 +9,7 @@ author_profile: false
 {% assign public_projects = writing.projects | where: 'public', true %}
 
 <link rel="stylesheet" href="{{ '/assets/css/academic-writing.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/progress-visual-system.css' | relative_url }}">
 
 <div class="aw-page">
   <section class="aw-hero">

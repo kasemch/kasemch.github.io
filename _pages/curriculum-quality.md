@@ -6,6 +6,7 @@ author_profile: false
 ---
 
 <link rel="stylesheet" href="{{ '/assets/css/curriculum-quality-hub.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/progress-visual-system.css' | relative_url }}">
 <div class="curriculum-quality-hub">
   <section class="cq-hero">
     <div class="cq-shell">
@@ -26,7 +27,7 @@ author_profile: false
       <div class="cq-eyebrow">Continuous Improvement Cycle</div>
       <h2 id="flow-title">From programme intent to evidence-informed improvement</h2>
       <p class="cq-lead">This is a public explanatory model of how curriculum and academic quality activities connect. It is intentionally cyclical: improvement feeds back into programme intent and the next design cycle.</p>
-      <div class="cq-cycle" aria-label="Curriculum and academic quality improvement cycle">
+      <div class="cq-cycle" aria-label="Curriculum and academic quality improvement cycle" tabindex="0">
         <div class="cq-cycle-center"><strong>Evidence-Informed<br>Improvement</strong><span>Review → refine → repeat</span></div>
         <div class="cq-cycle-node cq-cycle-1"><span>01</span><strong>Program</strong><small>Purpose &amp; intent</small></div>
         <div class="cq-cycle-node cq-cycle-2"><span>02</span><strong>PLO / CLO</strong><small>Outcome alignment</small></div>
@@ -35,7 +36,7 @@ author_profile: false
         <div class="cq-cycle-node cq-cycle-5"><span>05</span><strong>Evidence</strong><small>Interpret results</small></div>
         <div class="cq-cycle-node cq-cycle-6"><span>06</span><strong>Improvement</strong><small>Act &amp; feed forward</small></div>
       </div>
-      <div class="cq-cycle-mobile" aria-label="Curriculum and academic quality improvement cycle, mobile view">
+      <div class="cq-cycle-mobile" aria-label="Curriculum and academic quality improvement cycle, mobile view" tabindex="0">
         <div><span>01</span><strong>Program</strong><small>Purpose &amp; intent</small></div>
         <i>↓</i><div><span>02</span><strong>PLO / CLO</strong><small>Outcome alignment</small></div>
         <i>↓</i><div><span>03</span><strong>Learning</strong><small>Teaching &amp; activities</small></div>
