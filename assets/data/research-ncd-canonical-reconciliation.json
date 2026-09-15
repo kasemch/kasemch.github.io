@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "1.0",
+  "lastVerified": "2026-09-15",
+  "candidateId": "ncd-synthesis",
+  "decisionStatus": "canonical-title-scope-resolved-authority-pending",
+  "canonicalTitleTh": "ถอดรหัสพื้นที่วิกฤต (Hotspots) กลุ่มโรค NCDs และภาวะเนือยนิ่งในประเทศไทย: การสังเคราะห์บิ๊กดาต้าสาธารณสุขสู่ยุทธศาสตร์มุ่งเป้า",
+  "canonicalTitleEn": "Deciphering NCDs Hotspots and Sedentary Behavior in Thailand: A Health Big Data Synthesis for Targeted Strategic Planning",
+  "canonicalScope": "Secondary-data and health-big-data synthesis focused on NCD burden, sedentary behaviour, geographic hotspots, and targeted structural or strategic responses in Thailand.",
+  "canonicalIdentityBasis": [
+    "The Thai Hotspots title appears in a complete research report record.",
+    "The matching English title appears in a research manuscript submitted to an academic conference.",
+    "The Thai and English titles describe the same Hotspots, sedentary-behaviour, health-big-data, and targeted-strategy scope.",
+    "Earlier broad policy-synthesis titles and integrated-NCD titles are treated as predecessor or alternate report variants rather than the canonical public title."
+  ],
+  "versionAssessment": {
+    "broadPolicySynthesisVariant": "superseded-scope-candidate",
+    "integratedNcdVariant": "alternate-expanded-scope",
+    "hotspotsNamedFinalReport": "canonical-content-candidate",
+    "formattedSynthesisReport": "alternate-formatted-variant",
+    "laterExpandedFinalReport": "later-derived-variant-authority-unconfirmed"
+  },
+  "authorityAssessment": {
+    "status": "pending",
+    "reason": "Chronology alone is insufficient to establish authority. A later document uses the canonical title but differs in research-team composition and has not been verified as the formally approved or controlled final version.",
+    "requiredEvidence": "A controlled project register, approval record, submission record, or explicit canonical-version designation that identifies the authoritative final report."
+  },
+  "publicationRelationship": {
+    "status": "title-match-observed-not-yet-project-bound",
+    "note": "A conference manuscript uses the canonical English title. This supports title and scope reconciliation but does not by itself establish the authoritative final-report file or a governed project-publication binding."
+  },
+  "lifecycleDecision": "retain-as-candidate",
+  "completedPromotionAllowed": false,
+  "nextGate": "Verify the authoritative final-report version against a controlled or approval-level record; only then evaluate Completed onboarding and any publication binding.",
+  "publicSafety": "summary-safe-no-private-links-or-file-identifiers"
+}
