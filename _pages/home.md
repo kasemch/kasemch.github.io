@@ -14,6 +14,7 @@ classes: wide
 
 <link rel="stylesheet" href="{{ '/assets/css/academic-executive.css' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/css/static-ai-v2.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/signature-mark.css' | relative_url }}">
 
 <div class="academic-executive option17a">
   <section class="ae-hero" aria-labelledby="home-title">
@@ -22,6 +23,7 @@ classes: wide
         <div class="ae-kicker">Healthier People · Stronger Societies</div>
         <h1 id="home-title">Asst. Prof. Dr.<br>Kasem Chooratna</h1>
         <p class="ae-role">Health Education and Physical Education · Ramkhamhaeng University</p>
+        <div class="ae-signature-mark" aria-hidden="true"><img src="{{ '/images/signature-web-safe.svg' | relative_url }}" alt="" width="300" height="87" decoding="async"></div>
         <p class="ae-lead">Academic work connecting teaching, research, curriculum development, quality assurance, community engagement and responsible digital innovation for healthier people and stronger communities.</p>
         <div class="ae-actions">
           <a class="ae-btn ae-btn-gold" href="{{ '/about/' | relative_url }}">Explore Profile</a>
