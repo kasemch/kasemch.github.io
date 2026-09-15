@@ -23,18 +23,26 @@ author_profile: false
 
   <section class="cq-section" aria-labelledby="flow-title">
     <div class="cq-shell">
-      <div class="cq-eyebrow">Traceable Academic Quality</div>
-      <h2 id="flow-title">From programme intent to improvement</h2>
-      <p class="cq-lead">The architecture below shows how curriculum and quality evidence should connect conceptually. It is a public explanatory model, not a disclosure of restricted programme records.</p>
-      <div class="cq-flow" aria-label="Curriculum and quality evidence flow">
-        <div class="cq-step">Program</div>
-        <div class="cq-step">PLO</div>
-        <div class="cq-step">Course</div>
-        <div class="cq-step">CLO</div>
-        <div class="cq-step">Learning</div>
-        <div class="cq-step">Assessment</div>
-        <div class="cq-step">Evidence</div>
-        <div class="cq-step">Improvement</div>
+      <div class="cq-eyebrow">Continuous Improvement Cycle</div>
+      <h2 id="flow-title">From programme intent to evidence-informed improvement</h2>
+      <p class="cq-lead">This is a public explanatory model of how curriculum and academic quality activities connect. It is intentionally cyclical: improvement feeds back into programme intent and the next design cycle.</p>
+      <div class="cq-cycle" aria-label="Curriculum and academic quality improvement cycle">
+        <div class="cq-cycle-center"><strong>Evidence-Informed<br>Improvement</strong><span>Review → refine → repeat</span></div>
+        <div class="cq-cycle-node cq-cycle-1"><span>01</span><strong>Program</strong><small>Purpose &amp; intent</small></div>
+        <div class="cq-cycle-node cq-cycle-2"><span>02</span><strong>PLO / CLO</strong><small>Outcome alignment</small></div>
+        <div class="cq-cycle-node cq-cycle-3"><span>03</span><strong>Learning</strong><small>Teaching &amp; activities</small></div>
+        <div class="cq-cycle-node cq-cycle-4"><span>04</span><strong>Assessment</strong><small>Measure learning</small></div>
+        <div class="cq-cycle-node cq-cycle-5"><span>05</span><strong>Evidence</strong><small>Interpret results</small></div>
+        <div class="cq-cycle-node cq-cycle-6"><span>06</span><strong>Improvement</strong><small>Act &amp; feed forward</small></div>
+      </div>
+      <div class="cq-cycle-mobile" aria-label="Curriculum and academic quality improvement cycle, mobile view">
+        <div><span>01</span><strong>Program</strong><small>Purpose &amp; intent</small></div>
+        <i>↓</i><div><span>02</span><strong>PLO / CLO</strong><small>Outcome alignment</small></div>
+        <i>↓</i><div><span>03</span><strong>Learning</strong><small>Teaching &amp; activities</small></div>
+        <i>↓</i><div><span>04</span><strong>Assessment</strong><small>Measure learning</small></div>
+        <i>↓</i><div><span>05</span><strong>Evidence</strong><small>Interpret results</small></div>
+        <i>↓</i><div><span>06</span><strong>Improvement</strong><small>Act &amp; feed forward</small></div>
+        <i>↺</i><div class="cq-cycle-return"><strong>Return to Program</strong><small>Begin the next improvement cycle</small></div>
       </div>
     </div>
   </section>
