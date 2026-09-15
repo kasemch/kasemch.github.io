@@ -1,0 +1,33 @@
+audit_date: "2026-09-15"
+policy: "Evidence-First / No Fabrication / Public-Safe Only"
+
+areas:
+  - area: "Academic Leadership"
+    status: "NEEDS-EVIDENCE"
+    public_action: "Do not add new leadership titles until appointment/order evidence is directly verified."
+    notes: "Drive search surfaced profile documents mentioning programme leadership and past university-level quality leadership, but formal appointment evidence was not yet reconciled in this audit."
+
+  - area: "Academic Service & Community Engagement"
+    status: "NEEDS-EVIDENCE"
+    public_action: "Keep only high-level public-safe descriptions already on the site; do not add named projects or outcomes without source verification."
+
+  - area: "Professional Standards / PSF"
+    status: "NEEDS-EVIDENCE"
+    public_action: "Do not publish application/submission or reviewer materials. A public teaching-practice case may be created later from verified, non-confidential evidence."
+
+  - area: "Professional Credentials"
+    status: "PUBLIC-SAFE"
+    public_action: "Continue showing only the selected verified CITI credentials already registered in _data/professional_credentials.yml."
+    evidence_status: "VERIFIED REGISTRY"
+
+  - area: "Curriculum / Programme Contribution"
+    status: "PUBLIC-SAFE-WITH-BOUNDARY"
+    public_action: "May describe verified programme-level curriculum and quality work at portfolio level; do not expose internal SAR evidence, committee records, student data, or restricted implementation details."
+    evidence_status: "Drive confirms HEPE curriculum database and AY2568 AUN-QA programme SAR records."
+
+verified_evidence:
+  - "RU-HEPE curriculum and instructor database for the 2567 curriculum"
+  - "B.Ed. Health Education and Physical Education AY2568 programme SAR under AUN-QA"
+  - "Selected CITI research ethics and integrity credential registry"
+
+release_rule: "A missing public item is not automatically a gap to publish. Promote only after identity, authority, recency, confidentiality and evidence status are verified."
