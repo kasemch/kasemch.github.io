@@ -10,6 +10,10 @@
 {% if page.url == '/' or page.url == '/workspace/' or page.url == '/research/' or page.url == '/teaching/' or page.url == '/curriculum-quality/' or page.url == '/research-progress/' %}
 <link rel="stylesheet" href="{{ '/assets/css/academic-executive-data-viz.css' | relative_url }}">
 {% endif %}
+{% if page.url == '/' or page.url == '/workspace/' %}
+<link rel="stylesheet" href="{{ '/assets/css/information-freshness.css' | relative_url }}">
+<script src="{{ '/assets/js/information-freshness.js' | relative_url }}" data-registry-url="{{ '/assets/data/information-freshness.json' | relative_url }}" defer></script>
+{% endif %}
 
 <!-- Academic profile metadata -->
 <meta name="author" content="{{ site.author.name | default: site.name }}">
