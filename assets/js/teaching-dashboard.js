@@ -42,6 +42,32 @@
   empty.textContent = 'No matching public teaching evidence was found.';
   toolbar.insertAdjacentElement('afterend', empty);
 
+  const qualityHeading = root.querySelector('#quality-docs-title');
+  const qualitySection = qualityHeading?.closest('.sp-section');
+  if (qualitySection) {
+    const pathSection = document.createElement('section');
+    pathSection.className = 'sp-section sp-shell td-evidence-path-section';
+    pathSection.setAttribute('aria-labelledby', 'td-evidence-path-title');
+    pathSection.innerHTML = `
+      <div class="sp-section-head">
+        <div class="sp-eyebrow">Teaching Evidence Path</div>
+        <h2 id="td-evidence-path-title">How course-quality evidence moves toward improvement</h2>
+        <p class="sp-intro">This is an explanatory evidence path, not a completion score. Individual courses may have different evidence coverage at each step, and an official offering status always takes precedence over supporting quality documents.</p>
+      </div>
+      <div class="td-evidence-path-wrap" role="region" aria-label="Teaching evidence path" tabindex="0">
+        <ol class="td-evidence-path">
+          <li><span class="td-path-node">01</span><div><strong>Course</strong><small>Course specification and intended learning</small></div></li>
+          <li><span class="td-path-node">02</span><div><strong>Teaching</strong><small>Learning activities and delivery evidence</small></div></li>
+          <li><span class="td-path-node">03</span><div><strong>Assessment</strong><small>Tasks, rubrics and assessment evidence</small></div></li>
+          <li><span class="td-path-node">04</span><div><strong>TQF5</strong><small>Course report or equivalent quality record</small></div></li>
+          <li><span class="td-path-node">05</span><div><strong>Verification</strong><small>Learning-achievement verification evidence</small></div></li>
+          <li><span class="td-path-node">06</span><div><strong>Improvement</strong><small>Evidence-informed refinement for the next cycle</small></div></li>
+        </ol>
+      </div>
+      <div class="sp-policy"><strong>Interpretation rule.</strong> The path describes the evidence architecture. It does not imply that every course has completed every stage or that document existence overrides authoritative MR30 status.</div>`;
+    qualitySection.insertAdjacentElement('beforebegin', pathSection);
+  }
+
   const search = toolbar.querySelector('#td-search');
   const status = toolbar.querySelector('#td-status');
   const evidence = toolbar.querySelector('#td-evidence');
