@@ -3,13 +3,19 @@ policy: "Evidence-First / No Fabrication / Public-Safe Only"
 
 areas:
   - area: "Academic Leadership"
-    status: "NEEDS-EVIDENCE"
-    public_action: "Do not add new leadership titles until appointment/order evidence is directly verified."
-    notes: "Drive search surfaced profile documents mentioning programme leadership and past university-level quality leadership, but formal appointment evidence was not yet reconciled in this audit."
+    status: "SUPPORTED-PENDING-AUTHORITY"
+    public_action: "Keep programme-level leadership descriptions public-safe, but do not promote specific administrative titles to VERIFIED until appointment/order evidence is directly reconciled."
+    notes: "Drive profile and programme records support programme leadership history, including chair-of-programme wording, but a directly verified appointment order has not yet been located. Former university-level quality leadership is likewise supported by profile records but remains pending authoritative appointment evidence."
+
+  - area: "Quality Assurance Contribution"
+    status: "VERIFIED-CONTRIBUTION"
+    public_action: "May describe programme-level AUN-QA and evidence-informed quality work as verified academic contribution; do not present former administrative quality titles as verified appointments until their orders are found."
+    evidence_status: "Multiple HEPE AY2568 AUN-QA programme SAR records and curriculum/quality records are present in the connected academic archive."
 
   - area: "Academic Service & Community Engagement"
-    status: "NEEDS-EVIDENCE"
-    public_action: "Keep only high-level public-safe descriptions already on the site; do not add named projects or outcomes without source verification."
+    status: "PARTIALLY-VERIFIED"
+    public_action: "A verified university-service role may be shown: Chair of the Handball Competition Subcommittee in an official Ramkhamhaeng University Sาธิตราม event document. Other named service/community projects remain evidence-gated."
+    evidence_status: "Official Ramkhamhaeng University event PDF names Asst. Prof. Kasem Chooratna as Chair of the Handball Competition Subcommittee."
 
   - area: "Professional Standards / PSF"
     status: "NEEDS-EVIDENCE"
@@ -25,9 +31,27 @@ areas:
     public_action: "May describe verified programme-level curriculum and quality work at portfolio level; do not expose internal SAR evidence, committee records, student data, or restricted implementation details."
     evidence_status: "Drive confirms HEPE curriculum database and AY2568 AUN-QA programme SAR records."
 
+specific_role_reconciliation:
+  - role: "Chair, B.Ed. Health Education and Physical Education programme"
+    status: "SUPPORTED-PENDING-AUTHORITY"
+    basis: "Profile documents and programme records support the role wording; no directly reconciled appointment order located in this audit."
+
+  - role: "Former university-level educational quality leadership"
+    status: "SUPPORTED-PENDING-AUTHORITY"
+    basis: "Profile records support former leadership history; authoritative appointment/order evidence not yet directly located."
+
+  - role: "AUN-QA / programme quality contribution"
+    status: "VERIFIED-CONTRIBUTION"
+    basis: "Multiple AY2568 programme SAR and curriculum-quality records support active programme-level quality work."
+
+  - role: "Chair, Handball Competition Subcommittee — Ramkhamhaeng University event"
+    status: "VERIFIED-SERVICE"
+    basis: "Official Ramkhamhaeng University Sาธิตราม competition document lists Asst. Prof. Kasem Chooratna as chair of the handball competition subcommittee."
+
 verified_evidence:
   - "RU-HEPE curriculum and instructor database for the 2567 curriculum"
   - "B.Ed. Health Education and Physical Education AY2568 programme SAR under AUN-QA"
   - "Selected CITI research ethics and integrity credential registry"
+  - "Official Ramkhamhaeng University Sาธิตราม handball competition document naming Kasem Chooratna as subcommittee chair"
 
-release_rule: "A missing public item is not automatically a gap to publish. Promote only after identity, authority, recency, confidentiality and evidence status are verified."
+release_rule: "A missing public item is not automatically a gap to publish. Promote only after identity, authority, recency, confidentiality and evidence status are verified. Formal administrative titles require appointment-order or equivalent authoritative evidence; demonstrated academic contributions may be verified from authoritative programme or institutional records."
