@@ -1,0 +1,10 @@
+{
+  "schemaVersion": "1.0",
+  "notice": "Freshness is reported per evidence domain. Dates describe the relevant verification or public review event, not a universal website update timestamp.",
+  "records": [
+    {"id":"research","label":"Research","dateLabel":"Last verified","date":null,"status":"Controlled evidence binding","state":"verified","detail":"Research status is fail-closed and shown only when supported by the governed public research registry.","href":"./research-progress/","dynamicSource":"research-projects"},
+    {"id":"publications","label":"Publications","dateLabel":"Register checked","date":"2026-09-13","status":"Verified working register","state":"verified","detail":"Journal publications, conference proceedings and degree research remain separate evidence categories.","href":"./publications/"},
+    {"id":"teaching","label":"Teaching","dateLabel":"Public review","date":"2026-09-14","status":"MR30 reconciled","state":"reviewed","detail":"Semester 1/2569 is reconciled against official MR30 evidence; retained offerings remain pending final authoritative confirmation.","href":"./teaching/"},
+    {"id":"curriculum-quality","label":"Curriculum & Quality","dateLabel":"Verification date","date":null,"status":"Public explanatory model","state":"bounded","detail":"This public layer explains curriculum and quality architecture without asserting a single authoritative verification date for restricted programme records.","href":"./curriculum-quality/"}
+  ]
+}
