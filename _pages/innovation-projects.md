@@ -13,7 +13,7 @@ author_profile: false
     <div class="sp-kicker">Innovation · Systems · Public Impact</div>
     <h1>Innovation &amp; Projects</h1>
     <p>Selected public-facing academic innovation connecting health and physical education, curriculum and quality, digital technology, artificial intelligence and community-oriented academic service.</p>
-    <div class="sp-navchips"><a class="sp-chip" href="{{ '/research/' | relative_url }}">Research</a><a class="sp-chip" href="{{ '/curriculum-quality/' | relative_url }}">Curriculum &amp; Quality</a><a class="sp-chip" href="{{ '/about/' | relative_url }}">About</a></div>
+    <div class="sp-navchips"><a class="sp-chip" href="{{ '/current-work/' | relative_url }}">Current Work</a><a class="sp-chip" href="{{ '/research/' | relative_url }}">Research</a><a class="sp-chip" href="{{ '/curriculum-quality/' | relative_url }}">Curriculum &amp; Quality</a><a class="sp-chip" href="{{ '/about/' | relative_url }}">About</a></div>
   </section>
 
   <section class="sp-section sp-shell">
@@ -23,6 +23,16 @@ author_profile: false
       <article class="sp-card"><div class="sp-eyebrow">Community</div><h3>Health &amp; Community Service Innovation</h3><p>Project interests include health screening, physical fitness, wellbeing, health promotion, participant-facing health information and community service models that connect university expertise with practical public benefit.</p></article>
       <article class="sp-card"><div class="sp-eyebrow">Scholarship</div><h3>Public Scholarship</h3><p>Academic communication, educational resources and selected work connecting health, physical education, history, culture and public understanding.</p></article>
     </div>
+  </section>
+
+  <section class="sp-section sp-shell" aria-labelledby="hed3505-title">
+    <article class="sp-card sp-wide">
+      <div class="sp-eyebrow">Teaching Innovation · Verified Pilot</div>
+      <h2 id="hed3505-title">HED3505 Learning Workspace</h2>
+      <p>HED3505 is the verified pilot course workspace within {{ ru_hepe.name }}. Its public learning architecture connects a central Course Hub with a course repository and reusable assignment and student-portfolio structures, supporting a more traceable and reusable approach to digital teaching resources.</p>
+      <div class="sp-policy"><strong>Public boundary.</strong> This section describes the public teaching-and-learning architecture only. It does not expose student records, credentials, restricted implementation details or other non-public system information.</div>
+      <p class="sp-all-publications"><a class="sp-link" href="{{ ru_hepe.profile_path | relative_url }}">View the verified teaching-and-learning ecosystem →</a></p>
+    </article>
   </section>
 
   <section class="sp-section sp-shell" aria-labelledby="ru-hepe-learning-title">
