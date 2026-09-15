@@ -1,0 +1,82 @@
+/* Shared Progress Visualization System
+   Harmonizes Research Milestone Map, Academic Writing Book Journey,
+   and Curriculum Improvement Cycle without forcing identical layouts. */
+:root{
+  --pv-verified:#2f7b63;
+  --pv-active:#2563b8;
+  --pv-next:#c5a160;
+  --pv-future:#a8b2bd;
+  --pv-locked:#7f8b97;
+  --pv-line:#dce3e9;
+  --pv-ring:#e7f0ff;
+  --pv-node-size:50px;
+  --pv-radius:20px;
+  --pv-gap:1rem;
+}
+
+/* Shared focus treatment for horizontally scrollable progress visuals. */
+.rpd-milestone-scroll:focus-visible,
+.aw-journey-wrap:focus-visible,
+.cq-cycle:focus-visible,
+.cq-cycle-mobile:focus-visible{
+  outline:3px solid rgba(37,99,184,.24);
+  outline-offset:4px;
+  border-radius:var(--pv-radius);
+}
+
+/* Research Milestone Map */
+.rpd-milestone-node{
+  width:var(--pv-node-size);
+  height:var(--pv-node-size);
+}
+.rpd-milestone[data-state="verified"] .rpd-milestone-node{
+  background:var(--pv-verified);
+  border-color:var(--pv-verified);
+}
+.rpd-milestone[data-state="active"] .rpd-milestone-node{
+  background:var(--pv-active);
+  border-color:var(--pv-active);
+  box-shadow:0 0 0 6px var(--pv-ring),0 0 0 8px rgba(37,99,184,.18);
+}
+.rpd-milestone-legend span[data-state="verified"]:before{background:var(--pv-verified)}
+.rpd-milestone-legend span[data-state="active"]:before{background:var(--pv-active)}
+.rpd-milestone-legend span[data-state="not-publicly-confirmed"]:before{background:var(--pv-future)}
+
+/* Academic Writing Book Journey */
+.aw-node{
+  width:var(--pv-node-size);
+  height:var(--pv-node-size);
+}
+.aw-step[data-state="verified"] .aw-node{background:var(--pv-verified);border-color:var(--pv-verified)}
+.aw-step[data-state="active"] .aw-node{background:var(--pv-active);border-color:var(--pv-active);box-shadow:0 0 0 6px var(--pv-ring)}
+.aw-step[data-state="next"] .aw-node{border-color:var(--pv-next);background:#fff8e8;color:#8b691d}
+.aw-step[data-state="future"] .aw-node{border-color:var(--pv-future)}
+.aw-step[data-state="locked"] .aw-node{border-color:var(--pv-locked)}
+.aw-legend span[data-state="verified"]:before{background:var(--pv-verified)}
+.aw-legend span[data-state="active"]:before{background:var(--pv-active)}
+.aw-legend span[data-state="next"]:before{background:var(--pv-next)}
+.aw-legend span[data-state="future"]:before{background:var(--pv-future)}
+.aw-legend span[data-state="locked"]:before{background:var(--pv-locked)}
+
+/* Curriculum Improvement Cycle: keep explanatory meaning, but match visual scale. */
+.cq-cycle-node{
+  border-radius:var(--pv-radius);
+  border-color:var(--pv-line);
+}
+.cq-cycle-node>span{
+  color:var(--pv-active);
+  font-weight:850;
+}
+.cq-cycle-center{
+  border-radius:50%;
+  box-shadow:0 0 0 8px rgba(37,99,184,.06);
+}
+.cq-cycle-mobile>div{
+  border-radius:var(--pv-radius);
+  border-color:var(--pv-line);
+}
+.cq-cycle-mobile>div>span{color:var(--pv-active);font-weight:850}
+
+@media (prefers-reduced-motion:reduce){
+  .rpd-milestone-node,.aw-node,.cq-cycle-node{transition:none!important}
+}
