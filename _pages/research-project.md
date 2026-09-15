@@ -1,7 +1,7 @@
 ---
 permalink: /research-project/
 title: "Research Project Detail"
-description: "Public-safe evidence-first research project detail view with lifecycle, outputs, and verification status."
+description: "Public-safe evidence-first research project detail view with lifecycle, outputs, validation, and verification status."
 author_profile: false
 ---
 
@@ -10,8 +10,9 @@ author_profile: false
 <div class="rpd-page">
   <main class="rpd-shell">
     <div class="rpd-back-row"><a class="rpd-back" href="../research-progress/">← Back to Research Command Center</a></div>
-    <div id="rpd-root" aria-live="polite"><div class="rpd-loading">Loading verified project record…</div></div>
+    <div id="rpd-root" aria-live="polite"><div class="rpd-loading">Loading and validating verified project record…</div></div>
   </main>
 </div>
 
+<script src="../assets/js/research-registry-validator.js" defer></script>
 <script src="../assets/js/research-project.js" defer></script>
