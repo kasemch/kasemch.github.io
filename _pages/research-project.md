@@ -7,6 +7,7 @@ author_profile: false
 
 <link rel="stylesheet" href="../assets/css/research-project.css">
 <link rel="stylesheet" href="../assets/css/research-milestone-map.css">
+<link rel="stylesheet" href="../assets/css/progress-visual-system.css">
 
 <div class="rpd-page">
   <main class="rpd-shell">
