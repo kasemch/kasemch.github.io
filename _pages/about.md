@@ -8,6 +8,7 @@ redirect_from:
 ---
 
 <link rel="stylesheet" href="{{ '/assets/css/signature-pages.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/signature-mark.css' | relative_url }}">
 <div class="signature-page">
   <section class="sp-hero sp-shell">
     <div class="sp-kicker">Academic Profile</div>
@@ -18,7 +19,7 @@ redirect_from:
 
   <section class="sp-section sp-shell">
     <div class="sp-grid">
-      <article class="sp-card sp-wide"><div class="sp-eyebrow">Profile</div><h2>Asst. Prof. Dr. Kasem Chooratna</h2><p>University lecturer in the Department of Physical Education, Faculty of Education, Ramkhamhaeng University, Thailand. Academic work spans health education, physical education, school health, curriculum development, teaching and learning, educational assessment, and quality assurance in higher education.</p><p>His work connects classroom practice with programme-level curriculum development and institutional quality improvement. A continuing area of interest is the responsible use of artificial intelligence and digital systems to improve academic workflows, evidence management, curriculum governance, teaching support, and educational services.</p></article>
+      <article class="sp-card sp-wide"><div class="sp-eyebrow">Profile</div><h2>Asst. Prof. Dr. Kasem Chooratna</h2><div class="sp-signature-mark" aria-hidden="true"><img src="{{ '/images/signature-web-safe.svg' | relative_url }}" alt="" width="250" height="72" decoding="async"></div><p>University lecturer in the Department of Physical Education, Faculty of Education, Ramkhamhaeng University, Thailand. Academic work spans health education, physical education, school health, curriculum development, teaching and learning, educational assessment, and quality assurance in higher education.</p><p>His work connects classroom practice with programme-level curriculum development and institutional quality improvement. A continuing area of interest is the responsible use of artificial intelligence and digital systems to improve academic workflows, evidence management, curriculum governance, teaching support, and educational services.</p></article>
 
       <article class="sp-card"><div class="sp-eyebrow">Teaching</div><h3>Teaching &amp; Academic Development</h3><p>Teaching focuses on health and physical education in higher education, with attention to active learning, case-based learning, authentic assessment, reflective practice, and alignment among programme outcomes, course outcomes, learning activities, and assessment.</p></article>
       <article class="sp-card"><div class="sp-eyebrow">Quality</div><h3>Curriculum &amp; Quality Work</h3><p>Academic work includes curriculum design and revision, programme and course learning outcomes, curriculum mapping, programme evaluation, evidence-based quality assurance, and systems that reduce duplicated academic documentation while maintaining traceability and accountability.</p></article>
