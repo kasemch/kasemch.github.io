@@ -1,7 +1,8 @@
 {
-  "schemaVersion": "1.4",
-  "lastVerified": "2026-09-14",
-  "evidencePolicy": "Only public-safe fields supported by authoritative or controlled project records are displayed. Draft-only or unbound research candidates are never promoted to Verified Active. Candidate records may be counted or displayed only when their candidate status itself is supported by a public-safe controlled record. Milestone-to-output and project-to-publication links are shown only when the relationship itself is verified.",
+  "schemaVersion": "1.5",
+  "lastVerified": "2026-09-15",
+  "matrixPath": "../assets/data/research-evidence-matrix.json",
+  "evidencePolicy": "Only public-safe fields supported by authoritative or controlled project records are displayed. Draft-only or unbound research candidates are never promoted to Verified Active. Candidate records may be counted or displayed only when their candidate status itself is supported by a public-safe controlled record. Milestone-to-output and project-to-publication links are shown only when the relationship itself is verified. Relationship-level traceability is stored in a separate public evidence matrix so additional projects can be added without changing the renderer.",
   "portfolioClasses": [
     {"id":"verified-active","label":"Verified Active","description":"An ongoing research project with an authoritative or controlled project identity and a verified current lifecycle state."},
     {"id":"candidate","label":"Candidate","description":"A research concept or proposal with a controlled candidate record but not yet verified as an active governed project."},
@@ -11,6 +12,7 @@
   "pipeline":["Project Core","Protocol","Ethics","Instrument","Data Collection","Analysis","Manuscript","Publication"],
   "projects":[{
     "id":"bmo",
+    "matrixProjectId":"bmo",
     "shortTitle":"BMO",
     "title":"Inequalities in Movement Opportunity, Time Poverty, and 24-Hour Movement Behaviours among Working-Age Adults in Bangkok, Thailand",
     "titleTh":"ความเหลื่อมล้ำด้านโอกาสในการเคลื่อนไหว ภาวะขาดแคลนเวลา และพฤติกรรมการเคลื่อนไหวตลอด 24 ชั่วโมงของประชากรวัยทำงานในกรุงเทพมหานคร",
@@ -29,7 +31,7 @@
     "nextEvidenceGate":"Complete Adopt / Adapt / Develop decisions before candidate-item development",
     "verificationStatus":"Authoritative research binding and governed continuation state verified",
     "sourceAsOf":"2026-09-07",
-    "lastVerified":"2026-09-14",
+    "lastVerified":"2026-09-15",
     "featured":true,
     "visibility":"public-summary",
     "detailPath":"../research-project/?id=bmo",

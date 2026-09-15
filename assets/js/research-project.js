@@ -2,6 +2,7 @@
   'use strict';
 
   const DATA_URL = '../assets/data/research-projects.json';
+  const DEFAULT_MATRIX_URL = '../assets/data/research-evidence-matrix.json';
   const root = document.querySelector('#rpd-root');
 
   const escapeHtml = (value = '') => String(value)
@@ -15,16 +16,32 @@
     return new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).format(date);
   };
 
-  const stateLabel = (state) => ({ verified: 'Verified', active: 'Active', 'not-publicly-confirmed': 'Not publicly confirmed' }[state] || state || 'Not publicly confirmed');
+  const stateLabel = (state) => ({
+    verified: 'Verified',
+    active: 'Active',
+    'not-publicly-confirmed': 'Not publicly confirmed'
+  }[state] || state || 'Not publicly confirmed');
 
-  const render = (project, data) => {
+  const humanize = (value = '') => String(value).replaceAll('-', ' ');
+
+  const render = (project, data, matrix) => {
     const themes = (project.themes || []).map((item) => `<span class="rpd-chip">${escapeHtml(item)}</span>`).join('');
     const outputsById = new Map((project.publicOutputs || []).map((item) => [item.id, item]));
+    const milestonesById = new Map((project.milestones || []).map((item) => [item.id, item]));
+    const matrixProjectId = project.matrixProjectId || project.id;
+    const matrixRows = (matrix?.rows || []).filter((row) => row.projectId === matrixProjectId);
+
+    const matrixRowsByMilestone = new Map();
+    matrixRows.forEach((row) => {
+      if (!matrixRowsByMilestone.has(row.milestoneId)) matrixRowsByMilestone.set(row.milestoneId, []);
+      matrixRowsByMilestone.get(row.milestoneId).push(row);
+    });
 
     const milestones = (project.milestones || []).map((item, index) => {
-      const linked = (item.linkedOutputIds || []).map((id) => outputsById.get(id)).filter(Boolean);
-      const linkedSummary = linked.length
-        ? linked.map((output) => escapeHtml(output.label)).join(' · ')
+      const rows = matrixRowsByMilestone.get(item.id) || [];
+      const boundOutputs = rows.map((row) => row.outputId && outputsById.get(row.outputId)).filter(Boolean);
+      const linkedSummary = boundOutputs.length
+        ? boundOutputs.map((output) => escapeHtml(output.label)).join(' · ')
         : 'No verified public-safe output binding';
       return `
         <li class="rpd-timeline-item" data-state="${escapeHtml(item.state)}">
@@ -32,7 +49,7 @@
           <div>
             <strong>${escapeHtml(item.label)}</strong>
             <span>${escapeHtml(stateLabel(item.state))}</span>
-            <span class="rpd-binding-line">Output binding: ${linkedSummary}</span>
+            <span class="rpd-binding-line">Matrix binding: ${linkedSummary}</span>
           </div>
         </li>`;
     }).join('');
@@ -45,22 +62,29 @@
         <span>${item.publicSourceAvailable ? 'Public source available' : 'Controlled source; public file not exposed'}</span>
       </article>`).join('') || '<p class="rpd-muted">No public-safe output record is available.</p>';
 
-    const traceabilityRows = (project.milestones || []).map((item) => {
-      const linked = (item.linkedOutputIds || []).map((id) => outputsById.get(id)).filter(Boolean);
-      const publicationCount = (item.publicationIds || []).length;
+    const matrixTableRows = matrixRows.map((row) => {
+      const milestone = milestonesById.get(row.milestoneId);
+      const output = row.outputId ? outputsById.get(row.outputId) : null;
+      const publicationLabel = row.publicationId ? escapeHtml(row.publicationId) : 'None verified';
       return `
         <tr>
-          <td>${escapeHtml(item.label)}</td>
-          <td><span class="rpd-state rpd-state-${escapeHtml(item.state)}">${escapeHtml(stateLabel(item.state))}</span></td>
-          <td>${linked.length ? linked.map((output) => escapeHtml(output.label)).join('<br>') : '—'}</td>
-          <td>${publicationCount ? `${publicationCount} verified` : 'None verified'}</td>
+          <td>${escapeHtml(milestone?.label || row.milestoneId)}</td>
+          <td>${escapeHtml(humanize(row.evidenceClass))}</td>
+          <td><span class="rpd-state rpd-state-${escapeHtml(row.evidenceStatus)}">${escapeHtml(stateLabel(row.evidenceStatus))}</span></td>
+          <td>${output ? escapeHtml(output.label) : '—'}</td>
+          <td>${publicationLabel}</td>
+          <td>${escapeHtml(humanize(row.relationshipStatus))}</td>
         </tr>`;
     }).join('');
+
+    const matrixBlock = matrixRows.length
+      ? `<div class="rpd-table-wrap"><table class="rpd-trace-table"><thead><tr><th>Milestone</th><th>Evidence class</th><th>Evidence status</th><th>Output</th><th>Publication</th><th>Relationship</th></tr></thead><tbody>${matrixTableRows}</tbody></table></div>`
+      : '<div class="rpd-error"><strong>Evidence matrix unavailable for this project.</strong><p>No public-safe relationship rows were found, so relationship-level traceability is not inferred.</p></div>';
 
     const publications = project.publicationBindings || [];
     const publicationBlock = publications.length
       ? publications.map((item) => `<article class="rpd-publication"><strong>${escapeHtml(item.title)}</strong><span>${escapeHtml(item.status || 'Verified link')}</span></article>`).join('')
-      : `<article class="rpd-publication rpd-publication-empty"><strong>No verified BMO publication binding yet</strong><p>${escapeHtml(project.publicationBindingNote || 'No publication has been verified as a project output.')}</p></article>`;
+      : `<article class="rpd-publication rpd-publication-empty"><strong>No verified ${escapeHtml(project.shortTitle)} publication binding yet</strong><p>${escapeHtml(project.publicationBindingNote || 'No publication has been verified as a project output.')}</p></article>`;
 
     const evidence = project.publicEvidenceBinding || {};
 
@@ -87,11 +111,9 @@
         </div>
       </section>
 
-      <section class="rpd-section"><p class="rpd-eyebrow">Lifecycle</p><h2>Verified public timeline</h2><p class="rpd-muted">Each stage is linked only to outputs whose relationship to that milestone is itself controlled and verified. Unverified stages remain unconfirmed.</p><ol class="rpd-timeline">${milestones}</ol></section>
+      <section class="rpd-section"><p class="rpd-eyebrow">Lifecycle</p><h2>Verified public timeline</h2><p class="rpd-muted">Lifecycle bindings are resolved from the public research evidence matrix. Unverified stages remain unconfirmed.</p><ol class="rpd-timeline">${milestones}</ol></section>
 
-      <section class="rpd-section"><p class="rpd-eyebrow">Traceability</p><h2>Milestone → Output → Publication</h2>
-        <div class="rpd-table-wrap"><table class="rpd-trace-table"><thead><tr><th>Milestone</th><th>Status</th><th>Bound output</th><th>Publication</th></tr></thead><tbody>${traceabilityRows}</tbody></table></div>
-      </section>
+      <section class="rpd-section"><p class="rpd-eyebrow">Research evidence matrix</p><h2>Project × Milestone × Evidence × Output × Publication</h2><p class="rpd-muted">This matrix is relationship-level metadata only. Controlled source files remain outside the public repository.</p>${matrixBlock}</section>
 
       <section class="rpd-section"><p class="rpd-eyebrow">Outputs</p><h2>Public-safe project outputs</h2><div class="rpd-output-grid">${outputs}</div></section>
 
@@ -103,8 +125,8 @@
         <article class="rpd-evidence">
           <strong>${escapeHtml(evidence.label || project.verificationStatus || 'Controlled evidence status')}</strong>
           <p>${escapeHtml(evidence.note || project.evidenceNote)}</p>
+          <p><strong>Matrix status:</strong> ${matrixRows.length} public-safe relationship row${matrixRows.length === 1 ? '' : 's'} loaded; matrix last verified ${escapeHtml(formatDate(matrix?.lastVerified))}.</p>
           <p><strong>Project-publication link:</strong> ${project.publicationLinked ? 'Verified' : 'Not yet verified'}</p>
-          <p><strong>Public evidence register:</strong> BMO-specific controlled source files are not published there unless a suitable public source becomes available.</p>
           <div class="rpd-actions"><a class="rpd-btn rpd-btn-primary" href="${escapeHtml(evidence.explorerPath || '../evidence-explorer/')}">Browse public Evidence Explorer</a><a class="rpd-btn" href="../research-progress/">Research Command Center</a></div>
         </article>
       </section>
@@ -120,12 +142,23 @@
     try {
       const projectId = new URLSearchParams(window.location.search).get('id');
       if (!projectId) return failClosed('No project identifier was supplied.');
-      const response = await fetch(DATA_URL, { cache: 'no-store' });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const data = await response.json();
+
+      const registryResponse = await fetch(DATA_URL, { cache: 'no-store' });
+      if (!registryResponse.ok) throw new Error(`Registry HTTP ${registryResponse.status}`);
+      const data = await registryResponse.json();
       const project = (data.projects || []).find((item) => item.id === projectId);
       if (!project || project.visibility !== 'public-summary') return failClosed('No public-safe verified project record matches this identifier.');
-      render(project, data);
+
+      let matrix = { rows: [], lastVerified: null };
+      try {
+        const matrixResponse = await fetch(data.matrixPath || DEFAULT_MATRIX_URL, { cache: 'no-store' });
+        if (!matrixResponse.ok) throw new Error(`Matrix HTTP ${matrixResponse.status}`);
+        matrix = await matrixResponse.json();
+      } catch (matrixError) {
+        console.error('Research Evidence Matrix:', matrixError);
+      }
+
+      render(project, data, matrix);
     } catch (error) {
       console.error('Research Project Detail:', error);
       failClosed('The verified research register could not be loaded. The page failed closed rather than displaying stale or fabricated information.');
