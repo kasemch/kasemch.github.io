@@ -7,13 +7,13 @@ redirect_from:
   - /about.html
 ---
 
-<link rel="stylesheet" href="../assets/css/signature-pages.css">
+<link rel="stylesheet" href="{{ '/assets/css/signature-pages.css' | relative_url }}">
 <div class="signature-page">
   <section class="sp-hero sp-shell">
     <div class="sp-kicker">Academic Profile</div>
     <h1>About</h1>
     <p>Health &amp; Physical Education, curriculum and quality, research, teaching, and responsible academic innovation.</p>
-    <div class="sp-navchips"><a class="sp-chip" href="../teaching/">Teaching</a><a class="sp-chip" href="../research/">Research</a><a class="sp-chip" href="../cv/">Academic CV</a></div>
+    <div class="sp-navchips"><a class="sp-chip" href="{{ '/teaching/' | relative_url }}">Teaching</a><a class="sp-chip" href="{{ '/research/' | relative_url }}">Research</a><a class="sp-chip" href="{{ '/cv/' | relative_url }}">Academic CV</a></div>
   </section>
 
   <section class="sp-section sp-shell">
