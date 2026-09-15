@@ -1,0 +1,4 @@
+/* Home integration for Academic Textbook Writing */
+@media(min-width:1101px){.academic-executive .ae-card-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(min-width:721px) and (max-width:1100px){.academic-executive .ae-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.ae-card-academic-writing{background:linear-gradient(145deg,#fff,#fbfaf5)}
