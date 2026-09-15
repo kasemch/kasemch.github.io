@@ -25,6 +25,15 @@ author_profile: false
     </div>
   </section>
 
+  <section class="sp-section sp-shell" aria-labelledby="reflective-lab-title">
+    <article class="sp-card sp-wide">
+      <div class="sp-eyebrow">AI in Education · Public-Safe Prototype</div>
+      <h2 id="reflective-lab-title">AI-Assisted Reflective Curriculum Improvement Lab</h2>
+      <p>An educator-led teaching and research prototype exploring how artificial intelligence can support reflective curriculum improvement, rubric-informed review and the development of reusable teaching cases and guidance materials. The public presentation focuses on educational purpose, responsible use and transferable design lessons.</p>
+      <div class="sp-policy"><strong>Scope boundary.</strong> This is presented as a limited academic prototype rather than an institutional administration or production-control system. Public descriptions exclude identifiable learner information, protected records, credentials and non-public implementation details.</div>
+    </article>
+  </section>
+
   <section class="sp-section sp-shell" aria-labelledby="hed3505-title">
     <article class="sp-card sp-wide">
       <div class="sp-eyebrow">Teaching Innovation · Verified Pilot</div>
