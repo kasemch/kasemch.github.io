@@ -1,0 +1,8 @@
+/* Web-safe signature mark — visual branding only; never use for document authentication. */
+.ae-signature-mark,.sp-signature-mark{display:flex;align-items:center;margin-top:.8rem}
+.ae-signature-mark img,.sp-signature-mark img{display:block;width:min(300px,62vw);height:auto;object-fit:contain}
+.ae-signature-mark img{filter:brightness(0) invert(1);opacity:.86}
+.sp-signature-mark{margin:.55rem 0 .8rem}
+.sp-signature-mark img{width:min(250px,58vw);opacity:.9}
+@media(max-width:720px){.ae-signature-mark img{width:min(240px,70vw)}}
+@media(prefers-contrast:more){.ae-signature-mark img,.sp-signature-mark img{opacity:1}}
