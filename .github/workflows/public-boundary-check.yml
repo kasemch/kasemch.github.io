@@ -1,0 +1,92 @@
+name: AWOS public boundary check
+
+on:
+  pull_request:
+    branches: [master]
+  push:
+    branches: [master]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: awos-public-boundary-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  boundary:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: true
+
+      - name: Build public site
+        run: bundle exec jekyll build --strict_front_matter
+        env:
+          JEKYLL_ENV: production
+
+      - name: Verify Public Read / Internal Write boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          test -f _site/add-event/index.html
+          test -f _site/upload-center/index.html
+          test -f _site/workspace/index.html
+
+          grep -Fq 'noindex, nofollow, noarchive' _site/add-event/index.html
+          grep -Fq 'noindex, nofollow, noarchive' _site/upload-center/index.html
+          grep -Fq 'Academic Dashboard' _site/workspace/index.html
+          grep -Fq 'Public read / internal write' _site/workspace/index.html
+
+          forbidden_markers=(
+            'accounts.google.com/gsi/client'
+            'KASEM_GOOGLE_CALENDAR_CONFIG'
+            'KASEM_DOCUMENT_STORAGE_CONFIG'
+            'calendar.events.owned'
+            'www.googleapis.com/auth/drive.file'
+          )
+
+          for marker in "${forbidden_markers[@]}"; do
+            if grep -RIFq --exclude='*.map' "$marker" _site; then
+              echo "Forbidden public-boundary marker found: $marker" >&2
+              exit 1
+            fi
+          done
+
+          forbidden_paths=(
+            _site/docs
+            _site/scripts
+            _site/markdown_generator
+            _site/talkmap
+            _site/talkmap.py
+            _site/talkmap.ipynb
+            _site/talkmap_out.ipynb
+            _site/assets/js/auth
+            _site/assets/js/calendar
+            _site/assets/js/upload
+            _site/assets/js/google-calendar-direct.js
+            _site/assets/js/google-drive-upload.js
+            _site/assets/js/upload-classifier.js
+            _site/assets/js/workspace.js
+          )
+
+          for path in "${forbidden_paths[@]}"; do
+            if [ -e "$path" ]; then
+              echo "Internal/operational artifact emitted into public build: $path" >&2
+              exit 1
+            fi
+          done
+
+          if grep -Fq '/add-event/' _site/workspace/index.html || grep -Fq '/upload-center/' _site/workspace/index.html; then
+            echo 'Public dashboard still links to operational legacy routes.' >&2
+            exit 1
+          fi
+
+          echo 'AWOS Public Read / Internal Write boundary: PASS'
