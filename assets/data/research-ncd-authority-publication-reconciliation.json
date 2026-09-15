@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "1.0",
+  "lastVerified": "2026-09-15",
+  "projectId": "ncd-synthesis",
+  "canonicalTitleTh": "ถอดรหัสพื้นที่วิกฤต (Hotspots) กลุ่มโรค NCDs และภาวะเนือยนิ่งในประเทศไทย: การสังเคราะห์บิ๊กดาต้าสาธารณสุขสู่ยุทธศาสตร์มุ่งเป้า",
+  "canonicalTitleEn": "Deciphering NCDs Hotspots and Sedentary Behavior in Thailand: A Health Big Data Synthesis for Targeted Strategic Planning",
+  "authorityAssessment": {
+    "status": "authoritative-final-not-verified",
+    "canonicalReportCandidate": "three-researcher-hotspots-final-report",
+    "authorshipAlignment": "supported",
+    "controlRecordStatus": "not-found",
+    "submissionLifecycleStatus": "no-matching-controlled-record",
+    "decision": "hold",
+    "reason": "The three-researcher Hotspots final-report variant aligns with the canonical title and with the author form cited in the 2026 conference proceedings. However, no approval-level or controlled lifecycle record was found that explicitly designates this file as the authoritative final report. Chronology and title alignment alone do not establish authority."
+  },
+  "publicationAssessment": {
+    "conferenceManuscriptStatus": "withdrawal-notice-observed",
+    "conferenceProceedingsStatus": "proceedings-volume-verified",
+    "directProceedingsPaperBinding": "not-verified",
+    "reportCitationInProceedings": "verified",
+    "publicationLinked": false,
+    "decision": "do-not-bind-as-publication",
+    "reason": "A withdrawal notice exists for the manuscript with the canonical English title. The proceedings volume later contains a bibliographic citation to the canonical research report, but this does not establish that the withdrawn manuscript itself was published as a proceedings paper."
+  },
+  "safePublicInterpretation": "The NCD research report has a reconciled canonical identity and is cited within the 2026 conference proceedings. The project is not yet promoted to Completed and is not marked publication-linked because authoritative-final designation and direct publication binding remain unverified.",
+  "nextGate": "Obtain an approval, signed submission, controlled register entry, or equivalent authority record explicitly designating the canonical final report. Separately obtain a proceedings table-of-contents/page-level record or publication receipt before creating a project-publication binding."
+}
