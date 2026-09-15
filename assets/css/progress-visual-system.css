@@ -1,6 +1,6 @@
 /* Shared Progress Visualization System
    Harmonizes Research Milestone Map, Academic Writing Book Journey,
-   and Curriculum Improvement Cycle without forcing identical layouts. */
+   Curriculum Improvement Cycle, and Teaching Evidence Path without forcing identical layouts. */
 :root{
   --pv-verified:#2f7b63;
   --pv-active:#2563b8;
@@ -18,7 +18,8 @@
 .rpd-milestone-scroll:focus-visible,
 .aw-journey-wrap:focus-visible,
 .cq-cycle:focus-visible,
-.cq-cycle-mobile:focus-visible{
+.cq-cycle-mobile:focus-visible,
+.td-evidence-path-wrap:focus-visible{
   outline:3px solid rgba(37,99,184,.24);
   outline-offset:4px;
   border-radius:var(--pv-radius);
@@ -77,6 +78,18 @@
 }
 .cq-cycle-mobile>div>span{color:var(--pv-active);font-weight:850}
 
+/* Teaching Evidence Path: explanatory architecture, not a completion state. */
+.td-path-node{
+  width:var(--pv-node-size);
+  height:var(--pv-node-size);
+  border-color:var(--pv-active);
+  color:var(--pv-active);
+}
+.td-evidence-path li:not(:last-child):after{
+  background:linear-gradient(90deg,var(--pv-active),var(--pv-line));
+  opacity:.72;
+}
+
 @media (prefers-reduced-motion:reduce){
-  .rpd-milestone-node,.aw-node,.cq-cycle-node{transition:none!important}
+  .rpd-milestone-node,.aw-node,.cq-cycle-node,.td-path-node{transition:none!important}
 }
