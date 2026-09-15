@@ -1,6 +1,14 @@
 last_site_sync: "2026-09-15"
 policy: "Evidence-First / No Fabrication / Public-Safe Only"
 
+exclusion_rules:
+  - id: "TEACHING-ILLUSTRATION-NOT-RESEARCH"
+    scope: "Research / Publications / Conference / Proceedings sync"
+    classification: "EXCLUDED"
+    reason: "A previously referenced conference-related item was created as a teaching illustration for students and is not a research work, publication, conference output, proceeding, or current research project."
+    website_action: "Do not publish or count as research output; do not promote to Teaching Materials unless explicitly requested in a future update."
+    effective_from: "2026-09-15"
+
 items:
   - domain: "Research"
     source: "Research status registry"
