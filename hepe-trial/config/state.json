@@ -1,14 +1,11 @@
 {
   "phase_range": "B03.17A.3 → B03.20",
   "status": "GOVERNED_WRITE_RPC_READY_HUMAN_MAGIC_LINK_GATE",
-  "course_offering_id": "82806bab-ff9a-4041-b2b1-15fed7195981",
   "course_code": "HED2503",
   "programme_code": "25510071103503",
   "academic_year": "2569",
   "term_code": "1",
   "working_source": {
-    "drive_id": "1ZiRGl7vFQJMFOQUqxKqarc6uuXoYVtoxAtpy0VS-p5E",
-    "revision_id": "ANLCKQmm0f_0qCf6LgAlH5K-wkUhLAGsFq-bOeWIXO2B9GUiWEt9THLfYumR_GKcEEn-thleki8i0Yj35fbU2TLcz8YX646yZDZUHJLmOZA",
     "classification": "LATEST_WORKING_CONFIRMED",
     "authority": "NON_AUTHORITATIVE_WORKING_SOURCE"
   },
@@ -28,9 +25,9 @@
     "drive_search": "NO_AUTHORITATIVE_BLANK_TEMPLATE_FOUND"
   },
   "available_rpcs": [
-    "hepe_create_tqf3_working_draft(uuid,jsonb,text)",
-    "hepe_create_document_preview(text,text,uuid,uuid,uuid)",
-    "hepe_release_readiness(uuid)"
+    "hepe_create_tqf3_working_draft_by_code(text,text,text,text,jsonb,text)",
+    "hepe_create_tqf3_preview_by_code(text,text,text,text,text)",
+    "hepe_release_readiness_by_code(text,text,text,text)"
   ],
   "human_gate": "Real user Magic Link sign-in required.",
   "production_changed": false
