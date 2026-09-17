@@ -7,6 +7,8 @@ classes: wide
 
 {% assign teaching = site.data.teaching_ay2569 %}
 {% assign ru_hepe = site.data.ru_hepe_learning %}
+{% assign hepe_releases = site.data.hepe_public_releases.releases %}
+{% assign hepe_r1 = hepe_releases | where: "release_code", "HEPE-HED2503-TQF3-2569-1-R1" | first %}
 {% assign publication_count = site.publications | size %}
 {% assign proceeding_count_2023 = site.data.conference_proceedings.items | size %}
 {% assign proceeding_count_2026 = site.data.conference_proceedings_2026.items | size %}
@@ -120,7 +122,9 @@ classes: wide
         <article class="ae-card ae-card-academic-writing"><span>Academic Writing</span><h3>Textbook Development</h3><p>Public-safe Book Journey status for current textbook projects, from alignment and architecture through evidence readiness and later writing gates.</p><a href="{{ '/academic-writing/' | relative_url }}">Open Academic Writing →</a></article>
         <article class="ae-card"><span>Teaching Innovation · {{ ru_hepe.public_repository_count }} Public Repositories</span><h3>{{ ru_hepe.name }}</h3><p>A GitHub-based course ecosystem connecting the course hub, HED3505 pilot workspace, reusable assignment structures and student portfolio templates.</p><a href="{{ ru_hepe.profile_path | relative_url }}">Explore RU HEPE Learning →</a></article>
         <article class="ae-card"><span>Evidence</span><h3>Evidence Explorer</h3><p>Selected public claims connected to traceable academic sources and evidence boundaries.</p><a href="{{ '/evidence-explorer/' | relative_url }}">Open Evidence Explorer →</a></article>
-        <article class="ae-card"><span>Curriculum Governance · Registered Release</span><h3>HEPE HED2503 TQF3 — R1</h3><p>Project-controlled public release for HED2503 with registered lineage, frozen SHA-256 integrity metadata and an explicit non-institutional authority boundary.</p><a href="{{ '/hepe-public-releases/' | relative_url }}">Open HEPE Public Releases →</a></article>
+        {% if hepe_r1 %}
+        <article class="ae-card"><span>Curriculum Governance · Registered Release</span><h3>{{ hepe_r1.course_code }} {{ hepe_r1.document_type }} — {{ hepe_r1.release_code | split: '-' | last }}</h3><p>Project-controlled public release for {{ hepe_r1.course_code }} — {{ hepe_r1.course_title_th }} with registered lineage, frozen SHA-256 integrity metadata and an explicit non-institutional authority boundary.</p><a href="{{ hepe_r1.discovery_path | relative_url }}">Open HEPE Public Releases →</a></article>
+        {% endif %}
       </div>
     </div>
   </section>
