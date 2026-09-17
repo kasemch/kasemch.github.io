@@ -1,0 +1,62 @@
+---
+layout: single
+---
+{% assign hepe_releases = site.data.hepe_public_releases.releases %}
+{% assign release = hepe_releases | where: "release_code", page.release_code | first %}
+
+{% if release %}
+<section style="max-width:980px;margin:0 auto;padding:1rem 0 3rem;" aria-labelledby="release-detail-title">
+  <p style="font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:#667085;">HEPE · Public Release Detail</p>
+  <h1 id="release-detail-title">{{ release.release_code }}</h1>
+  <p style="font-size:1.1rem;"><strong>{{ release.course_code }} — {{ release.course_title_th }}</strong></p>
+  <p>รายละเอียดของกระบวนวิชา ({{ release.document_type }}) · {{ release.programme_title_th }} · ภาคเรียนที่ {{ release.term_code }} ปีการศึกษา {{ release.academic_year }}</p>
+
+  <div style="display:flex;flex-wrap:wrap;gap:.6rem;margin:1rem 0 1.2rem;">
+    <span style="padding:.3rem .65rem;border-radius:999px;background:#e8f7ee;color:#166534;font-weight:700;font-size:.82rem;">{{ release.release_status | replace: '_', ' ' }}</span>
+    {% if release.successor_release_code == nil or release.successor_release_code == empty %}
+    <span style="padding:.3rem .65rem;border-radius:999px;background:#eef2ff;color:#3730a3;font-weight:700;font-size:.82rem;">CURRENT LINEAGE HEAD</span>
+    {% else %}
+    <span style="padding:.3rem .65rem;border-radius:999px;background:#f3f4f6;color:#4b5563;font-weight:700;font-size:.82rem;">HAS SUCCESSOR</span>
+    {% endif %}
+  </div>
+
+  <dl style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.9rem;margin:1.4rem 0;">
+    <div><dt style="color:#667085;font-size:.82rem;">Document Type</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.document_type }}</dd></div>
+    <div><dt style="color:#667085;font-size:.82rem;">Academic Period</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.academic_year }}/{{ release.term_code }}</dd></div>
+    <div><dt style="color:#667085;font-size:.82rem;">Credit Pattern</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.canonical_credit_pattern }}</dd></div>
+    <div><dt style="color:#667085;font-size:.82rem;">Published</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.published_on }}</dd></div>
+    <div><dt style="color:#667085;font-size:.82rem;">Release Scope</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.release_scope | replace: '_', ' ' }}</dd></div>
+    <div><dt style="color:#667085;font-size:.82rem;">Source Provenance</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.source_provenance }}</dd></div>
+    <div><dt style="color:#667085;font-size:.82rem;">Template Scope</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.template_scope }}</dd></div>
+    <div><dt style="color:#667085;font-size:.82rem;">Institutional Official Claim</dt><dd style="margin:.2rem 0 0;font-weight:650;">{% if release.institutional_official_claim %}Yes{% else %}No{% endif %}</dd></div>
+  </dl>
+
+  <section style="margin:1.4rem 0;padding:1rem 1.1rem;border-left:4px solid #d0d5dd;background:#f8fafc;" aria-labelledby="lineage-heading">
+    <h2 id="lineage-heading" style="font-size:1rem;margin:.1rem 0 .7rem;">Release lineage</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.7rem;">
+      <div><span style="color:#667085;font-size:.82rem;">Lineage State</span><div><strong>{{ release.lineage_status }}</strong></div></div>
+      <div><span style="color:#667085;font-size:.82rem;">Predecessor</span><div>{% if release.predecessor_release_code %}<code>{{ release.predecessor_release_code }}</code>{% else %}None — first registered release{% endif %}</div></div>
+      <div><span style="color:#667085;font-size:.82rem;">Successor</span><div>{% if release.successor_release_code %}<code>{{ release.successor_release_code }}</code>{% else %}None registered{% endif %}</div></div>
+    </div>
+  </section>
+
+  <p><strong>Bundle SHA-256</strong><br><code style="overflow-wrap:anywhere;">{{ release.bundle_sha256 }}</code></p>
+
+  <nav aria-label="Release resources" style="display:flex;flex-wrap:wrap;gap:.9rem;margin:1.4rem 0;">
+    <a href="{{ release.release_path | relative_url }}">Public Release Registry →</a>
+    <a href="{{ release.manifest_path | relative_url }}">Release Manifest →</a>
+    <a href="{{ release.lineage_path | relative_url }}">Release Lineage →</a>
+    <a href="{{ '/hepe-public-releases/' | relative_url }}">All HEPE Public Releases →</a>
+  </nav>
+
+  <aside style="margin-top:1.5rem;padding:1rem 1.2rem;border-radius:14px;background:#f8fafc;color:#475467;line-height:1.65;">
+    <strong>Authority boundary.</strong> This detail page presents public-safe metadata for a HEPE project-controlled release. It does not claim institutional-official status unless separately evidenced and governed.
+  </aside>
+</section>
+{% else %}
+<section style="max-width:820px;margin:0 auto;padding:2rem 0;">
+  <h1>Release metadata unavailable</h1>
+  <p>The requested release code is not present in the public-safe canonical registry.</p>
+  <p><a href="{{ '/hepe-public-releases/' | relative_url }}">Return to HEPE Public Releases →</a></p>
+</section>
+{% endif %}
