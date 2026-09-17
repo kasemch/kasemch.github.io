@@ -2,12 +2,21 @@
 # This file is a discovery/rendering source only. It does not replace or mutate
 # authoritative controlled-release records, release.json, lineage.json, or Supabase records.
 
-schema_version: 1
+schema_version: 2
 registry_scope: HEPE_PROJECT_CONTROLLED_PUBLIC_RELEASES
 public_safe_only: true
 
 releases:
   - release_code: HEPE-HED2503-TQF3-2569-1-R1
+    release_family: HED2503-TQF3-2569-1
+    revision_number: 1
+    display_label: "R1"
+    language: th
+    current_release: true
+    superseded: false
+    superseded_by: null
+    display_order: 1
+    detail_route: /hepe-public-releases/HEPE-HED2503-TQF3-2569-1-R1/
     course_code: HED2503
     course_title_th: "เพศวิถีศึกษา"
     programme_title_th: "หลักสูตรศึกษาศาสตรบัณฑิต สาขาวิชาสุขศึกษาและพลศึกษา (4 ปี)"
