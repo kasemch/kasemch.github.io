@@ -28,3 +28,8 @@ No Supabase production or institutional production state was changed.
 
 ## Result
 PASS — Public discovery is now visible from both the academic homepage and Curriculum & Quality Hub while preserving R1 integrity and governance boundaries.
+
+---
+
+## B03.27 Follow-up Note
+The post-deployment regression audit is tracked separately in `hepe-live-public-regression-b03-27.md` so the B03.26 closure record remains historically stable.
