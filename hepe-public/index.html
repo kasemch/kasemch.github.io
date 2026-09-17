@@ -3,11 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="HEPE public release registry for the project-controlled TQF3 release of HED2503 Sexuality Education, AY 2569/1.">
+  <meta name="description" content="ทะเบียนเผยแพร่สาธารณะ HEPE สำหรับ TQF3 รายวิชา HED2503 เพศวิถีศึกษา ภาคเรียนที่ 1 ปีการศึกษา 2569">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://kasemch.github.io/hepe-public/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="HEPE Public Release Registry — HED2503">
+  <meta property="og:description" content="Project-controlled public release registry for HED2503 TQF3, AY 2569/1.">
+  <meta property="og:url" content="https://kasemch.github.io/hepe-public/">
   <title>HEPE Public Release Registry — HED2503</title>
   <style>
     :root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172033;background:#f6f8fb}body{margin:0}.wrap{max-width:980px;margin:auto;padding:32px 18px 56px}header{padding:28px 0 18px}.eyebrow{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:#5d6b82}.card{background:#fff;border:1px solid #e2e7ef;border-radius:18px;padding:22px;margin:16px 0;box-shadow:0 8px 24px rgba(28,40,70,.05)}h1{font-size:clamp(2rem,5vw,3.2rem);margin:.25rem 0 .75rem}h2{font-size:1.2rem;margin:0 0 14px}.status{display:inline-block;padding:7px 11px;border-radius:999px;background:#e8f7ee;color:#166534;font-weight:700}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.item{padding:14px;border-radius:14px;background:#f8fafc}.k{display:block;font-size:.76rem;color:#6b7280;margin-bottom:5px}.v{font-weight:650;overflow-wrap:anywhere}.note{color:#586174;line-height:1.65}.hash{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.82rem;word-break:break-all}footer{margin-top:28px;color:#6b7280;font-size:.86rem;line-height:1.6}a{color:#1d4ed8;text-decoration:none}a:hover{text-decoration:underline}
   </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"CreativeWork","name":"HEPE Public Release Registry — HED2503","identifier":"HEPE-HED2503-TQF3-2569-1-R1","inLanguage":"th","url":"https://kasemch.github.io/hepe-public/","version":"R1","isPartOf":{"@type":"EducationalOrganization","name":"HEPE Project-Controlled Release Registry"}}
+  </script>
 </head>
 <body>
   <main class="wrap">
@@ -21,6 +30,7 @@
     <section class="card">
       <h2>Release Summary</h2>
       <div class="grid">
+        <div class="item"><span class="k">Public Release Code</span><span class="v">HEPE-HED2503-TQF3-2569-1-R1</span></div>
         <div class="item"><span class="k">Document Type</span><span class="v">TQF3 Course Specification</span></div>
         <div class="item"><span class="k">Release Scope</span><span class="v">HEPE Project-Controlled Public Release</span></div>
         <div class="item"><span class="k">Source Provenance</span><span class="v">CONTROLLED_SOURCE</span></div>
@@ -34,6 +44,7 @@
       <h2>Integrity</h2>
       <p class="note">The public registry points to the finalized controlled release record. The checksum below identifies the frozen release bundle used at finalization.</p>
       <div class="item"><span class="k">Bundle SHA-256</span><span class="v hash">799818a46e8e0f931a156526f5e592088680c044ba8c62c04add3d5b40912256</span></div>
+      <p class="note"><a href="./release.json">Public release manifest</a> · <a href="./lineage.json">Release lineage</a></p>
     </section>
 
     <section class="card">
@@ -46,8 +57,13 @@
       <p class="note">แม่แบบและแหล่งข้อมูลของ release นี้ได้รับการควบคุมในขอบเขตโครงการ HEPE เท่านั้น หน้านี้ไม่อ้างว่าเป็นแม่แบบหรือประกาศทางการของมหาวิทยาลัยรามคำแหง เว้นแต่จะมีหลักฐานและการอนุมัติระดับสถาบันเพิ่มเติมในอนาคต</p>
     </section>
 
+    <section class="card">
+      <h2>Release Lineage Policy</h2>
+      <p class="note">R1 เป็น baseline ที่ปิดแล้ว การแก้ไขสาระหรือหลักฐานในอนาคตต้องเผยแพร่เป็น release ใหม่ (R2 เป็นต้นไป) และเชื่อม predecessor lineage แทนการแก้ R1 ย้อนหลัง</p>
+    </section>
+
     <footer>
-      Public publication approved by the project owner on 17 September 2026. Internal Supabase production state was not changed by this publication action.
+      Public publication approved by the project owner on 17 September 2026. B03.23 repository/registry audit completed with a tooling limitation on independent live HTTP verification. Internal Supabase production state was not changed by this publication action.
     </footer>
   </main>
 </body>
