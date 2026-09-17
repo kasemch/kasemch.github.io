@@ -12,8 +12,14 @@ layout: single
   <p>รายละเอียดของกระบวนวิชา ({{ release.document_type }}) · {{ release.programme_title_th }} · ภาคเรียนที่ {{ release.term_code }} ปีการศึกษา {{ release.academic_year }}</p>
 
   <div style="display:flex;flex-wrap:wrap;gap:.6rem;margin:1rem 0 1.2rem;">
+    {% if release.display_label %}<span style="padding:.3rem .65rem;border-radius:999px;background:#f8fafc;color:#344054;font-weight:700;font-size:.82rem;">{{ release.display_label }}</span>{% endif %}
     <span style="padding:.3rem .65rem;border-radius:999px;background:#e8f7ee;color:#166534;font-weight:700;font-size:.82rem;">{{ release.release_status | replace: '_', ' ' }}</span>
-    {% if release.successor_release_code == nil or release.successor_release_code == empty %}
+    {% assign is_current = release.current_release %}
+    {% if is_current == nil %}
+      {% assign is_current = false %}
+      {% if release.successor_release_code == nil or release.successor_release_code == empty %}{% assign is_current = true %}{% endif %}
+    {% endif %}
+    {% if is_current %}
     <span style="padding:.3rem .65rem;border-radius:999px;background:#eef2ff;color:#3730a3;font-weight:700;font-size:.82rem;">CURRENT LINEAGE HEAD</span>
     {% else %}
     <span style="padding:.3rem .65rem;border-radius:999px;background:#f3f4f6;color:#4b5563;font-weight:700;font-size:.82rem;">HAS SUCCESSOR</span>
@@ -24,6 +30,9 @@ layout: single
     <div><dt style="color:#667085;font-size:.82rem;">Document Type</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.document_type }}</dd></div>
     <div><dt style="color:#667085;font-size:.82rem;">Academic Period</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.academic_year }}/{{ release.term_code }}</dd></div>
     <div><dt style="color:#667085;font-size:.82rem;">Credit Pattern</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.canonical_credit_pattern }}</dd></div>
+    {% if release.language %}<div><dt style="color:#667085;font-size:.82rem;">Language</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.language }}</dd></div>{% endif %}
+    {% if release.release_family %}<div><dt style="color:#667085;font-size:.82rem;">Release Family</dt><dd style="margin:.2rem 0 0;font-weight:650;"><code>{{ release.release_family }}</code></dd></div>{% endif %}
+    {% if release.revision_number %}<div><dt style="color:#667085;font-size:.82rem;">Revision</dt><dd style="margin:.2rem 0 0;font-weight:650;">R{{ release.revision_number }}</dd></div>{% endif %}
     <div><dt style="color:#667085;font-size:.82rem;">Published</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.published_on }}</dd></div>
     <div><dt style="color:#667085;font-size:.82rem;">Release Scope</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.release_scope | replace: '_', ' ' }}</dd></div>
     <div><dt style="color:#667085;font-size:.82rem;">Source Provenance</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.source_provenance }}</dd></div>
