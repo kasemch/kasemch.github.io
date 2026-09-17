@@ -32,6 +32,7 @@ classes: wide
   {% for release in hepe_releases %}
   {% assign is_current = false %}
   {% if release.successor_release_code == nil or release.successor_release_code == empty %}{% assign is_current = true %}{% endif %}
+  {% capture detail_path %}/hepe-public-releases/{{ release.release_code }}/{% endcapture %}
   <article style="margin-top:1.5rem;padding:1.5rem;border:1px solid #e5e7eb;border-radius:16px;background:#fff;" aria-labelledby="release-{{ forloop.index }}-title">
     <div style="display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin-bottom:.8rem;">
       <strong>{{ release.release_code }}</strong>
@@ -43,7 +44,7 @@ classes: wide
       {% endif %}
     </div>
 
-    <h2 id="release-{{ forloop.index }}-title" style="margin:.4rem 0;">{{ release.course_code }} — {{ release.course_title_th }}</h2>
+    <h2 id="release-{{ forloop.index }}-title" style="margin:.4rem 0;"><a href="{{ detail_path | relative_url }}">{{ release.course_code }} — {{ release.course_title_th }}</a></h2>
     <p>รายละเอียดของกระบวนวิชา ({{ release.document_type }}) · {{ release.programme_title_th }} · ภาคเรียนที่ {{ release.term_code }} ปีการศึกษา {{ release.academic_year }}</p>
 
     <dl style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.8rem;margin:1.2rem 0;">
@@ -67,7 +68,8 @@ classes: wide
 
     <p><strong>Bundle SHA-256</strong><br><code style="overflow-wrap:anywhere;">{{ release.bundle_sha256 }}</code></p>
     <p style="display:flex;flex-wrap:wrap;gap:.8rem;">
-      <a href="{{ release.release_path | relative_url }}">Open Public Release Registry →</a>
+      <a href="{{ detail_path | relative_url }}">Release Detail →</a>
+      <a href="{{ release.release_path | relative_url }}">Public Release Registry →</a>
       <a href="{{ release.manifest_path | relative_url }}">Release Manifest →</a>
       <a href="{{ release.lineage_path | relative_url }}">Release Lineage →</a>
     </p>
