@@ -16,6 +16,7 @@ abort 'Canonical registry must contain a releases array.' unless releases.is_a?(
 
 errors = []
 seen_codes = {}
+release_by_code = {}
 
 normalize_path = lambda do |site_path|
   value = site_path.to_s
@@ -32,6 +33,7 @@ check_equal = lambda do |release_code, source_name, field, expected, actual|
   errors << "#{release_code}: #{source_name}.#{field} mismatch; expected #{expected.inspect}, got #{actual.inspect}"
 end
 
+# First pass: validate identifiers and build an index used by lineage checks.
 releases.each do |release|
   code = release['release_code'].to_s
   if code.empty?
@@ -43,7 +45,14 @@ releases.each do |release|
     errors << "Duplicate release_code: #{code}"
   else
     seen_codes[code] = true
+    release_by_code[code] = release
   end
+end
+
+# Second pass: validate public artifacts and canonical metadata fidelity.
+releases.each do |release|
+  code = release['release_code'].to_s
+  next if code.empty?
 
   unless release['public_safe'] == true
     errors << "#{code}: canonical release entry must have public_safe: true"
@@ -120,10 +129,76 @@ releases.each do |release|
   end
 end
 
+# Third pass: reciprocal lineage integrity across the canonical registry.
+releases.each do |release|
+  code = release['release_code'].to_s
+  next if code.empty?
+
+  predecessor = release['predecessor_release_code']
+  successor = release['successor_release_code']
+
+  if predecessor == code
+    errors << "#{code}: predecessor_release_code cannot reference itself"
+  end
+  if successor == code
+    errors << "#{code}: successor_release_code cannot reference itself"
+  end
+
+  if predecessor
+    referenced = release_by_code[predecessor]
+    if referenced.nil?
+      errors << "#{code}: predecessor_release_code references missing release #{predecessor}"
+    elsif referenced['successor_release_code'] != code
+      errors << "#{code}: predecessor #{predecessor} must reciprocally declare successor_release_code #{code}"
+    end
+  end
+
+  if successor
+    referenced = release_by_code[successor]
+    if referenced.nil?
+      errors << "#{code}: successor_release_code references missing release #{successor}"
+    elsif referenced['predecessor_release_code'] != code
+      errors << "#{code}: successor #{successor} must reciprocally declare predecessor_release_code #{code}"
+    end
+  end
+end
+
+# A release can be the predecessor of at most one successor in the linear R1→R2→R3 model.
+predecessor_claims = Hash.new { |hash, key| hash[key] = [] }
+releases.each do |release|
+  predecessor = release['predecessor_release_code']
+  predecessor_claims[predecessor] << release['release_code'] if predecessor
+end
+predecessor_claims.each do |predecessor, children|
+  next if children.length <= 1
+
+  errors << "#{predecessor}: multiple releases claim the same predecessor: #{children.join(', ')}"
+end
+
+# Detect cycles by walking successor pointers from every release.
+release_by_code.each_key do |start_code|
+  visited = {}
+  current = start_code
+
+  while current
+    if visited[current]
+      cycle = visited.keys.drop_while { |code| code != current } + [current]
+      errors << "Lineage cycle detected: #{cycle.join(' -> ')}"
+      break
+    end
+
+    visited[current] = true
+    node = release_by_code[current]
+    break unless node
+
+    current = node['successor_release_code']
+  end
+end
+
 unless errors.empty?
   warn 'HEPE public release consistency validation: FAIL'
-  errors.each { |error| warn "- #{error}" }
+  errors.uniq.each { |error| warn "- #{error}" }
   exit 1
 end
 
-puts "HEPE public release consistency validation: PASS (#{releases.length} release#{releases.length == 1 ? '' : 's'})"
+puts "HEPE public release consistency validation: PASS (#{releases.length} release#{releases.length == 1 ? '' : 's'}; reciprocal lineage valid)"
