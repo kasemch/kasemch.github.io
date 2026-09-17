@@ -5,6 +5,7 @@ on:
     branches: [master]
     paths:
       - '_data/hepe_public_releases.yml'
+      - '_pages/hepe-public-releases.md'
       - 'hepe-public/**'
       - 'scripts/validate_hepe_public_releases.rb'
       - '.github/workflows/hepe-release-consistency.yml'
@@ -12,6 +13,7 @@ on:
     branches: [master]
     paths:
       - '_data/hepe_public_releases.yml'
+      - '_pages/hepe-public-releases.md'
       - 'hepe-public/**'
       - 'scripts/validate_hepe_public_releases.rb'
       - '.github/workflows/hepe-release-consistency.yml'
