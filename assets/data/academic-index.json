@@ -1,4 +1,6 @@
 ---
+layout: null
+sitemap: false
 ---
 [
   {"title":"Academic Profile","type":"profile","url":"./about/","domain":"profile","keywords":["profile","about","health education","physical education","school health","quality assurance","ai education"],"summary":"Public academic profile covering health and physical education, teaching, research, curriculum, quality and responsible digital innovation.","evidence_status":"PUBLIC SOURCE"},
