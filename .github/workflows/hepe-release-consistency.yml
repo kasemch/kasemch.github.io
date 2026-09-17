@@ -6,6 +6,8 @@ on:
     paths:
       - '_data/hepe_public_releases.yml'
       - '_pages/hepe-public-releases.md'
+      - '_pages/hepe-release-*.md'
+      - '_layouts/hepe-release.html'
       - 'hepe-public/**'
       - 'scripts/validate_hepe_public_releases.rb'
       - '.github/workflows/hepe-release-consistency.yml'
@@ -14,6 +16,8 @@ on:
     paths:
       - '_data/hepe_public_releases.yml'
       - '_pages/hepe-public-releases.md'
+      - '_pages/hepe-release-*.md'
+      - '_layouts/hepe-release.html'
       - 'hepe-public/**'
       - 'scripts/validate_hepe_public_releases.rb'
       - '.github/workflows/hepe-release-consistency.yml'
