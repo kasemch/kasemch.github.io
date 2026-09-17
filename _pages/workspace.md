@@ -17,8 +17,10 @@ classes: wide
       <div class="aw-brand"><span>KC</span><strong>Academic<br>Dashboard</strong></div>
       <nav>
         <a class="is-active" href="{{ '/workspace/' | relative_url }}">Overview</a>
+        <a href="{{ '/current-work/' | relative_url }}">Current Work</a>
         <a href="{{ '/research-progress/' | relative_url }}">Research</a>
         <a href="{{ '/publications/' | relative_url }}">Publications</a>
+        <a href="{{ '/analytics/' | relative_url }}">Analytics</a>
         <a href="{{ '/teaching/' | relative_url }}">Teaching</a>
         <a href="{{ '/curriculum-quality/' | relative_url }}">Curriculum &amp; QA</a>
         <a href="{{ '/evidence-explorer/' | relative_url }}">Evidence</a>
@@ -69,6 +71,8 @@ classes: wide
         <article class="aw-dash-card aw-dash-card-wide">
           <div class="aw-card-head"><div><span class="aw-eyebrow">Public Discovery</span><h2>Explore verified academic work</h2></div></div>
           <div class="aw-quick-grid">
+            <div class="aw-quick"><strong>Current Work</strong><span>Open the public-safe cross-domain view of work currently in progress.</span><div class="aw-actions"><a class="aw-btn aw-btn-secondary" href="{{ '/current-work/' | relative_url }}">View Current Work</a></div></div>
+            <div class="aw-quick"><strong>Academic Analytics</strong><span>Inspect descriptive patterns in verified public teaching, research and publication data.</span><div class="aw-actions"><a class="aw-btn aw-btn-secondary" href="{{ '/analytics/' | relative_url }}">Open Analytics</a></div></div>
             <div class="aw-quick"><strong>Evidence Explorer</strong><span>Trace public claims to approved evidence records.</span><div class="aw-actions"><a class="aw-btn aw-btn-secondary" href="{{ '/evidence-explorer/' | relative_url }}">Explore Evidence</a></div></div>
             <div class="aw-quick"><strong>Knowledge Map</strong><span>Browse relationships across teaching, research, quality and innovation.</span><div class="aw-actions"><a class="aw-btn aw-btn-secondary" href="{{ '/knowledge-map/' | relative_url }}">Open Map</a></div></div>
             <div class="aw-quick"><strong>Public Calendar</strong><span>View public-safe academic events without write access.</span><div class="aw-actions"><a class="aw-btn aw-btn-secondary" href="{{ '/academic-calendar/' | relative_url }}">View Calendar</a></div></div>
