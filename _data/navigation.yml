@@ -1,15 +1,13 @@
 # Master navigation for the AWOS Public Hub
 # Public navigation exposes read-only academic content only.
+# Specialist routes remain available through contextual hub links.
 
 main:
   - title: "Home"
     url: /
 
-  - title: "About"
+  - title: "Profile"
     url: /about/
-
-  - title: "Current Work"
-    url: /current-work/
 
   - title: "Teaching"
     url: /teaching/
@@ -17,29 +15,14 @@ main:
   - title: "Research"
     url: /research/
 
-  - title: "Research Status"
-    url: /research-progress/
-
   - title: "Publications"
     url: /publications/
-
-  - title: "Academic Analytics"
-    url: /analytics/
-
-  - title: "Academic Leadership & Service"
-    url: /academic-leadership-service/
-
-  - title: "Academic Dashboard"
-    url: /workspace/
 
   - title: "Curriculum & Quality"
     url: /curriculum-quality/
 
-  - title: "HEPE Public Releases"
-    url: /hepe-public-releases/
-
-  - title: "Innovation & Projects"
+  - title: "Innovation & Service"
     url: /innovation-projects/
 
-  - title: "Professional Development"
-    url: /professional-development/
+  - title: "Academic Hub"
+    url: /workspace/
