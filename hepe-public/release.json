@@ -1,0 +1,17 @@
+{
+  "release_status": "PUBLIC_PUBLISHED",
+  "release_scope": "HEPE_PROJECT_CONTROLLED_PUBLIC_RELEASE",
+  "document_type": "TQF3",
+  "course_code": "HED2503",
+  "course_title_th": "เพศวิถีศึกษา",
+  "programme_title_th": "หลักสูตรศึกษาศาสตรบัณฑิต สาขาวิชาสุขศึกษาและพลศึกษา (4 ปี)",
+  "academic_year": "2569",
+  "term_code": "1",
+  "source_provenance": "CONTROLLED_SOURCE",
+  "template_scope": "HEPE_PROJECT_CONTROLLED",
+  "institutional_official_claim": false,
+  "canonical_credit_pattern": "3(3-0-6)",
+  "bundle_sha256": "799818a46e8e0f931a156526f5e592088680c044ba8c62c04add3d5b40912256",
+  "public_safe": true,
+  "published_on": "2026-09-17"
+}
