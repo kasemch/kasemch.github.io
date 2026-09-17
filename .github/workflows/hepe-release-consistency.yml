@@ -1,0 +1,35 @@
+name: HEPE release consistency
+
+on:
+  pull_request:
+    branches: [master]
+    paths:
+      - '_data/hepe_public_releases.yml'
+      - 'hepe-public/**'
+      - 'scripts/validate_hepe_public_releases.rb'
+      - '.github/workflows/hepe-release-consistency.yml'
+  push:
+    branches: [master]
+    paths:
+      - '_data/hepe_public_releases.yml'
+      - 'hepe-public/**'
+      - 'scripts/validate_hepe_public_releases.rb'
+      - '.github/workflows/hepe-release-consistency.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+
+      - name: Validate HEPE release registry consistency
+        run: ruby scripts/validate_hepe_public_releases.rb
