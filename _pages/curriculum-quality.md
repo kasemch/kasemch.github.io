@@ -17,8 +17,23 @@ author_profile: false
         <a href="{{ '/teaching/' | relative_url }}">Teaching</a>
         <a href="{{ '/research/' | relative_url }}">Research</a>
         <a href="{{ '/publications/' | relative_url }}">Publications</a>
+        <a href="{{ '/hepe-public-releases/' | relative_url }}">HEPE Public Releases</a>
         <a href="{{ '/cv/' | relative_url }}">Academic CV</a>
       </nav>
+    </div>
+  </section>
+
+  <section class="cq-section" aria-labelledby="release-title">
+    <div class="cq-shell">
+      <div class="cq-eyebrow">Registered Public Release</div>
+      <h2 id="release-title">HEPE-HED2503-TQF3-2569-1-R1</h2>
+      <p class="cq-lead">A project-controlled public release for HED2503 — เพศวิถีศึกษา has completed the governed release workflow and is registered with frozen lineage and SHA-256 integrity metadata. This is a HEPE project-controlled release and is not represented as an official institutional document.</p>
+      <div class="cq-grid">
+        <article class="cq-card" data-cq-domain="curriculum evidence qa"><div class="cq-eyebrow">Release State</div><h3>PUBLIC RELEASE REGISTERED</h3><p>R1 is closed as an immutable baseline. Any later revision must be issued as R2 or a later lineage rather than editing R1 retrospectively.</p></article>
+        <article class="cq-card" data-cq-domain="evidence qa"><div class="cq-eyebrow">Integrity</div><h3>SHA-256 Bound</h3><p>The public release registry and lineage reference the same frozen bundle hash used at controlled finalization.</p></article>
+        <article class="cq-card" data-cq-domain="qa curriculum"><div class="cq-eyebrow">Authority Boundary</div><h3>HEPE Project-Controlled</h3><p>The public record explicitly distinguishes project-controlled status from any future institutional-official status.</p></article>
+      </div>
+      <p><a href="{{ '/hepe-public-releases/' | relative_url }}">Open HEPE Public Release Discovery →</a></p>
     </div>
   </section>
 
