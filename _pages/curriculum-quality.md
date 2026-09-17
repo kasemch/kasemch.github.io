@@ -5,6 +5,9 @@ description: "Curriculum and quality work of Asst. Prof. Dr. Kasem Chooratna, in
 author_profile: false
 ---
 
+{% assign hepe_releases = site.data.hepe_public_releases.releases %}
+{% assign hepe_r1 = hepe_releases | where: "release_code", "HEPE-HED2503-TQF3-2569-1-R1" | first %}
+
 <link rel="stylesheet" href="{{ '/assets/css/curriculum-quality-hub.css' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/css/progress-visual-system.css' | relative_url }}">
 <div class="curriculum-quality-hub">
@@ -23,19 +26,21 @@ author_profile: false
     </div>
   </section>
 
+  {% if hepe_r1 %}
   <section class="cq-section" aria-labelledby="release-title">
     <div class="cq-shell">
       <div class="cq-eyebrow">Registered Public Release</div>
-      <h2 id="release-title">HEPE-HED2503-TQF3-2569-1-R1</h2>
-      <p class="cq-lead">A project-controlled public release for HED2503 — เพศวิถีศึกษา has completed the governed release workflow and is registered with frozen lineage and SHA-256 integrity metadata. This is a HEPE project-controlled release and is not represented as an official institutional document.</p>
+      <h2 id="release-title">{{ hepe_r1.release_code }}</h2>
+      <p class="cq-lead">A project-controlled public release for {{ hepe_r1.course_code }} — {{ hepe_r1.course_title_th }} has completed the governed release workflow and is registered with frozen lineage and SHA-256 integrity metadata. This is a HEPE project-controlled release and is not represented as an official institutional document.</p>
       <div class="cq-grid">
-        <article class="cq-card" data-cq-domain="curriculum evidence qa"><div class="cq-eyebrow">Release State</div><h3>PUBLIC RELEASE REGISTERED</h3><p>R1 is closed as an immutable baseline. Any later revision must be issued as R2 or a later lineage rather than editing R1 retrospectively.</p></article>
-        <article class="cq-card" data-cq-domain="evidence qa"><div class="cq-eyebrow">Integrity</div><h3>SHA-256 Bound</h3><p>The public release registry and lineage reference the same frozen bundle hash used at controlled finalization.</p></article>
+        <article class="cq-card" data-cq-domain="curriculum evidence qa"><div class="cq-eyebrow">Release State</div><h3>PUBLIC RELEASE REGISTERED</h3><p>{{ hepe_r1.release_code | split: '-' | last }} is closed as an immutable baseline. Any later revision must be issued as R2 or a later lineage rather than editing this release retrospectively.</p></article>
+        <article class="cq-card" data-cq-domain="evidence qa"><div class="cq-eyebrow">Integrity</div><h3>SHA-256 Bound</h3><p>The public release registry and lineage reference the frozen bundle hash <code>{{ hepe_r1.bundle_sha256 }}</code>.</p></article>
         <article class="cq-card" data-cq-domain="qa curriculum"><div class="cq-eyebrow">Authority Boundary</div><h3>HEPE Project-Controlled</h3><p>The public record explicitly distinguishes project-controlled status from any future institutional-official status.</p></article>
       </div>
-      <p><a href="{{ '/hepe-public-releases/' | relative_url }}">Open HEPE Public Release Discovery →</a></p>
+      <p><a href="{{ hepe_r1.discovery_path | relative_url }}">Open HEPE Public Release Discovery →</a></p>
     </div>
   </section>
+  {% endif %}
 
   <section class="cq-section" aria-labelledby="flow-title">
     <div class="cq-shell">
