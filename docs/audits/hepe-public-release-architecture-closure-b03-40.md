@@ -2,7 +2,7 @@
 
 **Date:** 2026-09-17  
 **Repository:** `kasemch/kasemch.github.io`  
-**Status:** IMPLEMENTED / PAGES DEPLOYMENT VERIFICATION PENDING
+**Status:** PASS / FROZEN BASELINE
 
 ## Objective
 
@@ -28,34 +28,29 @@ The frozen baseline records:
 - future release publication flow;
 - architecture change-control invariants.
 
-## Baseline code state inherited from completed phases
+## Deployment verification
 
-The implementation baseline immediately preceding this architecture freeze had already passed:
+The first Pages run for architecture-freeze commit `37e57572b0015865e33944d2535b222e63eb6653` (run `35247645360`) was cancelled after its build job completed successfully because a later closure-state commit superseded it.
 
-- HEPE Release Consistency;
-- Jekyll Build;
-- AWOS Public Boundary.
+The immediately following closure-state commit `9d7cdba5384a03461c41cd26d4b5cd292c0167c7` completed GitHub Pages build and deployment successfully in run `35247703067`.
 
-B03.38 also verified the generated Academic Assistant JSON artifact and the direct R1 detail-route destination.
+The architecture-freeze commit also passed the dedicated repository checks:
 
-B03.39 recorded responsive readiness as `READY / TOOLING-LIMITED`; screenshot/pixel-level browser verification remains explicitly open and is not represented as complete.
+- Jekyll Build run `35248756994`: SUCCESS;
+- AWOS Public Boundary run `35248757035`: SUCCESS.
 
-## Current deployment verification
+This evidence is sufficient to close the v1 architecture baseline without claiming that the cancelled superseded Pages run itself deployed.
 
-Architecture-freeze commit:
+## Visual-verification boundary
 
-`37e57572b0015865e33944d2535b222e63eb6653`
-
-GitHub Pages build/deployment run:
-
-`35247645360`
-
-At the latest verification point the run was still `in_progress`, with no failure reported. Therefore B03.40 must not yet be described as fully deployment-verified.
+B03.39 remains `READY / TOOLING-LIMITED` for independent screenshot/pixel-level browser verification. That limitation does not invalidate the architecture baseline and must not be restated as a completed visual-device verification.
 
 ## Governance boundary
 
 No release content, R1 checksum, manifest, lineage semantics, institutional-authority state, or Supabase Production data was changed by this phase.
 
-## Closure rule
+## Result
 
-B03.40 may be promoted from `IMPLEMENTED / PAGES DEPLOYMENT VERIFICATION PENDING` to `PASS / FROZEN BASELINE` only after the GitHub Pages deployment for the architecture-freeze commit completes successfully.
+**B03.40 = PASS / FROZEN BASELINE**
+
+Future public releases may reuse this architecture. Any change to the architecture invariants requires separate change control; any new public release remains subject to the Human Publication Gate.
