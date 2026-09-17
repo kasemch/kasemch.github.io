@@ -30,12 +30,20 @@ classes: wide
   </div>
 
   {% for release in hepe_releases %}
-  {% assign is_current = false %}
-  {% if release.successor_release_code == nil or release.successor_release_code == empty %}{% assign is_current = true %}{% endif %}
-  {% capture detail_path %}/hepe-public-releases/{{ release.release_code }}/{% endcapture %}
+  {% assign is_current = release.current_release %}
+  {% if is_current == nil %}
+    {% assign is_current = false %}
+    {% if release.successor_release_code == nil or release.successor_release_code == empty %}{% assign is_current = true %}{% endif %}
+  {% endif %}
+  {% if release.detail_route %}
+    {% assign detail_path = release.detail_route %}
+  {% else %}
+    {% capture detail_path %}/hepe-public-releases/{{ release.release_code }}/{% endcapture %}
+  {% endif %}
   <article style="margin-top:1.5rem;padding:1.5rem;border:1px solid #e5e7eb;border-radius:16px;background:#fff;" aria-labelledby="release-{{ forloop.index }}-title">
     <div style="display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin-bottom:.8rem;">
       <strong>{{ release.release_code }}</strong>
+      {% if release.display_label %}<span style="padding:.3rem .65rem;border-radius:999px;background:#f8fafc;color:#344054;font-weight:700;font-size:.82rem;">{{ release.display_label }}</span>{% endif %}
       <span style="padding:.3rem .65rem;border-radius:999px;background:#e8f7ee;color:#166534;font-weight:700;font-size:.82rem;">{{ release.release_status | replace: '_', ' ' }}</span>
       {% if is_current %}
       <span style="padding:.3rem .65rem;border-radius:999px;background:#eef2ff;color:#3730a3;font-weight:700;font-size:.82rem;">CURRENT LINEAGE HEAD</span>
@@ -50,6 +58,7 @@ classes: wide
     <dl style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.8rem;margin:1.2rem 0;">
       <div><dt style="color:#667085;font-size:.82rem;">Document Type</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.document_type }}</dd></div>
       <div><dt style="color:#667085;font-size:.82rem;">Academic Period</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.academic_year }}/{{ release.term_code }}</dd></div>
+      {% if release.language %}<div><dt style="color:#667085;font-size:.82rem;">Language</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.language }}</dd></div>{% endif %}
       <div><dt style="color:#667085;font-size:.82rem;">Release Scope</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.release_scope | replace: '_', ' ' }}</dd></div>
       <div><dt style="color:#667085;font-size:.82rem;">Source Provenance</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.source_provenance }}</dd></div>
       <div><dt style="color:#667085;font-size:.82rem;">Template Scope</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.template_scope }}</dd></div>
