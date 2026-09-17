@@ -14,7 +14,7 @@ redirect_from:
     <div class="sp-kicker">Academic Profile</div>
     <h1>About</h1>
     <p>Health &amp; Physical Education, curriculum and quality, research, teaching, academic leadership and responsible academic innovation.</p>
-    <div class="sp-navchips"><a class="sp-chip" href="{{ '/teaching/' | relative_url }}">Teaching</a><a class="sp-chip" href="{{ '/research/' | relative_url }}">Research</a><a class="sp-chip" href="{{ '/academic-leadership-service/' | relative_url }}">Leadership &amp; Service</a><a class="sp-chip" href="{{ '/cv/' | relative_url }}">Academic CV</a></div>
+    <div class="sp-navchips"><a class="sp-chip" href="{{ '/teaching/' | relative_url }}">Teaching</a><a class="sp-chip" href="{{ '/research/' | relative_url }}">Research</a><a class="sp-chip" href="{{ '/academic-leadership-service/' | relative_url }}">Leadership &amp; Service</a><a class="sp-chip" href="{{ '/professional-development/' | relative_url }}">Professional Development</a><a class="sp-chip" href="{{ '/cv/' | relative_url }}">Academic CV</a></div>
   </section>
 
   <section class="sp-section sp-shell">
