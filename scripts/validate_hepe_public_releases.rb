@@ -18,6 +18,10 @@ errors = []
 seen_codes = {}
 release_by_code = {}
 
+schema_version = registry['schema_version']
+errors << "Unsupported schema_version: #{schema_version.inspect}" unless [1, 2].include?(schema_version)
+errors << 'Registry public_safe_only must remain true.' unless registry['public_safe_only'] == true
+
 normalize_path = lambda do |site_path|
   value = site_path.to_s
   if value.empty? || value.match?(%r{\Ahttps?://}i)
@@ -127,6 +131,50 @@ releases.each do |release|
   if release['institutional_official_claim'] != false
     errors << "#{code}: institutional_official_claim must remain false unless a separately governed authority change is made"
   end
+
+  # Schema v2 public-rendering metadata: optional for backward compatibility,
+  # but when present it must agree with governed lineage facts.
+  revision = release['revision_number']
+  if !revision.nil? && (!revision.is_a?(Integer) || revision < 1)
+    errors << "#{code}: revision_number must be a positive integer when present"
+  end
+
+  display_label = release['display_label']
+  if revision && display_label && display_label != "R#{revision}"
+    errors << "#{code}: display_label #{display_label.inspect} must agree with revision_number #{revision}"
+  end
+
+  if release.key?('current_release')
+    expected_current = release['successor_release_code'].nil?
+    check_equal.call(code, 'canonical', 'current_release', expected_current, release['current_release'])
+  end
+
+  if release.key?('superseded')
+    expected_superseded = !release['successor_release_code'].nil?
+    check_equal.call(code, 'canonical', 'superseded', expected_superseded, release['superseded'])
+  end
+
+  if release.key?('superseded_by')
+    check_equal.call(code, 'canonical', 'superseded_by', release['successor_release_code'], release['superseded_by'])
+  end
+
+  family = release['release_family']
+  errors << "#{code}: release_family cannot be blank when present" if !family.nil? && family.to_s.strip.empty?
+
+  language = release['language']
+  errors << "#{code}: language must be a short public language tag when present" if !language.nil? && !language.to_s.match?(/\A[a-z]{2,3}(?:-[A-Za-z0-9]+)*\z/)
+
+  display_order = release['display_order']
+  if !display_order.nil? && (!display_order.is_a?(Integer) || display_order < 0)
+    errors << "#{code}: display_order must be a non-negative integer when present"
+  end
+
+  if release['detail_route']
+    expected_route = "/hepe-public-releases/#{code}/"
+    check_equal.call(code, 'canonical', 'detail_route', expected_route, release['detail_route'])
+    detail_file = ROOT.join("_pages/hepe-release-#{code}.md")
+    errors << "#{code}: detail route stub missing at #{detail_file.relative_path_from(ROOT)}" unless detail_file.file?
+  end
 end
 
 # Third pass: reciprocal lineage integrity across the canonical registry.
@@ -201,4 +249,4 @@ unless errors.empty?
   exit 1
 end
 
-puts "HEPE public release consistency validation: PASS (#{releases.length} release#{releases.length == 1 ? '' : 's'}; reciprocal lineage valid)"
+puts "HEPE public release consistency validation: PASS (#{releases.length} release#{releases.length == 1 ? '' : 's'}; schema v#{schema_version}; reciprocal lineage valid)"
