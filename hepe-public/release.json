@@ -1,4 +1,5 @@
 {
+  "public_release_code": "HEPE-HED2503-TQF3-2569-1-R1",
   "release_status": "PUBLIC_PUBLISHED",
   "release_scope": "HEPE_PROJECT_CONTROLLED_PUBLIC_RELEASE",
   "document_type": "TQF3",
@@ -12,6 +13,7 @@
   "institutional_official_claim": false,
   "canonical_credit_pattern": "3(3-0-6)",
   "bundle_sha256": "799818a46e8e0f931a156526f5e592088680c044ba8c62c04add3d5b40912256",
+  "lineage": "./lineage.json",
   "public_safe": true,
   "published_on": "2026-09-17"
 }
