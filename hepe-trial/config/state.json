@@ -1,31 +1,44 @@
 {
-  "phase_range": "TQF-STATE-RECONCILIATION-01 → TQF-STATUS-SURFACE-01",
-  "status": "RECONCILED_STATUS_SURFACE_READY",
-  "course_code": "HED2503",
+  "phase": "FAST-SUBMISSION-PORTAL-01",
+  "status": "READY_FOR_URGENT_SUBMISSION",
+  "updated_at": "2026-09-18",
+  "route": "./hepe-trial/",
   "programme_code": "25510071103503",
+  "course_code": "HED2503",
   "academic_year": "2569",
   "term_code": "1",
-  "effective_state_model": {
-    "working_state": "DRAFT",
-    "frozen_release_state": "FINAL",
-    "publication_state": "PUBLIC_PUBLISHED",
-    "effective_state": "PUBLIC_PUBLISHED_WITH_ACTIVE_WORKING_DRAFT",
-    "state_relation": "PARALLEL_LIFECYCLES_EXPECTED"
+  "modules": {
+    "login": {
+      "status": "READY",
+      "methods": [
+        "MAGIC_LINK",
+        "PASSWORD_IF_CONFIGURED"
+      ]
+    },
+    "tqf3": {
+      "status": "READY",
+      "mode": "WORKING_VERSION_APPEND_ONLY",
+      "immutable_release_protected": true
+    },
+    "tqf5": {
+      "status": "READY",
+      "mode": "DRAFT_UNVERIFIED_SNAPSHOT"
+    },
+    "verification": {
+      "status": "READY",
+      "mode": "EVIDENCE_GATED",
+      "verified_shortcut": false
+    },
+    "tqf4": {
+      "status": "DEFERRED"
+    },
+    "tqf6": {
+      "status": "DEFERRED"
+    },
+    "tqf7": {
+      "status": "DEFERRED"
+    }
   },
-  "immutable_release": {
-    "release_code": "HEPE-HED2503-TQF3-2569-1-R1",
-    "sha256": "799818a46e8e0f931a156526f5e592088680c044ba8c62c04add3d5b40912256",
-    "institutional_official_claim": false
-  },
-  "available_rpcs": [
-    "hepe_authoritative_release_registry_by_code(text,text,text,text)",
-    "hepe_tqf3_state_reconciliation_by_code(text,text,text,text)"
-  ],
-  "ui_surface": {
-    "route": "./hepe-trial/",
-    "auth_required": true,
-    "anon_status_access": false,
-    "read_only": true
-  },
-  "production_changed": false
+  "environment": "NON-PRODUCTION",
+  "production_authorized": false
 }
