@@ -227,7 +227,7 @@
               <div class="form-section">
                 <div class="form-section-header">
                   <div>
-                    <h3>หมวด 3 แผนการจัดการเรียนรู้รายสัปดาห์</h3>
+                    <h3>หมวด 3 แผนการจัดการเรียนรู้รายสัปดาห์ <span id="section-status-weekly" class="badge info">NOT STARTED</span></h3>
                     <div class="help">จำนวนแถวเริ่มต้นเป็น planning slots ปรับเพิ่ม/ลบได้ตามภาคการศึกษาจริง</div>
                   </div>
                   <div class="actions">
@@ -285,7 +285,7 @@
               <div class="form-section">
                 <div class="form-section-header">
                   <div>
-                    <h3>หมวด 4 การวัดและประเมินผล</h3>
+                    <h3>หมวด 4 การวัดและประเมินผล <span id="section-status-assessment" class="badge info">NOT STARTED</span></h3>
                     <div class="help">สัดส่วนรวม: <strong id="assessment-total">0%</strong></div>
                   </div>
                   <div class="actions">
@@ -325,7 +325,7 @@
 
               <div class="form-section">
                 <div class="form-section-header">
-                  <h3>หมวด 5 ทรัพยากรและแนวทางปรับปรุง</h3>
+                  <h3>หมวด 5 ทรัพยากรและแนวทางปรับปรุง <span id="section-status-overview" class="badge info">NOT STARTED</span></h3>
                   <button type="button" class="btn small ai ai-section" data-section="overview">AI ตรวจภาพรวม</button>
                 </div>
                 <div class="ai-inline-result" data-ai-inline-section="overview" hidden>
@@ -367,6 +367,17 @@
                   </div>
                 </div>
                 <div id="cqi-carry" class="cqi-carry"></div>
+              </div>
+
+              <div class="form-section" id="reuse-update-section">
+                <div class="form-section-header">
+                  <div>
+                    <h3>Reuse → Update จาก Working Version ก่อน</h3>
+                    <div class="help">เปรียบเทียบฉบับก่อนกับฉบับปัจจุบัน แล้วผู้ใช้เลือกว่าจะคงฉบับปัจจุบันหรือนำข้อมูลเดิมมาเป็น working draft</div>
+                  </div>
+                  <span id="reuse-source-version" class="badge info">ยังไม่มีรุ่นก่อน</span>
+                </div>
+                <div id="reuse-update-body" class="reuse-update-body"></div>
               </div>
 
               <div class="form-section">
@@ -625,6 +636,22 @@
                 </div>
                 <div id="template-review" class="template-review-grid">
                   <div class="help">เปิดแท็บ Readiness เพื่อโหลด structural review</div>
+                </div>
+              </div>
+              <hr>
+              <div class="review-queue-card">
+                <div class="section-title">
+                  <div>
+                    <h3>Review Queue Mode</h3>
+                    <div class="help">จัดการ BLOCKING ก่อน WARNING ทีละรายการ พร้อมไปยังจุดที่ต้องแก้</div>
+                  </div>
+                  <span id="review-queue-progress" class="badge info">0 / 0</span>
+                </div>
+                <div id="review-queue-current" class="review-queue-current"><div class="help">ยังไม่มีรายการที่ต้องตรวจ</div></div>
+                <div class="actions">
+                  <button type="button" id="review-queue-prev" class="btn small">ก่อนหน้า</button>
+                  <button type="button" id="review-queue-next" class="btn small primary">จุดถัดไป</button>
+                  <button type="button" id="review-queue-refresh" class="btn small">รีเฟรช Queue</button>
                 </div>
               </div>
               <hr>
