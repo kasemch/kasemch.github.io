@@ -1,6 +1,6 @@
 {
-  "phase": "FAST-SUBMISSION-PORTAL-15",
-  "status": "V35_PROPOSAL_REVIEW_CHANGE_CONTROL_PREACTIVATION_READY",
+  "phase": "FAST-SUBMISSION-PORTAL-16",
+  "status": "V36_COMPLETION_RATIONALE_EVIDENCE_TEMPLATE_READINESS_READY",
   "updated_at": "2026-09-18",
   "route": "./hepe-trial/",
   "programme_code": "25510071103503",
@@ -518,11 +518,54 @@
       },
       "activation_action": false,
       "human_gate": true
+    },
+    "live_form_ux_v36": {
+      "status": "READY",
+      "mobile_touch_targets": true,
+      "sticky_inline_ai_header": true,
+      "reduced_motion_safe": true
+    },
+    "section_completion_v36": {
+      "status": "READY",
+      "finish_section_action": true,
+      "unresolved_gap_only": true,
+      "next_gap": true,
+      "live_recompute": true,
+      "institutional_approval_claim": false
+    },
+    "change_rationale_v36": {
+      "status": "READY",
+      "reuse_update_requires_rationale": true,
+      "trivial_formatting_rationale_required": false,
+      "persisted_in_tqf3_working_content": true,
+      "review_package_appendix": true
+    },
+    "evidence_review_readiness_v36": {
+      "status": "READY",
+      "group_by_evidence_type": true,
+      "document_age_indicator": true,
+      "locator_completeness": true,
+      "authority_owner_completeness": true,
+      "ready_for_human_review_count": true,
+      "admission_action": false,
+      "auto_admit": false
+    },
+    "template_activation_readiness_v36": {
+      "status": "READY_READ_ONLY",
+      "field_by_field": true,
+      "classifications": [
+        "SOURCE_READY",
+        "EXECUTION_REQUIRED",
+        "HUMAN_INPUT_REQUIRED",
+        "SIGNATURE_GATE"
+      ],
+      "activation_action": false,
+      "human_gate": true
     }
   },
   "environment": "NON-PRODUCTION",
   "production_authorized": false,
-  "ui_version": "35",
+  "ui_version": "36",
   "ai_assistant": {
     "status": "READY",
     "mode": "LOCAL_SMART_QA_PLUS_CHATGPT_HANDOFF",
@@ -656,7 +699,7 @@
       "institutional_approval_claim": false
     }
   },
-  "release_cache_key": "34.0",
+  "release_cache_key": "36.0",
   "validation": {
     "v32": {
       "js_parse": "PASS",
@@ -689,6 +732,21 @@
       "review_package_appendices": "PASS",
       "template_activation_lock": "PASS",
       "hed2503_r1_immutable": "PASS"
+    },
+    "v36": {
+      "js_parse": "PASS",
+      "bad_collection_selectors": 0,
+      "duplicate_dom_ids": 0,
+      "live_assets": "portal-v36.js / portal-v36.css",
+      "finish_section": "PASS",
+      "change_rationale_guard": "PASS",
+      "evidence_grouping": "PASS",
+      "evidence_age_indicator": "PASS",
+      "template_activation_checklist": "PASS",
+      "tqf4_v2_activation_lock": "PASS",
+      "tqf6_v2_activation_lock": "PASS",
+      "hed2503_r1_immutable": "PASS",
+      "scope_65_of_65_descriptions": "PASS"
     }
   },
   "runtime_observed": {
@@ -696,6 +754,12 @@
     "hed2503_tqf3_version_count": 6,
     "hed2503_verification": "INSUFFICIENT_EVIDENCE",
     "immutable_r1_status": "PUBLIC_PUBLISHED",
-    "immutable_r1_sha256": "799818a46e8e0f931a156526f5e592088680c044ba8c62c04add3d5b40912256"
+    "immutable_r1_sha256": "799818a46e8e0f931a156526f5e592088680c044ba8c62c04add3d5b40912256",
+    "tqf4_v2_current_version_no": 1,
+    "tqf4_v2_status": "UNDER_REVIEW",
+    "tqf4_v2_approved_at": null,
+    "tqf6_v2_current_version_no": 1,
+    "tqf6_v2_status": "UNDER_REVIEW",
+    "tqf6_v2_approved_at": null
   }
 }
