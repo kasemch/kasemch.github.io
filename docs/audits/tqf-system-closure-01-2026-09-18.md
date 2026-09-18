@@ -522,3 +522,32 @@ and
 **PRODUCTION = NOT AUTHORIZED**
 
 The system is correctly fail-closed and currently avoids promoting unsupported claims.
+
+
+## Human governance decision — Template authority
+
+Decision date:
+
+`2026-09-18`
+
+Decision:
+
+`OPTION B — KEEP UNDER_REVIEW`
+
+Scope:
+
+- `HEPE-TQF4-GENERIC`
+- `HEPE-TQF5-GENERIC`
+- `HEPE-TQF6-GENERIC`
+
+Interpretation:
+
+The project-controlled templates remain usable for controlled-draft workflows in NON-PRODUCTION, but they are not promoted to APPROVED or institutional-official status.
+
+No template status was changed in Supabase.
+
+Reason:
+
+The currently available evidence supports HEPE/Smart QMS project use, but does not establish institutional ownership or university-level official template authority with sufficient provenance.
+
+This decision preserves Evidence-First / No-Fabrication governance.
