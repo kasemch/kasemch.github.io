@@ -2,13 +2,13 @@
 
 Date: 2026-09-18
 
-Status: PASS WITH EXECUTED-EVIDENCE GAPS
+Status: PASS WITH EXECUTION-EVIDENCE GAPS
 
-Environment: NON-PRODUCTION / Supabase Sandbox + connected Google Drive
+Environment: NON-PRODUCTION / Supabase Sandbox + Google Drive
 
 ## Objective
 
-Operationalize TQF6 as the reporting counterpart to TQF4 while preserving strict separation between planned/working material and executed fieldwork-result evidence.
+Operationalize TQF6 as the reporting counterpart to TQF4 for HED3701 while preventing future-dated or unevidenced fieldwork results from being treated as executed facts.
 
 ## Source template
 
@@ -20,18 +20,18 @@ Drive file ID:
 
 `1TCoSmZb8nSV25zjoJ_ub4-1e5B_IZMlp_xv3N30JOZc`
 
-Observed source structure:
+Observed source sections:
 
 1. หมวดที่ 1 ข้อมูลทั่วไป และสรุปจำนวนนักศึกษา
 2. หมวดที่ 2 สรุปผลการประเมินนักศึกษาและเกรด
 3. หมวดที่ 3 สรุปข้อเสนอแนะจากสถานศึกษา / ครูพี่เลี้ยง / สถานประกอบการ
-4. หมวดที่ 4 แผนการปรับปรุงประสบการณ์ภาคสนาม
+4. หมวดที่ 4 แผนการปรับปรุงประสบการณ์ภาคสนาม (CQI Action Plan)
 
-The source contains placeholders for course identity, student counts, grade distribution and approval.
+The source contains placeholders for course identity, counts, supervisors, grade distribution, approval, and report-specific results.
 
-## HED3701 future-dated candidate
+## Future-dated HED3701 working example
 
-A separate Drive file was located:
+A combined HED3701 TQF4/TQF6 DOCX was located:
 
 `รายละเอียดและรายงานผลประสบการณ์ภาคสนาม (มคอ.4 และ มคอ.6) วิชา HED 3701.docx`
 
@@ -39,112 +39,52 @@ Drive file ID:
 
 `1VKu2ZBoidcFwx-h0xMNkVfzh4HDki3Nv`
 
-It claims, among other things:
+It includes claimed TQF6 results and a claimed report date of 25 March 2570.
 
-- HED3701 AY2569/2 results;
-- 45 students;
+Because the current review date is 18 September 2569, those result claims are future-dated and were **not admitted as executed evidence**.
+
+The following claims from that future working file were intentionally excluded from canonical TQF6 result fields:
+
+- 45 students / 100% pass;
 - grade distribution;
-- CLO attainment;
-- satisfaction/evaluation results;
-- report/signature date 25 March 2570.
+- GPA 3.54;
+- CLO attainment percentages;
+- satisfaction 4.82 / 5.00 and 4.88 / 5.00;
+- 90 executed hours;
+- executed placement/supervision outcomes;
+- final CQI results;
+- signatures dated 25 March 2570.
 
-At the review date 18 September 2569, that claimed report/signature date is in the future.
+## Provenance decision
 
-Classification:
+Template classification:
 
-`FUTURE-DATED WORKING CANDIDATE / NOT ADMITTED AS EXECUTED EVIDENCE`
+`HEPE_PROJECT_CONTROLLED / SOURCE_OBSERVED / UNDER_REVIEW`
 
-No student count, grade, CLO, satisfaction, deviation, approval or signed conclusion from that file was promoted into the TQF6 controlled runtime.
+Institutional official claim:
 
-## Runtime architecture added
+`false`
 
-New tables:
+The template is a project-controlled source capture, not an official-university claim.
+
+## Runtime architecture
+
+TQF6 now uses:
 
 - `tqf6_records`
 - `tqf6_versions`
-
-Traceability:
-
-`tqf6_records.tqf4_record_id` references the controlling TQF4 planning record.
-
-RLS:
-
-- scoped authenticated SELECT;
-- scoped authenticated write;
-- A4 programme authority / assigned-offering checks;
-- no anon write path.
-
-New functions:
-
 - `hepe_create_tqf6_working_draft(...)`
 - `hepe_build_tqf6_document_model(...)`
+- TQF6 support in `hepe_document_render_bundle(...)`
 
-Generic document renderer was extended to support `TQF6`.
+TQF6 records preserve linkage to:
 
-Document-preview constraints were extended to admit TQF6 course-level preview sessions.
+- a TQF4 record;
+- the specific TQF4 version used as the planning baseline.
 
-## Template registry
+## Traceability
 
-Template:
-
-`HEPE-TQF6-GENERIC`
-
-Template ID:
-
-`60276379-9414-4800-8255-d38a57d5e7f9`
-
-Version ID:
-
-`cd029284-bb72-485d-9225-0b5d1fecc930`
-
-Version:
-
-1
-
-Template status:
-
-`UNDER_REVIEW`
-
-Version status:
-
-`UNDER_REVIEW`
-
-Required bindings:
-
-7 / 7 BOUND
-
-Bound fields include:
-
-- COURSE_IDENTITY
-- ACADEMIC_TERM
-- TQF4_LINEAGE
-- STUDENT_COUNTS
-- GRADE_DISTRIBUTION
-- FIELDWORK_FEEDBACK
-- FIELDWORK_CQI
-
-Student counts, grades, feedback and lineage are synthetic-data-protected as appropriate.
-
-Renderer profiles were added for:
-
-- DOCX
-- HTML
-- PRINT_PDF
-
-## Controlled trial course
-
-Course:
-
-- HED3701
-- การฝึกปฏิบัติวิชาชีพครูระหว่างเรียนวิชาเอกสุขศึกษาและพลศึกษา
-- Teaching Practicum in Health and Physical Education
-- AY2569 / Term 2
-
-Course offering:
-
-`d89c1cd7-44d7-436c-84de-7d38de23d5a0`
-
-## TQF4 linkage
+HED3701 TQF6 is linked to:
 
 TQF4 record:
 
@@ -154,7 +94,20 @@ TQF4 version:
 
 `852e786e-ba7a-4b30-9234-488726da4292`
 
-The TQF6 runtime preserves this planning lineage.
+This establishes:
+
+TQF4 planning baseline → TQF6 reporting shell
+
+without claiming that fieldwork execution has occurred.
+
+## Controlled trial course
+
+Course:
+
+- HED3701
+- การฝึกปฏิบัติวิชาชีพครูระหว่างเรียนวิชาเอกสุขศึกษาและพลศึกษา
+- AY2569 / Term 2
+- offering ID: `d89c1cd7-44d7-436c-84de-7d38de23d5a0`
 
 ## TQF6 runtime record
 
@@ -162,13 +115,17 @@ TQF6 record:
 
 `0e653f8f-9b90-4a5f-9325-84e5364b37b5`
 
-TQF6 version:
-
-`76f0df57-862b-42eb-8f42-7268bfbf954b`
-
 Lifecycle:
 
 `DRAFT`
+
+Current version:
+
+2
+
+Current TQF6 version:
+
+`21a17c0d-03bc-4106-98b9-a796a9319693`
 
 Version status:
 
@@ -178,35 +135,94 @@ Source status:
 
 `SOURCE_OBSERVED`
 
-## Intentionally unpopulated result fields
+## Controlled content state
 
-The controlled runtime keeps the following unverified:
+The current TQF6 draft intentionally contains:
 
-- student_count
-- passed_count
-- grade_distribution
-- CLO attainment
-- deviations from plan
-- student satisfaction
-- mentor feedback
-- placement feedback
-- supervisor feedback
-- approval identity
-- approval date
+- student_count = null
+- passed_count = null
+- supervisors = []
+- executed_hours = null
+- report_date = null
+- grade_distribution = {}
+- clo_results = []
+- feedback status = NOT_EXECUTED
+- CQI items = []
+- approval status = NOT_EXECUTED
 
-The future-dated HED3701 report candidate is referenced only as `NOT_ADMITTED_AS_EXECUTED_EVIDENCE`.
+The source-control block explicitly records that the future-dated working example was not admitted.
+
+## Template registry
+
+Active template:
+
+`HEPE-TQF6-GENERIC`
+
+Template ID:
+
+`4bc4034b-d857-4c2c-b5af-8a0eee0ef0b6`
+
+Version ID:
+
+`39cf8a4f-c7ba-44ec-89a2-13408bb6ff66`
+
+Template/version status:
+
+`UNDER_REVIEW`
+
+Required bindings:
+
+8 / 8 BOUND
+
+Bindings include:
+
+- COURSE_IDENTITY
+- ACADEMIC_TERM
+- STUDENT_COUNTS
+- SUPERVISORS
+- GRADE_DISTRIBUTION
+- FIELDWORK_FEEDBACK
+- CQI_PLAN
+- TQF4_LINEAGE
+
+## Duplicate-template reconciliation
+
+During onboarding, two project-controlled TQF6 template rows were detected.
+
+The older incomplete duplicate was retired:
+
+- template: `60276379-9414-4800-8255-d38a57d5e7f9`
+- version: `cd029284-bb72-485d-9225-0b5d1fecc930`
+
+The active template is the source-bound/project-approved row listed above.
+
+The renderer was hardened to exclude RETIRED templates and RETIRED versions.
+
+## Renderer profiles
+
+The active template has controlled profiles for:
+
+- DOCX
+- HTML
+- PRINT_PDF
+
+Current binding status:
+
+`UNDER_REVIEW`
+
+Authoritative rendering remains disabled.
 
 ## Preview trial
 
 Preview session:
 
-`3fb4905a-492d-471a-8e9f-8e93b6b3141c`
+`77911ea0-fbc2-4dba-b15a-a260a6763077`
 
 Target:
 
 DOCX
 
-Initial status:
+Initial state:
 
 `READY_FOR_REVIEW`
 
@@ -216,12 +232,11 @@ Blocking findings:
 
 Warnings:
 
-- fieldwork student result count not evidenced;
+- student participation count not evidenced;
 - grade distribution not evidenced;
-- fieldwork evaluation results not evidenced;
-- TQF6 approval not executed.
+- fieldwork feedback not evidenced as executed.
 
-Info:
+Informational finding:
 
 - template/version remains UNDER_REVIEW.
 
@@ -235,52 +250,54 @@ Final preview status:
 
 `APPROVED_FOR_CONTROLLED_EXPORT`
 
-Authoritative export:
+Authoritative export allowed:
 
 `false`
 
-Watermark:
+Required watermark:
 
 `DRAFT / UNDER REVIEW`
 
-This decision authorizes only controlled draft rendering. It does not admit the future-dated result claims or assert completed fieldwork outcomes.
+The approval authorizes only a controlled draft representation.
 
-## Gate assessment
+It does not authorize or verify:
 
-TQF6 now has operational coverage for:
+- student counts;
+- grades;
+- CLO attainment;
+- executed fieldwork hours;
+- supervisor/placement execution;
+- feedback;
+- CQI results;
+- final approval;
+- institutional authority.
 
-- source/template baseline;
-- dedicated runtime tables;
-- versioned draft runtime;
-- TQF4 lineage;
-- scoped RLS;
-- template registry;
-- field bindings;
-- renderer profiles;
-- document model;
-- controlled preview/review path;
-- one real course-offering trial.
-
-Remaining major gaps:
-
-- executed fieldwork results;
-- authoritative student counts;
-- actual grade distribution;
-- actual CLO attainment;
-- executed evaluation/feedback evidence;
-- signed/approved TQF6;
-- downstream course verification/aggregation from fieldwork results.
-
-## Decision
+## Gate decision
 
 TQF-06A:
 
-**PASS WITH EXECUTED-EVIDENCE GAPS**
+**PASS WITH EXECUTION-EVIDENCE GAPS**
 
 TQF6 is no longer template-only.
 
 It is now:
 
 **CONTROLLED-DRAFT OPERATIONAL**
+
+## Remaining gaps
+
+Before TQF6 can become result-bearing/controlled:
+
+- actual student roster / participation count;
+- actual placement records;
+- actual supervisor assignments;
+- actual executed hours;
+- actual assessment records;
+- grade distribution;
+- CLO attainment evidence;
+- feedback/evaluation evidence;
+- approved CQI decision;
+- executed approval/sign-off;
+- post-execution verification.
 
 Production remains unchanged.
