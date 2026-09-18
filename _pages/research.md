@@ -129,9 +129,25 @@ author_profile: false
       <h2 id="rps-active-title">Current governed project state</h2>
       <p class="sp-intro">The active-project view is loaded from the public research registry. It reports the latest verified lifecycle stage and next evidence gate without converting stage placement into a completion percentage.</p>
     </div>
-    <div id="rps-active-projects" class="rps-active-projects" data-registry-url="{{ '/assets/data/research-projects.json' | relative_url }}" aria-live="polite">
+    <div id="rps-active-projects" class="rps-active-projects"
+         data-registry-url="{{ '/assets/data/research-projects.json' | relative_url }}"
+         data-project-base="{{ '/research-project/' | relative_url }}"
+         data-status-base="{{ '/research-progress/' | relative_url }}"
+         data-evidence-base="{{ '/evidence-explorer/' | relative_url }}"
+         aria-live="polite">
       <article class="sp-card rps-loading-card">Loading verified research registry…</article>
     </div>
+
+    <section id="rps-project-explorer" class="rps-project-explorer" aria-live="polite" aria-labelledby="rps-project-explorer-title" hidden>
+      <div class="rps-explorer-head">
+        <div>
+          <span class="sp-eyebrow">Research Evidence Explorer</span>
+          <h3 id="rps-project-explorer-title">Select a project to inspect its verified public evidence</h3>
+        </div>
+        <button type="button" class="rps-explorer-close" aria-label="Close research project explorer">Close</button>
+      </div>
+      <div id="rps-project-explorer-content"></div>
+    </section>
   </section>
 
   <section class="sp-section sp-shell" aria-labelledby="research-themes-title">
