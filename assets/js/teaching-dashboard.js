@@ -94,6 +94,110 @@
     }
   });
 
+  // Wave 03 — course-level evidence drill-down.
+  const explorer = document.getElementById('tps-course-explorer');
+  const explorerContent = document.getElementById('tps-course-explorer-content');
+  const explorerTitle = document.getElementById('tps-course-explorer-title');
+  const explorerClose = explorer?.querySelector('.tps-explorer-close');
+  const courseButtons = [...root.querySelectorAll('[data-course-open]')];
+
+  const parseJsonScript = (id) => {
+    const el = document.getElementById(id);
+    if (!el) return [];
+    try {
+      const value = JSON.parse(el.textContent || '[]');
+      return Array.isArray(value) ? value : [];
+    } catch (_) {
+      return [];
+    }
+  };
+
+  const qualityRegistry = parseJsonScript('tps-course-quality-data');
+  const gapRegistry = parseJsonScript('tps-course-gap-data');
+  const qualityByCode = new Map(qualityRegistry.map(item => [String(item.code || ''), item]));
+  const gapByCode = new Map(gapRegistry.map(item => [String(item.code || ''), item]));
+  const escapeHtml = (value) => String(value ?? '').replace(/[&<>'"]/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char]));
+
+  function accessLabel(access) {
+    return access === 'RESTRICTED_SOURCE'
+      ? '<span class="td-status td-status--restricted">Restricted source · metadata verified</span>'
+      : '';
+  }
+
+  function renderStep(label, value, access = '') {
+    const safeValue = value ? escapeHtml(value) : 'Not directly located';
+    return `<article class="tps-explorer-step">
+      <span class="tps-explorer-step-label">${escapeHtml(label)}</span>
+      <p>${safeValue}</p>
+      ${accessLabel(access)}
+    </article>`;
+  }
+
+  function openCourseExplorer(button) {
+    if (!explorer || !explorerContent || !explorerTitle) return;
+    const code = String(button.dataset.courseOpen || '');
+    const row = button.closest('tr');
+    const title = row?.dataset.courseTitle || code;
+    const statusValue = row?.dataset.courseStatus || '';
+    const schedule = row?.dataset.courseSchedule || '';
+    const note = row?.dataset.courseNote || '';
+    const quality = qualityByCode.get(code);
+    const gap = gapByCode.get(code);
+
+    courseButtons.forEach(item => item.setAttribute('aria-expanded', item === button ? 'true' : 'false'));
+    explorer.hidden = false;
+    explorerTitle.textContent = `${code} · ${title}`;
+
+    const statusClass = statusValue === 'OFFICIALLY_CANCELLED' ? 'cancelled' : 'retained';
+    const statusLabel = statusValue === 'OFFICIALLY_CANCELLED'
+      ? 'Officially cancelled'
+      : 'Retained in latest reconciliation';
+
+    let body = `
+      <div class="tps-explorer-summary">
+        <span class="td-status td-status--${statusClass}">${statusLabel}</span>
+        <span class="tps-explorer-meta">${escapeHtml(schedule)}</span>
+      </div>
+      <div class="sp-evidence-note"><strong>Offering evidence note:</strong> ${escapeHtml(note || 'No additional public note asserted.')}</div>`;
+
+    if (quality) {
+      body += `
+        <div class="tps-explorer-banner"><strong>Direct course-quality evidence metadata located.</strong> Document existence does not override the authoritative offering status shown above.</div>
+        <div class="tps-explorer-grid">
+          ${renderStep('Teaching status', quality.teaching_evidence)}
+          ${renderStep('Course Specification (TQF3)', quality.tqf3_status, quality.tqf3_access)}
+          ${renderStep('Assessment evidence', quality.assessment_evidence)}
+          ${renderStep('Course Report (TQF5)', quality.tqf5_status, quality.tqf5_access)}
+          ${renderStep('Verification', quality.verification_status, quality.verification_access)}
+          ${renderStep('Improvement', quality.improvement_evidence)}
+        </div>`;
+    } else if (gap) {
+      body += `
+        <div class="tps-explorer-banner tps-explorer-banner--gap"><strong>Evidence gap.</strong> No direct AY2569 course-quality package was admitted to the public evidence matrix for this course.</div>
+        <article class="tps-explorer-step tps-explorer-step-wide">
+          <span class="tps-explorer-step-label">Targeted search result</span>
+          <p>${escapeHtml(gap.search_status)}</p>
+        </article>`;
+    } else {
+      body += `
+        <div class="tps-explorer-banner tps-explorer-banner--gap"><strong>No course-quality detail asserted.</strong> The current public registry does not contain a direct quality-evidence record or targeted-search gap entry for this course.</div>`;
+    }
+
+    body += '<p class="tps-explorer-boundary">Evidence shown here is public-safe metadata only. Missing or restricted evidence is not inferred, and course-quality documents do not reverse official MR30 offering status.</p>';
+    explorerContent.innerHTML = body;
+    explorer.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'nearest' });
+    explorerClose?.focus({ preventScroll: true });
+  }
+
+  courseButtons.forEach(button => button.addEventListener('click', () => openCourseExplorer(button)));
+  explorerClose?.addEventListener('click', () => {
+    if (!explorer) return;
+    explorer.hidden = true;
+    const active = courseButtons.find(button => button.getAttribute('aria-expanded') === 'true');
+    courseButtons.forEach(button => button.setAttribute('aria-expanded', 'false'));
+    active?.focus();
+  });
+
   const norm = value => (value || '').toLowerCase().trim();
   function applyFilters(){
     const q = norm(search.value);
