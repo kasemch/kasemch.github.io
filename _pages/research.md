@@ -19,16 +19,35 @@ author_profile: false
 {% assign proceeding_count = proceeding_count_2023 | plus: proceeding_count_2026 %}
 
 <link rel="stylesheet" href="{{ '/assets/css/signature-pages.css' | relative_url }}">
-<div class="signature-page">
-  <section class="sp-hero sp-shell">
-    <div class="sp-kicker">Research Profile</div>
-    <h1>Research</h1>
-    <p>Research in health and physical education, health behaviour, movement and wellbeing, educational assessment, curriculum development, and responsible innovation in higher education.</p>
-    <div class="sp-navchips">
-      <a class="sp-chip" href="{{ '/publications/' | relative_url }}">Publications</a>
-      <a class="sp-chip" href="{{ '/teaching/' | relative_url }}">Teaching</a>
-      <a class="sp-chip" href="{{ '/innovation-projects/' | relative_url }}">Innovation &amp; Projects</a>
+<div class="signature-page rps-studio">
+  <section class="sp-hero sp-shell rps-hero" aria-labelledby="research-portfolio-title">
+    <div class="rps-hero-copy">
+      <div class="sp-kicker">Research Portfolio Studio</div>
+      <h1 id="research-portfolio-title">Research that connects<br><span>evidence and practice.</span></h1>
+      <p class="rps-hero-lead">A public, evidence-first research portfolio spanning health and physical education, movement and wellbeing, educational assessment, curriculum, and responsible academic innovation.</p>
+      <div class="sp-navchips">
+        <a class="sp-chip rps-chip-primary" href="#rps-active-title">Active Research</a>
+        <a class="sp-chip" href="{{ '/publications/' | relative_url }}">Publications</a>
+        <a class="sp-chip" href="{{ '/research-progress/' | relative_url }}">Research Status</a>
+      </div>
+      <blockquote class="rps-note">Question · Evidence · Analysis · Translation</blockquote>
     </div>
+    <div class="rps-hero-visual" aria-hidden="true">
+      <div class="rps-orbit rps-orbit-a"></div>
+      <div class="rps-orbit rps-orbit-b"></div>
+      <div class="rps-node rps-node-main"><strong>Research</strong><span>Evidence-led inquiry</span></div>
+      <div class="rps-node rps-node-one">Movement</div>
+      <div class="rps-node rps-node-two">Education</div>
+      <div class="rps-node rps-node-three">Quality</div>
+      <div class="rps-node rps-node-four">Innovation</div>
+    </div>
+  </section>
+
+  <section class="rps-pillar-strip sp-shell" aria-label="Research portfolio structure">
+    <a href="#research-themes-title"><span>01</span><strong>Research Focus</strong><small>Connected domains of inquiry</small></a>
+    <a href="#rps-active-title"><span>02</span><strong>Active Projects</strong><small>Verified current project state</small></a>
+    <a href="#publication-profile-title"><span>03</span><strong>Outputs</strong><small>Publications and proceedings</small></a>
+    <a href="{{ '/research-progress/' | relative_url }}"><span>04</span><strong>Lifecycle</strong><small>Evidence-backed research stages</small></a>
   </section>
 
   <section class="sp-section sp-shell" aria-labelledby="research-overview-title">
@@ -43,6 +62,17 @@ author_profile: false
       <article class="sp-metric"><strong>{{ venue_groups | size }}</strong><span>Journal publication venues</span></article>
       <article class="sp-metric"><strong>{% if first_publication and latest_publication %}{{ first_publication.date | date: "%Y" }}–{{ latest_publication.date | date: "%Y" }}{% else %}—{% endif %}</strong><span>Journal publication span</span></article>
       <article class="sp-metric"><strong>2</strong><span>Degree research works</span></article>
+    </div>
+  </section>
+
+  <section class="sp-section sp-shell rps-active-section" aria-labelledby="rps-active-title">
+    <div class="sp-section-head">
+      <div class="sp-eyebrow">Verified Active Research</div>
+      <h2 id="rps-active-title">Current governed project state</h2>
+      <p class="sp-intro">The active-project view is loaded from the public research registry. It reports the latest verified lifecycle stage and next evidence gate without converting stage placement into a completion percentage.</p>
+    </div>
+    <div id="rps-active-projects" class="rps-active-projects" data-registry-url="{{ '/assets/data/research-projects.json' | relative_url }}" aria-live="polite">
+      <article class="sp-card rps-loading-card">Loading verified research registry…</article>
     </div>
   </section>
 
