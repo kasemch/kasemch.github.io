@@ -77,7 +77,7 @@ function renderProgrammeOptions(){
   )).join('');
   if(!sel.value&&programmeCatalog[0])sel.value=programmeCatalog[0].programme_code;
   const p=programmeCatalog.find(x=>x.programme_code===sel.value);
-  $('#programme-meta').textContent=p?('Curriculum: '+(p.curriculum_version_label||p.curriculum_version_code||'—')+' · '+p.course_count+' รายวิชา HED/PED ที่อยู่ในขอบเขตระบบ'):'';
+  $('#programme-meta').textContent=p?('Curriculum: '+(p.curriculum_version_label||p.curriculum_version_code||'—')+' · '+p.course_count+' รายวิชา'):'';
 }
 
 function renderYearOptions(){
@@ -119,7 +119,7 @@ async function loadCourses(){
 }
 function renderSelectorMeta(){
   const p=programmeCatalog.find(x=>x.programme_code===$('#programme-select').value);
-  if(p)$('#programme-meta').textContent='Curriculum: '+(p.curriculum_version_label||p.curriculum_version_code||'—')+' · '+p.course_count+' รายวิชา HED/PED ที่อยู่ในขอบเขตระบบ';
+  if(p)$('#programme-meta').textContent='Curriculum: '+(p.curriculum_version_label||p.curriculum_version_code||'—')+' · '+p.course_count+' รายวิชา';
 }
 
 async function loadSelectedCourse(){
@@ -155,24 +155,33 @@ async function loadSelectedCourse(){
 
 function renderCourseContext(){
   const c=curriculumCtx?.course||{},p=curriculumCtx?.programme||{},cv=curriculumCtx?.curriculum||{},d=curriculumCtx?.description;
+  const workingDesc=
+    docCtx?.tqf3?.content?.form_sections?.course_description ||
+    docCtx?.tqf3?.content?.source_supported_content?.course_description ||
+    docCtx?.tqf3?.content?.course_description ||
+    '';
   $('#course-title').textContent=(c.course_code||'')+' · '+(c.title_th||'');
   $('#course-subtitle').textContent=(c.title_en||'')+(c.credit_value!=null?' · '+c.credit_value+' หน่วยกิต':'');
   $('#curriculum-title').textContent=p.title_th||'—';
   $('#curriculum-version').textContent=cv.version_label||cv.version_code||'—';
-  $('#canonical-desc').value=d?.description_th||'';
+  $('#canonical-desc').value=d?.description_th||workingDesc||'';
   $('#canonical-desc-en').value=d?.description_en||'';
   $('#desc-provenance').innerHTML='';
   if(d){
+    setBadge(makeSpan('#desc-provenance'),'CURRICULUM DESCRIPTION','ok');
     setBadge(makeSpan('#desc-provenance'),d.verification_status||'UNKNOWN',kind(d.verification_status));
     setBadge(makeSpan('#desc-provenance'),d.authority_status||'UNKNOWN',kind(d.authority_status));
-    if(d.source_reference)setBadge(makeSpan('#desc-provenance'),'Curriculum source connected','ok');
-    $('#desc-locator').textContent=(d.source_locator||'ไม่ระบุตำแหน่งแหล่งข้อมูล')+(d.source_reference?' · '+d.source_reference:'');
-  }else if(c.course_code==='HED3701'){
-    setBadge(makeSpan('#desc-provenance'),'TQF4/TQF6 SOURCE ROUTE','warn');
-    $('#desc-locator').textContent='HED3701 เป็นรายวิชาฝึกปฏิบัติวิชาชีพ ใช้ workflow มคอ.4/6 และยังไม่สร้างคำอธิบายขึ้นเองจาก AI';
+    if(d.source_reference)setBadge(makeSpan('#desc-provenance'),'Source: '+d.source_reference,'info');
+    $('#desc-locator').textContent=d.source_locator||'ไม่ระบุตำแหน่งแหล่งข้อมูล';
+  }else if(workingDesc){
+    setBadge(makeSpan('#desc-provenance'),'WORKING FALLBACK — NON-CANONICAL','warn');
+    setBadge(makeSpan('#desc-provenance'),'ต้องยืนยันจากเล่มหลักสูตร','warn');
+    $('#desc-locator').textContent='ข้อความนี้มาจาก Working TQF3 เท่านั้น ยังไม่ใช่ canonical curriculum description';
   }else{
-    setBadge(makeSpan('#desc-provenance'),'NEEDS CURRICULUM-SOURCE IMPORT','warn');
-    $('#desc-locator').textContent='ยังไม่พบข้อความจากแหล่งหลักสูตรที่ยืนยันได้ ระบบจะไม่สร้างคำอธิบายแทนด้วย AI';
+    setBadge(makeSpan('#desc-provenance'),'MISSING CANONICAL DESCRIPTION','danger');
+    $('#desc-locator').textContent=(c.course_code==='HED3701')
+      ?'HED3701 เป็นรายวิชาเดียวใน scope ปัจจุบันที่ยังไม่มีคำอธิบายรายวิชาที่รับเข้า course_description_versions'
+      :'ยังไม่มีคำอธิบายรายวิชาที่ตรวจสอบแหล่งที่มาได้';
   }
   const offering=docCtx?.course?.course_offering_id;
   $('#offering-note').hidden=!!offering;
@@ -367,14 +376,8 @@ function analyze(section,row){
   const out=[];
   if(section==='curriculum'){
     const d=curriculumCtx?.description;
-    if(!d){
-      if(curriculumCtx?.course?.course_code==='HED3701') out.push(sug('desc-field-route','HED3701 ใช้เส้นทาง มคอ.4/6','ไม่สร้างคำอธิบายรายวิชาด้วย AI ให้ใช้ข้อมูลและแบบฟอร์มจาก field-practicum source เมื่อพัฒนา มคอ.4/6'));
-      else out.push(sug('desc-missing','ยังไม่พบคำอธิบายจาก Curriculum Source Registry','ให้ตรวจหรือ import จากเล่มหลักสูตรก่อนใช้ โดยห้าม AI สร้างข้อความแทนต้นฉบับ'));
-    } else if(d.authority_status==='CURRICULUM_BOOK_SOURCE_OBSERVED'){
-      out.push(sug('desc-source-ok','พบคำอธิบายจากเล่มหลักสูตรแล้ว','ระบบดึงข้อความจาก Curriculum Book Source พร้อม provenance แล้ว ใช้เป็นข้อมูลฐานได้ตามสถานะ SOURCE_TEXT_EXTRACTED; การอนุมัติทางสถาบันยังเป็นคนละขั้นตอน'));
-    } else if(d.authority_status!=='AUTHORITATIVE'&&d.authority_status!=='VERIFIED'){
-      out.push(sug('desc-authority','คำอธิบายมีแหล่งที่มาแต่ authority ยังต้องตรวจ','ใช้ตาม provenance ที่แสดง และอย่ายกระดับเป็น institutional approval โดยอัตโนมัติ'));
-    }
+    if(!d)out.push(sug('desc-missing','ยังไม่มีคำอธิบายรายวิชาในฐานหลักสูตร','ควรเพิ่มแหล่งหลักฐานก่อนใช้ข้อมูลนี้ใน มคอ.3'));
+    else if(d.authority_status!=='AUTHORITATIVE'&&d.authority_status!=='VERIFIED')out.push(sug('desc-authority','คำอธิบายยังไม่ใช่ authoritative source','ใช้เป็นข้อมูลฐานปัจจุบันได้ตามสถานะ แต่ไม่ควรอ้างว่าเป็นข้อความจากเล่มหลักสูตรโดยตรงจนกว่าจะยืนยัน provenance'));
     if(!(curriculumCtx?.course_plo_mappings||[]).length)out.push(sug('plo-map-missing','ยังไม่มี canonical course→PLO mapping','ให้ผู้ใช้กรอก working mapping ได้ แต่ต้องแยกจาก canonical mapping และไม่ให้ AI สร้างแทน'));
   }
   if(section==='clo'){
@@ -414,27 +417,36 @@ function analyze(section,row){
   return out.length?out:[sug('ok','ไม่พบช่องว่างสำคัญจาก Smart QA รอบนี้','ยังควรให้ผู้รับผิดชอบตรวจเนื้อหาทางวิชาการและหลักฐานก่อนส่ง')];
 }
 function sug(id,title,message){return{id,title,message,status:'SUGGESTED'};}
+function composeAiAnalysis(section,row,suggestions){
+  const labels={curriculum:'ข้อมูลหลักสูตรและคำอธิบายรายวิชา',clo:'CLO–PLO',weekly:'แผนการจัดการเรียนรู้รายสัปดาห์',assessment:'การวัดและประเมินผล',tqf5:'มคอ.5 ผลการดำเนินงาน',verification:'การทวนสอบและหลักฐาน',overview:'Readiness / ความสอดคล้อง'};
+  const c=curriculumCtx?.course||{};
+  const lines=[
+    'ผลวิเคราะห์เบื้องต้น — '+(labels[section]||section),
+    'รายวิชา: '+(c.course_code||'')+' '+(c.title_th||''),
+    '',
+    'ประเด็นที่ระบบตรวจพบ'
+  ];
+  suggestions.forEach((x,i)=>{
+    lines.push((i+1)+'. '+x.title);
+    lines.push('   '+x.message);
+  });
+  lines.push('');
+  lines.push('ข้อเสนอเพื่อการตัดสินใจของผู้ใช้');
+  lines.push('• ตรวจข้อความและหลักฐานต้นทางก่อนกดรับข้อเสนอ');
+  lines.push('• หากข้อเสนอไม่ตรงบริบท ให้แก้ไขก่อนรับหรือเลือกไม่ใช้');
+  lines.push('• AI ไม่เปลี่ยนข้อมูล canonical และไม่สร้างหลักฐานแทนผู้ใช้');
+  return lines.join('\n');
+}
 function runSectionAi(section,row=null){
   activeAiSection=section;
   aiSuggestions=analyze(section,row);
+  const box=$('#ai-analysis-text');
+  if(box)box.value=composeAiAnalysis(section,row,aiSuggestions);
   renderAiRail();
-  const box=$('#ai-analysis-box');
-  if(box){
-    const labels={curriculum:'ข้อมูลหลักสูตร',clo:'CLO–PLO',weekly:'แผนรายสัปดาห์',assessment:'การประเมิน',tqf5:'มคอ.5',verification:'ทวนสอบ',overview:'Readiness'};
-    box.value='ผลวิเคราะห์ทันที — '+(labels[section]||section)+'\n\n'+
-      aiSuggestions.map((x,i)=>(i+1)+'. '+x.title+'\n   '+x.message).join('\n\n');
-    box.scrollTop=0;
-  }
 }
 function renderAiRail(){
-  const labels={curriculum:'ข้อมูลหลักสูตร',clo:'CLO–PLO',weekly:'แผนรายสัปดาห์',assessment:'การประเมิน',tqf5:'มคอ.5',verification:'ทวนสอบ',overview:'Readiness'};
+  const labels={curriculum:'ข้อมูลหลักสูตร',clo:'CLO–PLO',weekly:'แผนรายสัปดาห์',assessment:'การประเมิน',tqf5:'มคอ.5',verification:'ทวนสอบ',overview:'Readiness',dashboard:'Programme Dashboard'};
   $('#ai-context').textContent=labels[activeAiSection]||activeAiSection;
-  const box=$('#ai-analysis-box');
-  if(box){
-    box.value=aiSuggestions.length
-      ? aiSuggestions.map((x,i)=>(i+1)+'. '+x.title+'\n   '+x.message).join('\n\n')
-      : 'กดปุ่ม AI วิเคราะห์ในหมวดที่ต้องการ ผลวิเคราะห์จะปรากฏในกล่องนี้ทันที';
-  }
   const list=$('#ai-suggestions');
   list.innerHTML=aiSuggestions.length?aiSuggestions.map((s,i)=>'<div class="suggestion '+(s.status==='ACCEPTED'?'accepted':s.status==='REJECTED'?'rejected':'')+'"><div class="title">'+esc(s.title)+'</div><textarea class="suggestion-text" data-i="'+i+'">'+esc(s.message)+'</textarea><div class="actions"><button class="btn small good sug-accept" data-i="'+i+'">รับข้อเสนอ</button><button class="btn small sug-edit" data-i="'+i+'">แก้ไขแล้วรับ</button><button class="btn small sug-reject" data-i="'+i+'">ไม่ใช้</button></div></div>').join(''):'<div class="help">กด AI ช่วยวิเคราะห์ในแต่ละหมวด</div>';
   $$('.sug-accept').forEach(b=>b.onclick=()=>decideSuggestion(Number(b.dataset.i),'ACCEPTED'));
@@ -453,7 +465,8 @@ function aiPrompt(){
   const section=activeAiSection,data=sectionData(section);
   return 'คุณเป็นผู้ช่วยวิเคราะห์ระบบ มคอ. ภายใต้หลัก Evidence-First และ Human-in-the-Loop\n'+
     'บริบท: '+(curriculumCtx?.programme?.title_th||'')+' / '+(curriculumCtx?.course?.course_code||'')+' '+(curriculumCtx?.course?.title_th||'')+'\n'+
-    'ส่วนที่วิเคราะห์: '+section+'\n\n'+
+    'ส่วนที่วิเคราะห์: '+section+'\n'+
+    'ผล Smart QA ในหน้าเว็บ:\n'+($('#ai-analysis-text')?.value||'')+'\n\n'+
     'โปรด 1) ตรวจความครบถ้วน 2) ตรวจ CLO-PLO-กิจกรรม-การประเมิน 3) ห้ามแต่งข้อมูล 4) เสนอข้อความหรือ action เป็นตัวเลือก 5) ระบุสิ่งที่ต้องให้ผู้ใช้ตัดสินใจ\n\nข้อมูล:\n'+JSON.stringify(data,null,2);
 }
 async function openChatGPT(){
