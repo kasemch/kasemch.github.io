@@ -1,6 +1,6 @@
 {
-  "phase": "FAST-SUBMISSION-PORTAL-01",
-  "status": "READY_FOR_URGENT_SUBMISSION",
+  "phase": "FAST-SUBMISSION-PORTAL-02",
+  "status": "STRUCTURED_FORMS_WITH_AI_ASSISTANT_READY",
   "updated_at": "2026-09-18",
   "route": "./hepe-trial/",
   "programme_code": "25510071103503",
@@ -18,16 +18,19 @@
     "tqf3": {
       "status": "READY",
       "mode": "WORKING_VERSION_APPEND_ONLY",
-      "immutable_release_protected": true
+      "immutable_release_protected": true,
+      "ui": "STRUCTURED_FORM"
     },
     "tqf5": {
       "status": "READY",
-      "mode": "DRAFT_UNVERIFIED_SNAPSHOT"
+      "mode": "DRAFT_UNVERIFIED_SNAPSHOT",
+      "ui": "STRUCTURED_FORM"
     },
     "verification": {
       "status": "READY",
       "mode": "EVIDENCE_GATED",
-      "verified_shortcut": false
+      "verified_shortcut": false,
+      "ui": "CHECKLIST_AND_FINDINGS_FORM"
     },
     "tqf4": {
       "status": "DEFERRED"
@@ -40,5 +43,13 @@
     }
   },
   "environment": "NON-PRODUCTION",
-  "production_authorized": false
+  "production_authorized": false,
+  "ui_version": "25",
+  "ai_assistant": {
+    "status": "READY",
+    "local_smart_qa": true,
+    "chatgpt_handoff": true,
+    "embedded_api_key": false,
+    "note": "Structured prompt is copied to clipboard and ChatGPT is opened in a new tab."
+  }
 }
