@@ -72,12 +72,10 @@ hr{border:0;border-top:1px solid var(--line);margin:18px 0}
 #dashboard-panel .table-wrap table{min-width:980px}
 #version-diff .badge{white-space:nowrap}
 
-/* ===== V28 scoped curriculum + immediate AI analysis ===== */
-.ai-analysis-box{
-  min-height:190px;
-  background:#ffffff;
-  border:1px solid #c8d2ee;
-  box-shadow:inset 0 0 0 1px rgba(49,86,181,.03);
-  line-height:1.55;
-}
-.ai-analysis-box:focus{outline:3px solid rgba(49,86,181,.15);border-color:#6b7fd7}
+
+/* ===== V28 Scope / Immediate AI Analysis ===== */
+.scope-note{border:1px solid #d7e2ef;background:#f5f9ff;border-radius:12px;padding:10px 12px;margin-top:10px}
+.scope-note strong{color:var(--brand)}
+.ai-analysis-box{min-height:180px;background:#fff;border:1px solid #dfe3f1}
+.ai-instant-label{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:10px 0 6px}
+.ai-instant-label strong{color:#293b91}
