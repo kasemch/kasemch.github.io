@@ -1,6 +1,6 @@
 {
-  "phase": "FAST-SUBMISSION-PORTAL-03",
-  "status": "V26_CURRICULUM_FIRST_WEEKLY_AI_READINESS_READY",
+  "phase": "FAST-SUBMISSION-PORTAL-04",
+  "status": "V27_AUTOSAVE_DASHBOARD_EVIDENCE_COMPARE_CQI_READY",
   "updated_at": "2026-09-18",
   "route": "./hepe-trial/",
   "programme_code": "25510071103503",
@@ -60,11 +60,47 @@
       "status": "READY",
       "internal_review_only": true,
       "cross_document_consistency": true
+    },
+    "autosave": {
+      "status": "READY",
+      "mode": "LOCAL_BUFFER_DEBOUNCED",
+      "recovery": true,
+      "cross_course_keyed": true,
+      "server_version_per_keystroke": false
+    },
+    "dashboard": {
+      "status": "READY",
+      "mode": "READ_ONLY",
+      "summary_metrics": [
+        "curriculum_courses",
+        "offered_courses",
+        "tqf3_present",
+        "tqf5_present",
+        "verified_courses",
+        "insufficient_evidence"
+      ]
+    },
+    "evidence_workspace": {
+      "status": "READY",
+      "linked_evidence": true,
+      "evidence_candidates": true,
+      "verified_shortcut": false
+    },
+    "version_compare": {
+      "status": "READY",
+      "tqf3_working_versions": true,
+      "history_rewrite": false
+    },
+    "cqi": {
+      "status": "READY_READ_ONLY_CARRY_FORWARD",
+      "prior_tqf5": true,
+      "improvement_items": true,
+      "user_decision_required": true
     }
   },
   "environment": "NON-PRODUCTION",
   "production_authorized": false,
-  "ui_version": "26",
+  "ui_version": "27",
   "ai_assistant": {
     "status": "READY",
     "mode": "LOCAL_SMART_QA_PLUS_CHATGPT_HANDOFF",
