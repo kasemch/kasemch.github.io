@@ -1,6 +1,6 @@
 {
-  "phase": "FAST-SUBMISSION-PORTAL-04",
-  "status": "V27_AUTOSAVE_DASHBOARD_EVIDENCE_COMPARE_CQI_READY",
+  "phase": "FAST-SUBMISSION-PORTAL-05",
+  "status": "V28_SCOPE_DESCRIPTION_AI_IMMEDIATE_READY",
   "updated_at": "2026-09-18",
   "route": "./hepe-trial/",
   "programme_code": "25510071103503",
@@ -100,7 +100,7 @@
   },
   "environment": "NON-PRODUCTION",
   "production_authorized": false,
-  "ui_version": "27",
+  "ui_version": "28",
   "ai_assistant": {
     "status": "READY",
     "mode": "LOCAL_SMART_QA_PLUS_CHATGPT_HANDOFF",
@@ -111,7 +111,9 @@
       "REJECTED"
     ],
     "user_final_decision": true,
-    "embedded_api_key": false
+    "embedded_api_key": false,
+    "immediate_analysis_box": true,
+    "deep_analysis_handoff_optional": true
   },
   "catalog": {
     "programme_count_verified": 1,
@@ -120,5 +122,30 @@
     "programme_plo_code_count_verified": 7,
     "hed2503_course_plo_mapping_count": 0,
     "source_rule": "CURRENT_CURRICULUM_MEMBERSHIP_NOT_IS_ACTIVE_ONLY"
+  },
+  "scope": {
+    "rule": "HED_PED_ONLY",
+    "included_prefixes": [
+      "HED",
+      "PED"
+    ],
+    "excluded_prefixes": [
+      "EDU",
+      "RAM"
+    ],
+    "scoped_course_count": 65,
+    "rationale": "Department-owned courses only; general education and EDU teacher-profession courses excluded"
+  },
+  "curriculum_descriptions": {
+    "source_file_id": "1E0fXyoOc-v2z-GzEyfGq-JHHKMK9C0xk",
+    "source_title": "หลักสูตรศึกษาศาสตรบัณฑิต HE - PE 67 (1).docx",
+    "imported_count": 64,
+    "missing_count": 1,
+    "missing_courses": [
+      "HED3701"
+    ],
+    "verification_status": "SOURCE_TEXT_EXTRACTED",
+    "authority_status": "CURRICULUM_BOOK_SOURCE_OBSERVED",
+    "hed3701_route": "TQF4_TQF6_FIELD_PRACTICUM"
   }
 }
