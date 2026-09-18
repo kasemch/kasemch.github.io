@@ -107,6 +107,11 @@
 <link rel="stylesheet" href="{{ '/assets/css/teaching-portfolio-studio.css' | relative_url }}">
 <script src="{{ '/assets/js/teaching-dashboard.js' | relative_url }}" defer></script>
 {% endif %}
+{% if page.url == '/research/' %}
+<link rel="stylesheet" href="{{ '/assets/css/research-portfolio-studio.css' | relative_url }}">
+<script src="{{ '/assets/js/research-portfolio-studio.js' | relative_url }}" defer></script>
+{% endif %}
+
 
 <!-- Support for Academicons -->
 <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
