@@ -82,7 +82,7 @@ function setTab(name){
   enhanceAccessibility();
 }
 
-async function loadInitialCatalogs(){async function loadInitialCatalogs(){
+async function loadInitialCatalogs(){
   say('กำลังโหลดหลักสูตรและภาคการศึกษา…');
   const [p,t]=await Promise.all([
     client.rpc('hepe_fast_tqf_programme_catalog'),
@@ -190,7 +190,7 @@ async function loadSelectedCourse(){
   }
 }
 
-function renderCourseContext(){function renderCourseContext(){
+function renderCourseContext(){
   const c=curriculumCtx?.course||{},p=curriculumCtx?.programme||{},cv=curriculumCtx?.curriculum||{},d=curriculumCtx?.description;
   const workingDesc=
     docCtx?.tqf3?.content?.form_sections?.course_description ||
@@ -1367,7 +1367,7 @@ async function loadDashboard(){
     const app=$('#app-view');if(app)app.setAttribute('aria-busy','false');
   }
 }
-function renderDashboard(){function renderDashboard(){
+function renderDashboard(){
   const s=dashboardCtx?.summary||{},rows=dashboardCtx?.courses||[];
   $('#dash-curriculum').textContent=s.curriculum_courses??0;
   $('#dash-offered').textContent=s.offered_courses??0;
@@ -1433,7 +1433,7 @@ function filterDashboardRows(rows=dashboardCtx?.courses||[]){
   renderProgrammeAiSummary(filtered);
   enhanceAccessibility();
 }
-async function openDashboardCourseasync function openDashboardCourse(code){
+async function openDashboardCourse(code){
   const sel=$('#course-select');if(!sel)return;
   const opt=[...sel.options].find(o=>o.value===code);if(!opt){say('รายวิชานี้ไม่อยู่ใน course selector ปัจจุบัน','warn');return;}
   sel.value=code;await loadSelectedCourse();setTab('tqf3');window.scrollTo({top:0,behavior:'smooth'});
