@@ -1080,7 +1080,43 @@ function renderReviewPackagePreview(){
     '</div><div class="provenance-footer">DRAFT · NON-PRODUCTION · Internal review only · not institutional approval</div>';
 }
 
-/* ---------- V27 Autosave / Recovery ---------- *//* ---------- V27 Autosave / Recovery ---------- *//* ---------- V27 Autosave / Recovery ---------- */
+async function loadTemplateReview(){
+  if(templateReviewLoaded){renderTemplateReview();return;}
+  const calls=await Promise.all([
+    client.rpc('hepe_document_template_version_review',{p_template_code:'HEPE-TQF4-GENERIC',p_version_no:1}),
+    client.rpc('hepe_document_template_version_review',{p_template_code:'HEPE-TQF4-GENERIC',p_version_no:2}),
+    client.rpc('hepe_document_template_version_review',{p_template_code:'HEPE-TQF6-GENERIC',p_version_no:1}),
+    client.rpc('hepe_document_template_version_review',{p_template_code:'HEPE-TQF6-GENERIC',p_version_no:2})
+  ]);
+  const err=calls.find(x=>x.error)?.error;if(err)throw err;
+  templateReviewCtx={tqf4v1:calls[0].data,tqf4v2:calls[1].data,tqf6v1:calls[2].data,tqf6v2:calls[3].data};
+  templateReviewLoaded=true;
+  renderTemplateReview();
+}
+function structuralExecutionField(f){
+  return /STUDENT|SUPERVISOR|PLACEMENT|EXECUTED|VARIANCE|GRADE|ATTAINMENT|PROBLEM|EVALUATION|APPROVAL|SIGNATURE/i.test((f.field_code||'')+' '+(f.field_kind||''));
+}
+function templateReviewCard(label,v1,v2){
+  if(!v1||!v2)return'<div class="template-review-card"><h4>'+esc(label)+'</h4><div class="notice warn">ยังโหลดข้อมูลไม่ครบ</div></div>';
+  const s1=v1.sections||[],s2=v2.sections||[],codes1=new Set(s1.map(x=>x.section_code));
+  const added=s2.filter(x=>!codes1.has(x.section_code));
+  const fields=v2.fields||[],guarded=fields.filter(x=>x.synthetic_data_forbidden),canonical=fields.filter(x=>x.canonical_entity),execution=fields.filter(structuralExecutionField),approval=fields.filter(x=>x.field_kind==='SIGNATURE'||x.field_code==='APPROVAL');
+  return '<div class="template-review-card"><h4>'+esc(label)+'</h4>'+
+    '<div class="actions"><span class="badge info">v1 '+esc(v1.version?.version_status||'—')+'</span><span class="badge warn">v2 '+esc(v2.version?.version_status||'—')+'</span><span class="badge warn">current = v'+esc(v2.template?.current_version_no??v1.template?.current_version_no??'1')+'</span></div>'+
+    '<div class="template-compare"><div class="template-version-box"><strong>v1 · '+s1.length+' sections</strong><ul>'+s1.map(x=>'<li>'+esc(x.section_label_th)+'</li>').join('')+'</ul></div>'+
+    '<div class="template-version-box"><strong>v2 · '+s2.length+' sections</strong><ul>'+s2.map(x=>'<li>'+esc(x.section_label_th)+'</li>').join('')+'</ul></div></div>'+
+    '<div class="template-field-summary"><div><b>เพิ่มใน v2:</b> '+(added.length?added.map(x=>esc(x.section_label_th)).join(' · '):'ไม่มี')+'</div>'+
+    '<div><b>Field bindings:</b> '+fields.length+' · guarded against synthetic data '+guarded.length+' · canonical/linkage entity '+canonical.length+' · execution-sensitive '+execution.length+' · approval/signature gate '+approval.length+'</div>'+
+    '<div class="help">v2 เป็น structural-only review; ไม่มีปุ่ม Activate/Approve ใน portal นี้</div></div></div>';
+}
+function renderTemplateReview(){
+  const host=$('#template-review');if(!host)return;
+  if(!templateReviewCtx){host.innerHTML='<div class="help">กำลังรอข้อมูล template review</div>';return;}
+  host.innerHTML=templateReviewCard('มคอ.4',templateReviewCtx.tqf4v1,templateReviewCtx.tqf4v2)+templateReviewCard('มคอ.6',templateReviewCtx.tqf6v1,templateReviewCtx.tqf6v2);
+  enhanceAccessibility();
+}
+
+/* ---------- V27 Autosave / Recovery ---------- */
 function bufferKey(){
   const a=courseArgs();
   return ['hepe-tqf-v27',a.p_programme_code,a.p_course_code,a.p_academic_year,a.p_term_code].join(':');
@@ -1235,7 +1271,7 @@ function renderEvidenceWorkspace(){
   renderAdmissionReviewQueue();
   enhanceAccessibility();
 }
-function validSha256function validSha256(v){return !v||/^[A-Fa-f0-9]{64}$/.test(v);}
+function validSha256(v){return !v||/^[A-Fa-f0-9]{64}$/.test(v);}
 async function checkEvidenceDuplicate(){
   const source=$('#evidence-source')?.value.trim()||'',locator=$('#evidence-locator')?.value.trim()||'',sha=$('#evidence-sha')?.value.trim()||'';
   if(!source){if($('#evidence-duplicate-state'))setBadge($('#evidence-duplicate-state'),'กรอก source ก่อน','info');return null;}
