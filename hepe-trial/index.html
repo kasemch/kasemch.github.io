@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>HEPE Fast TQF Portal v31</title>
-  <link rel="stylesheet" href="./assets/css/portal-v31.css?v=31">
+  <title>HEPE Fast TQF Portal v32</title>
+  <link rel="stylesheet" href="./assets/css/portal-v32.css?v=32">
 </head>
 <body><div id="draft-watermark" class="draft-watermark">DRAFT · NON-PRODUCTION</div>
   <header class="topbar">
@@ -173,6 +173,27 @@
                     <button id="add-clo" class="btn small">+ เพิ่ม CLO</button>
                   </div>
                 </div>
+                <div class="ai-inline-result" data-ai-inline-section="clo" hidden>
+                  <div class="ai-inline-head">
+                    <div>
+                      <strong>✨ AI แนะนำ — หมวด 2 CLO–PLO</strong>
+                      <div class="help" data-ai-inline-summary>กด AI วิเคราะห์เพื่อดูข้อเสนอ</div>
+                    </div>
+                    <span class="badge info" data-ai-inline-basis>Evidence basis —</span>
+                  </div>
+                  <div class="ai-inline-list" data-ai-inline-list></div>
+                  <div class="field ai-inline-selected-wrap">
+                    <label>ข้อเสนอที่เลือก</label>
+                    <textarea data-ai-inline-selected placeholder="เมื่อเลือกข้อเสนอ ข้อความจะปรากฏที่นี่ทันที"></textarea>
+                    <div class="help" data-ai-inline-target>ยังไม่ได้เลือกข้อเสนอ</div>
+                  </div>
+                  <div class="actions">
+                    <button type="button" class="btn small good" data-ai-inline-accept disabled>รับข้อเสนอ</button>
+                    <button type="button" class="btn small" data-ai-inline-apply disabled>แก้ข้อความแล้วใส่ในช่อง</button>
+                    <button type="button" class="btn small" data-ai-inline-copy disabled>คัดลอก</button>
+                    <button type="button" class="btn small" data-ai-inline-close>ซ่อน</button>
+                  </div>
+                </div>
                 <div class="field">
                   <label for="t3-objectives">วัตถุประสงค์ของรายวิชา</label>
                   <textarea id="t3-objectives"></textarea>
@@ -204,6 +225,27 @@
                   <div class="actions">
                     <button class="btn small ai ai-section" data-section="weekly">AI วิเคราะห์ทั้งภาค</button>
                     <button id="add-week" class="btn small">+ เพิ่มสัปดาห์</button>
+                  </div>
+                </div>
+                <div class="ai-inline-result" data-ai-inline-section="weekly" hidden>
+                  <div class="ai-inline-head">
+                    <div>
+                      <strong>✨ AI แนะนำ — หมวด 3 แผนรายสัปดาห์</strong>
+                      <div class="help" data-ai-inline-summary>กด AI วิเคราะห์เพื่อดูข้อเสนอ</div>
+                    </div>
+                    <span class="badge info" data-ai-inline-basis>Evidence basis —</span>
+                  </div>
+                  <div class="ai-inline-list" data-ai-inline-list></div>
+                  <div class="field ai-inline-selected-wrap">
+                    <label>ข้อเสนอที่เลือก</label>
+                    <textarea data-ai-inline-selected placeholder="เมื่อเลือกข้อเสนอ ข้อความจะปรากฏที่นี่ทันที"></textarea>
+                    <div class="help" data-ai-inline-target>ยังไม่ได้เลือกข้อเสนอ</div>
+                  </div>
+                  <div class="actions">
+                    <button type="button" class="btn small good" data-ai-inline-accept disabled>รับข้อเสนอ</button>
+                    <button type="button" class="btn small" data-ai-inline-apply disabled>แก้ข้อความแล้วใส่ในช่อง</button>
+                    <button type="button" class="btn small" data-ai-inline-copy disabled>คัดลอก</button>
+                    <button type="button" class="btn small" data-ai-inline-close>ซ่อน</button>
                   </div>
                 </div>
                 <div class="weekly-tools">
@@ -244,6 +286,27 @@
                     <button id="add-assessment" class="btn small">+ เพิ่มรายการประเมิน</button>
                   </div>
                 </div>
+                <div class="ai-inline-result" data-ai-inline-section="assessment" hidden>
+                  <div class="ai-inline-head">
+                    <div>
+                      <strong>✨ AI แนะนำ — หมวด 4 การวัดและประเมินผล</strong>
+                      <div class="help" data-ai-inline-summary>กด AI วิเคราะห์เพื่อดูข้อเสนอ</div>
+                    </div>
+                    <span class="badge info" data-ai-inline-basis>Evidence basis —</span>
+                  </div>
+                  <div class="ai-inline-list" data-ai-inline-list></div>
+                  <div class="field ai-inline-selected-wrap">
+                    <label>ข้อเสนอที่เลือก</label>
+                    <textarea data-ai-inline-selected placeholder="เมื่อเลือกข้อเสนอ ข้อความจะปรากฏที่นี่ทันที"></textarea>
+                    <div class="help" data-ai-inline-target>ยังไม่ได้เลือกข้อเสนอ</div>
+                  </div>
+                  <div class="actions">
+                    <button type="button" class="btn small good" data-ai-inline-accept disabled>รับข้อเสนอ</button>
+                    <button type="button" class="btn small" data-ai-inline-apply disabled>แก้ข้อความแล้วใส่ในช่อง</button>
+                    <button type="button" class="btn small" data-ai-inline-copy disabled>คัดลอก</button>
+                    <button type="button" class="btn small" data-ai-inline-close>ซ่อน</button>
+                  </div>
+                </div>
                 <div class="table-wrap">
                   <table>
                     <thead><tr><th>รายการประเมิน</th><th>วิธีประเมิน</th><th>น้ำหนัก %</th><th>CLO</th><th>หลักฐาน/Rubric</th><th>AI / จัดการ</th></tr></thead>
@@ -256,6 +319,27 @@
                 <div class="form-section-header">
                   <h3>หมวด 5 ทรัพยากรและแนวทางปรับปรุง</h3>
                   <button class="btn small ai ai-section" data-section="overview">AI ตรวจภาพรวม</button>
+                </div>
+                <div class="ai-inline-result" data-ai-inline-section="overview" hidden>
+                  <div class="ai-inline-head">
+                    <div>
+                      <strong>✨ AI แนะนำ — หมวด 5 ภาพรวมและแนวทางปรับปรุง</strong>
+                      <div class="help" data-ai-inline-summary>กด AI วิเคราะห์เพื่อดูข้อเสนอ</div>
+                    </div>
+                    <span class="badge info" data-ai-inline-basis>Evidence basis —</span>
+                  </div>
+                  <div class="ai-inline-list" data-ai-inline-list></div>
+                  <div class="field ai-inline-selected-wrap">
+                    <label>ข้อเสนอที่เลือก</label>
+                    <textarea data-ai-inline-selected placeholder="เมื่อเลือกข้อเสนอ ข้อความจะปรากฏที่นี่ทันที"></textarea>
+                    <div class="help" data-ai-inline-target>ยังไม่ได้เลือกข้อเสนอ</div>
+                  </div>
+                  <div class="actions">
+                    <button type="button" class="btn small good" data-ai-inline-accept disabled>รับข้อเสนอ</button>
+                    <button type="button" class="btn small" data-ai-inline-apply disabled>แก้ข้อความแล้วใส่ในช่อง</button>
+                    <button type="button" class="btn small" data-ai-inline-copy disabled>คัดลอก</button>
+                    <button type="button" class="btn small" data-ai-inline-close>ซ่อน</button>
+                  </div>
                 </div>
                 <div class="field">
                   <label for="t3-resources">ทรัพยากร / เอกสาร / สื่อ</label>
@@ -313,6 +397,27 @@
                   <h3>ข้อมูลนักศึกษาและผลจริงเทียบแผน</h3>
                   <button class="btn small ai ai-section" data-section="tqf5">AI วิเคราะห์ มคอ.5</button>
                 </div>
+                <div class="ai-inline-result" data-ai-inline-section="tqf5" hidden>
+                  <div class="ai-inline-head">
+                    <div>
+                      <strong>✨ AI แนะนำ — มคอ.5 Plan → Actual</strong>
+                      <div class="help" data-ai-inline-summary>กด AI วิเคราะห์เพื่อดูข้อเสนอ</div>
+                    </div>
+                    <span class="badge info" data-ai-inline-basis>Evidence basis —</span>
+                  </div>
+                  <div class="ai-inline-list" data-ai-inline-list></div>
+                  <div class="field ai-inline-selected-wrap">
+                    <label>ข้อเสนอที่เลือก</label>
+                    <textarea data-ai-inline-selected placeholder="เมื่อเลือกข้อเสนอ ข้อความจะปรากฏที่นี่ทันที"></textarea>
+                    <div class="help" data-ai-inline-target>ยังไม่ได้เลือกข้อเสนอ</div>
+                  </div>
+                  <div class="actions">
+                    <button type="button" class="btn small good" data-ai-inline-accept disabled>รับข้อเสนอ</button>
+                    <button type="button" class="btn small" data-ai-inline-apply disabled>แก้ข้อความแล้วใส่ในช่อง</button>
+                    <button type="button" class="btn small" data-ai-inline-copy disabled>คัดลอก</button>
+                    <button type="button" class="btn small" data-ai-inline-close>ซ่อน</button>
+                  </div>
+                </div>
                 <div class="grid cols-2">
                   <div class="field"><label>นักศึกษาลงทะเบียน</label><input id="registered-students" type="number" min="0"></div>
                   <div class="field"><label>นักศึกษาที่มีผลปลายภาค</label><input id="students-at-end" type="number" min="0"></div>
@@ -365,6 +470,27 @@
                 <div class="form-section-header">
                   <h3>Evidence Checklist</h3>
                   <button class="btn small ai ai-section" data-section="verification">AI วิเคราะห์หลักฐาน</button>
+                </div>
+                <div class="ai-inline-result" data-ai-inline-section="verification" hidden>
+                  <div class="ai-inline-head">
+                    <div>
+                      <strong>✨ AI แนะนำ — หลักฐานทวนสอบ</strong>
+                      <div class="help" data-ai-inline-summary>กด AI วิเคราะห์เพื่อดูข้อเสนอ</div>
+                    </div>
+                    <span class="badge info" data-ai-inline-basis>Evidence basis —</span>
+                  </div>
+                  <div class="ai-inline-list" data-ai-inline-list></div>
+                  <div class="field ai-inline-selected-wrap">
+                    <label>ข้อเสนอที่เลือก</label>
+                    <textarea data-ai-inline-selected placeholder="เมื่อเลือกข้อเสนอ ข้อความจะปรากฏที่นี่ทันที"></textarea>
+                    <div class="help" data-ai-inline-target>ยังไม่ได้เลือกข้อเสนอ</div>
+                  </div>
+                  <div class="actions">
+                    <button type="button" class="btn small good" data-ai-inline-accept disabled>รับข้อเสนอ</button>
+                    <button type="button" class="btn small" data-ai-inline-apply disabled>แก้ข้อความแล้วใส่ในช่อง</button>
+                    <button type="button" class="btn small" data-ai-inline-copy disabled>คัดลอก</button>
+                    <button type="button" class="btn small" data-ai-inline-close>ซ่อน</button>
+                  </div>
                 </div>
                 <div id="verification-checklist" class="check-list"></div>
               </div>
@@ -622,6 +748,6 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./assets/js/portal-v31.js?v=31"></script>
+  <script src="./assets/js/portal-v32.js?v=32"></script>
 </body>
 </html>
