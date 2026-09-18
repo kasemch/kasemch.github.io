@@ -158,6 +158,106 @@ author_profile: false
     </div>
   </section>
 
+  <section class="sp-section sp-shell tps-story-section" aria-labelledby="tps-story-title">
+    <div class="sp-section-head">
+      <div class="sp-eyebrow">Teaching Story</div>
+      <h2 id="tps-story-title">From teaching plan to evidence-informed improvement</h2>
+      <p class="sp-intro">This visual narrative explains how the public teaching portfolio is organized. It combines verified offering status, located course-quality evidence and documented teaching approaches without turning missing evidence into assumed outcomes.</p>
+    </div>
+
+    <div class="tps-story-layout">
+      <article class="sp-card tps-story-card tps-story-timeline">
+        <div class="tps-panel-head">
+          <div><span class="sp-eyebrow">Semester Timeline</span><h3>Semester 1/2569 evidence journey</h3></div>
+          <span class="tps-panel-badge">Temporal truth</span>
+        </div>
+        <ol class="tps-semester-story">
+          <li>
+            <time>01</time>
+            <div><strong>Initial teaching register</strong><p>{{ teaching.summary.initially_scheduled }} course codes entered the Semester 1/2569 working register.</p></div>
+          </li>
+          <li>
+            <time>02</time>
+            <div><strong>MR30 reconciliation</strong><p>Official supplementary notices are applied using latest-authority-wins while earlier scheduling evidence is preserved as provenance.</p></div>
+          </li>
+          <li>
+            <time>03</time>
+            <div><strong>Current offering state</strong><p>{{ teaching.summary.retained }} course codes remain retained pending final confirmation; {{ teaching.summary.officially_cancelled }} are officially cancelled.</p></div>
+          </li>
+          <li>
+            <time>04</time>
+            <div><strong>Course-quality evidence review</strong><p>{{ teaching.summary.direct_quality_evidence_courses }} course codes have direct quality evidence metadata located; gaps remain visible rather than inferred away.</p></div>
+          </li>
+          <li>
+            <time>05</time>
+            <div><strong>Public reflection boundary</strong><p>Draft, working, planned and restricted evidence stays labeled as such; Semester 2/2569 remains unpublished until authoritative assignment evidence is confirmed.</p></div>
+          </li>
+        </ol>
+      </article>
+
+      <article class="sp-card tps-story-card">
+        <div class="tps-panel-head"><div><span class="sp-eyebrow">Pedagogy Cards</span><h3>Teaching approaches represented in the portfolio</h3></div></div>
+        <div class="tps-pedagogy-grid">
+          <div><span>01</span><strong>Active Learning</strong><p>Structured discussion, learner participation and purposeful activity.</p></div>
+          <div><span>02</span><strong>Case &amp; Scenario Learning</strong><p>Context-rich problems used to connect concepts with professional judgement.</p></div>
+          <div><span>03</span><strong>Authentic Assessment</strong><p>Tasks and rubrics aligned with intended learning and practical application.</p></div>
+          <div><span>04</span><strong>CLO / PLO Alignment</strong><p>Teaching and assessment are interpreted within curriculum mapping and alignment.</p></div>
+          <div><span>05</span><strong>Reflective Improvement</strong><p>Evidence is used to identify what can be refined in a subsequent teaching cycle.</p></div>
+          <div><span>06</span><strong>Responsible Digital Learning</strong><p>AI and digital tools are used within evidence, privacy and academic-integrity boundaries.</p></div>
+        </div>
+      </article>
+
+      <article class="sp-card tps-story-card tps-story-wide">
+        <div class="tps-panel-head">
+          <div><span class="sp-eyebrow">Evidence Storytelling</span><h3>Evidence → Reflection → Improvement</h3></div>
+          <span class="tps-panel-badge">Not a completion score</span>
+        </div>
+        <div class="tps-reflection-flow">
+          <div class="tps-reflection-step">
+            <b>01</b><span>Evidence</span>
+            <strong>What is documented?</strong>
+            <p>MR30 status, TQF3/TQF5 metadata, assessment architecture, verification material and targeted evidence gaps.</p>
+          </div>
+          <i aria-hidden="true">→</i>
+          <div class="tps-reflection-step">
+            <b>02</b><span>Interpretation</span>
+            <strong>What can be claimed?</strong>
+            <p>Only claims supported by authoritative or directly verified public-safe evidence are admitted to the page.</p>
+          </div>
+          <i aria-hidden="true">→</i>
+          <div class="tps-reflection-step">
+            <b>03</b><span>Reflection</span>
+            <strong>What requires review?</strong>
+            <p>Conflicts, missing documents, draft states and incomplete evidence are surfaced as review points rather than silently resolved.</p>
+          </div>
+          <i aria-hidden="true">→</i>
+          <div class="tps-reflection-step">
+            <b>04</b><span>Improvement</span>
+            <strong>What may be refined?</strong>
+            <p>Improvement is presented only where evidence supports a documented refinement path; no unsupported outcome is inferred.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="sp-card tps-story-card tps-story-quote">
+        <div class="sp-eyebrow">Portfolio Principle</div>
+        <blockquote>“Evidence should clarify the teaching story—not decorate it.”</blockquote>
+        <p>The page therefore separates offering status, teaching approach, course-quality evidence and improvement claims instead of collapsing them into one score.</p>
+      </article>
+
+      <article class="sp-card tps-story-card">
+        <div class="tps-panel-head"><div><span class="sp-eyebrow">Quality Milestones</span><h3>Public evidence milestones currently visible</h3></div></div>
+        <div class="tps-milestone-stack">
+          <div><strong>{{ teaching.summary.tqf3_courses_located }}</strong><span>Course codes with TQF3 located</span></div>
+          <div><strong>{{ teaching.summary.tqf5_courses_located }}</strong><span>Course codes with TQF5 material located</span></div>
+          <div><strong>{{ teaching.summary.verification_courses_located }}</strong><span>Course codes with verification material located</span></div>
+          <div><strong>{{ teaching.summary.evidence_gap_courses }}</strong><span>Course codes with direct evidence gaps still visible</span></div>
+        </div>
+        <p class="sp-evidence-note">These milestones describe evidence availability only. They do not represent a quality rating or completion percentage.</p>
+      </article>
+    </div>
+  </section>
+
   <section class="sp-section sp-shell" aria-labelledby="retained-courses-title">
     <div class="sp-section-head">
       <div class="sp-eyebrow">Current / Retained Teaching</div>
