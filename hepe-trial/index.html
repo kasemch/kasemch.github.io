@@ -3,83 +3,94 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>HEPE Fast TQF Portal</title>
-  <link rel="stylesheet" href="./assets/css/portal-v25.css?v=25">
+  <title>HEPE Fast TQF Portal v26</title>
+  <link rel="stylesheet" href="./assets/css/portal-v26.css?v=26">
 </head>
 <body>
-  <div class="topbar">
+  <header class="topbar">
     <div class="topbar-inner">
       <div class="brand">
-        <h1>HEPE Fast TQF Portal</h1>
-        <p>กรอก มคอ.3 · มคอ.5 · ทวนสอบ พร้อม AI Assistant — NON-PRODUCTION</p>
+        <h1>HEPE Fast <em>TQF</em> Portal</h1>
+        <p>มคอ.3 · มคอ.5 · ทวนสอบ · AI-assisted Academic QA — NON-PRODUCTION</p>
       </div>
       <div class="actions">
-        <span id="identity" class="small"></span>
+        <span id="identity" class="help"></span>
+        <button id="print-form" class="btn">พิมพ์ / PDF</button>
         <button id="logout" class="btn">ออกจากระบบ</button>
       </div>
     </div>
-  </div>
+  </header>
 
   <main class="shell">
     <div id="status" class="status">กำลังเตรียมระบบ…</div>
 
-    <section id="login-view" class="login-box card">
+    <section id="login-view" class="card login-box">
       <div class="section-title">
         <div>
           <h2>เข้าสู่ระบบ</h2>
-          <div class="help">ใช้บัญชีที่มีสิทธิ์ใน HEPE Sandbox</div>
+          <div class="help">ใช้บัญชี HEPE Sandbox</div>
         </div>
-        <span class="badge info">LOGIN</span>
+        <span class="badge warn">NON-PRODUCTION</span>
       </div>
       <form id="login-form">
         <div class="field">
           <label for="login-email">อีเมล</label>
-          <input id="login-email" type="email" placeholder="name@example.com" required>
+          <input id="login-email" type="email" required>
         </div>
         <button class="btn primary" type="submit">ส่ง Magic Link</button>
       </form>
       <hr>
       <div class="field">
-        <label for="login-password">หรือเข้าสู่ระบบด้วยรหัสผ่าน</label>
-        <input id="login-password" type="password" placeholder="Password">
+        <label for="login-password">รหัสผ่าน</label>
+        <input id="login-password" type="password">
       </div>
       <button id="password-login" class="btn">Login ด้วยรหัสผ่าน</button>
     </section>
 
     <section id="app-view" hidden>
-      <section class="card">
+      <section class="card selector-card">
         <div class="section-title">
           <div>
-            <h2>เลือกรายวิชา</h2>
-            <div id="course-summary" class="help">ยังไม่ได้โหลดรายวิชา</div>
+            <h2>เลือกหลักสูตรและรายวิชา</h2>
+            <div class="help">เลือกจากชื่อหลักสูตร ระบบกรองรายวิชาและดึงข้อมูลหลักสูตรให้อัตโนมัติ</div>
           </div>
-          <div class="actions">
-            <span id="offering-status" class="badge">—</span>
-            <span id="source-status" class="badge">—</span>
-          </div>
+          <button id="reload-course" class="btn">รีโหลดข้อมูล</button>
         </div>
+
         <div class="grid cols-4">
           <div class="field">
-            <label>Programme Code</label>
-            <input id="programme-code">
+            <label class="required" for="programme-select">หลักสูตร</label>
+            <select id="programme-select"></select>
+            <div id="programme-meta" class="help"></div>
           </div>
           <div class="field">
-            <label>Course Code</label>
-            <input id="course-code">
+            <label class="required" for="course-select">รายวิชา</label>
+            <select id="course-select"></select>
+            <div class="help">✓ = มี Course Offering ในปี/ภาคที่เลือก</div>
           </div>
           <div class="field">
-            <label>ปีการศึกษา</label>
-            <input id="academic-year">
+            <label class="required" for="year-select">ปีการศึกษา</label>
+            <select id="year-select"></select>
           </div>
           <div class="field">
-            <label>ภาคเรียน</label>
-            <input id="term-code">
+            <label class="required" for="term-select">ภาคเรียน</label>
+            <select id="term-select"></select>
+            <div id="term-meta" class="help"></div>
           </div>
         </div>
-        <div class="actions">
-          <button id="load-course" class="btn primary">โหลดรายวิชา</button>
-          <button id="print-form" class="btn">พิมพ์ / บันทึก PDF</button>
-          <span class="help">Course Offering: <span id="course-offering-id" class="mono">—</span></span>
+
+        <div class="course-context">
+          <div class="source-box">
+            <strong id="course-title">—</strong>
+            <div id="course-subtitle" class="help"></div>
+            <div class="help">หลักสูตร: <span id="curriculum-title">—</span></div>
+            <div class="help">Curriculum version: <span id="curriculum-version">—</span></div>
+          </div>
+          <div class="source-box">
+            <strong>Course Offering</strong>
+            <div id="course-offering-id" class="mono help">—</div>
+            <div id="offering-note" class="no-offering" hidden>ยังไม่พบ Course Offering สำหรับปี/ภาคนี้ จึงดูข้อมูลหลักสูตรได้ แต่ยังบันทึก มคอ. ไม่ได้</div>
+          </div>
         </div>
       </section>
 
@@ -87,16 +98,16 @@
         <button class="tab active" data-tab="tqf3">มคอ.3</button>
         <button class="tab" data-tab="tqf5">มคอ.5</button>
         <button class="tab" data-tab="verification">ทวนสอบ</button>
-        <button class="tab" data-tab="overview">ภาพรวม</button>
+        <button class="tab" data-tab="overview">Readiness</button>
       </div>
 
-      <div class="grid main-ai">
+      <div class="main-grid">
         <div>
           <section id="panel-tqf3" class="panel">
             <section class="card">
               <div class="section-title">
                 <div>
-                  <h2>มคอ.3 — แบบกรอกข้อมูล</h2>
+                  <h2>มคอ.3 — Structured Academic Form</h2>
                   <div id="tqf3-meta" class="help"></div>
                 </div>
                 <div class="actions">
@@ -106,95 +117,111 @@
               </div>
 
               <div class="notice info">
-                กรอกเหมือนแบบ มคอ. ปกติ ระบบจะเก็บเป็น Working Version ใหม่โดยไม่แก้ R1 ที่เผยแพร่แล้ว
+                ข้อมูล canonical จากหลักสูตรเป็น read-only ส่วนข้อมูลออกแบบรายวิชาจะบันทึกเป็น Working Version ใหม่เท่านั้น
               </div>
 
-              <div class="toolbar no-print">
-                <div class="form-nav">
-                  <a href="#t3-sec1">ข้อมูลทั่วไป</a>
-                  <a href="#t3-sec2">วัตถุประสงค์/CLO</a>
-                  <a href="#t3-sec3">การจัดการเรียนรู้</a>
-                  <a href="#t3-sec4">การประเมิน</a>
-                  <a href="#t3-sec5">ทรัพยากร/CQI</a>
+              <div class="form-section">
+                <div class="form-section-header">
+                  <h3>หมวด 1 ข้อมูลทั่วไปและคำอธิบายรายวิชา</h3>
+                  <div class="actions">
+                    <button class="btn small ai ai-section" data-section="curriculum">AI วิเคราะห์หมวดนี้</button>
+                  </div>
                 </div>
-              </div>
 
-              <div id="t3-sec1" class="form-section">
-                <h3>หมวดที่ 1 ข้อมูลทั่วไปและคำอธิบายรายวิชา</h3>
                 <div class="field">
-                  <label class="required" for="t3-course-description">คำอธิบายรายวิชา</label>
-                  <textarea id="t3-course-description" class="tall" placeholder="วาง/พิมพ์คำอธิบายรายวิชาตามหลักสูตร"></textarea>
+                  <label>คำอธิบายรายวิชา (ฐานหลักสูตร)</label>
+                  <textarea id="canonical-desc" class="tall" readonly></textarea>
+                  <div id="desc-provenance" class="provenance"></div>
+                  <div id="desc-locator" class="help"></div>
                 </div>
+                <div class="field">
+                  <label>Course Description (English)</label>
+                  <textarea id="canonical-desc-en" readonly></textarea>
+                </div>
+                <div id="course-plo-source" class="notice"></div>
               </div>
 
-              <div id="t3-sec2" class="form-section">
-                <h3>หมวดที่ 2 จุดมุ่งหมายและผลลัพธ์การเรียนรู้</h3>
-                <div class="field">
-                  <label class="required" for="t3-objectives">วัตถุประสงค์ของรายวิชา</label>
-                  <textarea id="t3-objectives" placeholder="เขียนวัตถุประสงค์สำคัญของรายวิชา"></textarea>
+              <div class="form-section">
+                <div class="form-section-header">
+                  <h3>หมวด 2 จุดมุ่งหมายและผลลัพธ์การเรียนรู้ของรายวิชา (CLO)</h3>
+                  <div class="actions">
+                    <button class="btn small ai ai-section" data-section="clo">AI วิเคราะห์ CLO ทั้งหมด</button>
+                    <button id="add-clo" class="btn small">+ เพิ่ม CLO</button>
+                  </div>
                 </div>
-                <h4>CLO และความเชื่อมโยง PLO</h4>
+                <div class="field">
+                  <label for="t3-objectives">วัตถุประสงค์ของรายวิชา</label>
+                  <textarea id="t3-objectives"></textarea>
+                </div>
                 <div class="table-wrap">
                   <table>
-                    <thead><tr><th style="width:100px">CLO</th><th>ผลลัพธ์การเรียนรู้</th><th style="width:180px">PLO ที่เชื่อมโยง</th></tr></thead>
+                    <thead><tr><th style="width:90px">CLO</th><th>ข้อความผลลัพธ์การเรียนรู้</th><th style="width:190px">PLO ที่เชื่อมโยง</th><th style="width:180px">จัดการ</th></tr></thead>
                     <tbody id="t3-clo-body"></tbody>
                   </table>
                 </div>
               </div>
 
-              <div id="t3-sec3" class="form-section">
-                <h3>หมวดที่ 3 การจัดกิจกรรมการเรียนรู้</h3>
-                <div class="field">
-                  <label class="required" for="t3-teaching-methods">วิธีจัดการเรียนรู้ / Learning Activities</label>
-                  <textarea id="t3-teaching-methods" class="tall" placeholder="เช่น Case-based learning, small-group discussion, role play, active learning"></textarea>
+              <div class="form-section">
+                <div class="form-section-header">
+                  <div>
+                    <h3>หมวด 3 แผนการจัดการเรียนรู้รายสัปดาห์</h3>
+                    <div class="help">จำนวนแถวเริ่มต้นเป็น planning slots ปรับเพิ่ม/ลบได้ตามภาคการศึกษาจริง</div>
+                  </div>
+                  <div class="actions">
+                    <button class="btn small ai ai-section" data-section="weekly">AI วิเคราะห์ทั้งภาค</button>
+                    <button id="add-week" class="btn small">+ เพิ่มสัปดาห์</button>
+                  </div>
                 </div>
-                <div class="field">
-                  <label for="t3-learning-schedule">แผน/ตารางการเรียนรู้โดยสรุป</label>
-                  <textarea id="t3-learning-schedule" class="tall" placeholder="สัปดาห์หรือหน่วยการเรียนรู้ หัวข้อ กิจกรรม และหลักฐานการเรียนรู้"></textarea>
+                <div class="table-wrap">
+                  <table class="week-table">
+                    <thead>
+                      <tr>
+                        <th>สัปดาห์</th><th>หัวข้อ/สาระ</th><th>CLO</th><th>PLO</th><th>กิจกรรมการเรียนรู้</th>
+                        <th>ชั่วโมง<br><span class="help">L / P / Self</span></th><th>การวัด/หลักฐาน</th><th>สื่อ/แหล่งเรียนรู้</th><th>AI / จัดการ</th>
+                      </tr>
+                    </thead>
+                    <tbody id="weekly-body"></tbody>
+                  </table>
                 </div>
               </div>
 
-              <div id="t3-sec4" class="form-section">
-                <h3>หมวดที่ 4 การวัดและประเมินผล</h3>
-                <div class="grid cols-2">
-                  <div class="field">
-                    <label for="t3-formative">Formative / ระหว่างเรียน (%)</label>
-                    <input id="t3-formative" type="number" min="0" max="100">
+              <div class="form-section">
+                <div class="form-section-header">
+                  <div>
+                    <h3>หมวด 4 การวัดและประเมินผล</h3>
+                    <div class="help">สัดส่วนรวม: <strong id="assessment-total">0%</strong></div>
                   </div>
-                  <div class="field">
-                    <label for="t3-summative">Summative / ปลายภาค (%)</label>
-                    <input id="t3-summative" type="number" min="0" max="100">
+                  <div class="actions">
+                    <span id="assessment-total-badge" class="badge warn">รวม 0%</span>
+                    <button class="btn small ai ai-section" data-section="assessment">AI วิเคราะห์การประเมิน</button>
+                    <button id="add-assessment" class="btn small">+ เพิ่มรายการประเมิน</button>
                   </div>
                 </div>
-                <div class="field">
-                  <label class="required" for="t3-assessment-details">รายละเอียดวิธีประเมิน</label>
-                  <textarea id="t3-assessment-details" class="tall" placeholder="ระบุงาน/กิจกรรม/ข้อสอบ วิธีให้คะแนน และความเชื่อมโยงกับ CLO"></textarea>
-                </div>
-                <div class="field">
-                  <label for="t3-rubrics">Rubrics / เกณฑ์การประเมิน</label>
-                  <textarea id="t3-rubrics" placeholder="ชื่อ rubric หรือสรุปเกณฑ์ที่ใช้"></textarea>
+                <div class="table-wrap">
+                  <table>
+                    <thead><tr><th>รายการประเมิน</th><th>วิธีประเมิน</th><th>น้ำหนัก %</th><th>CLO</th><th>หลักฐาน/Rubric</th><th>AI / จัดการ</th></tr></thead>
+                    <tbody id="assessment-body"></tbody>
+                  </table>
                 </div>
               </div>
 
-              <div id="t3-sec5" class="form-section">
-                <h3>หมวดที่ 5 ทรัพยากรและการพัฒนา</h3>
+              <div class="form-section">
+                <div class="form-section-header">
+                  <h3>หมวด 5 ทรัพยากรและแนวทางปรับปรุง</h3>
+                  <button class="btn small ai ai-section" data-section="overview">AI ตรวจภาพรวม</button>
+                </div>
                 <div class="field">
-                  <label for="t3-resources">ทรัพยากร / เอกสาร / สื่อการเรียนรู้</label>
+                  <label for="t3-resources">ทรัพยากร / เอกสาร / สื่อ</label>
                   <textarea id="t3-resources"></textarea>
                 </div>
                 <div class="field">
-                  <label for="t3-improvement">แนวทางพัฒนา/ปรับปรุงรายวิชา</label>
+                  <label for="t3-improvement">แนวทางพัฒนา / ปรับปรุง</label>
                   <textarea id="t3-improvement"></textarea>
                 </div>
               </div>
 
-              <details class="no-print">
-                <summary>Advanced: ดู JSON เดิมของระบบ</summary>
-                <textarea id="t3-json" class="code" disabled></textarea>
-              </details>
-
-              <div class="actions no-print">
-                <button id="save-tqf3" class="btn primary">บันทึก มคอ.3 Draft</button>
+              <div class="actions">
+                <button id="save-tqf3" class="btn primary">บันทึก มคอ.3 Working Draft</button>
               </div>
             </section>
           </section>
@@ -203,87 +230,48 @@
             <section class="card">
               <div class="section-title">
                 <div>
-                  <h2>มคอ.5 — แบบกรอกรายงานผล</h2>
-                  <div class="help">บันทึกเป็น Draft / Unverified จนกว่าจะผ่านทวนสอบ</div>
+                  <h2>มคอ.5 — Plan → Actual</h2>
+                  <div class="help">ดึงโครงสร้างจาก มคอ.3 แล้วให้กรอกเฉพาะผลจริง ปัญหา และ CQI</div>
                 </div>
                 <span id="tqf5-status" class="badge">—</span>
               </div>
 
               <div class="form-section">
-                <h3>หมวดที่ 1 ข้อมูลนักศึกษาและการดำเนินการจริง</h3>
+                <div class="form-section-header">
+                  <h3>ข้อมูลนักศึกษาและผลจริงเทียบแผน</h3>
+                  <button class="btn small ai ai-section" data-section="tqf5">AI วิเคราะห์ มคอ.5</button>
+                </div>
                 <div class="grid cols-2">
-                  <div class="field">
-                    <label>นักศึกษาลงทะเบียน</label>
-                    <input id="registered-students" type="number" min="0">
-                  </div>
-                  <div class="field">
-                    <label>นักศึกษาที่มีผลปลายภาค</label>
-                    <input id="students-at-end" type="number" min="0">
-                  </div>
+                  <div class="field"><label>นักศึกษาลงทะเบียน</label><input id="registered-students" type="number" min="0"></div>
+                  <div class="field"><label>นักศึกษาที่มีผลปลายภาค</label><input id="students-at-end" type="number" min="0"></div>
                 </div>
                 <div class="field">
                   <label for="t5-plan-actual">สิ่งที่ดำเนินการจริงเทียบกับแผน มคอ.3</label>
-                  <textarea id="t5-plan-actual" class="tall" placeholder="ระบุว่าสอดคล้องกับแผนหรือมีการปรับอะไร เพราะเหตุใด"></textarea>
+                  <textarea id="t5-plan-actual" class="tall"></textarea>
                 </div>
               </div>
 
               <div class="form-section">
-                <h3>หมวดที่ 2 ผลการประเมินนักศึกษา</h3>
-                <h4>การกระจายระดับคะแนน</h4>
+                <h3>การกระจายระดับคะแนน</h3>
                 <div class="table-wrap">
-                  <table>
-                    <thead><tr><th>เกรด</th><th>จำนวน</th><th>ร้อยละ</th></tr></thead>
-                    <tbody id="grade-body"></tbody>
-                  </table>
+                  <table><thead><tr><th>เกรด</th><th>จำนวน</th><th>ร้อยละ</th></tr></thead><tbody id="grade-body"></tbody></table>
                 </div>
-                <h4>การบรรลุ CLO</h4>
+              </div>
+
+              <div class="form-section">
+                <h3>ผลการบรรลุ CLO</h3>
                 <div class="table-wrap">
-                  <table>
-                    <thead><tr><th>CLO</th><th>เป้าหมาย (%)</th><th>ผลจริง (%)</th></tr></thead>
-                    <tbody id="clo-body"></tbody>
-                  </table>
+                  <table><thead><tr><th>CLO</th><th>เป้าหมาย %</th><th>ผลจริง %</th></tr></thead><tbody id="clo-body"></tbody></table>
                 </div>
               </div>
 
               <div class="form-section">
-                <h3>หมวดที่ 3 ผลประเมิน ปัญหา และข้อเสนอแนะ</h3>
-                <div class="grid cols-3">
-                  <div class="field">
-                    <label>On-site Mean</label>
-                    <input id="classroom-mean" type="number" min="0" max="5" step="0.01">
-                  </div>
-                  <div class="field">
-                    <label>Independent Mean</label>
-                    <input id="independent-mean" type="number" min="0" max="5" step="0.01">
-                  </div>
-                  <div class="field">
-                    <label>Overall Mean</label>
-                    <input id="teaching-mean" type="number" min="0" max="5" step="0.01">
-                  </div>
-                </div>
-                <div class="field">
-                  <label for="t5-problems">ปัญหา/อุปสรรค</label>
-                  <textarea id="t5-problems" placeholder="หนึ่งประเด็นต่อหนึ่งบรรทัด"></textarea>
-                </div>
+                <h3>ปัญหา / อุปสรรค และ CQI</h3>
+                <div class="field"><label for="t5-problems">ปัญหา / อุปสรรค</label><textarea id="t5-problems"></textarea></div>
+                <div class="field"><label for="improvement-plan">แผนปรับปรุงรอบถัดไป</label><textarea id="improvement-plan" class="tall" placeholder="หนึ่งรายการต่อหนึ่งบรรทัด เช่น เพิ่ม structured practice | 1/2570"></textarea></div>
               </div>
 
-              <div class="form-section">
-                <h3>หมวดที่ 4 แผนการปรับปรุง (CQI)</h3>
-                <div class="field">
-                  <label for="improvement-plan">แผนปรับปรุงรอบถัดไป</label>
-                  <textarea id="improvement-plan" class="tall" placeholder="เช่น เพิ่มกิจกรรมฝึกทักษะ | 1/2570"></textarea>
-                </div>
-                <div class="help">Snapshot: <span id="tqf5-snapshot" class="mono">—</span></div>
-              </div>
-
-              <details class="no-print">
-                <summary>Advanced: ดู JSON เต็ม</summary>
-                <textarea id="t5-json" class="code" disabled></textarea>
-              </details>
-
-              <div class="actions no-print">
-                <button id="save-tqf5" class="btn primary">บันทึก มคอ.5 Draft</button>
-              </div>
+              <button id="save-tqf5" class="btn primary">บันทึก มคอ.5 Draft</button>
             </section>
           </section>
 
@@ -292,82 +280,84 @@
               <div class="section-title">
                 <div>
                   <h2>ทวนสอบผลสัมฤทธิ์รายวิชา</h2>
-                  <div class="help">ติ๊กเฉพาะหลักฐานที่มีจริงและตรวจแล้ว</div>
+                  <div class="help">Evidence-first / ไม่มีทางลัด VERIFIED</div>
                 </div>
                 <span id="verification-status" class="badge">—</span>
               </div>
-
-              <div class="grid cols-2">
-                <div class="kpi"><small>Verification Record</small><strong id="verification-id" class="mono">—</strong></div>
-                <div class="kpi"><small>อัปเดตล่าสุด</small><strong id="verification-updated">—</strong></div>
+              <div class="kpi">
+                <small>Verification Record</small>
+                <strong id="verification-id" class="mono">—</strong>
               </div>
 
               <div class="form-section">
-                <h3>1. ตรวจหลักฐาน</h3>
-                <div id="verification-checklist" class="checklist"></div>
-              </div>
-
-              <div class="form-section">
-                <h3>2. ข้อค้นพบและข้อสรุป</h3>
-                <div class="field">
-                  <label for="verification-note">บันทึกผลทวนสอบ</label>
-                  <textarea id="verification-note" class="tall" placeholder="สรุปสิ่งที่ตรวจพบ หลักฐานที่รองรับ ประเด็นที่ยังขาด และข้อเสนอแนะ"></textarea>
+                <div class="form-section-header">
+                  <h3>Evidence Checklist</h3>
+                  <button class="btn small ai ai-section" data-section="verification">AI วิเคราะห์หลักฐาน</button>
                 </div>
+                <div id="verification-checklist" class="check-list"></div>
               </div>
 
-              <div class="actions no-print">
-                <button id="save-verification-note" class="btn primary">บันทึกทวนสอบ</button>
+              <div class="field">
+                <label for="verification-note">ข้อค้นพบ / ข้อสรุปการทวนสอบ</label>
+                <textarea id="verification-note" class="tall"></textarea>
               </div>
-              <hr>
-              <div id="verification-actions" class="actions no-print"></div>
-              <div class="notice danger">ระบบจะไม่ให้ VERIFIED หากหลักฐานต้นทางยังไม่ผ่าน Evidence Gate</div>
+              <div class="actions">
+                <button id="save-verification-note" class="btn primary">บันทึกทวนสอบ</button>
+                <div id="verification-actions" class="actions"></div>
+              </div>
             </section>
           </section>
 
           <section id="panel-overview" class="panel" hidden>
             <section class="card">
-              <h2>ภาพรวมรุ่นส่งงาน</h2>
-              <div class="grid cols-4">
-                <div class="kpi"><small>Login</small><strong>พร้อม</strong></div>
-                <div class="kpi"><small>มคอ.3</small><strong>Structured Form</strong></div>
-                <div class="kpi"><small>มคอ.5</small><strong>Structured Form</strong></div>
-                <div class="kpi"><small>ทวนสอบ</small><strong>Evidence Checklist</strong></div>
+              <div class="section-title">
+                <div>
+                  <h2>Readiness & Cross-document Consistency</h2>
+                  <div class="help">เป็น readiness สำหรับ internal review ไม่ใช่ institutional approval</div>
+                </div>
+                <button class="btn small ai ai-section" data-section="overview">AI ตรวจภาพรวม</button>
               </div>
-              <div class="notice good">ส่วน มคอ.4 / มคอ.6 / มคอ.7 จะอัปเดตรอบถัดไปหลังส่งงานวันนี้</div>
+              <div class="readiness">
+                <div class="ring" id="readiness-ring" style="--p:0"><strong id="readiness-score">0%</strong></div>
+                <div id="readiness-list" class="check-list"></div>
+              </div>
+              <hr>
+              <h3>Cross-document consistency</h3>
+              <div id="consistency-list" class="check-list"></div>
             </section>
           </section>
         </div>
 
-        <aside class="ai-panel no-print">
-          <div class="section-title">
-            <div>
-              <h3>AI Assistant</h3>
-              <div class="help">กำลังดู: <strong id="ai-context">มคอ.3</strong></div>
+        <aside class="ai-rail no-print">
+          <div class="ai-card">
+            <div class="section-title">
+              <div>
+                <h3>AI Assistant</h3>
+                <div class="help">กำลังดู: <strong id="ai-context">ข้อมูลหลักสูตร</strong></div>
+              </div>
+              <div id="ai-readiness-score" class="score">—</div>
             </div>
-            <div id="ai-score" class="ai-score">—</div>
-          </div>
 
-          <div class="notice info">
-            ตรวจความครบถ้วนในหน้าเว็บก่อน แล้วส่งข้อมูลที่กรอกให้ ChatGPT ช่วยวิเคราะห์/ปรับถ้อยคำต่อได้
-          </div>
+            <div class="notice info">
+              AI ช่วยวิเคราะห์และเสนอทางเลือก แต่ผู้ใช้เป็นผู้ตัดสินใจทุกครั้ง
+            </div>
 
-          <div class="actions">
-            <button id="ai-analyze" class="btn ai">วิเคราะห์ความครบถ้วน</button>
-            <button id="ai-chatgpt" class="btn primary">เปิด ChatGPT วิเคราะห์ต่อ</button>
-          </div>
+            <div id="ai-suggestions">
+              <div class="help">กด “AI วิเคราะห์” ในแต่ละหมวดเพื่อเริ่มต้น</div>
+            </div>
 
-          <h4>ผลวิเคราะห์เบื้องต้น</h4>
-          <div id="ai-output" class="ai-output">กด “วิเคราะห์ความครบถ้วน” เพื่อเริ่มตรวจเอกสาร</div>
+            <hr>
+            <div class="actions">
+              <button id="ai-chatgpt" class="btn ai">เปิด ChatGPT วิเคราะห์หมวดนี้</button>
+              <button id="ai-show-prompt" class="btn small">ดู Prompt</button>
+            </div>
+            <div id="ai-prompt-wrap" hidden>
+              <textarea id="ai-prompt" class="code" readonly></textarea>
+            </div>
 
-          <div class="actions" style="margin-top:10px">
-            <button id="ai-show-prompt" class="btn ghost">ดู Prompt ที่จะส่ง</button>
-          </div>
-          <div id="ai-prompt-wrap" hidden>
-            <textarea id="ai-prompt" class="code" readonly></textarea>
-          </div>
-
-          <div class="help">
-            เพื่อความปลอดภัย รุ่นเร่งด่วนนี้ไม่ฝัง API key ของ AI ลง GitHub Pages
+            <div class="help" style="margin-top:10px">
+              ไม่มีการฝัง AI secret/API key ใน GitHub Pages
+            </div>
           </div>
         </aside>
       </div>
@@ -375,6 +365,6 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./assets/js/portal-v25.js?v=25"></script>
+  <script src="./assets/js/portal-v26.js?v=26"></script>
 </body>
 </html>
