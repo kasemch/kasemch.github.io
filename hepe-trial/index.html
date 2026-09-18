@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>HEPE Fast TQF Portal v28</title>
-  <link rel="stylesheet" href="./assets/css/portal-v28.css?v=28">
+  <title>HEPE Fast TQF Portal v29</title>
+  <link rel="stylesheet" href="./assets/css/portal-v29.css?v=29">
 </head>
-<body>
+<body><div id="draft-watermark" class="draft-watermark">DRAFT · NON-PRODUCTION</div>
   <header class="topbar">
     <div class="topbar-inner">
       <div class="brand">
@@ -15,7 +15,7 @@
       </div>
       <div class="actions">
         <span id="identity" class="help"></span><span id="save-state" class="badge info">พร้อม</span>
-        <button id="print-form" class="btn">พิมพ์ / PDF</button>
+        <button id="submission-mode" class="btn">โหมดส่งงาน</button><button id="print-form" class="btn">พิมพ์ / PDF</button>
         <button id="logout" class="btn">ออกจากระบบ</button>
       </div>
     </div>
@@ -143,6 +143,15 @@
                   <textarea id="canonical-desc" class="tall" readonly></textarea>
                   <div id="desc-provenance" class="provenance"></div>
                   <div id="desc-locator" class="help"></div>
+                  <details id="source-drawer" class="source-drawer">
+                    <summary>ดูแหล่งที่มา / Provenance</summary>
+                    <div class="source-grid">
+                      <div><small>Source</small><strong id="source-title">—</strong></div>
+                      <div><small>Locator</small><strong id="source-locator">—</strong></div>
+                      <div><small>Verification</small><strong id="source-verification">—</strong></div>
+                      <div><small>Authority</small><strong id="source-authority">—</strong></div>
+                    </div>
+                  </details>
                 </div>
                 <div class="field">
                   <label>Course Description (English)</label>
@@ -169,6 +178,16 @@
                     <tbody id="t3-clo-body"></tbody>
                   </table>
                 </div>
+                <div class="matrix-block">
+                  <div class="form-section-header">
+                    <div>
+                      <h3>CLO–PLO Working Matrix</h3>
+                      <div class="help">Working layer แยกจาก canonical mapping; ค่า I/R/M ต้องเป็นการตัดสินใจของผู้ใช้</div>
+                    </div>
+                    <span id="canonical-mapping-state" class="badge info">Canonical mapping: —</span>
+                  </div>
+                  <div id="clo-plo-matrix" class="table-wrap"></div>
+                </div>
               </div>
 
               <div class="form-section">
@@ -182,7 +201,20 @@
                     <button id="add-week" class="btn small">+ เพิ่มสัปดาห์</button>
                   </div>
                 </div>
-                <div class="table-wrap">
+                <div class="weekly-tools">
+                  <div class="grid cols-4">
+                    <div class="field"><label>จากสัปดาห์</label><input id="bulk-week-start" type="number" min="1" value="1"></div>
+                    <div class="field"><label>ถึงสัปดาห์</label><input id="bulk-week-end" type="number" min="1" value="15"></div>
+                    <div class="field"><label>CLO</label><input id="bulk-week-clo" placeholder="เช่น CLO2"></div>
+                    <div class="field"><label>PLO</label><input id="bulk-week-plo" placeholder="เช่น PLO3"></div>
+                  </div>
+                  <div class="actions">
+                    <button id="bulk-apply-empty" class="btn small">ใส่เฉพาะช่องว่าง</button>
+                    <button id="bulk-apply-all" class="btn small">ใส่ทับช่วงที่เลือก</button>
+                  </div>
+                </div>
+                <div id="weekly-coverage" class="coverage-strip"></div>
+                <div class="table-wrap weekly-scroll">
                   <table class="week-table">
                     <thead>
                       <tr>
@@ -267,8 +299,9 @@
                   <h2>มคอ.5 — Plan → Actual</h2>
                   <div class="help">ดึงโครงสร้างจาก มคอ.3 แล้วให้กรอกเฉพาะผลจริง ปัญหา และ CQI</div>
                 </div>
-                <span id="tqf5-status" class="badge">—</span>
+                <div class="actions"><button id="sync-tqf5-from-tqf3" class="btn small">Sync CLO จาก มคอ.3</button><span id="tqf5-status" class="badge">—</span></div>
               </div>
+              <div id="tqf5-plan-baseline" class="notice info"></div>
 
               <div class="form-section">
                 <div class="form-section-header">
@@ -406,6 +439,21 @@
                   <tbody id="dashboard-body"><tr><td colspan="7">เลือกแท็บเพื่อโหลดข้อมูล</td></tr></tbody>
                 </table>
               </div>
+
+              <hr>
+              <div class="section-title">
+                <div>
+                  <h3>Evidence Queue</h3>
+                  <div class="help">read-only queue สำหรับติดตามหลักฐานที่ขาด/อยู่ระหว่างพิจารณา</div>
+                </div>
+                <div class="actions"><span id="evidence-queue-summary" class="badge warn">—</span></div>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead><tr><th>รายวิชา</th><th>Verification</th><th>Linked Evidence</th><th>Candidates</th><th>Queue State</th></tr></thead>
+                  <tbody id="evidence-queue-body"><tr><td colspan="5">ยังไม่โหลดข้อมูล</td></tr></tbody>
+                </table>
+              </div>
             </section>
           </section>
         </div>
@@ -452,6 +500,6 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./assets/js/portal-v28.js?v=28"></script>
+  <script src="./assets/js/portal-v29.js?v=29"></script>
 </body>
 </html>
