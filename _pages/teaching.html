@@ -72,17 +72,27 @@ author_profile: false
         </div>
         <div class="tps-course-table-wrap" role="region" aria-label="Semester 1/2569 course status board" tabindex="0">
           <table class="tps-course-table">
-            <thead><tr><th>Course</th><th>Title</th><th>Schedule</th><th>Current public status</th></tr></thead>
+            <thead><tr><th>Course</th><th>Title</th><th>Schedule</th><th>Current public status</th><th>Evidence</th></tr></thead>
             <tbody>
               {% for course in teaching.retained_courses %}
-              <tr><td><strong>{{ course.code }}</strong></td><td>{{ course.title }}</td><td>{{ course.day }} · {{ course.time }}</td><td><span class="td-status td-status--retained">Retained in latest reconciliation</span></td></tr>
+              <tr data-course-code="{{ course.code }}" data-course-title="{{ course.title | escape }}" data-course-schedule="{{ course.day | append: ' · ' | append: course.time | escape }}" data-course-status="RETAINED_PENDING_FINAL_CONFIRMATION" data-course-note="{{ course.evidence_note | escape }}"><td><strong>{{ course.code }}</strong></td><td>{{ course.title }}</td><td>{{ course.day }} · {{ course.time }}</td><td><span class="td-status td-status--retained">Retained in latest reconciliation</span></td><td><button class="tps-course-drill" type="button" data-course-open="{{ course.code }}" aria-controls="tps-course-explorer" aria-expanded="false">View evidence</button></td></tr>
               {% endfor %}
               {% for course in teaching.cancelled_courses %}
-              <tr><td><strong>{{ course.code }}</strong></td><td>{{ course.title }}</td><td>{{ course.day }} · {{ course.time }}</td><td><span class="td-status td-status--cancelled">Officially cancelled</span></td></tr>
+              <tr data-course-code="{{ course.code }}" data-course-title="{{ course.title | escape }}" data-course-schedule="{{ course.day | append: ' · ' | append: course.time | escape }}" data-course-status="OFFICIALLY_CANCELLED" data-course-note="{{ course.evidence_note | escape }}"><td><strong>{{ course.code }}</strong></td><td>{{ course.title }}</td><td>{{ course.day }} · {{ course.time }}</td><td><span class="td-status td-status--cancelled">Officially cancelled</span></td><td><button class="tps-course-drill" type="button" data-course-open="{{ course.code }}" aria-controls="tps-course-explorer" aria-expanded="false">View evidence</button></td></tr>
               {% endfor %}
             </tbody>
           </table>
         </div>
+        <section id="tps-course-explorer" class="tps-course-explorer" aria-live="polite" aria-labelledby="tps-course-explorer-title" hidden>
+          <div class="tps-explorer-head">
+            <div>
+              <span class="sp-eyebrow">Course Drill-down</span>
+              <h3 id="tps-course-explorer-title">Select a course to inspect its public evidence</h3>
+            </div>
+            <button type="button" class="tps-explorer-close" aria-label="Close course evidence explorer">Close</button>
+          </div>
+          <div id="tps-course-explorer-content"></div>
+        </section>
       </article>
 
       <article class="sp-card tps-panel">
@@ -348,4 +358,15 @@ author_profile: false
     </div>
     <div class="sp-policy">Teaching information is reconciled against Ramkhamhaeng University MR30 records and traceable academic documents. Student-identifiable records, grades, answer scripts, restricted Drive identifiers, private audit metadata and confidential HEPE records are not published on this website.</div>
   </section>
+
+<script type="application/json" id="tps-course-quality-data">[
+{% for course in teaching.course_quality_matrix %}
+{"code":{{ course.code | jsonify }},"title":{{ course.title | jsonify }},"offering_status":{{ course.offering_status | jsonify }},"teaching_evidence":{{ course.teaching_evidence | jsonify }},"tqf3_status":{{ course.tqf3_status | jsonify }},"tqf3_access":{{ course.tqf3_access | default: "" | jsonify }},"assessment_evidence":{{ course.assessment_evidence | jsonify }},"tqf5_status":{{ course.tqf5_status | jsonify }},"tqf5_access":{{ course.tqf5_access | default: "" | jsonify }},"verification_status":{{ course.verification_status | jsonify }},"verification_access":{{ course.verification_access | default: "" | jsonify }},"improvement_evidence":{{ course.improvement_evidence | jsonify }}}{% unless forloop.last %},{% endunless %}
+{% endfor %}
+]</script>
+<script type="application/json" id="tps-course-gap-data">[
+{% for course in teaching.document_search_gaps %}
+{"code":{{ course.code | jsonify }},"title":{{ course.title | jsonify }},"search_status":{{ course.search_status | jsonify }}}{% unless forloop.last %},{% endunless %}
+{% endfor %}
+]</script>
 </div>
