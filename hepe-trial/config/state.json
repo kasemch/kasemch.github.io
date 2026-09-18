@@ -117,11 +117,13 @@
   },
   "catalog": {
     "programme_count_verified": 1,
-    "curriculum_course_count_verified": 92,
+    "curriculum_course_count_verified": 65,
     "academic_term_count_verified": 2,
     "programme_plo_code_count_verified": 7,
     "hed2503_course_plo_mapping_count": 0,
-    "source_rule": "CURRENT_CURRICULUM_MEMBERSHIP_NOT_IS_ACTIVE_ONLY"
+    "source_rule": "HED_PED_ONLY_CURRENT_CURRICULUM_MEMBERSHIP",
+    "scoped_course_count_verified": 65,
+    "full_curriculum_course_count_reference": 92
   },
   "scope": {
     "rule": "HED_PED_ONLY",
@@ -134,7 +136,11 @@
       "RAM"
     ],
     "scoped_course_count": 65,
-    "rationale": "Department-owned courses only; general education and EDU teacher-profession courses excluded"
+    "hed_count": 28,
+    "ped_count": 37,
+    "edu_count": 0,
+    "ram_count": 0,
+    "rationale": "Fast TQF operational scope is department-owned HED/PED courses only; general education and EDU teacher-profession courses are excluded."
   },
   "curriculum_descriptions": {
     "source_file_id": "1E0fXyoOc-v2z-GzEyfGq-JHHKMK9C0xk",
@@ -146,6 +152,7 @@
     ],
     "verification_status": "SOURCE_TEXT_EXTRACTED",
     "authority_status": "CURRICULUM_BOOK_SOURCE_OBSERVED",
+    "parser_tail_remaining": 0,
     "hed3701_route": "TQF4_TQF6_FIELD_PRACTICUM"
   }
 }
