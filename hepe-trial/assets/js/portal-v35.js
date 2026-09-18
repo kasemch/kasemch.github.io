@@ -765,17 +765,17 @@ function aiQuickButtons(section,target,row=null,actions=['write','check','refine
 }
 
 function refreshAiFieldStates(){
-  $('[data-ai-field-state]').forEach(el=>{
+  $$('[data-ai-field-state]').forEach(el=>{
     const st=aiFieldStatus(el.dataset.aiFieldState);
     setBadge(el,st.label,st.kind);
   });
 }
 function bindAiFieldButtons(){
-  $('.ai-field-menu').forEach(menu=>menu.addEventListener('toggle',()=>{
+  $$('.ai-field-menu').forEach(menu=>menu.addEventListener('toggle',()=>{
     if(!menu.open)return;
-    $('.ai-field-menu').forEach(other=>{if(other!==menu)other.open=false;});
+    $$('.ai-field-menu').forEach(other=>{if(other!==menu)other.open=false;});
   }));
-  $('.ai-field').forEach(b=>b.onclick=()=>{
+  $$('.ai-field').forEach(b=>b.onclick=()=>{
     const menu=b.closest('details.ai-field-menu');
     runFieldAi(b);
     if(menu)menu.open=false;
