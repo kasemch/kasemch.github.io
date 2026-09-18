@@ -1,17 +1,20 @@
 # HEPE FAST TQF PORTAL — MASTER CONTINUATION COMMAND
 
-Effective date: 2026-09-18
+Effective: 2026-09-18
 Revision: POST-V28 SCOPE / CURRICULUM DESCRIPTION / IMMEDIATE AI
-Status: ACTIVE MASTER CONTINUATION COMMAND
+Status: ACTIVE
 Environment: NON-PRODUCTION
 
 Repository:
-`kasemch/kasemch.github.io`
+kasemch/kasemch.github.io
 
-Route:
-`https://kasemch.github.io/hepe-trial/?v=28`
+Public route:
+https://kasemch.github.io/hepe-trial/?v=28
 
-Operating principles:
+==================================================
+0. MASTER OPERATING MODE
+==================================================
+
 EVIDENCE-FIRST
 NO FABRICATION
 FAIL-CLOSED GOVERNANCE
@@ -23,356 +26,363 @@ BATCH EXECUTION + EXCEPTION STOP
 MINIMUM USER EFFORT
 MAXIMUM SAFE CONTINUATION
 
-==================================================
-0. PERMANENT CONTINUATION RULE
-==================================================
+After every material batch:
 
-After every major processing batch:
-
-- continue all clear, reversible, non-destructive work automatically
-- batch related work
-- refresh this command after material state changes
-- preserve all approved design locks and governance boundaries
+- continue all clear reversible work automatically
+- batch related tasks
+- preserve locked baselines
+- update audit
+- update this continuation command
 - stop only at a true Human Gate
-- never invent curriculum data, evidence, results, approval, or authority
-- never promote sample/example documents to factual course content
-- never create VERIFIED to demonstrate workflow success
-- never mutate immutable R1
-- never expose secrets in GitHub Pages
 
 ==================================================
-1. MASTER UI LOCK
+1. TRUE HUMAN GATES
+==================================================
+
+Stop only for:
+
+- Production authorization
+- secret or credential change
+- destructive database action
+- immutable R1 mutation
+- historical lifecycle rewrite
+- institutional-official authority claim
+- evidence admission requiring human judgment
+- VERIFIED decision requiring human judgment
+- master UI unlock
+- direct AI API integration requiring protected secrets/privacy review
+- authenticated visual acceptance when the live authenticated page cannot be independently observed
+
+==================================================
+2. STATIC WEB CONSTRAINT
+==================================================
+
+Frontend must remain GitHub Pages compatible.
+
+Allowed:
+
+HTML5
+Vanilla CSS
+JavaScript ES6+
+Supabase JS
+Jekyll
+approved CDN libraries
+external APIs through fetch/RPC
+
+No server backend framework unless separately authorized.
+
+All local asset paths must remain relative.
+
+==================================================
+3. MASTER UI LOCK
 ==================================================
 
 Master UI/UX:
 APPROVED / LOCKED
 
-File:
-`docs/design/hepe-fast-tqf-master-ui-design-lock-v1.md`
+Design file:
+docs/design/hepe-fast-tqf-master-ui-design-lock-v1.md
 
-Core screens remain:
+Locked conceptual screens:
 
-Login
-Academic/Course Selection
-TQF3 General+CLO
-CLO–PLO
-Weekly Planner
-Assessment
-TQF5
-Verification Evidence
-Readiness
-Programme Dashboard
-
-Major architecture change requires explicit unlock.
+1. Login
+2. Course Selection / Academic Dashboard
+3. TQF3 General + CLO
+4. CLO–PLO Mapping
+5. Weekly Teaching Plan
+6. TQF3 Assessment
+7. TQF5 Plan→Actual
+8. Verification Evidence Workspace
+9. Readiness / Cross-document Consistency
+10. Programme Dashboard
 
 ==================================================
-2. CURRENT UI BASELINE
+4. CURRENT UI BASELINE
 ==================================================
 
 Version:
 V28
 
-Files:
+Main files:
 
-`./hepe-trial/index.html`
-`./hepe-trial/assets/js/portal-v28.js`
-`./hepe-trial/assets/css/portal-v28.css`
-`./hepe-trial/config/state.json`
+./hepe-trial/index.html
+./hepe-trial/assets/css/portal-v28.css
+./hepe-trial/assets/js/portal-v28.js
+./hepe-trial/config/state.json
 
-V28 route:
+Current audit:
 
-`https://kasemch.github.io/hepe-trial/?v=28`
+docs/audits/hepe-fast-tqf-v28-scope-description-ai-immediate-2026-09-18.md
 
 ==================================================
-3. FAST TQF COURSE SCOPE — LOCKED
+5. FAST TQF OPERATIONAL SCOPE
 ==================================================
 
-The Fast TQF Portal handles only department-owned HED/PED courses.
+LOCK CURRENT OPERATIONAL RULE:
 
-IN SCOPE:
+HED / PED ONLY
+
+Included prefixes:
 
 HED
 PED
 
-OUT OF SCOPE:
-
-EDU
-RAM / general education
-
-Current curriculum raw composition:
-
-EDU = 13
-HED = 28
-PED = 37
-RAM = 14
-TOTAL = 92
-
-Fast TQF scoped total:
-
-HED + PED = 65
-
-This is not merely a UI filter.
-
-Portal catalog/context/dashboard read models enforce HED/PED scope.
-
-==================================================
-4. SCOPE EVIDENCE
-==================================================
-
-Google Drive source:
-
-`RU-HEPE ฐานข้อมูลหลักสูตรและผู้สอน พ.ศ. 2567`
-
-File ID:
-
-`1Hn7___9uLYPXJ2wT4f9fBQkKmzdHCESoBA4DBptjnhE`
-
-Source states:
-
-department-managed teaching courses are HED/PED only
-
-excluded:
-
-general education
-EDU teacher-profession courses managed elsewhere
-
-Use this as the controlled scope rule for Fast TQF Portal.
-
-==================================================
-5. PROGRAMME / COURSE UX
-==================================================
-
-User flow:
-
-Login
-→ Programme
-→ HED/PED Course
-→ Academic Year
-→ Term
-→ Curriculum Context
-→ TQF3/TQF5/Verification/Readiness/Dashboard
-
-Programme count display now reflects scoped HED/PED course count.
-
-Current scoped course count:
-
-65
-
-Course dropdown must not show:
+Excluded:
 
 EDU
 RAM
+general-education courses
+
+Reason:
+
+Fast TQF workflow is scoped to department-owned HED/PED courses.
+
+This is enforced in backend catalogue/dashboard RPCs,
+not only hidden in frontend JavaScript.
+
+Current full curriculum reference:
+
+92 courses
+
+Current Fast TQF operational scope:
+
+HED = 28
+PED = 37
+TOTAL = 65
+
+EDU returned in Fast TQF catalogue:
+
+0
+
+RAM returned in Fast TQF catalogue:
+
+0
 
 ==================================================
-6. CURRICULUM DESCRIPTION SOURCE
+6. SCOPE-AWARE RPC
 ==================================================
 
-Primary curriculum-book source currently admitted as source-observed:
+Current scope-aware read models:
 
-File:
+hepe_fast_tqf_programme_catalog()
 
-`หลักสูตรศึกษาศาสตรบัณฑิต HE - PE 67 (1).docx`
+hepe_fast_tqf_course_catalog(
+  programme_code,
+  academic_year,
+  term_code
+)
 
-Google Drive File ID:
+hepe_fast_tqf_curriculum_context(
+  programme_code,
+  course_code
+)
 
-`1E0fXyoOc-v2z-GzEyfGq-JHHKMK9C0xk`
+hepe_fast_tqf_programme_dashboard(
+  programme_code,
+  academic_year,
+  term_code
+)
 
-Course-description section:
+Scope marker:
 
-`3.1.5 คำอธิบายรายวิชา`
+HED_PED_ONLY
 
-Descriptions imported to Sandbox:
+Do not re-introduce EDU/RAM without explicit scope change approval.
 
-64
+==================================================
+7. CURRICULUM DESCRIPTION SOURCE
+==================================================
 
-Scoped courses:
+Source file:
 
-65
+Google Drive ID:
+1E0fXyoOc-v2z-GzEyfGq-JHHKMK9C0xk
 
-Missing:
+Title:
+
+หลักสูตรศึกษาศาสตรบัณฑิต HE - PE 67 (1).docx
+
+Source section:
+
+3.1.5 คำอธิบายรายวิชา
+
+Current scoped HED/PED descriptions:
+
+65 scoped courses
+64 extracted descriptions
+1 exception
+
+Verification status:
+
+SOURCE_TEXT_EXTRACTED
+
+Authority status:
+
+CURRICULUM_BOOK_SOURCE_OBSERVED
+
+Important:
+
+These are source-observed curriculum-book records.
+
+Do not automatically escalate them to institutional-official authority.
+
+==================================================
+8. HED3701 EXCEPTION
+==================================================
+
+Course:
 
 HED3701
 
+Current description row:
+
+none admitted from the standard course-description source section.
+
+Do not fabricate a description.
+
+UI behavior:
+
+show:
+
+TQF4/TQF6 SOURCE ROUTE
+
+Interpretation:
+
+HED3701 is a professional field-practicum course
+and belongs to the TQF4/TQF6 workflow.
+
 ==================================================
-7. COURSE DESCRIPTION GOVERNANCE
+9. DESCRIPTION QUALITY
 ==================================================
 
-Imported description state:
+Known parser-tail contamination found and cleaned:
+
+HED2615
+HED3505
+PED3103
+PED3601
+
+Cleanup method:
+
+append-only description version
+
+Final known parser-tail marker count:
+
+0
+
+Do not rewrite old description versions.
+
+==================================================
+10. HED2503 DESCRIPTION CURRENT STATE
+==================================================
+
+Current source:
+
+curriculum book
 
 verification_status:
 
-`SOURCE_TEXT_EXTRACTED`
+SOURCE_TEXT_EXTRACTED
 
 authority_status:
 
-`CURRICULUM_BOOK_SOURCE_OBSERVED`
+CURRICULUM_BOOK_SOURCE_OBSERVED
 
-status_code:
+The old working source candidate remains historical provenance only.
 
-`DRAFT`
-
-This means:
-
-- text is extracted from the identified curriculum book
-- source provenance is visible
-- institutional approval state is separate
-- do not call it officially approved merely because it came from the curriculum book
-
-HED2503 now uses curriculum-book-derived version 2.
+Do not mutate historical description versions.
 
 ==================================================
-8. HED3701 SPECIAL ROUTE
+11. PROGRAMME / COURSE UX
 ==================================================
 
-HED3701:
+Flow:
 
-field-practicum course
+Login
+→ Programme Name
+→ Course
+→ Academic Year
+→ Term
+→ Curriculum Context
+→ TQF workflow
 
-Current course-description extraction:
+Programme selector:
 
-not available in the same regular course-description pattern.
+human-readable title
 
-Therefore:
+Course selector:
 
-DO NOT create a description using AI.
+HED/PED only
 
-Route:
+Display:
 
-TQF4/TQF6 FIELD PRACTICUM SOURCE WORKFLOW
+COURSECODE — ชื่อรายวิชา
 
-UI should display this special route clearly.
-
-==================================================
-9. CATALOG RPC BASELINE
-==================================================
-
-Portal read models:
-
-`hepe_fast_tqf_programme_catalog()`
-`hepe_fast_tqf_course_catalog(text,text,text)`
-`hepe_fast_tqf_curriculum_context(text,text)`
-`hepe_fast_tqf_term_catalog()`
-`hepe_fast_tqf_programme_dashboard(text,text,text)`
-
-Current scope rule:
-
-`HED_PED_ONLY`
-
-Anon execute:
-
-DENIED
-
-Authenticated execute:
-
-ALLOWED
+Do not require users to type internal codes manually.
 
 ==================================================
-10. CURRENT VERIFIED RUNTIME
+12. TQF3 SECTION 1
 ==================================================
 
-Programme scoped courses:
-
-65
-
-Descriptions present:
-
-64
-
-Missing descriptions:
-
-HED3701
-
-AY2569/T1:
-
-offered courses = 30
-TQF3 present = 1
-TQF5 present = 1
-verification present = 1
-VERIFIED = 0
-INSUFFICIENT_EVIDENCE = 1
-
-Do not inflate or infer missing states.
-
-==================================================
-11. TQF3 GENERAL
-==================================================
-
-Canonical curriculum fields:
-
-read-only
-
-Includes:
+Auto-fill canonical/source-derived data:
 
 programme
-course
+course code
 Thai title
 English title
 credits
 curriculum version
 course description
-source reference
-source locator
-verification status
-authority status
+provenance
 
-If description missing:
+Course description field:
 
-do not say simply “no description in database”
+read-only
 
-Use:
+AI:
 
-NEEDS CURRICULUM-SOURCE IMPORT
+may analyze
+may explain
+may suggest implications
 
-except HED3701:
-
-TQF4/TQF6 SOURCE ROUTE
+AI must not overwrite source text.
 
 ==================================================
-12. TQF3 CLO
+13. TQF3 SECTION 2
 ==================================================
 
 Structured CLO table:
 
 CLO code
 CLO statement
-working PLO link
-AI analysis
-actions
+working PLO linkage
+AI review
+row actions
 
-AI is advisory.
+AI checks:
 
-Canonical mapping remains separate from working mapping.
+measurable wording
+ambiguity
+duplication
+scope
+missing PLO
+unsupported mapping
 
-==================================================
-13. CLO–PLO
-==================================================
+Canonical course→PLO mapping:
 
-Matrix direction remains approved.
-
-Rows:
-
-CLO
-
-Columns:
-
-PLO
-
-Values:
-
-I/R/M/none
-
-Never fabricate canonical mapping.
+do not fabricate.
 
 ==================================================
-14. WEEKLY PLANNER
+14. TQF3 SECTION 3
 ==================================================
 
-LOCKED.
+WEEKLY PLANNER:
+LOCKED
 
 Columns:
 
 week
-topic
+topic/content
 CLO
 PLO
 learning activity
@@ -380,112 +390,144 @@ lecture hours
 practice hours
 self-study hours
 assessment/evidence
-resources
-AI/actions
+learning resources
+AI review
+actions
 
-Default planning rows are UI slots only.
+Default rows are planning slots only.
+
+Do not claim an official teaching-week count from the UI default.
 
 ==================================================
-15. ASSESSMENT
+15. TQF3 ASSESSMENT
 ==================================================
 
-Structured assessment:
+Structured fields:
 
-item
+assessment item
 method
 weight
 CLO
 evidence/rubric
-AI
+AI review
 
-Current core validation:
+Current hard check:
 
-weight total = 100%
+total assessment weight = 100%
 
-Future:
+Future checks may add:
 
+CLO without evidence
 orphan assessment
-missing evidence
-rubric completeness
-timing
-formative/summative balance
+rubric gap
+timing gap
+assessment burden
 
 ==================================================
-16. AI IMMEDIATE ANALYSIS — V28 LOCK
+16. AI IMMEDIATE ANALYSIS RULE
 ==================================================
 
-User requirement:
+NEW LOCKED USER EXPERIENCE:
 
-press AI
-→ analysis content must appear immediately in a text box.
+When the user presses any AI analyze button:
 
-V28 implements:
+1. analysis runs immediately
+2. visible content appears immediately in:
+   ai-analysis-box
+3. suggestions are shown below
+4. user decides:
+   - รับข้อเสนอ
+   - แก้ไขแล้วรับ
+   - ไม่ใช้
 
-`#ai-analysis-box`
-
-Behavior:
-
-- clicking any section AI button runs Smart QA immediately
-- results appear immediately in the visible text area
-- suggestion cards appear underneath
-- user decides:
-  ACCEPTED
-  EDITED_AND_ACCEPTED
-  REJECTED
-
-ChatGPT handoff is optional deeper analysis.
-
-It is not required for the immediate first response.
+Do not require the user to open ChatGPT before seeing analysis.
 
 ==================================================
-17. AI GOVERNANCE
+17. AI TWO-LAYER MODEL
 ==================================================
 
-AI may:
+Layer 1:
 
-identify gaps
-suggest wording
-check alignment
-summarize evidence gaps
-suggest improvements
+Immediate Local Smart QA
+
+Purpose:
+
+instant feedback
+missing-field checks
+alignment checks
+consistency checks
+readiness checks
+
+Layer 2:
+
+Optional ChatGPT deep analysis handoff
+
+Purpose:
+
+deeper academic analysis
+rewriting assistance
+expanded rationale
+complex synthesis
+
+The user may stay entirely in Layer 1.
+
+No protected AI secret is embedded in GitHub Pages.
+
+==================================================
+18. AI GOVERNANCE
+==================================================
+
+AI is advisory only.
+
+Suggestion lifecycle:
+
+SUGGESTED
+ACCEPTED
+EDITED_AND_ACCEPTED
+REJECTED
+
+User remains final decision-maker.
 
 AI must not:
 
-invent curriculum descriptions
-invent canonical mappings
-invent student results
-invent evidence
-change institutional authority
-mark VERIFIED
-silently overwrite user data
-mutate immutable R1
+- invent curriculum facts
+- rewrite source-derived course descriptions
+- invent PLO authority
+- invent evidence
+- invent results
+- auto-admit evidence
+- mark VERIFIED
+- claim institutional approval
+- mutate R1
 
 ==================================================
-18. AUTOSAVE / RECOVERY
+19. AUTOSAVE / RECOVERY
 ==================================================
 
-V27 functionality remains active in V28.
+Current:
 
-Local autosave:
+localStorage
+debounced local save
+course-identity key
 
-debounced
-
-Key:
+Identity includes:
 
 programme
 course
-year
+academic year
 term
 
-Recovery:
+Recovery options:
 
-restore matching local draft
-discard local draft
+restore
+discard
 
-Do not restore across course identity.
+Never restore a local draft into another course identity.
+
+Do not create a server version on every keystroke.
 
 ==================================================
-19. TQF5
+20. TQF5
 ==================================================
 
 Mode:
@@ -496,17 +538,21 @@ Current fields:
 
 registered students
 students at end
-plan vs actual
+plan-vs-actual
 grade distribution
 CLO attainment
 problems
 CQI
 AI review
 
-Keep draft/unverified until evidence supports escalation.
+State remains:
+
+DRAFT / UNVERIFIED
+
+until evidence permits governed escalation.
 
 ==================================================
-20. VERIFICATION
+21. VERIFICATION
 ==================================================
 
 Evidence-first.
@@ -519,68 +565,36 @@ INSUFFICIENT_EVIDENCE
 
 Evidence candidate:
 
-not automatically admitted
+NOT_ADMITTED
+
+Do not auto-admit.
 
 ==================================================
-21. EVIDENCE WORKSPACE
-==================================================
-
-Display:
-
-linked controlled evidence
-candidate evidence
-source
-authority
-status
-
-Never auto-admit candidates.
-
-==================================================
-22. READINESS
-==================================================
-
-Readiness means:
-
-READY FOR INTERNAL REVIEW
-
-not institutional approval.
-
-Continue strengthening:
-
-blocking vs warning
-section scores
-unresolved AI count
-cross-document mismatch
-evidence-gap count
-export readiness
-
-==================================================
-23. PROGRAMME DASHBOARD
+22. PROGRAMME DASHBOARD
 ==================================================
 
 Current scoped dashboard:
 
-HED/PED only
+65 HED/PED curriculum courses
 
-Current curriculum course count:
+AY2569/T1 currently:
 
-65
+offered courses = 30
+TQF3 present = 1
+TQF5 present = 1
+verification present = 1
+VERIFIED = 0
+INSUFFICIENT_EVIDENCE = 1
 
-Current AY2569/T1 offered:
-
-30
-
-Do not show general education or EDU.
+Dashboard is read-only.
 
 ==================================================
-24. VERSION HISTORY / COMPARE
+23. VERSION COMPARE
 ==================================================
 
-Working version history remains append-only.
+Current:
 
-Current HED2503 working versions:
-
-5
+TQF3 working versions
 
 Compare:
 
@@ -591,39 +605,48 @@ assessment
 resources
 improvement notes
 
-Future:
-
-field-level text diff
-week diff
-AI-assisted change diff
+No historical rewrite.
 
 ==================================================
-25. CQI
+24. CQI
 ==================================================
 
-Carry-forward remains user-controlled.
+Carry-forward only when source exists.
 
-No CQI source:
+Do not generate fake CQI to populate UI.
 
-show none
-
-Do not invent.
-
-Future decisions:
-
-IMPLEMENT
-MODIFY
-NOT_ADOPTED
-
-with rationale and target term.
+User decides whether to adopt prior CQI.
 
 ==================================================
-26. HED2503 R1
+25. READINESS
+==================================================
+
+Readiness means:
+
+READY FOR INTERNAL REVIEW
+
+not:
+
+INSTITUTIONAL APPROVAL
+
+Current dimensions:
+
+curriculum context
+course description provenance
+CLO
+weekly plan
+assessment total
+TQF3↔TQF5 consistency
+verification
+AI decisions
+
+==================================================
+26. IMMUTABLE R1
 ==================================================
 
 Release:
 
-`HEPE-HED2503-TQF3-2569-1-R1`
+HEPE-HED2503-TQF3-2569-1-R1
 
 Status:
 
@@ -631,9 +654,7 @@ PUBLIC_PUBLISHED
 
 SHA-256:
 
-`799818a46e8e0f931a156526f5e592088680c044ba8c62c04add3d5b40912256`
-
-Immutable.
+799818a46e8e0f931a156526f5e592088680c044ba8c62c04add3d5b40912256
 
 Never mutate.
 
@@ -641,159 +662,220 @@ Never mutate.
 27. SAMPLE FILE RULE
 ==================================================
 
-If a source is explicitly described as:
+If a file is described as:
 
-sample
-example
-template example
 ตัวอย่าง
 แบบฟอร์มตัวอย่าง
 ตัวอย่างการเขียน
+sample
+example
 mockup
 prototype
 
-classification defaults to:
+default classification:
 
 REFERENCE_SAMPLE_ONLY
 
-Use for:
+May use:
 
 structure
 layout
-writing pattern
-UI testing
+writing style
+UI reference
 
-Do not use as factual course content without separate evidence.
+Do not use as factual course data without separate evidence.
 
 ==================================================
-28. NEXT SAFE PRIORITIES
+28. V28 REGRESSION BASELINE
 ==================================================
 
-V29-A — AI UX polish
+Backend scope:
 
-- make immediate analysis box larger on desktop
-- add Copy Result
-- add Clear Result
-- add section label/time
-- add severity markers
-- add “apply to field” only when user explicitly chooses
-- never auto-apply
+PASS
 
-V29-B — Course-description coverage QA
+HED count:
 
-- compare all 64 imported descriptions against source
-- flag extraction anomalies
-- add source-preview drawer
-- add “view source locator”
-- maintain HED3701 special route
+28
 
-V29-C — CLO/PLO improvement
+PED count:
 
-- populate verified PLO statements when source available
-- build matrix
-- distinguish canonical vs working mapping
-- add mapping coverage QA
+37
 
-V29-D — Weekly planner efficiency
+EDU count:
 
-- copy prior week
-- copy prior term
-- bulk assign CLO
-- bulk assign resources
-- hours summary
-- incomplete-row indicators
+0
 
-V29-E — Assessment QA
+RAM count:
 
-- CLO coverage matrix
-- total weight check
-- rubric/evidence completeness
-- formative/summative classification
-- assessment timing
+0
 
-V29-F — Submission readiness
+Scoped total:
 
-- blocking errors
-- warnings
-- source gaps
-- unresolved AI suggestions
-- print/export readiness
+65
 
-V29-G — Dashboard
+Curriculum description coverage:
 
-- filter HED/PED group
-- responsible instructor
-- document status
-- evidence status
-- readiness
-- due dates
+64/65
 
-V29-H — Controlled export
+HED3701 exception:
 
-- print/PDF preview
+preserved
+
+Parser-tail check:
+
+0
+
+JS syntax:
+
+PASS
+
+DOM contract:
+
+PASS
+
+Immediate AI text box:
+
+PASS
+
+V28 CSS/JS relative paths:
+
+PASS
+
+R1 invariant:
+
+PASS
+
+Production:
+
+UNCHANGED / NOT AUTHORIZED
+
+==================================================
+29. CURRENT TRUE HUMAN GATE
+==================================================
+
+AUTHENTICATED VISUAL ACCEPTANCE OF V28
+
+Expected behavior:
+
+- course dropdown contains only HED/PED
+- EDU and general-education/RAM courses do not appear
+- normal HED/PED courses show curriculum description where available
+- description provenance is visible
+- HED3701 shows TQF4/TQF6 source-route message
+- pressing AI analyze immediately fills the visible analysis text box
+- Accept / Edit & Accept / Reject remain available
+
+If user reports a defect:
+
+repair first
+regression second
+continue third
+
+==================================================
+30. NEXT AUTOMATIC SAFE PHASE
+==================================================
+
+After V28 visual acceptance:
+
+V29-A — AI RESPONSE QUALITY
+
+- make immediate analysis more section-specific
+- add severity:
+  BLOCKING / WARNING / SUGGESTION
+- include “why this matters”
+- include “recommended user action”
+- distinguish source gap from writing improvement
+- show no-issue positive confirmation without false approval
+
+V29-B — COURSE DESCRIPTION QA
+
+- create description coverage dashboard
+- flag missing source descriptions
+- flag source versions with anomalies
+- add source locator drawer
+- add “view source metadata”
+- never edit source-derived text in form
+
+V29-C — CLO/PLO UX
+
+- add visual CLO↔PLO matrix
+- add I/R/M working layer
+- visually separate canonical mapping and working mapping
+- add mapping-gap warning
+
+V29-D — WEEKLY PLANNER EFFICIENCY
+
+- copy week
+- multi-week duplicate
+- paste table rows
+- keyboard navigation
+- bulk CLO assignment
+- weekly coverage summary
+- assessment/evidence heatmap
+
+V29-E — TQF5 REUSE
+
+- stronger TQF3 carry-forward
+- plan-vs-actual diff
+- auto-create variance prompts
+- preserve user edits
+
+V29-F — VERIFICATION EVIDENCE INTAKE
+
+- register evidence reference
+- source type
+- date
+- locator
+- authority owner
+- hash when available
+- candidate state first
+- no auto-admission
+
+V29-G — DASHBOARD DRILL-DOWN
+
+- filter by HED/PED
+- filter by document state
+- filter by evidence state
+- filter by readiness
+- direct open course
+- sort by update
+- show missing-description indicator
+
+V29-H — EXPORT
+
+- print preview
 - draft watermark
-- version number
+- version label
 - provenance footer
-- readiness state
-- never label official without authority
+- readiness summary
+- no official label without authority
 
-V29-I — Return to TQF4/TQF6
+V29-I — RETURN TO TQF4/TQF6
 
-- after urgent TQF3/TQF5/Verification flow is stable
-- HED3701 routes here
-- sample forms remain REFERENCE_SAMPLE_ONLY
-- use real field-practicum sources before content admission
-
-==================================================
-29. TRUE HUMAN GATES
-==================================================
-
-Production authorization
-secret/credential changes
-destructive migration
-immutable R1 mutation
-historical rewrite
-institutional official claim
-template authority escalation
-evidence admission requiring judgment
-VERIFIED decision requiring judgment
-master UI unlock
-direct protected AI API integration
-uncertain curriculum source adoption
-
-Everything else:
-
-continue automatically.
+- after urgent TQF3/TQF5/verification flow is stable
+- keep example templates as REFERENCE_SAMPLE_ONLY
+- develop HED3701 through TQF4/TQF6 route
+- do not reuse example values as actual results
 
 ==================================================
-30. EXECUTION TRIGGER
+31. AUTOMATIC EXECUTION TRIGGER
 ==================================================
 
 When user says:
 
 Approve
+Start
 Resume
 Next
 Continue
-Start
 ดำเนินการ
 ดำเนินการทันที
 ต่อ
 ทำต่อ
 
-continue with highest-priority safe work.
+If V28 visual acceptance has passed:
 
-Current next safe phase:
-
-V29-A
-→ V29-B
-→ V29-C
-→ V29-D
-→ V29-E
-→ V29-F
-→ V29-G
-→ V29-H
-
-Then return to TQF4/TQF6 when urgent workflow is stable.
+continue automatically through V29 safe phases
+until a true Human Gate is reached.
 
 END MASTER CONTINUATION COMMAND
