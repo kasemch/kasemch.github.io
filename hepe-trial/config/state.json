@@ -1,6 +1,6 @@
 {
-  "phase": "FAST-SUBMISSION-PORTAL-14",
-  "status": "V34_CONTEXT_AWARE_REVIEW_WORKFLOW_READY",
+  "phase": "FAST-SUBMISSION-PORTAL-15",
+  "status": "V35_PROPOSAL_REVIEW_CHANGE_CONTROL_PREACTIVATION_READY",
   "updated_at": "2026-09-18",
   "route": "./hepe-trial/",
   "programme_code": "25510071103503",
@@ -437,11 +437,92 @@
       "activation_action": false,
       "tqf4_v2_current": false,
       "tqf6_v2_current": false
+    },
+    "field_ai_v35": {
+      "status": "READY",
+      "blank_primary_action": "WRITE",
+      "nonempty_primary_action": "CHECK",
+      "field_status": [
+        "EMPTY",
+        "UNCHECKED",
+        "CHECKED"
+      ],
+      "close_other_ai_menus": true,
+      "keyboard_access": true
+    },
+    "proposal_quality_v35": {
+      "status": "READY",
+      "thai_source_phrase_extraction": true,
+      "weekly_sequence_from_entered_topics_only": true,
+      "assessment_consistency": true,
+      "cqi_followup_from_user_entered_problems": true,
+      "verification_evidence_bound": true
+    },
+    "review_queue_v35": {
+      "status": "READY",
+      "section_progress": true,
+      "filters": [
+        "ALL",
+        "BLOCKING",
+        "WARNING",
+        "UNRESOLVED_AI",
+        "EVIDENCE",
+        "TQF3",
+        "TQF5",
+        "VERIFICATION"
+      ],
+      "target_context_preview": true,
+      "keyboard_next_previous": "ALT_ARROW",
+      "resolve_and_next": true
+    },
+    "change_control_v35": {
+      "status": "READY",
+      "prior_diff": [
+        "OBJECTIVES",
+        "RESOURCES",
+        "IMPROVEMENT",
+        "CLO",
+        "WEEKLY_PLAN",
+        "ASSESSMENT"
+      ],
+      "change_origin": true,
+      "origin_limits": "DIRECT_USER_EDIT_NOT_INFERRED_WITHOUT_EVENT_RECORD"
+    },
+    "review_package_v35": {
+      "status": "READY",
+      "appendices_added": [
+        "CHANGE_ORIGIN",
+        "EVIDENCE_SOURCE_COMPLETENESS"
+      ],
+      "draft_only": true
+    },
+    "template_preactivation_v35": {
+      "status": "READY_READ_ONLY",
+      "tqf4": {
+        "source_ready": 5,
+        "execution_required": 6,
+        "human_input_required": 7,
+        "signature_gate": 0,
+        "current_version_no": 1,
+        "v2_status": "UNDER_REVIEW",
+        "approved_at": null
+      },
+      "tqf6": {
+        "source_ready": 3,
+        "execution_required": 16,
+        "human_input_required": 1,
+        "signature_gate": 1,
+        "current_version_no": 1,
+        "v2_status": "UNDER_REVIEW",
+        "approved_at": null
+      },
+      "activation_action": false,
+      "human_gate": true
     }
   },
   "environment": "NON-PRODUCTION",
   "production_authorized": false,
-  "ui_version": "34",
+  "ui_version": "35",
   "ai_assistant": {
     "status": "READY",
     "mode": "LOCAL_SMART_QA_PLUS_CHATGPT_HANDOFF",
@@ -609,5 +690,12 @@
       "template_activation_lock": "PASS",
       "hed2503_r1_immutable": "PASS"
     }
+  },
+  "runtime_observed": {
+    "hed2503_tqf3_current_version": 6,
+    "hed2503_tqf3_version_count": 6,
+    "hed2503_verification": "INSUFFICIENT_EVIDENCE",
+    "immutable_r1_status": "PUBLIC_PUBLISHED",
+    "immutable_r1_sha256": "799818a46e8e0f931a156526f5e592088680c044ba8c62c04add3d5b40912256"
   }
 }
