@@ -341,7 +341,7 @@ function bindDynamicButtons(){
   $$('.delete-assessment').forEach(b=>b.onclick=()=>deleteRow('assessment',Number(b.dataset.row)));
   $$('.as-weight').forEach(x=>x.oninput=()=>{updateAssessmentTotal();renderWeeklyCoverage();});
   $$('.t3-clo-code,.t3-clo-desc,.t3-clo-plo').forEach(x=>x.addEventListener('input',()=>{renderCloPloMatrix(collectPloMatrix());renderWeeklyCoverage();}));
-  $('.wk-topic,.wk-clo,.wk-plo,.wk-assess').forEach(x=>x.addEventListener('input',renderWeeklyCoverage));
+  $$('.wk-topic,.wk-clo,.wk-plo,.wk-assess').forEach(x=>x.addEventListener('input',renderWeeklyCoverage));
   bindAiFieldButtons();
 }
 function collectClos(){return $$('.t3-clo-code').map((el,i)=>({code:el.value.trim()||('CLO'+(i+1)),description:$('.t3-clo-desc[data-row="'+i+'"]')?.value.trim()||'',plo:$('.t3-clo-plo[data-row="'+i+'"]')?.value.trim()||''}));}
@@ -913,6 +913,7 @@ function renderInlineAi(section,row=null,sourceEl=null,forcedPanel=null,selected
   const panel=forcedPanel||findInlinePanel(section,sourceEl);
   if(!panel)return;
   ensureInlineV33(panel);
+  const all=inlineSuggestionList(section);
   const list=filteredInlineSuggestions(section,panel);
   const basis=aiEvidenceBasis(section);
   panel.hidden=false;
@@ -921,30 +922,32 @@ function renderInlineAi(section,row=null,sourceEl=null,forcedPanel=null,selected
   const summary=panel.querySelector('[data-ai-inline-summary]');
   const basisEl=panel.querySelector('[data-ai-inline-basis]');
   const listEl=panel.querySelector('[data-ai-inline-list]');
-  if(summary)summary.textContent='แสดง '+list.length+' ข้อเสนอ · เรียง BLOCKING → WARNING → SUGGESTION';
+  if(summary)summary.textContent='แสดง '+list.length+' / '+all.length+' ข้อเสนอ · เรียง BLOCKING → WARNING → SUGGESTION';
   if(basisEl){
     basisEl.textContent=basis.level+' · '+basis.label;
     basisEl.className='badge '+(basis.level==='HIGH'?'ok':basis.level==='MEDIUM'?'warn':'danger');
     basisEl.title=basis.detail||'';
   }
   if(listEl){
-    listEl.innerHTML=list.map((x,i)=>
-      '<div class="ai-inline-card '+(x.status==='REJECTED'?'rejected':x.status==='ACCEPTED'||x.status==='EDITED_AND_ACCEPTED'?'accepted':'')+'" data-ai-inline-card data-i="'+i+'">'+
-        '<div class="ai-inline-card-head"><span class="badge '+severityKind(x.severity)+'">'+esc(x.severity)+'</span><strong>'+esc(x.title)+'</strong></div>'+
+    listEl.innerHTML=list.map(x=>{
+      const i=all.indexOf(x);
+      return '<div class="ai-inline-card '+(x.status==='REJECTED'?'rejected':x.status==='ACCEPTED'||x.status==='EDITED_AND_ACCEPTED'?'accepted':'')+'" data-ai-inline-card data-i="'+i+'">'+
+        '<div class="ai-inline-card-head"><span class="badge '+severityKind(x.severity)+'">'+esc(x.severity)+'</span><strong>'+esc(x.title)+'</strong><span class="badge info">'+esc(x.action_type||'CHECK')+'</span></div>'+
         '<div>'+esc(x.message)+'</div>'+
         '<div class="help"><b>เหตุผล:</b> '+esc(x.why)+'</div>'+
         '<div class="actions">'+
           '<button type="button" class="btn small ai-inline-pick" data-i="'+i+'">เลือกข้อเสนอนี้</button>'+
           '<button type="button" class="btn small ai-inline-reject" data-i="'+i+'">ไม่ใช้</button>'+
         '</div>'+
-      '</div>'
-    ).join('');
+      '</div>';
+    }).join('');
   }
-  $$('.ai-inline-pick').filter(b=>b.closest('.ai-inline-result')===panel).forEach(b=>b.onclick=()=>pickInlineSuggestion(panel,Number(b.dataset.i)));
-  $$('.ai-inline-reject').filter(b=>b.closest('.ai-inline-result')===panel).forEach(b=>b.onclick=()=>rejectInlineSuggestion(panel,Number(b.dataset.i)));
+  $$('.ai-inline-pick').filter(x=>x.closest('.ai-inline-result')===panel).forEach(x=>x.onclick=()=>pickInlineSuggestion(panel,Number(x.dataset.i)));
+  $$('.ai-inline-reject').filter(x=>x.closest('.ai-inline-result')===panel).forEach(x=>x.onclick=()=>rejectInlineSuggestion(panel,Number(x.dataset.i)));
 
-  const idx=Math.max(0,Math.min(selectedIndex,list.length-1));
-  if(list.length)pickInlineSuggestion(panel,idx,false);
+  let idx=Number(selectedIndex);
+  if(!all[idx]||!list.includes(all[idx]))idx=list.length?all.indexOf(list[0]):-1;
+  if(idx>=0)pickInlineSuggestion(panel,idx,false);
   else clearInlineSelection(panel);
 
   panel.classList.remove('ai-inline-flash');
@@ -1827,7 +1830,7 @@ function bindStatic(){
   if($('#register-evidence-candidate'))$('#register-evidence-candidate').onclick=()=>registerEvidenceCandidate().catch(e=>say(friendlyError(e),'danger'));
   if($('#check-evidence-duplicate'))$('#check-evidence-duplicate').onclick=()=>checkEvidenceDuplicate().catch(e=>say(friendlyError(e),'danger'));
   if($('#evidence-candidate-filter'))$('#evidence-candidate-filter').onchange=renderEvidenceWorkspace;
-  $('[data-ai-inline-close]').forEach(b=>b.onclick=()=>{const p=b.closest('.ai-inline-result');if(p)p.hidden=true;});
+  $$('[data-ai-inline-close]').forEach(b=>b.onclick=()=>{const p=b.closest('.ai-inline-result');if(p)p.hidden=true;});
   ensureV33Ui();
   if($('#ai-copy-proposed'))$('#ai-copy-proposed').onclick=()=>copyAiProposedText();
   if($('#ai-undo-apply'))$('#ai-undo-apply').onclick=undoLastAiApply;
