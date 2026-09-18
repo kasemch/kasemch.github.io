@@ -713,7 +713,7 @@ function readinessState(){
   add('Assessment→CLO/Evidence',orphanAssess===0?'PASS':'BLOCKING',orphanAssess?orphanAssess+' รายการยังขาด CLO หรือ evidence':'รายการที่กรอกมี CLO/evidence','ASSESSMENT','#assessment-body');
   const t5=collectTqf5(),t3Codes=new Set(clos.map(x=>x.code).filter(Boolean)),t5Codes=new Set((t5.results?.clo_attainment||[]).map(x=>x.clo).filter(Boolean));
   const mismatch=[...t3Codes].filter(x=>!t5Codes.has(x));
-  add('มคอ.3 ↔ มคอ.5 CLO',mismatch.length===0?'PASS':'WARNING',mismatch.length?'ขาด '+mismatch.join(', '):'สอดคล้อง','CROSS_DOCUMENT','#t5-clo-body');
+  add('มคอ.3 ↔ มคอ.5 CLO',mismatch.length===0?'PASS':'WARNING',mismatch.length?'ขาด '+mismatch.join(', '):'สอดคล้อง','CROSS_DOCUMENT','#clo-body');
   const v=docCtx?.verification;
   add('ทวนสอบ',v?.status==='VERIFIED'?'PASS':'WARNING',v?.status||'ยังไม่มี','VERIFICATION','#verification-checklist');
   const linked=(evidenceWorkspace?.linked_evidence||[]).length,candidates=(evidenceWorkspace?.candidates||[]).length;
