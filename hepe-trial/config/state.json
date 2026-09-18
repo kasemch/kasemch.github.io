@@ -1,6 +1,6 @@
 {
-  "phase": "FAST-SUBMISSION-PORTAL-11",
-  "status": "V32_INLINE_AI_RECOMMENDATION_UX_READY",
+  "phase": "FAST-SUBMISSION-PORTAL-12",
+  "status": "V32_ACCESSIBILITY_RESPONSIBILITY_CROSSDOC_TEMPLATE_REVIEW_READY",
   "updated_at": "2026-09-18",
   "route": "./hepe-trial/",
   "programme_code": "25510071103503",
@@ -23,7 +23,9 @@
       "assessment_planner": true,
       "ai_per_section": true,
       "append_only_working_version": true,
-      "immutable_release_protected": true
+      "immutable_release_protected": true,
+      "save_default_source_status": "UNVERIFIED",
+      "working_content_auto_confirmed": false
     },
     "tqf5": {
       "status": "READY",
@@ -253,6 +255,82 @@
       "trigger": "ONE_CLICK",
       "result_location": "INLINE_UNDER_ACTIVE_SECTION",
       "user_decision_required": true
+    },
+    "accessibility_v32": {
+      "status": "READY",
+      "skip_link": true,
+      "aria_live_status": true,
+      "tablist_semantics": true,
+      "keyboard_tab_navigation": true,
+      "focus_visible": true,
+      "reduced_motion": true,
+      "sticky_table_headers": true,
+      "horizontal_table_hint": true,
+      "dynamic_table_regions": true,
+      "consistent_busy_state": true,
+      "friendly_error_mapping": true
+    },
+    "course_responsibility_v32": {
+      "status": "READY_READ_ONLY",
+      "source": "v_course_academic_responsibility_current",
+      "course_rpc": "hepe_fast_tqf_course_responsibility_by_code",
+      "programme_rpc": "hepe_fast_tqf_programme_responsibility_by_code",
+      "authenticated_only": true,
+      "programme_in_scope_courses": 65,
+      "courses_with_controlled_records_verified": 28,
+      "courses_with_verified_named_responsibility_verified": 28,
+      "missing_record_policy": "DISPLAY_MISSING_DO_NOT_INFER",
+      "dashboard_filter": true
+    },
+    "cross_document_qa_v32": {
+      "status": "READY",
+      "checks": [
+        "TQF3_ASSESSMENT_TO_TQF5_PLAN_ACTUAL",
+        "WEEKLY_EVIDENCE_EXPECTATION_TO_EVIDENCE_WORKSPACE",
+        "TQF3_CLO_TO_TQF5_CLO_ATTAINMENT",
+        "CQI_SOURCE_TO_NEXT_TQF3",
+        "ACCEPTED_AI_CHANGE_TRACEABILITY"
+      ],
+      "item_level_result_inference": false,
+      "version_change_narrative": true
+    },
+    "evidence_review_v32": {
+      "status": "READY",
+      "candidate_metadata_preview": true,
+      "duplicate_group_display": true,
+      "missing_authority_warning": true,
+      "hash_presence_indicator": true,
+      "locator_completeness": true,
+      "ready_for_human_review_state": true,
+      "admission_action": false,
+      "auto_admit": false
+    },
+    "template_review_v32": {
+      "status": "READY_READ_ONLY",
+      "rpc": "hepe_document_template_version_review",
+      "tqf4_compare_versions": [
+        1,
+        2
+      ],
+      "tqf6_compare_versions": [
+        1,
+        2
+      ],
+      "v2_activation_action": false,
+      "activation_human_gate": true
+    },
+    "review_package_v32": {
+      "status": "READY",
+      "appendices": [
+        "SECTION_FINDINGS",
+        "ACCEPTED_AI_DECISIONS",
+        "EVIDENCE_CANDIDATES",
+        "VERSION_DIFF",
+        "CQI_LINEAGE",
+        "SOURCE_PROVENANCE"
+      ],
+      "draft_only": true,
+      "institutional_approval_claim": false
     }
   },
   "environment": "NON-PRODUCTION",
@@ -329,15 +407,13 @@
   "curriculum_descriptions": {
     "source_file_id": "1E0fXyoOc-v2z-GzEyfGq-JHHKMK9C0xk",
     "source_title": "หลักสูตรศึกษาศาสตรบัณฑิต HE - PE 67 (1).docx",
-    "imported_count": 64,
-    "missing_count": 1,
-    "missing_courses": [
-      "HED3701"
-    ],
+    "imported_count": 65,
+    "missing_count": 0,
+    "missing_courses": [],
     "verification_status": "SOURCE_TEXT_EXTRACTED",
     "authority_status": "CURRICULUM_BOOK_SOURCE_OBSERVED",
     "parser_tail_remaining": 0,
-    "hed3701_route": "TQF4_TQF6_FIELD_PRACTICUM"
+    "hed3701_route": "CURRICULUM_BOOK_SOURCE_OBSERVED"
   },
   "course_description": {
     "eligible_courses": 65,
@@ -351,6 +427,26 @@
       "source_reference": "Google Drive 1E0fXyoOc-v2z-GzEyfGq-JHHKMK9C0xk | หลักสูตรศึกษาศาสตรบัณฑิต HE - PE 67 (1).docx",
       "source_locator": "3.1.5 คำอธิบายรายวิชา | HED3701",
       "institutional_approval_claim": false
+    }
+  },
+  "release_cache_key": "32.2",
+  "validation": {
+    "v32": {
+      "js_parse": "PASS",
+      "bad_collection_selectors": 0,
+      "duplicate_dom_ids": 0,
+      "missing_static_dom_ids_excluding_dynamic": [
+        "create-verification"
+      ],
+      "create_verification_id": "DYNAMIC_BY_DESIGN",
+      "aria_tab_panel_contract": "PASS",
+      "scope_65_of_65_descriptions": "PASS",
+      "responsibility_acl": "PASS",
+      "responsibility_out_of_scope_block": "PASS",
+      "tqf4_v2_activation_lock": "PASS",
+      "tqf6_v2_activation_lock": "PASS",
+      "hed2503_r1_immutable": "PASS",
+      "public_route_external_fetch": "NOT_VERIFIED_BY_WEB_TOOL"
     }
   }
 }
