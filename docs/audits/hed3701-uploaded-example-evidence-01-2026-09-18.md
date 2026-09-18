@@ -1,216 +1,149 @@
-# HED3701 USER-UPLOADED EXAMPLE EVIDENCE — 2026-09-18
+# HED3701 USER-UPLOADED EXAMPLE — CORRECTED CLASSIFICATION
 
-Status: TQF4 WORKING SOURCE ADMITTED / TQF6 FUTURE RESULTS NOT ADMITTED
+Date: 2026-09-18
 
-Environment: NON-PRODUCTION / Supabase Sandbox
+Status: **SUPERSEDED / CORRECTED AFTER USER CLARIFICATION**
 
-## Source
+Environment: NON-PRODUCTION
 
-File:
+## Correction notice
+
+The user explicitly clarified that the uploaded file:
 
 `รายละเอียดและรายงานผลประสบการณ์ภาคสนาม (มคอ.4 และ มคอ.6) วิชา HED 3701.docx`
 
-Source:
+is:
 
-Direct user upload in the ChatGPT project conversation.
+**a sample form and a sample of how to write TQF4/TQF6**
 
-SHA-256:
+and is **not actual HED3701 course content**.
 
-`787c2a2594480be7004d16243962880cd9f10385944015916f6c58e1e215b726`
+Therefore, the earlier interpretation that part of the uploaded document could be used as course-specific HED3701 working content was incorrect.
 
-Rendered page count:
+That interpretation has been superseded.
 
-`9`
+## Correct classification
 
-Visual render review:
+Evidence type:
 
-`PASS — readable, tables fit, no material clipping/overlap observed`
-
-DOCX modified metadata:
-
-`2026-09-18 01:58 UTC`
-
-## Document split
-
-Pages 1–5:
-
-TQF4 / Field Experience Specification
-
-Pages 6–9:
-
-TQF6 / Field Experience Report
-
-The two parts are governed separately.
-
-## TQF4 observations
-
-The source states HED3701 as:
-
-- 1 credit
-- source-observed pattern: 1(0-2-1)
-- planned fieldwork: 90 hours
-- AY2569 / Term 2
-- responsible instructor: Asst. Prof. Dr. Kasem Chooratna
-- placement scope: OBEC/BMA/Ramkhamhaeng demonstration-school networks
-- five CLOs with PLO mappings
-- planned activity allocation:
-  - pre-practicum 6 hours
-  - observation 20 hours
-  - co-teaching 40 hours
-  - school-health activity 14 hours
-  - post-practicum seminar 10 hours
-- assessment weighting:
-  - cooperating teacher 40%
-  - university supervisor 40%
-  - department/committee report + E-Portfolio 20%
-
-The canonical course table independently confirms:
-
-- course code HED3701
-- course title
-- credit value = 1
-
-The source-observed 1(0-2-1), 90-hour plan, activity allocation and 40/40/20 weighting are not promoted to institutional authority.
-
-## Temporal limitation on TQF4
-
-The source declares its latest-prepared/revised date as:
-
-`1 November 2569`
-
-Current evidence-review date:
-
-`18 September 2569`
-
-Therefore this date is future relative to the review.
+`SAMPLE_TQF4_TQF6_FORM_AND_WRITING_EXAMPLE`
 
 Classification:
 
-`FUTURE_DECLARED_DATE / WORKING PLAN`
+`SAMPLE_FORM_AND_WRITING_EXAMPLE_ONLY`
 
-It is not evidence of an executed approval event.
+Course evidence:
 
-## New controlled TQF4 version
+`REJECTED`
 
-Record:
+May be used for:
+
+- document structure
+- section organization
+- writing style
+- example wording patterns
+- UI/renderer/layout testing
+
+May NOT be used as evidence for:
+
+- actual HED3701 credit pattern
+- actual fieldwork hours
+- actual assessment weights
+- actual CLO/PLO mappings
+- actual instructors/supervisors
+- actual placement sites
+- actual student counts
+- actual school counts
+- actual grades
+- actual CLO attainment
+- actual satisfaction values
+- actual CQI outcomes
+- actual approval/signature dates
+
+## Supabase correction
+
+TQF4 record:
 
 `3782540a-8bf6-4ba2-abb5-e7ad4fdc29c2`
 
-Prior version:
-
-`852e786e-ba7a-4b30-9234-488726da4292`
-
-New version:
+Erroneous interpretation version retained for audit only:
 
 `c67d8d72-8219-4217-bc68-354101a7f888`
 
-Version number:
+Version:
 
 `2`
 
-Version status:
+This version is no longer current.
 
-`DRAFT`
+Corrective current version:
 
-Source status:
+`c6d5a2ec-5d30-4ed5-9c78-0b98f7839c18`
 
-`SOURCE_OBSERVED`
+Version:
 
-Lifecycle:
+`3`
 
-`DRAFT`
+Version 3 restores the pre-upload working content and records the user clarification.
 
-Approval:
+Current readback:
 
-`NOT_EXECUTED`
+- fieldwork_hours = null
+- course_specific_validation = PENDING
+- assessment applicability = SOURCE_TEMPLATE_ONLY_UNVERIFIED_FOR_HED3701
+- sample content admitted as course fact = false
+- lifecycle = DRAFT
 
-The new version supersedes Version 1 without deleting or rewriting it.
-
-## Evidence candidate registration
-
-Candidate:
-
-`5736fbc0-233e-46e0-98e4-0d8e0b43186a`
+## Evidence candidate correction
 
 Evidence ID:
 
 `HEPE-EV-HED3701-TQF4-TQF6-UPLOAD-20260918`
 
-Verification classification:
+Current verification status:
 
-`CONTENT_CONFIRMED_SPLIT_ADMISSION_TQF4_WORKING_TQF6_FUTURE`
+`USER_CLARIFIED_SAMPLE_ONLY_NOT_COURSE_EVIDENCE`
 
 Admission status:
 
-`NOT_ADMITTED`
+`REJECTED`
 
 Creates system authority:
 
 `false`
 
-This candidate records the uploaded file and its limitations; it does not create institutional authority.
+## TQF6 invariant
 
-## TQF6 future-result section
+TQF6 remains unchanged:
 
-The file states future result claims including:
-
-- 45 students
-- 45 passed
-- 12 schools
-- report date 25 March 2570
-- grade distribution
-- CLO attainment percentages
-- student satisfaction 4.82/5
-- mentor/school satisfaction 4.88/5
-- CQI outcomes
-
-The signature areas at the end of the rendered document remain blank signature lines with the future date 25 March 2570.
-
-Classification:
-
-`FUTURE WORKING CLAIMS / NOT EXECUTED EVIDENCE`
-
-No TQF6 result was admitted.
-
-## Invariant verification
-
-After TQF4 Version 2 creation:
-
-TQF4:
-
-- current version = 2
-- fieldwork hours = 90 (SOURCE_OBSERVED)
-- approval = NOT_EXECUTED
-- lifecycle = DRAFT
-
-TQF6:
-
-- current version remains 2
 - student_count = null
 - passed_count = null
 - approval = NOT_EXECUTED
-- lifecycle = DRAFT
+- verification = DRAFT
 
-Verification:
+No sample result was admitted.
 
-- HED3701 verification remains DRAFT
+## Governance rule established
 
-No TQF6 future result was promoted.
+When the user supplies a document and explicitly labels it as:
 
-No VERIFIED transition occurred.
+- ตัวอย่าง
+- แบบฟอร์มตัวอย่าง
+- ตัวอย่างการเขียน
+- sample/template/example
 
-No Production write occurred.
+the document must default to:
+
+`REFERENCE_SAMPLE_ONLY`
+
+unless the user separately confirms that some specific fields are actual course data.
+
+Example values must not be promoted into operational records by inference.
 
 ## Final assessment
 
-The uploaded document is useful and materially improves the HED3701 TQF4 working specification.
+The uploaded HED3701 document is useful as a **format and writing reference only**.
 
-It does **not** establish executed TQF6 results.
+It is not evidence of actual HED3701 implementation or results.
 
-Correct governed treatment:
-
-`TQF4 = COURSE-SPECIFIC WORKING SOURCE / SOURCE_OBSERVED`
-
-`TQF6 = FUTURE WORKING CLAIMS / NOT ADMITTED`
-
-Fail-closed behavior remains intact.
+The system state has been corrected without deleting audit history.
