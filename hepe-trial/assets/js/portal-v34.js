@@ -1428,33 +1428,50 @@ function renderReadiness(){
   $('#consistency-list').innerHTML=r.checks.filter(x=>['ALIGNMENT','ASSESSMENT','CROSS_DOCUMENT','VERIFICATION','EVIDENCE'].includes(x.category)).map(x=>'<div class="check-row"><span>'+esc(x.name)+'</span><span>'+esc(x.detail)+' '+readinessBadge(x.state)+'</span></div>').join('');
   renderReadinessSectionScores(r);renderWeeklyCoverageHeatmap();renderAssessmentMap();renderSourceGapQueue();renderAdvancedCrossDocumentQA();renderReviewPackagePreview();renderSectionCompletionV33();renderReviewQueueV33();enhanceAccessibility();
 }
+function reviewQueueRemainingByGroup(){
+  const rows=readinessGapList().map(x=>({...x,group:reviewQueueGroup(x)}));
+  return rows.reduce((a,x)=>{a[x.group]=(a[x.group]||0)+1;return a;},{});
+}
+function aiDecisionCountsBySection(){
+  return aiDecisions.reduce((a,x)=>{const k=x.section||'UNKNOWN';a[k]=(a[k]||0)+1;return a;},{});
+}
+function unresolvedAiTrail(){
+  return aiSuggestions.filter(x=>!['ACCEPTED','EDITED_AND_ACCEPTED','REJECTED'].includes(x.status));
+}
+function fieldLevelPriorDiffAppendix(){
+  const prev=priorWorkingVersion();if(!prev)return'<div>ยังไม่มี prior working version</div>';
+  return '<div><b>ฐานเปรียบเทียบ:</b> Working Version '+esc(prev.version_no)+'</div>'+reuseFieldCompareHtml(prev);
+}
 function renderReviewPackagePreview(){
   const host=$('#review-package-preview');if(!host)return;
   const r=readinessState(),c=curriculumCtx?.course||{},p=curriculumCtx?.programme||{},t3=collectTqf3(),t5=collectTqf5();
   const linked=(evidenceWorkspace?.linked_evidence||[]).length,candidates=evidenceWorkspace?.candidates||[],cand=candidates.length;
-  const unresolved=aiSuggestions.filter(x=>!['ACCEPTED','EDITED_AND_ACCEPTED','REJECTED'].includes(x.status)).length;
-  const accepted=aiDecisions.filter(x=>['ACCEPTED','EDITED_AND_ACCEPTED'].includes(x.decision));
-  const findings=r.checks.filter(x=>x.state!=='PASS');
-  const resp=(courseResponsibilityCtx?.records||[]).filter(x=>x.display_as_responsible_person);
+  const unresolved=unresolvedAiTrail(),accepted=aiDecisions.filter(x=>['ACCEPTED','EDITED_AND_ACCEPTED'].includes(x.decision));
+  const findings=r.checks.filter(x=>x.state!=='PASS'),resp=(courseResponsibilityCtx?.records||[]).filter(x=>x.display_as_responsible_person);
   const cqiSources=(cqiContext?.prior_tqf5||[]).reduce((n,x)=>n+(Array.isArray(x.improvement_plan)?x.improvement_plan.length:0),0)+(cqiContext?.improvement_items||[]).length;
-  host.innerHTML='<div class="review-grid">'+
+  const qGroups=reviewQueueRemainingByGroup(),aiCounts=aiDecisionCountsBySection();
+  host.innerHTML='<div class="draft-watermark">DRAFT · INTERNAL REVIEW</div><div class="review-grid">'+
     '<div><small>หลักสูตร</small><strong>'+esc(p.title_th||'—')+'</strong></div>'+
     '<div><small>รายวิชา</small><strong>'+esc((c.course_code||'')+' '+(c.title_th||''))+'</strong></div>'+
     '<div><small>Controlled responsibility</small><strong>'+esc(resp.length?resp.map(x=>x.person_name_th).join(', '):'ยังไม่มี controlled record')+'</strong></div>'+
     '<div><small>TQF3 Working Version</small><strong>'+esc(docCtx?.tqf3?.current_version_no??'—')+'</strong></div>'+
     '<div><small>Readiness</small><strong>'+r.score+'% · B '+r.blocking+' · W '+r.warnings+'</strong></div>'+
+    '<div><small>Review Queue remaining</small><strong>'+esc(Object.entries(qGroups).map(([k,v])=>k+' '+v).join(' · ')||'0')+'</strong></div>'+
     '<div><small>TQF3</small><strong>CLO '+(t3.form_sections?.clos||[]).length+' · Weeks '+(t3.form_sections?.weekly_plan||[]).length+' · Assess '+(t3.form_sections?.assessment_items||[]).length+'</strong></div>'+
     '<div><small>TQF5</small><strong>'+esc(docCtx?.tqf5?.lifecycle_status||'NO_RECORD')+' · CLO Results '+((t5.results?.clo_attainment||[]).length)+'</strong></div>'+
     '<div><small>Verification / Evidence</small><strong>'+esc(docCtx?.verification?.status||'NO_RECORD')+' · Linked '+linked+' · Candidate '+cand+'</strong></div>'+
-    '<div><small>AI / Source gaps</small><strong>Unresolved '+unresolved+' · Accepted '+accepted.length+' · Source gaps '+courseCatalog.filter(x=>!x.description?.description_th).length+'</strong></div>'+
+    '<div><small>AI</small><strong>Unresolved '+unresolved.length+' · Accepted '+accepted.length+'</strong></div>'+
     '</div>'+
     '<div class="review-appendices">'+
       '<div class="review-appendix"><h4>Appendix A · Section findings</h4><ul>'+(findings.length?findings.map(x=>'<li>'+esc(x.name)+' — '+esc(x.state)+' — '+esc(x.detail)+'</li>').join(''):'<li>ไม่พบ BLOCKING/WARNING ใน checks ปัจจุบัน</li>')+'</ul></div>'+
-      '<div class="review-appendix"><h4>Appendix B · Accepted AI decisions</h4><ul>'+(accepted.length?accepted.slice(-12).map(x=>'<li>'+esc(x.section||'')+' · '+esc(x.decision)+' · '+esc(x.source_basis||x.source_reference||'basis not recorded')+'</li>').join(''):'<li>ยังไม่มี AI decision ที่ผู้ใช้รับ</li>')+'</ul></div>'+
-      '<div class="review-appendix"><h4>Appendix C · Evidence candidates</h4><ul>'+(candidates.length?candidates.map(x=>'<li>'+esc(x.evidence_id)+' · '+esc(x.admission_status)+' · '+esc(candidateReviewState(x))+'</li>').join(''):'<li>ยังไม่มี evidence candidate</li>')+'</ul></div>'+
-      '<div class="review-appendix"><h4>Appendix D · Version diff</h4><div>'+esc(buildVersionChangeNarrative())+'</div></div>'+
-      '<div class="review-appendix"><h4>Appendix E · CQI lineage</h4><div>CQI source '+cqiSources+' · carry-forward accepted '+aiDecisions.filter(x=>x.section==='CQI_CARRY_FORWARD'&&x.decision==='IMPLEMENT').length+'</div></div>'+
-      '<div class="review-appendix"><h4>Appendix F · Source / provenance</h4><div>'+esc(curriculumCtx?.description?.source_reference||'No curriculum source')+' · '+esc(curriculumCtx?.description?.source_locator||'')+'</div></div>'+'<div class="review-appendix"><h4>Appendix G · AI Decision / Evidence Trail</h4><ul>'+(aiDecisions.length?aiDecisions.slice(-20).map(x=>'<li>'+esc(x.decided_at||'')+' · '+esc(x.document||'')+' · '+esc(x.section||'')+' · '+esc(x.action_type||'')+' · '+esc(x.decision||'')+' · '+esc(x.target||'no target')+' · basis: '+esc(x.source_basis||'not recorded')+' · working v'+esc(x.working_version??'—')+'</li>').join(''):'<li>ยังไม่มี AI decision trail ใน session/working content ปัจจุบัน</li>')+'</ul></div>'+
+      '<div class="review-appendix"><h4>Appendix B · AI decisions by section</h4><ul>'+(Object.keys(aiCounts).length?Object.entries(aiCounts).map(([k,v])=>'<li>'+esc(k)+' · '+v+' decisions</li>').join(''):'<li>ยังไม่มี AI decision</li>')+'</ul></div>'+
+      '<div class="review-appendix"><h4>Appendix C · Unresolved AI</h4><ul>'+(unresolved.length?unresolved.map(x=>'<li>'+esc(x.severity)+' · '+esc(x.title)+'</li>').join(''):'<li>ไม่มี unresolved suggestion ในชุดวิเคราะห์ปัจจุบัน</li>')+'</ul></div>'+
+      '<div class="review-appendix"><h4>Appendix D · Evidence candidates</h4><ul>'+(candidates.length?candidates.map(x=>'<li>'+esc(x.evidence_id)+' · '+esc(x.admission_status)+' · '+esc(candidateReviewState(x))+'</li>').join(''):'<li>ยังไม่มี evidence candidate</li>')+'</ul></div>'+
+      '<div class="review-appendix"><h4>Appendix E · Field-level prior-version diff</h4>'+fieldLevelPriorDiffAppendix()+'</div>'+
+      '<div class="review-appendix"><h4>Appendix F · CQI lineage</h4><div>CQI source '+cqiSources+' · carry-forward accepted '+aiDecisions.filter(x=>x.section==='CQI_CARRY_FORWARD'&&x.decision==='IMPLEMENT').length+'</div></div>'+
+      '<div class="review-appendix"><h4>Appendix G · Reuse / Update lineage</h4><ul>'+(reuseLineage.length?reuseLineage.map(x=>'<li>'+esc(x.at)+' · '+esc(x.action)+' · v'+esc(x.source_version)+' → v'+esc(x.target_version)+' · '+esc((x.fields||[]).join(', '))+'</li>').join(''):'<li>ยังไม่มี reuse/update action ใน session นี้</li>')+'</ul></div>'+
+      '<div class="review-appendix"><h4>Appendix H · Source / provenance</h4><div>'+esc(curriculumCtx?.description?.source_reference||'No curriculum source')+' · '+esc(curriculumCtx?.description?.source_locator||'')+'</div></div>'+
+      '<div class="review-appendix"><h4>Appendix I · AI Decision / Evidence Trail</h4><ul>'+(aiDecisions.length?aiDecisions.slice(-30).map(x=>'<li>'+esc(x.decided_at||'')+' · '+esc(x.document||'')+' · '+esc(x.section||'')+' · '+esc(x.action_type||'')+' · '+esc(x.decision||'')+' · '+esc(x.target||'no target')+' · basis: '+esc(x.source_basis||'not recorded')+' · rationale: '+esc(x.rationale||'—')+'</li>').join(''):'<li>ยังไม่มี AI decision trail ใน session/working content ปัจจุบัน</li>')+'</ul></div>'+
     '</div><div class="provenance-footer">DRAFT · NON-PRODUCTION · Internal review only · not institutional approval</div>';
 }
 
@@ -1476,17 +1493,22 @@ function structuralExecutionField(f){
 }
 function templateReviewCard(label,v1,v2){
   if(!v1||!v2)return'<div class="template-review-card"><h4>'+esc(label)+'</h4><div class="notice warn">ยังโหลดข้อมูลไม่ครบ</div></div>';
-  const s1=v1.sections||[],s2=v2.sections||[],codes1=new Set(s1.map(x=>x.section_code));
-  const added=s2.filter(x=>!codes1.has(x.section_code));
+  const s1=v1.sections||[],s2=v2.sections||[],codes1=new Set(s1.map(x=>x.section_code)),added=s2.filter(x=>!codes1.has(x.section_code));
   const fields=v2.fields||[],guarded=fields.filter(x=>x.synthetic_data_forbidden),canonical=fields.filter(x=>x.canonical_entity),execution=fields.filter(structuralExecutionField),approval=fields.filter(x=>x.field_kind==='SIGNATURE'||x.field_code==='APPROVAL');
+  const canonicalList=fields.filter(x=>/COURSE|ACADEMIC_TERM|CREDIT|PREREQUISITE|TQF4_LINEAGE/i.test(x.field_code||''));
+  const execList=fields.filter(structuralExecutionField);
   return '<div class="template-review-card"><h4>'+esc(label)+'</h4>'+
     '<div class="actions"><span class="badge info">v1 '+esc(v1.version?.version_status||'—')+'</span><span class="badge warn">v2 '+esc(v2.version?.version_status||'—')+'</span><span class="badge warn">current = v'+esc(v2.template?.current_version_no??v1.template?.current_version_no??'1')+'</span></div>'+
     '<div class="template-compare"><div class="template-version-box"><strong>v1 · '+s1.length+' sections</strong><ul>'+s1.map(x=>'<li>'+esc(x.section_label_th)+'</li>').join('')+'</ul></div>'+
     '<div class="template-version-box"><strong>v2 · '+s2.length+' sections</strong><ul>'+s2.map(x=>'<li>'+esc(x.section_label_th)+'</li>').join('')+'</ul></div></div>'+
     '<div class="template-field-summary"><div><b>เพิ่มใน v2:</b> '+(added.length?added.map(x=>esc(x.section_label_th)).join(' · '):'ไม่มี')+'</div>'+
-    '<div><b>Field bindings:</b> '+fields.length+' · guarded against synthetic data '+guarded.length+' · canonical/linkage entity '+canonical.length+' · execution-sensitive '+execution.length+' · approval/signature gate '+approval.length+'</div>'+
+    '<div><b>Field bindings:</b> '+fields.length+' · synthetic guard '+guarded.length+' · canonical/linkage '+canonical.length+' · execution-sensitive '+execution.length+' · approval/signature gate '+approval.length+'</div>'+
+    '<details><summary>Canonical/source-fed fields</summary><ul>'+(canonicalList.length?canonicalList.map(x=>'<li>'+esc(x.field_code)+' · '+esc(x.source_label_th||'')+'</li>').join(''):'<li>ไม่มีรายการที่จัดกลุ่มอัตโนมัติ</li>')+'</ul></details>'+
+    '<details><summary>Execution-only / evidence-required fields</summary><ul>'+(execList.length?execList.map(x=>'<li>'+esc(x.field_code)+' · '+esc(x.source_label_th||'')+'</li>').join(''):'<li>ไม่มีรายการ</li>')+'</ul></details>'+
+    '<details><summary>Approval / signature gates</summary><ul>'+(approval.length?approval.map(x=>'<li>'+esc(x.field_code)+' · '+esc(x.source_label_th||'')+'</li>').join(''):'<li>ไม่มี signature field ใน template นี้</li>')+'</ul></details>'+
     '<div class="help">v2 เป็น structural-only review; ไม่มีปุ่ม Activate/Approve ใน portal นี้</div></div></div>';
 }
+
 function renderTemplateReview(){
   const host=$('#template-review');if(!host)return;
   if(!templateReviewCtx){host.innerHTML='<div class="help">กำลังรอข้อมูล template review</div>';return;}
