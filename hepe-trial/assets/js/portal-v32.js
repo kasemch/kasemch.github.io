@@ -271,9 +271,9 @@ function assessmentRow(x,i){
   '</tr>';
 }
 function bindDynamicButtons(){
-  $('.clo-ai').forEach(b=>b.onclick=()=>runSectionAi('clo',Number(b.dataset.row),b));
-  $('.week-ai').forEach(b=>b.onclick=()=>runSectionAi('weekly',Number(b.dataset.row),b));
-  $('.assess-ai').forEach(b=>b.onclick=()=>runSectionAi('assessment',Number(b.dataset.row),b));
+  $$('.clo-ai').forEach(b=>b.onclick=()=>runSectionAi('clo',Number(b.dataset.row),b));
+  $$('.week-ai').forEach(b=>b.onclick=()=>runSectionAi('weekly',Number(b.dataset.row),b));
+  $$('.assess-ai').forEach(b=>b.onclick=()=>runSectionAi('assessment',Number(b.dataset.row),b));
   $$('.delete-clo').forEach(b=>b.onclick=()=>deleteRow('clo',Number(b.dataset.row)));
   $$('.delete-week').forEach(b=>b.onclick=()=>deleteRow('week',Number(b.dataset.row)));
   $$('.duplicate-week').forEach(b=>b.onclick=()=>duplicateWeek(Number(b.dataset.row)));
@@ -1268,7 +1268,7 @@ function bindStatic(){
   $('#sync-tqf5-from-tqf3').onclick=syncTqf5FromTqf3;
   $('#submission-mode').onclick=toggleSubmissionMode;
   $('#save-tqf3').onclick=()=>saveTqf3().catch(e=>say(e.message,'danger'));$('#save-tqf5').onclick=()=>saveTqf5().catch(e=>say(e.message,'danger'));$('#save-verification-note').onclick=()=>saveVerificationNote().catch(e=>say(e.message,'danger'));
-  $('.ai-section').forEach(b=>b.onclick=()=>runSectionAi(b.dataset.section,null,b));
+  $$('.ai-section').forEach(b=>b.onclick=()=>runSectionAi(b.dataset.section,null,b));
   $('#ai-chatgpt').onclick=()=>openChatGPT().catch(e=>say(e.message,'danger'));$('#ai-show-prompt').onclick=()=>{$('#ai-prompt-wrap').hidden=!$('#ai-prompt-wrap').hidden;$('#ai-prompt').value=aiPrompt();};
   $('#print-form').onclick=()=>window.print();$('#logout').onclick=()=>logout().catch(e=>say(e.message,'danger'));
   $('#login-form').addEventListener('submit',e=>loginMagic(e).catch(x=>say(x.message,'danger')));$('#password-login').onclick=()=>loginPassword().catch(x=>say(x.message,'danger'));
@@ -1281,7 +1281,7 @@ function bindStatic(){
   if($('#register-evidence-candidate'))$('#register-evidence-candidate').onclick=()=>registerEvidenceCandidate().catch(e=>say(e.message,'danger'));
   if($('#check-evidence-duplicate'))$('#check-evidence-duplicate').onclick=()=>checkEvidenceDuplicate().catch(e=>say(e.message,'danger'));
   if($('#evidence-candidate-filter'))$('#evidence-candidate-filter').onchange=renderEvidenceWorkspace;
-  $('[data-ai-inline-close]').forEach(b=>b.onclick=()=>{const p=b.closest('.ai-inline-result');if(p)p.hidden=true;});
+  $$('[data-ai-inline-close]').forEach(b=>b.onclick=()=>{const p=b.closest('.ai-inline-result');if(p)p.hidden=true;});
   if($('#ai-copy-proposed'))$('#ai-copy-proposed').onclick=()=>copyAiProposedText();
   if($('#ai-undo-apply'))$('#ai-undo-apply').onclick=undoLastAiApply;
   if($('#review-package-print'))$('#review-package-print').onclick=()=>window.print();
