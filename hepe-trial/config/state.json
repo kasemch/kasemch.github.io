@@ -1,6 +1,6 @@
 {
-  "phase": "FAST-SUBMISSION-PORTAL-06",
-  "status": "V29_AI_MATRIX_WEEKLY_REUSE_EVIDENCE_SUBMISSION_READY",
+  "phase": "FAST-SUBMISSION-PORTAL-08",
+  "status": "V29_SCOPE_FILTER_DESCRIPTION_FIX_INSTANT_AI_READY",
   "updated_at": "2026-09-18",
   "route": "./hepe-trial/",
   "programme_code": "25510071103503",
@@ -175,7 +175,11 @@
     "user_final_decision": true,
     "embedded_api_key": false,
     "immediate_analysis_box": true,
-    "deep_analysis_handoff_optional": true
+    "deep_analysis_handoff_optional": true,
+    "instant_textbox": true,
+    "textbox_id": "ai-analysis-box",
+    "behavior": "CLICK_ANALYZE_POPULATES_TEXT_IMMEDIATELY",
+    "canonical_auto_edit": false
   },
   "catalog": {
     "programme_count_verified": 1,
@@ -188,21 +192,17 @@
     "full_curriculum_course_count_reference": 92
   },
   "scope": {
-    "rule": "HED_PED_ONLY",
-    "included_prefixes": [
-      "HED",
-      "PED"
-    ],
+    "status": "LOCKED_FOR_CURRENT_PORTAL",
+    "include_rule": "CURRENT_CURRICULUM_MEMBER_EXCLUDING_EDU_AND_RAM",
     "excluded_prefixes": [
       "EDU",
       "RAM"
     ],
-    "scoped_course_count": 65,
-    "hed_count": 28,
-    "ped_count": 37,
-    "edu_count": 0,
-    "ram_count": 0,
-    "rationale": "Fast TQF operational scope is department-owned HED/PED courses only; general education and EDU teacher-profession courses are excluded."
+    "excluded_meaning": {
+      "EDU": "education-core courses excluded from this HEPE portal",
+      "RAM": "general-education courses excluded from this HEPE portal"
+    },
+    "eligible_course_count_verified": 65
   },
   "curriculum_descriptions": {
     "source_file_id": "1E0fXyoOc-v2z-GzEyfGq-JHHKMK9C0xk",
@@ -216,5 +216,14 @@
     "authority_status": "CURRICULUM_BOOK_SOURCE_OBSERVED",
     "parser_tail_remaining": 0,
     "hed3701_route": "TQF4_TQF6_FIELD_PRACTICUM"
+  },
+  "course_description": {
+    "eligible_courses": 65,
+    "with_canonical_description_verified": 64,
+    "missing_canonical_description_verified": 1,
+    "missing_course_codes": [
+      "HED3701"
+    ],
+    "fallback_rule": "WORKING_TQF3_MAY_DISPLAY_AS_NON_CANONICAL_FALLBACK_WITH_PROVENANCE; AI_MUST_NOT_INVENT_CANONICAL_DESCRIPTION"
   }
 }
