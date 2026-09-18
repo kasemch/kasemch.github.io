@@ -86,3 +86,81 @@
 .tps-milestone-stack strong{display:block;color:var(--tps-brick);font:700 1.9rem/1 Georgia,serif}.tps-milestone-stack span{display:block;margin-top:.25rem;color:#5c7183;font-size:.82rem;line-height:1.4}
 @media(max-width:980px){.tps-story-layout{grid-template-columns:1fr}.tps-story-wide{grid-column:auto}.tps-reflection-flow{justify-content:start}}
 @media(max-width:620px){.tps-pedagogy-grid,.tps-milestone-stack{grid-template-columns:1fr}.tps-semester-story li{grid-template-columns:52px 1fr}.tps-semester-story time{width:44px;height:44px}.tps-semester-story li:before{left:21px;top:44px}.tps-story-card{padding:.95rem}}
+
+/* Wave 05 — visual polish & mobile acceptance */
+.tps-studio{scroll-behavior:smooth}
+.tps-studio .sp-section-head{max-width:1040px}
+.tps-studio .sp-section-head h2{max-width:980px;text-wrap:balance}
+.tps-studio .sp-intro{max-width:940px}
+.tps-studio .sp-card,.tps-panel,.tps-story-card{min-width:0}
+.tps-studio .sp-card p,.tps-studio .sp-evidence-note,.tps-studio .sp-policy{overflow-wrap:anywhere}
+.tps-studio .sp-list li+li{margin-top:.4rem}
+.tps-studio .sp-section+.sp-section{border-top:1px solid rgba(17,59,103,.05)}
+.tps-studio .sp-section:first-of-type{border-top:0}
+.tps-studio .sp-card:hover{transform:translateY(-1px)}
+.tps-studio .sp-chip:hover,.tps-studio .sp-link:hover{text-decoration-thickness:2px;text-underline-offset:3px}
+.tps-studio a:focus-visible,.tps-studio button:focus-visible,.tps-studio summary:focus-visible,.tps-studio [tabindex="0"]:focus-visible{outline:3px solid rgba(200,95,61,.28);outline-offset:3px}
+.tps-course-table th:first-child,.tps-course-table td:first-child{position:sticky;left:0;z-index:1;background:#fff}.tps-course-table th:first-child{z-index:2;background:#f7f9fb}
+.tps-course-table tbody tr:hover td:first-child{background:#fffaf6}
+.tps-course-table-wrap{scrollbar-width:thin;overscroll-behavior-inline:contain}
+.tps-doc-chain,.tps-reflection-flow{scrollbar-width:thin;overscroll-behavior-inline:contain}
+.tps-explorer-grid,.tps-pedagogy-grid,.tps-milestone-stack{align-items:stretch}
+.tps-explorer-step,.tps-pedagogy-grid>div,.tps-milestone-stack>div{height:100%}
+.tps-story-quote{display:flex;flex-direction:column;justify-content:center}
+.tps-hero-copy,.tps-hero-visual{min-width:0}
+.td-toolbar{backdrop-filter:blur(8px)}
+@media(max-width:1100px){
+  .tps-studio .tps-hero{grid-template-columns:minmax(0,1fr) minmax(300px,.78fr)}
+  .tps-studio .tps-hero h1{font-size:clamp(2.9rem,6vw,5.2rem)}
+  .tps-dashboard-grid,.tps-story-layout{gap:.85rem}
+}
+@media(max-width:980px){
+  .tps-studio .sp-section{padding-top:3rem}
+  .tps-studio .tps-hero{grid-template-columns:1fr}
+  .tps-hero-copy{padding:2.6rem 2rem 2rem}
+  .tps-hero-visual{min-height:390px}
+  .tps-portrait-frame{inset:20px 24px 0 90px}
+  .tps-handnote-a{right:1rem;top:1rem}.tps-handnote-b{left:1rem;bottom:1rem}
+  .tps-course-table{min-width:760px}
+  .tps-reflection-step{min-width:190px}
+}
+@media(max-width:760px){
+  .tps-studio .sp-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tps-panel-head{display:block}.tps-panel-badge{margin-top:.55rem;white-space:normal}
+  .tps-pillar-strip{border-radius:18px}
+  .tps-course-table-wrap:after{content:"Swipe horizontally to inspect the full course table";display:block;padding:.55rem .75rem;background:#f8fafb;border-top:1px solid #e7ebee;color:#738392;font-size:.72rem}
+  .tps-doc-chain:after,.tps-reflection-flow:after{content:"";min-width:1px}
+}
+@media(max-width:620px){
+  .tps-studio{font-size:.97rem}
+  .tps-studio .sp-shell{width:min(100% - 18px,1460px)}
+  .tps-studio .sp-section{padding-top:2.5rem}
+  .tps-hero-copy{padding:1.8rem 1.1rem 1.4rem}
+  .tps-studio .tps-hero h1{font-size:clamp(2.35rem,12.5vw,3.45rem);line-height:.96}
+  .tps-hero-lead{font-size:.98rem}
+  .tps-hero-visual{min-height:330px}
+  .tps-portrait-frame{inset:16px 8px 0 26px}
+  .tps-handnote{padding:.58rem .68rem;font-size:.76rem;max-width:128px}
+  .tps-handnote-a{right:.5rem;top:.65rem}.tps-handnote-b{left:.5rem;bottom:.7rem}
+  .tps-studio .sp-navchips{display:grid;grid-template-columns:1fr;gap:.5rem}.tps-studio .sp-chip{text-align:center}
+  .tps-studio .sp-metrics{grid-template-columns:1fr 1fr;gap:.65rem}
+  .tps-studio .sp-metric{padding:.85rem}.tps-studio .sp-metric strong{font-size:1.55rem}
+  .tps-pillar-strip{grid-template-columns:1fr}
+  .tps-pillar-strip a{padding:.85rem 1rem}
+  .tps-story-card,.tps-panel{padding:.85rem}
+  .tps-course-table{min-width:720px}
+  .tps-course-table th,.tps-course-table td{padding:.62rem .68rem}
+  .tps-reflection-flow,.tps-doc-chain{margin-inline:-.15rem;padding-bottom:.8rem}
+  .tps-story-quote blockquote{font-size:1.5rem}
+  .tps-explorer-summary{align-items:flex-start;flex-direction:column}
+}
+@media(max-width:390px){
+  .tps-studio .sp-metrics{grid-template-columns:1fr}
+  .tps-handnote-b{display:none}
+  .tps-hero-visual{min-height:300px}
+}
+@media(prefers-reduced-motion:reduce){
+  .tps-studio{scroll-behavior:auto}
+  .tps-studio .sp-card,.tps-course-drill,.tps-studio .sp-chip{transition:none!important}
+  .tps-studio .sp-card:hover{transform:none}
+}
