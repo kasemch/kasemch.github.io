@@ -1,6 +1,6 @@
 {
-  "phase": "FAST-SUBMISSION-PORTAL-09",
-  "status": "V30_ADVANCED_AI_READINESS_DASHBOARD_EVIDENCE_INTAKE_READY",
+  "phase": "FAST-SUBMISSION-PORTAL-10",
+  "status": "V31_AI_READINESS_DASHBOARD_EVIDENCE_REVIEW_READY",
   "updated_at": "2026-09-18",
   "route": "./hepe-trial/",
   "programme_code": "25510071103503",
@@ -187,11 +187,70 @@
     "review_package": {
       "status": "READY",
       "mode": "DRAFT_INTERNAL_REVIEW_PRINT_PREVIEW"
+    },
+    "advanced_readiness_v31": {
+      "status": "READY",
+      "states": [
+        "BLOCKING",
+        "WARNING",
+        "PASS"
+      ],
+      "section_scores": true,
+      "jump_to_field": true,
+      "weekly_heatmap": true,
+      "assessment_map": true,
+      "source_gap_queue": true,
+      "export_readiness": true
+    },
+    "dashboard_v31": {
+      "status": "READY",
+      "operational_readiness": true,
+      "source_gap_filter": true,
+      "readiness_filter": true,
+      "sort": [
+        "COURSE",
+        "READINESS",
+        "RECENT"
+      ],
+      "course_drilldown": true,
+      "programme_smart_qa": true
+    },
+    "evidence_review_v31": {
+      "status": "READY",
+      "duplicate_detection": true,
+      "sha256_validation": true,
+      "candidate_filter": true,
+      "admission_review_shell": true,
+      "admission_action": false
+    },
+    "review_package_v31": {
+      "status": "READY",
+      "expanded_summary": true,
+      "provenance_footer": true,
+      "draft_only": true
+    },
+    "tqf4_v2": {
+      "status": "UNDER_REVIEW",
+      "current": false,
+      "version_no": 2,
+      "sections": 7,
+      "field_bindings": 18,
+      "source_scope": "STRUCTURE_LAYOUT_ONLY",
+      "synthetic_data_forbidden": true
+    },
+    "tqf6_v2": {
+      "status": "UNDER_REVIEW",
+      "current": false,
+      "version_no": 2,
+      "sections": 8,
+      "field_bindings": 21,
+      "source_scope": "STRUCTURE_LAYOUT_ONLY",
+      "synthetic_data_forbidden": true
     }
   },
   "environment": "NON-PRODUCTION",
   "production_authorized": false,
-  "ui_version": "30",
+  "ui_version": "31",
   "ai_assistant": {
     "status": "READY",
     "mode": "LOCAL_SMART_QA_PLUS_CHATGPT_HANDOFF",
@@ -212,7 +271,10 @@
     "proposed_text_box": true,
     "undo_last_apply": true,
     "decision_history": true,
-    "unresolved_counter": true
+    "unresolved_counter": true,
+    "evidence_basis": true,
+    "section_state": true,
+    "undo_stack_depth": 20
   },
   "catalog": {
     "programme_count_verified": 1,
@@ -253,12 +315,16 @@
   },
   "course_description": {
     "eligible_courses": 65,
-    "with_canonical_description_verified": 64,
-    "missing_canonical_description_verified": 1,
-    "missing_course_codes": [
-      "HED3701"
-    ],
-    "fallback_rule": "WORKING_TQF3_MAY_DISPLAY_AS_NON_CANONICAL_FALLBACK_WITH_PROVENANCE; AI_MUST_NOT_INVENT_CANONICAL_DESCRIPTION",
-    "hed3701_source_gap": "AUTHORITATIVE_SOURCE_NOT_FOUND; SAMPLE_TQF4_TQF6_REJECTED_FOR_FACTUAL_ADMISSION"
+    "with_canonical_description_verified": 65,
+    "missing_canonical_description_verified": 0,
+    "missing_course_codes": [],
+    "hed3701": {
+      "status_code": "DRAFT",
+      "verification_status": "SOURCE_TEXT_EXTRACTED",
+      "authority_status": "CURRICULUM_BOOK_SOURCE_OBSERVED",
+      "source_reference": "Google Drive 1E0fXyoOc-v2z-GzEyfGq-JHHKMK9C0xk | หลักสูตรศึกษาศาสตรบัณฑิต HE - PE 67 (1).docx",
+      "source_locator": "3.1.5 คำอธิบายรายวิชา | HED3701",
+      "institutional_approval_claim": false
+    }
   }
 }
