@@ -128,3 +128,15 @@ hr{border:0;border-top:1px solid var(--line);margin:18px 0}
   .draft-watermark{display:block!important;position:fixed;right:20px;bottom:20px}
   #submission-mode{display:none!important}
 }
+
+
+/* ===== Scope notice ===== */
+.scope-note{
+  border:1px solid #d7e2ef;
+  background:#f5f9ff;
+  border-radius:12px;
+  padding:10px 12px;
+  margin:10px 0 14px;
+}
+.scope-note strong{color:var(--brand)}
+.scope-note .help{display:inline;margin-left:6px}
