@@ -17,7 +17,7 @@ let cfg={},programmeCatalog=[],courseCatalog=[],termCatalog=[],curriculumCtx=nul
 let versionHistory=[],evidenceWorkspace=null,cqiContext=null,dashboardCtx=null,evidenceQueueCtx=null;
 let courseResponsibilityCtx=null,programmeResponsibilityCtx=null,templateReviewCtx=null,templateReviewLoaded=false;
 let activeTab='tqf3',activeAiSection='curriculum',aiSuggestions=[],aiDecisions=[];
-let saveTimer=null,staticBound=false,aiUndoStack=[],aiSectionRuns={},aiSectionSuggestionCache={},reviewQueueIndex=0;
+let saveTimer=null,staticBound=false,aiUndoStack=[],aiSectionRuns={},aiSectionSuggestionCache={},reviewQueueState={items:[],index:0};
 
 function say(msg,kind='info'){
   const el=$('#status'); if(!el)return;
@@ -182,7 +182,6 @@ async function loadSelectedCourse(){
     renderCqiCarryForward();
     renderReadiness();
     renderAiRail();
-    ensureV33Ui();
     offerLocalRecovery();
     enhanceAccessibility();
     say(d.error?'โหลดข้อมูลหลักสูตรแล้ว แต่ยังไม่พบ Course Offering ในปี/ภาคนี้':'พร้อมกรอกและบันทึก Draft','ok');
@@ -298,14 +297,19 @@ function renderTqf3(){
   bindDynamicButtons();
   updateAssessmentTotal();
   renderCloPloMatrix(f.plo_matrix||{});
-  renderWeeklyCoverage();
+  renderWeeklyCoverage();renderSectionCompletion();renderReuseUpdate();
+}
+function rowAiModeSelect(kind,i){
+  return '<select class="row-ai-mode" data-kind="'+kind+'" data-row="'+i+'">'+
+    '<option value="check">ตรวจ</option><option value="write">ช่วยเขียน</option><option value="refine">ปรับข้อความ</option><option value="align">ตรวจความสอดคล้อง</option>'+
+  '</select>';
 }
 function cloRow(x,i){
   return '<tr>'+
     '<td><input class="t3-clo-code" data-row="'+i+'" value="'+esc(x.code||'')+'"></td>'+
-    '<td><textarea class="t3-clo-desc" data-row="'+i+'" placeholder="ผลลัพธ์การเรียนรู้ที่วัดได้">'+esc(x.description||'')+'</textarea>'+aiQuickButtons('clo','.t3-clo-desc[data-row="'+i+'"]',i,['write','check','refine','align'])+'</td>'+
+    '<td><textarea class="t3-clo-desc" data-row="'+i+'" placeholder="ผลลัพธ์การเรียนรู้ที่วัดได้">'+esc(x.description||'')+'</textarea></td>'+
     '<td><input class="t3-clo-plo" data-row="'+i+'" value="'+esc(x.plo||'')+'" placeholder="เช่น PLO2, PLO5"></td>'+
-    '<td><button type="button" class="btn small ai clo-ai" data-row="'+i+'">AI วิเคราะห์</button> <button class="icon-btn danger delete-clo" data-row="'+i+'">ลบ</button></td>'+
+    '<td>'+rowAiModeSelect('clo',i)+' <button type="button" class="btn small ai clo-ai" data-row="'+i+'">AI</button> <button class="icon-btn danger delete-clo" data-row="'+i+'">ลบ</button></td>'+
   '</tr>';
 }
 function weekRow(x,i){
@@ -314,11 +318,11 @@ function weekRow(x,i){
     '<td><textarea class="wk-topic" data-row="'+i+'">'+esc(x.topic||'')+'</textarea></td>'+
     '<td><input class="wk-clo" data-row="'+i+'" value="'+esc(x.clo||'')+'"></td>'+
     '<td><input class="wk-plo" data-row="'+i+'" value="'+esc(x.plo||'')+'"></td>'+
-    '<td><textarea class="wk-act" data-row="'+i+'">'+esc(x.activities||'')+'</textarea>'+aiQuickButtons('weekly','.wk-act[data-row="'+i+'"]',i,['write','check','refine','align'])+'</td>'+
+    '<td><textarea class="wk-act" data-row="'+i+'">'+esc(x.activities||'')+'</textarea></td>'+
     '<td><input class="wk-lec" data-row="'+i+'" type="number" min="0" step=".5" value="'+Number(x.lecture_hours||0)+'"><input class="wk-prac" data-row="'+i+'" type="number" min="0" step=".5" value="'+Number(x.practice_hours||0)+'"><input class="wk-self" data-row="'+i+'" type="number" min="0" step=".5" value="'+Number(x.self_hours||0)+'"></td>'+
     '<td><textarea class="wk-assess" data-row="'+i+'">'+esc(x.assessment||'')+'</textarea></td>'+
     '<td><textarea class="wk-res" data-row="'+i+'">'+esc(x.resources||'')+'</textarea></td>'+
-    '<td><button type="button" class="btn small ai week-ai" data-row="'+i+'">AI</button> <button class="icon-btn duplicate-week" data-row="'+i+'">คัดลอก</button> <button class="icon-btn danger delete-week" data-row="'+i+'">ลบ</button></td>'+
+    '<td>'+rowAiModeSelect('weekly',i)+' <button type="button" class="btn small ai week-ai" data-row="'+i+'">AI</button> <button class="icon-btn duplicate-week" data-row="'+i+'">คัดลอก</button> <button class="icon-btn danger delete-week" data-row="'+i+'">ลบ</button></td>'+
   '</tr>';
 }
 function assessmentRow(x,i){
@@ -327,14 +331,17 @@ function assessmentRow(x,i){
     '<td><input class="as-method" data-row="'+i+'" value="'+esc(x.method||'')+'"></td>'+
     '<td><input class="as-weight" data-row="'+i+'" type="number" min="0" max="100" step=".01" value="'+Number(x.weight||0)+'"></td>'+
     '<td><input class="as-clo" data-row="'+i+'" value="'+esc(x.clos||'')+'"></td>'+
-    '<td><textarea class="as-evidence" data-row="'+i+'">'+esc(x.evidence||'')+'</textarea>'+aiQuickButtons('assessment','.as-evidence[data-row="'+i+'"]',i,['write','check','refine','align'])+'</td>'+
-    '<td><button type="button" class="btn small ai assess-ai" data-row="'+i+'">AI</button> <button class="icon-btn danger delete-assessment" data-row="'+i+'">ลบ</button></td>'+
+    '<td><textarea class="as-evidence" data-row="'+i+'">'+esc(x.evidence||'')+'</textarea></td>'+
+    '<td>'+rowAiModeSelect('assessment',i)+' <button type="button" class="btn small ai assess-ai" data-row="'+i+'">AI</button> <button class="icon-btn danger delete-assessment" data-row="'+i+'">ลบ</button></td>'+
   '</tr>';
 }
+function rowAiMode(kind,row){
+  return $('.row-ai-mode[data-kind="'+kind+'"][data-row="'+row+'"]')?.value||'check';
+}
 function bindDynamicButtons(){
-  $$('.clo-ai').forEach(b=>b.onclick=()=>runSectionAi('clo',Number(b.dataset.row),b));
-  $$('.week-ai').forEach(b=>b.onclick=()=>runSectionAi('weekly',Number(b.dataset.row),b));
-  $$('.assess-ai').forEach(b=>b.onclick=()=>runSectionAi('assessment',Number(b.dataset.row),b));
+  $('.clo-ai').forEach(b=>b.onclick=()=>runSectionAi('clo',Number(b.dataset.row),b,{mode:rowAiMode('clo',Number(b.dataset.row)),target:'.t3-clo-desc[data-row="'+b.dataset.row+'"]'}));
+  $('.week-ai').forEach(b=>b.onclick=()=>runSectionAi('weekly',Number(b.dataset.row),b,{mode:rowAiMode('weekly',Number(b.dataset.row)),target:'.wk-act[data-row="'+b.dataset.row+'"]'}));
+  $('.assess-ai').forEach(b=>b.onclick=()=>runSectionAi('assessment',Number(b.dataset.row),b,{mode:rowAiMode('assessment',Number(b.dataset.row)),target:'.as-evidence[data-row="'+b.dataset.row+'"]'}));
   $$('.delete-clo').forEach(b=>b.onclick=()=>deleteRow('clo',Number(b.dataset.row)));
   $$('.delete-week').forEach(b=>b.onclick=()=>deleteRow('week',Number(b.dataset.row)));
   $$('.duplicate-week').forEach(b=>b.onclick=()=>duplicateWeek(Number(b.dataset.row)));
@@ -342,7 +349,6 @@ function bindDynamicButtons(){
   $$('.as-weight').forEach(x=>x.oninput=()=>{updateAssessmentTotal();renderWeeklyCoverage();});
   $$('.t3-clo-code,.t3-clo-desc,.t3-clo-plo').forEach(x=>x.addEventListener('input',()=>{renderCloPloMatrix(collectPloMatrix());renderWeeklyCoverage();}));
   $$('.wk-topic,.wk-clo,.wk-plo,.wk-assess').forEach(x=>x.addEventListener('input',renderWeeklyCoverage));
-  bindAiFieldButtons();
 }
 function collectClos(){return $$('.t3-clo-code').map((el,i)=>({code:el.value.trim()||('CLO'+(i+1)),description:$('.t3-clo-desc[data-row="'+i+'"]')?.value.trim()||'',plo:$('.t3-clo-plo[data-row="'+i+'"]')?.value.trim()||''}));}
 function collectWeeks(){return $$('.wk-topic').map((el,i)=>({week:i+1,topic:el.value.trim(),clo:$('.wk-clo[data-row="'+i+'"]')?.value.trim()||'',plo:$('.wk-plo[data-row="'+i+'"]')?.value.trim()||'',activities:$('.wk-act[data-row="'+i+'"]')?.value.trim()||'',lecture_hours:Number($('.wk-lec[data-row="'+i+'"]')?.value||0),practice_hours:Number($('.wk-prac[data-row="'+i+'"]')?.value||0),self_hours:Number($('.wk-self[data-row="'+i+'"]')?.value||0),assessment:$('.wk-assess[data-row="'+i+'"]')?.value.trim()||'',resources:$('.wk-res[data-row="'+i+'"]')?.value.trim()||''}));}
@@ -597,299 +603,53 @@ function sug(id,title,message,opts={}){
     severity:opts.severity||inferSeverity(id,title),
     why:opts.why||'ประเด็นนี้อาจกระทบความครบถ้วน ความสอดคล้อง หรือความสามารถในการตรวจสอบย้อนกลับของเอกสาร',
     action:opts.action||message,
-    target:opts.target||null,
-    action_type:opts.action_type||'CHECK',
-    context_ref:opts.context_ref||null
+    target:opts.target||null
   };
 }
-function severityRank(sev){return sev==='BLOCKING'?0:sev==='WARNING'?1:sev==='SUGGESTION'?2:3;}
-function sortAiSuggestions(list){return (list||[]).slice().sort((a,b)=>severityRank(a.severity)-severityRank(b.severity));}
-function fieldValue(target){const el=$(target);return el?.value?.trim?.()||'';}
-function fieldSuggestion(section,action,target,row=null){
-  const value=fieldValue(target),ctx=sectionData(section,row);
-  const common={target,action_type:action.toUpperCase(),context_ref:{section,row,target}};
-  const mk=(id,title,message,opts={})=>sug(id,title,message,{...common,...opts});
-
-  if(action==='check'){
-    const found=sortAiSuggestions(analyze(section,row).filter(x=>!x.target||x.target===target));
-    return found.length?found:[mk('field-check-ok','ยังไม่พบช่องว่างสำคัญในช่องนี้','ตรวจสอบความถูกต้องทางวิชาการและหลักฐานอีกครั้งก่อนส่ง',{severity:'SUGGESTION'})];
-  }
-
-  if(section==='clo'){
-    if(action==='write')return[mk('field-write-clo','ร่าง CLO แบบวัดได้',
-      value||'ให้นักศึกษาสามารถ [คำกริยาที่วัดได้] [ความรู้/ทักษะที่สัมพันธ์กับคำอธิบายรายวิชา] ใน [บริบท] โดยมี [เกณฑ์ที่สังเกตได้]',
-      {severity:'SUGGESTION',why:'CLO ควรระบุพฤติกรรมที่สังเกตหรือประเมินได้ โดยยังต้องให้ผู้ใช้เติมสาระจริงจากรายวิชา'})];
-    if(action==='refine')return[mk('field-refine-clo','ปรับ CLO ให้ชัดขึ้น',
-      value||'เติมข้อความ CLO ก่อน แล้วใช้กรอบ: คำกริยาที่วัดได้ + เนื้อหา/ทักษะ + บริบท + เกณฑ์',
-      {severity:value?'WARNING':'BLOCKING',why:'ระบบจะไม่สร้างสาระรายวิชาที่ไม่มีหลักฐาน แต่ช่วยจัดโครงข้อความให้ชัดเจนได้'})];
-    if(action==='align')return sortAiSuggestions(analyze('clo',row));
-  }
-  if(section==='weekly'){
-    const week=collectWeeks()[row]||{};
-    if(action==='write')return[mk('field-write-week','ร่างกิจกรรมให้สอดคล้องกับ CLO',
-      value||('กิจกรรม: [ผู้เรียนลงมือปฏิบัติ/วิเคราะห์/อภิปราย] เพื่อแสดงพฤติกรรมตาม '+(week.clo||'[CLO]')+' และเก็บหลักฐาน [ชิ้นงาน/การสังเกต/แบบประเมิน]'),
-      {severity:'SUGGESTION',why:'ใช้ CLO และข้อมูลสัปดาห์ที่ผู้ใช้กรอกเป็นบริบท โดยยังไม่สมมติวิธีสอนจริง'})];
-    if(action==='refine')return[mk('field-refine-week','ปรับกิจกรรมให้ตรวจสอบได้',
-      value||'ระบุว่า “ผู้เรียนทำอะไร” “เพื่อ CLO ใด” และ “มีหลักฐานอะไร”',
-      {severity:value?'WARNING':'BLOCKING'})];
-    if(action==='align')return sortAiSuggestions(analyze('weekly',row));
-  }
-  if(section==='assessment'){
-    const a=collectAssessments()[row]||{};
-    if(action==='write')return[mk('field-write-assessment','ร่างหลักฐาน/เกณฑ์การประเมิน',
-      value||('หลักฐาน: [ชิ้นงาน/การปฏิบัติ/คำตอบ] · CLO: '+(a.clos||'[CLO]')+' · เกณฑ์: [rubric/ตัวชี้วัดที่สังเกตได้]'),
-      {severity:'SUGGESTION',why:'ช่วยจัดรูปแบบ evidence–criterion โดยไม่สร้างคะแนนหรือ rubric ที่ไม่ได้กำหนดจริง'})];
-    if(action==='refine')return[mk('field-refine-assessment','ปรับหลักฐานให้ตรวจสอบย้อนกลับได้',
-      value||'ระบุหลักฐานที่ใช้จริง + เกณฑ์/rubric + CLO ที่รายการนี้สนับสนุน',
-      {severity:value?'WARNING':'BLOCKING'})];
-    if(action==='align')return sortAiSuggestions(analyze('assessment',row));
-  }
-  if(section==='tqf5'){
-    if(target==='#t5-problems'){
-      return[mk('field-write-t5-problem','โครงบันทึกปัญหาที่เกิดขึ้นจริง',
-        value||'[ปัญหาที่เกิดขึ้นจริง] → [หลักฐาน/ข้อมูลที่พบ] → [ผลกระทบต่อการเรียนรู้หรือการดำเนินงาน]',
-        {severity:'SUGGESTION',why:'ห้ามสร้างเหตุการณ์ขึ้นเอง ผู้ใช้ต้องแทน placeholder ด้วยสิ่งที่เกิดขึ้นจริง'})];
-    }
-    if(target==='#improvement-plan'){
-      return[mk('field-write-cqi','โครง CQI Action',
-        value||'[ประเด็นจากผลจริง] | [การปรับปรุงรอบถัดไป] | [ช่วงเวลา/ภาคเรียน] | [ตัวชี้วัดการติดตาม]',
-        {severity:'SUGGESTION',why:'CQI ต้องย้อนกลับไปยังผลจริงหรือปัญหาที่มีหลักฐาน'})];
-    }
-    if(target==='#t5-plan-actual'){
-      return[mk('field-write-planactual','โครง Plan → Actual',
-        value||'แผนเดิม: [สิ่งที่วางไว้] · ดำเนินการจริง: [สิ่งที่เกิดขึ้นจริง] · ความแตกต่าง: [ถ้ามี] · เหตุผล/หลักฐาน: [แหล่งข้อมูล]',
-        {severity:'SUGGESTION'})];
-    }
-    return sortAiSuggestions(analyze('tqf5',null));
-  }
-  if(section==='verification'){
-    return[mk('field-write-verification','โครงข้อค้นพบการทวนสอบ',
-      value||'ตรวจสอบ: [สิ่งที่ตรวจ] · หลักฐาน: [รายการ/แหล่งที่มา] · ข้อค้นพบ: [สิ่งที่หลักฐานรองรับ] · ช่องว่าง: [ถ้ามี] · สถานะ: [ยังไม่สรุป VERIFIED หากหลักฐานไม่ครบ]',
-      {severity:'SUGGESTION',why:'สรุปได้เฉพาะสิ่งที่หลักฐานจริงรองรับ'})];
-  }
-  if(section==='overview'){
-    return[mk('field-write-overview','โครงข้อความสำหรับส่วนนี้',
-      value||'[ข้อมูล/ทรัพยากรที่ใช้จริง] → [เหตุผลที่เกี่ยวข้อง] → [แนวทางปรับปรุงที่มีที่มา]',
-      {severity:'SUGGESTION'})];
-  }
-  return sortAiSuggestions(analyze(section,row));
+function aiModeLabel(mode){
+  return({check:'ตรวจ',write:'ช่วยเขียน',refine:'ปรับข้อความ',align:'ตรวจความสอดคล้อง'})[mode]||'ตรวจ';
 }
-function runFieldAi(button){
-  const section=button.dataset.section,action=button.dataset.action,target=button.dataset.target,row=button.dataset.row===''||button.dataset.row==null?null:Number(button.dataset.row);
+function targetValue(target){const el=target?$(target):null;return el?.value?.trim?.()||'';}
+function buildQuickSuggestion(section,row,target,mode){
+  if(!target)return null;
+  const current=targetValue(target);
+  const context=sectionData(section,row);
+  const common={target,severity:mode==='align'?'WARNING':'INFO',why:'เป็นข้อความร่างเพื่อช่วยผู้ใช้ตัดสินใจ โดยยังต้องตรวจให้ตรงกับข้อมูลและหลักฐานจริงก่อนนำไปใช้'};
+  if(mode==='write'){
+    if(target.includes('t3-clo-desc'))return sug('quick-write-clo','ร่างโครง CLO','ผู้เรียนสามารถ [คำกริยาที่วัดได้] [สาระหรือทักษะตามรายวิชา] [ภายใต้เงื่อนไข/บริบทที่กำหนด]',{...common,action:'เติมคำกริยา เนื้อหา และเงื่อนไขจากรายวิชาจริง'});
+    if(target.includes('wk-act'))return sug('quick-write-week','ร่างกิจกรรมการเรียนรู้','ให้ผู้เรียนลงมือปฏิบัติ/อภิปราย/วิเคราะห์ภารกิจที่เชื่อมกับ CLO ที่ระบุ และสร้างหลักฐานการเรียนรู้ที่ตรวจสอบได้',{...common,action:'ปรับรูปแบบกิจกรรมให้ตรงหัวข้อ ผู้เรียน และเวลาเรียนจริง'});
+    if(target.includes('as-evidence'))return sug('quick-write-assess','ร่างหลักฐานการประเมิน','ระบุชิ้นงาน/การปฏิบัติ/แบบประเมินหรือ rubric ที่ใช้จริง พร้อมเกณฑ์ที่เชื่อมกับ CLO',{...common,action:'แทน placeholder ด้วยหลักฐานและ rubric ที่ใช้จริง'});
+    if(target==='#t5-problems')return sug('quick-write-problem','ร่างโครงปัญหา/อุปสรรค','[ปัญหาที่เกิดขึ้นจริง] → [หลักฐานหรือผลกระทบ] → [การดำเนินการแก้ไข/สิ่งที่ต้องติดตาม]',{...common,action:'ใช้เฉพาะเหตุการณ์และหลักฐานที่เกิดขึ้นจริง'});
+    if(target==='#improvement-plan')return sug('quick-write-cqi','ร่างโครง CQI','[ประเด็นจากผลการดำเนินงาน] → [การปรับปรุง] → [ช่วงเวลา/ผู้รับผิดชอบ] → [ตัวชี้วัดติดตาม]',{...common,action:'เชื่อมกับปัญหาและผลจริงของ มคอ.5'});
+    if(target==='#verification-note')return sug('quick-write-verification','ร่างโครงข้อค้นพบทวนสอบ','สรุปข้อค้นพบจากหลักฐานที่ตรวจได้ แยก “หลักฐานที่มี” “ข้อจำกัด/สิ่งที่ยังขาด” และ “ประเด็นที่ต้องดำเนินการต่อ”',{...common,action:'อย่าระบุ VERIFIED หาก Evidence Gate ยังไม่ผ่าน'});
+  }
+  if(mode==='refine'){
+    return sug('quick-refine-'+section,'ปรับข้อความให้ชัดและตรวจสอบได้',current?('คงข้อเท็จจริงเดิม แล้วปรับให้ระบุพฤติกรรม/เงื่อนไข/หลักฐานให้ชัดขึ้น: '+current):'ช่องนี้ยังว่าง จึงควรเริ่มจากข้อมูลจริงก่อนปรับถ้อยคำ',{...common,action:'แก้ข้อความในกล่องข้อเสนอ แล้วค่อย Apply'});
+  }
+  if(mode==='align'){
+    return sug('quick-align-'+section,'ตรวจความสอดคล้องของช่องนี้','ตรวจว่าเนื้อหาในช่องนี้เชื่อมกับ CLO/PLO กิจกรรม การประเมิน หรือหลักฐานที่เกี่ยวข้องโดยตรง และไม่มีการอ้างสิ่งที่ฐานข้อมูลยังไม่รองรับ',{...common,severity:'WARNING',action:'แก้เฉพาะจุดที่มี gap และคง provenance'});
+  }
+  if(mode==='check'){
+    return sug('quick-check-'+section,'ตรวจช่องเป้าหมาย',current?'มีข้อความแล้ว ให้ตรวจความชัด ความสอดคล้อง และหลักฐานรองรับก่อนใช้':'ช่องเป้าหมายยังว่างหรือยังไม่มีข้อมูลเพียงพอ',{...common,severity:current?'INFO':'WARNING',action:current?'ตรวจความถูกต้องกับบริบทส่วนอื่น':'เพิ่มข้อมูลจริงก่อน'});
+  }
+  return null;
+}
+function severityRank(sev){return sev==='BLOCKING'?0:sev==='WARNING'?1:2;}
+function runSectionAi(section,row=null,sourceEl=null,opts={}){
   activeAiSection=section;
-  aiSuggestions=sortAiSuggestions(fieldSuggestion(section,action,target,row));
-  aiSectionRuns[section]={at:new Date().toISOString(),count:aiSuggestions.length,row,action,target};
-  aiSectionSuggestionCache[section]=aiSuggestions;
-  renderAiRail();
-  renderInlineAi(section,row,button);
-  const panel=findInlinePanel(section,button);
-  if(panel){panel.dataset.fieldTarget=target;panel.dataset.actionType=action.toUpperCase();}
-}
-function aiQuickButtons(section,target,row=null,actions=['write','check','refine']){
-  const label={write:'ช่วยเขียน',check:'ตรวจ',refine:'ปรับ',align:'เชื่อมโยง'};
-  return '<span class="ai-field-actions">'+actions.map(a=>'<button type="button" class="btn tiny ai ai-field" data-section="'+esc(section)+'" data-action="'+a+'" data-target="'+esc(target)+'" data-row="'+(row==null?'':row)+'">'+label[a]+'</button>').join('')+'</span>';
-}
-function bindAiFieldButtons(){
-  $$('.ai-field').forEach(b=>b.onclick=()=>runFieldAi(b));
-}
-function inlineContextHtml(section,row,target){
-  const c=curriculumCtx?.course||{},d=curriculumCtx?.description||{};
-  let specific='';
-  if(section==='clo'){const x=collectClos()[row??0]||{};specific='CLO: '+(x.code||'—')+' · '+(x.description||'ยังไม่มีข้อความ')+' · PLO: '+(x.plo||'—');}
-  if(section==='weekly'){const x=collectWeeks()[row??0]||{};specific='Week '+(x.week||'—')+' · Topic: '+(x.topic||'—')+' · CLO: '+(x.clo||'—')+' · PLO: '+(x.plo||'—');}
-  if(section==='assessment'){const x=collectAssessments()[row??0]||{};specific='Assessment: '+(x.item||'—')+' · CLO: '+(x.clos||'—')+' · Weight: '+Number(x.weight||0)+'%';}
-  if(section==='tqf5')specific='TQF5 source: '+(docCtx?.tqf5?.source_status||'UNVERIFIED / NO RECORD');
-  if(section==='verification')specific='Verification: '+(docCtx?.verification?.status||'NO RECORD')+' · Linked evidence '+((evidenceWorkspace?.linked_evidence||[]).length)+' · Candidates '+((evidenceWorkspace?.candidates||[]).length);
-  return '<div><b>รายวิชา:</b> '+esc((c.course_code||'')+' '+(c.title_th||''))+'</div>'+
-    '<div><b>Course description source:</b> '+esc(d.source_reference||'—')+'</div>'+
-    '<div><b>Locator:</b> '+esc(d.source_locator||'—')+'</div>'+
-    '<div><b>Authority:</b> '+esc(d.authority_status||'—')+'</div>'+
-    (specific?'<div><b>บริบทส่วนนี้:</b> '+esc(specific)+'</div>':'')+
-    (target?'<div><b>Target:</b> '+esc(target)+'</div>':'');
-}
-function ensureInlineV33(panel){
-  if(!panel||panel.dataset.v33Enhanced==='true')return;
-  panel.dataset.v33Enhanced='true';
-  const head=panel.querySelector('.ai-inline-head');
-  if(head){
-    const tools=document.createElement('div');
-    tools.className='ai-inline-v33-tools';
-    tools.innerHTML='<button type="button" class="btn tiny ai-gap-toggle">Gap-first</button><button type="button" class="btn tiny ai-next-gap">ไปจุดถัดไป</button>';
-    head.appendChild(tools);
-  }
-  const selected=panel.querySelector('.ai-inline-selected-wrap');
-  if(selected){
-    const diff=document.createElement('div');diff.className='ai-diff-preview';diff.innerHTML='<div class="help">Diff preview จะแสดงเมื่อเลือกข้อเสนอ</div>';selected.after(diff);
-    const ctx=document.createElement('details');ctx.className='ai-context-mini';ctx.innerHTML='<summary>บริบทที่ AI ใช้</summary><div class="ai-context-mini-body"></div>';diff.after(ctx);
-  }
-  panel.querySelector('.ai-gap-toggle')?.addEventListener('click',()=>{panel.dataset.showAll=panel.dataset.showAll==='true'?'false':'true';renderInlineAi(panel.dataset.section,panel.dataset.row===''?null:Number(panel.dataset.row),null,panel,Number(panel.dataset.selectedIndex||0));});
-  panel.querySelector('.ai-next-gap')?.addEventListener('click',()=>goToNextGap(panel.dataset.target||null));
-}
-function filteredInlineSuggestions(section,panel){
-  const all=sortAiSuggestions(inlineSuggestionList(section));
-  const gaps=all.filter(x=>x.severity==='BLOCKING'||x.severity==='WARNING');
-  if(panel?.dataset.showAll==='true'||!gaps.length)return all;
-  return gaps;
-}
-function simpleDiffHtml(oldText,newText){
-  const a=String(oldText||'').split(/(\s+)/),b=String(newText||'').split(/(\s+)/);
-  let p=0;while(p<a.length&&p<b.length&&a[p]===b[p])p++;
-  let sa=a.length-1,sb=b.length-1;while(sa>=p&&sb>=p&&a[sa]===b[sb]){sa--;sb--;}
-  const pre=esc(a.slice(0,p).join('')),oldMid=esc(a.slice(p,sa+1).join('')),newMid=esc(b.slice(p,sb+1).join('')),post=esc(a.slice(sa+1).join(''));
-  return '<div class="diff-line"><small>เดิม</small><div>'+pre+(oldMid?'<del>'+oldMid+'</del>':'')+post+'</div></div>'+
-    '<div class="diff-line"><small>เสนอ</small><div>'+pre+(newMid?'<ins>'+newMid+'</ins>':'')+post+'</div></div>';
-}
-function renderInlineDiff(panel){
-  const diff=panel.querySelector('.ai-diff-preview');if(!diff)return;
-  const ta=panel.querySelector('[data-ai-inline-selected]'),target=panel.dataset.target?$(panel.dataset.target):null;
-  const oldText=target?.value||'',newText=ta?.value||'';
-  diff.innerHTML=panel.dataset.target?simpleDiffHtml(oldText,newText):'<div class="help">ข้อเสนอนี้ไม่มี target field จึงไม่มี replacement diff</div>';
-}
-function updateInlineContextV33(panel){
-  ensureInlineV33(panel);
-  const body=panel.querySelector('.ai-context-mini-body');
-  if(body)body.innerHTML=inlineContextHtml(panel.dataset.section,panel.dataset.row===''?null:Number(panel.dataset.row),panel.dataset.target||'');
-  const toggle=panel.querySelector('.ai-gap-toggle');
-  if(toggle)toggle.textContent=panel.dataset.showAll==='true'?'แสดงเฉพาะ Gap':'ดูทั้งหมด';
-  renderInlineDiff(panel);
-}
-function completionState(section){
-  if(section==='clo'){
-    const c=collectClos(),started=$('#t3-objectives')?.value.trim()||c.some(x=>x.description||x.plo);
-    if(!started)return'NOT_STARTED';
-    if(c.length&&c.every(x=>x.description&&x.plo))return'READY_FOR_INTERNAL_REVIEW';
-    return c.some(x=>!x.description)?'NEEDS_REVIEW':'IN_PROGRESS';
-  }
-  if(section==='weekly'){
-    const w=collectWeeks(),filled=w.filter(x=>x.topic);
-    if(!filled.length)return'NOT_STARTED';
-    return filled.every(x=>x.clo&&x.activities&&x.assessment)?'READY_FOR_INTERNAL_REVIEW':'NEEDS_REVIEW';
-  }
-  if(section==='assessment'){
-    const a=collectAssessments(),total=a.reduce((n,x)=>n+Number(x.weight||0),0);
-    if(!a.some(x=>x.item))return'NOT_STARTED';
-    return Math.abs(total-100)<.01&&a.filter(x=>x.item).every(x=>x.clos&&x.evidence)?'READY_FOR_INTERNAL_REVIEW':'NEEDS_REVIEW';
-  }
-  if(section==='overview'){
-    const r=$('#t3-resources')?.value.trim(),i=$('#t3-improvement')?.value.trim();
-    if(!r&&!i)return'NOT_STARTED';return r&&i?'READY_FOR_INTERNAL_REVIEW':'IN_PROGRESS';
-  }
-  if(section==='tqf5'){
-    const t=collectTqf5(),started=t.general_information?.registered_students!=null||t.plan_actual?.summary||(t.issues?.course_problems||[]).length;
-    if(!started)return'NOT_STARTED';
-    return t.plan_actual?.summary&&(t.results?.clo_attainment||[]).length?'READY_FOR_INTERNAL_REVIEW':'NEEDS_REVIEW';
-  }
-  if(section==='verification'){
-    const linked=(evidenceWorkspace?.linked_evidence||[]).length,cand=(evidenceWorkspace?.candidates||[]).length;
-    if(!docCtx?.verification&&!linked&&!cand)return'NOT_STARTED';
-    return docCtx?.verification?.status==='VERIFIED'?'READY_FOR_INTERNAL_REVIEW':'NEEDS_REVIEW';
-  }
-  return'IN_PROGRESS';
-}
-function renderSectionCompletionV33(){
-  $$('[data-ai-inline-section]').forEach(panel=>{
-    const section=panel.dataset.aiInlineSection||panel.getAttribute('data-ai-inline-section'),owner=panel.closest('.form-section'),header=owner?.querySelector('.form-section-header');
-    if(!header)return;
-    let badge=header.querySelector('[data-section-completion]');
-    if(!badge){badge=document.createElement('span');badge.dataset.sectionCompletion=section;badge.className='badge section-completion';header.appendChild(badge);}
-    const state=completionState(section);setBadge(badge,state,state==='READY_FOR_INTERNAL_REVIEW'?'ok':state==='NEEDS_REVIEW'?'warn':'info');
-  });
-}
-function readinessGapList(){
-  const rank={BLOCKING:0,WARNING:1,INFO:2};
-  return readinessState().checks.filter(x=>x.state!=='PASS'&&x.target).slice().sort((a,b)=>(rank[a.state]??3)-(rank[b.state]??3));
-}
-function goToNextGap(currentTarget=null){
-  const gaps=readinessGapList();if(!gaps.length){say('ไม่พบ BLOCKING/WARNING ที่มีจุดแก้ใน readiness ปัจจุบัน','ok');return;}
-  let i=currentTarget?gaps.findIndex(x=>x.target===currentTarget):-1;i=(i+1)%gaps.length;
-  jumpToReadinessTarget(gaps[i].target);say('ไปยัง '+gaps[i].name+' — '+gaps[i].state,'info');
-}
-function ensureReviewQueueV33(){
-  let host=$('#review-queue-v33');if(host)return host;
-  const readiness=$('.readiness');if(!readiness)return null;
-  host=document.createElement('div');host.id='review-queue-v33';host.className='review-queue-v33';
-  readiness.after(host);return host;
-}
-function renderReviewQueueV33(){
-  const host=ensureReviewQueueV33();if(!host)return;
-  const items=readinessGapList();if(!items.length){host.innerHTML='<div class="notice ok">Review Queue: ไม่พบ BLOCKING/WARNING ที่มี target</div>';return;}
-  reviewQueueIndex=Math.max(0,Math.min(reviewQueueIndex,items.length-1));const x=items[reviewQueueIndex];
-  host.innerHTML='<div class="section-title"><div><h3>Review Queue Mode</h3><div class="help">แก้ทีละจุดตามลำดับ BLOCKING → WARNING</div></div><span class="badge '+(x.state==='BLOCKING'?'danger':'warn')+'">'+(reviewQueueIndex+1)+' / '+items.length+'</span></div>'+
-    '<div class="review-queue-item"><strong>'+esc(x.name)+'</strong><div>'+esc(x.detail)+'</div></div>'+
-    '<div class="actions"><button type="button" class="btn small" id="rq-prev">ก่อนหน้า</button><button type="button" class="btn small primary" id="rq-jump">ไปจุดนี้</button><button type="button" class="btn small" id="rq-next">ถัดไป</button></div>';
-  $('#rq-prev').onclick=()=>{reviewQueueIndex=(reviewQueueIndex-1+items.length)%items.length;renderReviewQueueV33();};
-  $('#rq-next').onclick=()=>{reviewQueueIndex=(reviewQueueIndex+1)%items.length;renderReviewQueueV33();};
-  $('#rq-jump').onclick=()=>jumpToReadinessTarget(x.target);
-}
-function ensureReuseUpdateV33(){
-  let host=$('#reuse-update-v33');if(host)return host;
-  const diff=$('#version-diff');if(!diff)return null;
-  host=document.createElement('div');host.id='reuse-update-v33';host.className='reuse-update-v33';diff.after(host);return host;
-}
-function priorWorkingVersion(){
-  const current=Number(docCtx?.tqf3?.current_version_no||0);
-  return versionHistory.filter(x=>Number(x.version_no)<current).sort((a,b)=>Number(b.version_no)-Number(a.version_no))[0]||null;
-}
-function renderReuseUpdateV33(){
-  const host=ensureReuseUpdateV33();if(!host)return;
-  const prev=priorWorkingVersion(),cqi=(cqiContext?.prior_tqf5||[]).length+(cqiContext?.improvement_items||[]).length;
-  if(!prev){host.innerHTML='<div class="help">Reuse → Update: ยังไม่มี prior working version ที่เก่ากว่าฉบับปัจจุบัน</div>';return;}
-  host.innerHTML='<div class="section-title"><div><h4>Reuse → Update Assistant</h4><div class="help">ฐาน: Working Version '+esc(prev.version_no)+' · CQI sources '+cqi+' · ไม่เขียนทับข้อมูลที่กรอกแล้ว</div></div><span class="badge info">USER DECIDES</span></div>'+
-    '<div class="actions"><button type="button" class="btn small" data-reuse-action="KEEP">คงฉบับปัจจุบัน</button><button type="button" class="btn small primary" data-reuse-action="UPDATE">เติมเฉพาะช่องว่างจาก Version '+esc(prev.version_no)+'</button><button type="button" class="btn small" data-reuse-action="REWRITE">เริ่มทบทวนจาก Gap แรก</button></div>'+
-    '<div id="reuse-update-result" class="help"></div>';
-  $$('[data-reuse-action]').forEach(b=>b.onclick=()=>applyReuseDecisionV33(b.dataset.reuseAction,prev));
-}
-function applyReuseDecisionV33(action,prev){
-  const result=$('#reuse-update-result');
-  if(action==='KEEP'){
-    aiDecisions.push({document:'TQF3',section:'REUSE_UPDATE',suggestion_id:'KEEP_CURRENT',decision:'ACCEPTED',text:'Keep current working content',source_basis:'Working Version '+prev.version_no,working_version:docCtx?.tqf3?.current_version_no,decided_at:new Date().toISOString()});
-    if(result)result.textContent='คงฉบับปัจจุบัน ไม่มีการเปลี่ยนช่องข้อมูล';return;
-  }
-  if(action==='REWRITE'){
-    aiDecisions.push({document:'TQF3',section:'REUSE_UPDATE',suggestion_id:'REVIEW_FROM_GAP',decision:'ACCEPTED',text:'Start review from first readiness gap',source_basis:'Working Version '+prev.version_no,working_version:docCtx?.tqf3?.current_version_no,decided_at:new Date().toISOString()});
-    goToNextGap(null);if(result)result.textContent='เริ่มทบทวนจาก Gap แรกแล้ว';return;
-  }
-  const fs=prev.content?.form_sections||{};let filled=0;
-  const fill=(sel,val)=>{const el=$(sel);if(el&&!el.value.trim()&&val){el.value=val;el.dispatchEvent(new Event('input',{bubbles:true}));filled++;}};
-  fill('#t3-objectives',fs.objectives);fill('#t3-resources',fs.resources);fill('#t3-improvement',fs.improvement_notes);
-  aiDecisions.push({document:'TQF3',section:'REUSE_UPDATE',suggestion_id:'FILL_BLANKS_FROM_PRIOR',decision:'EDITED_AND_ACCEPTED',text:'Filled '+filled+' blank top-level fields only',source_basis:'Working Version '+prev.version_no,working_version:docCtx?.tqf3?.current_version_no,decided_at:new Date().toISOString()});
-  if(result)result.textContent='เติมเฉพาะช่องว่าง '+filled+' ช่องจาก Version '+prev.version_no+' โดยไม่เขียนทับข้อมูลที่มีอยู่';
-  renderReadiness();
-}
-function ensureStaticFieldQuickActionsV33(){
-  const defs=[
-    ['#t3-objectives','clo',['write','check','refine']],
-    ['#t3-resources','overview',['write','check','refine']],
-    ['#t3-improvement','overview',['write','check','refine']],
-    ['#t5-plan-actual','tqf5',['write','check','refine']],
-    ['#t5-problems','tqf5',['write','check','refine']],
-    ['#improvement-plan','tqf5',['write','check','refine']],
-    ['#verification-note','verification',['write','check','refine']]
-  ];
-  defs.forEach(([sel,section,actions])=>{
-    const el=$(sel),field=el?.closest('.field');if(!el||!field||field.querySelector('.ai-field-actions'))return;
-    const wrap=document.createElement('div');wrap.innerHTML=aiQuickButtons(section,sel,null,actions);field.insertBefore(wrap.firstElementChild,el);
-  });
-  bindAiFieldButtons();
-}
-function ensureV33Ui(){
-  $$('[data-ai-inline-section]').forEach(ensureInlineV33);
-  ensureStaticFieldQuickActionsV33();
-  renderSectionCompletionV33();
-  renderReviewQueueV33();
-  renderReuseUpdateV33();
-}
-function runSectionAi(section,row=null,sourceEl=null){
-  activeAiSection=section;
-  aiSuggestions=sortAiSuggestions(analyze(section,row));
-  aiSectionRuns[section]={at:new Date().toISOString(),count:aiSuggestions.length,row};
+  const mode=opts.mode||'check';
+  let list=analyze(section,row);
+  const quick=buildQuickSuggestion(section,row,opts.target||null,mode);
+  if(quick)list=[quick,...list];
+  aiSuggestions=list.slice().sort((a,b)=>severityRank(a.severity)-severityRank(b.severity));
+  aiSectionRuns[section]={at:new Date().toISOString(),count:aiSuggestions.length,row,mode};
   aiSectionSuggestionCache[section]=aiSuggestions;
   renderAiRail();
   const box=$('#ai-analysis-box');
   if(box){
     const labels={curriculum:'ข้อมูลหลักสูตร',clo:'CLO–PLO',weekly:'แผนรายสัปดาห์',assessment:'การประเมิน',tqf5:'มคอ.5',verification:'ทวนสอบ',overview:'Readiness'};
     const c=curriculumCtx?.course||{};
-    const header='ผลวิเคราะห์ทันที — '+(labels[section]||section)+'\nรายวิชา: '+(c.course_code||'')+' '+(c.title_th||'')+'\n\n';
+    const header='ผลวิเคราะห์ทันที — '+(labels[section]||section)+' · '+aiModeLabel(mode)+'\nรายวิชา: '+(c.course_code||'')+' '+(c.title_th||'')+'\n\n';
     box.value=header+
       aiSuggestions.map((x,i)=>(i+1)+'. ['+x.severity+'] '+x.title+'\n   '+x.message+'\n   เหตุผล: '+x.why+'\n   Action: '+x.action).join('\n\n')+
       '\n\nการตัดสินใจสุดท้ายเป็นของผู้ใช้ ระบบจะไม่แก้ canonical data อัตโนมัติ';
@@ -899,6 +659,7 @@ function runSectionAi(section,row=null,sourceEl=null){
   renderAiDecisionHistory();
   renderInlineAi(section,row,sourceEl);
 }
+
 function findInlinePanel(section,sourceEl=null){
   const owner=sourceEl?.closest?.('.form-section');
   const local=owner?.querySelector?.('[data-ai-inline-section="'+section+'"]');
@@ -912,9 +673,7 @@ function inlineSuggestionList(section){
 function renderInlineAi(section,row=null,sourceEl=null,forcedPanel=null,selectedIndex=0){
   const panel=forcedPanel||findInlinePanel(section,sourceEl);
   if(!panel)return;
-  ensureInlineV33(panel);
-  const all=inlineSuggestionList(section);
-  const list=filteredInlineSuggestions(section,panel);
+  const list=inlineSuggestionList(section);
   const basis=aiEvidenceBasis(section);
   panel.hidden=false;
   panel.dataset.section=section;
@@ -922,38 +681,35 @@ function renderInlineAi(section,row=null,sourceEl=null,forcedPanel=null,selected
   const summary=panel.querySelector('[data-ai-inline-summary]');
   const basisEl=panel.querySelector('[data-ai-inline-basis]');
   const listEl=panel.querySelector('[data-ai-inline-list]');
-  if(summary)summary.textContent='แสดง '+list.length+' / '+all.length+' ข้อเสนอ · เรียง BLOCKING → WARNING → SUGGESTION';
+  if(summary)summary.textContent='พบ '+list.length+' ข้อเสนอ · เลือกข้อเสนอเพื่อดูข้อความด้านล่าง';
   if(basisEl){
     basisEl.textContent=basis.level+' · '+basis.label;
     basisEl.className='badge '+(basis.level==='HIGH'?'ok':basis.level==='MEDIUM'?'warn':'danger');
     basisEl.title=basis.detail||'';
   }
   if(listEl){
-    listEl.innerHTML=list.map(x=>{
-      const i=all.indexOf(x);
-      return '<div class="ai-inline-card '+(x.status==='REJECTED'?'rejected':x.status==='ACCEPTED'||x.status==='EDITED_AND_ACCEPTED'?'accepted':'')+'" data-ai-inline-card data-i="'+i+'">'+
-        '<div class="ai-inline-card-head"><span class="badge '+severityKind(x.severity)+'">'+esc(x.severity)+'</span><strong>'+esc(x.title)+'</strong><span class="badge info">'+esc(x.action_type||'CHECK')+'</span></div>'+
+    listEl.innerHTML=list.map((x,i)=>
+      '<div class="ai-inline-card '+(x.status==='REJECTED'?'rejected':x.status==='ACCEPTED'||x.status==='EDITED_AND_ACCEPTED'?'accepted':'')+'" data-ai-inline-card data-i="'+i+'">'+
+        '<div class="ai-inline-card-head"><span class="badge '+severityKind(x.severity)+'">'+esc(x.severity)+'</span><strong>'+esc(x.title)+'</strong></div>'+
         '<div>'+esc(x.message)+'</div>'+
         '<div class="help"><b>เหตุผล:</b> '+esc(x.why)+'</div>'+
         '<div class="actions">'+
           '<button type="button" class="btn small ai-inline-pick" data-i="'+i+'">เลือกข้อเสนอนี้</button>'+
           '<button type="button" class="btn small ai-inline-reject" data-i="'+i+'">ไม่ใช้</button>'+
         '</div>'+
-      '</div>';
-    }).join('');
+      '</div>'
+    ).join('');
   }
-  $$('.ai-inline-pick').filter(x=>x.closest('.ai-inline-result')===panel).forEach(x=>x.onclick=()=>pickInlineSuggestion(panel,Number(x.dataset.i)));
-  $$('.ai-inline-reject').filter(x=>x.closest('.ai-inline-result')===panel).forEach(x=>x.onclick=()=>rejectInlineSuggestion(panel,Number(x.dataset.i)));
+  $$('.ai-inline-pick').filter(b=>b.closest('.ai-inline-result')===panel).forEach(b=>b.onclick=()=>pickInlineSuggestion(panel,Number(b.dataset.i)));
+  $$('.ai-inline-reject').filter(b=>b.closest('.ai-inline-result')===panel).forEach(b=>b.onclick=()=>rejectInlineSuggestion(panel,Number(b.dataset.i)));
 
-  let idx=Number(selectedIndex);
-  if(!all[idx]||!list.includes(all[idx]))idx=list.length?all.indexOf(list[0]):-1;
-  if(idx>=0)pickInlineSuggestion(panel,idx,false);
+  const idx=Math.max(0,Math.min(selectedIndex,list.length-1));
+  if(list.length)pickInlineSuggestion(panel,idx,false);
   else clearInlineSelection(panel);
 
   panel.classList.remove('ai-inline-flash');
   void panel.offsetWidth;
   panel.classList.add('ai-inline-flash');
-  updateInlineContextV33(panel);
   panel.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 function clearInlineSelection(panel){
@@ -976,7 +732,7 @@ function pickInlineSuggestion(panel,i,focus=true){
   if(ta){
     ta.value=sg.message||sg.action||'';
     ta.dataset.original=ta.value;
-    ta.oninput=()=>{updateInlineApplyState(panel);renderInlineDiff(panel);};
+    ta.oninput=()=>updateInlineApplyState(panel);
     if(focus)ta.focus({preventScroll:true});
   }
   const target=panel.querySelector('[data-ai-inline-target]');
@@ -988,7 +744,10 @@ function pickInlineSuggestion(panel,i,focus=true){
   if(accept){accept.disabled=false;accept.onclick=()=>acceptInlineSuggestion(panel);}
   if(copy){copy.disabled=false;copy.onclick=()=>copyInlineSuggestion(panel);}
   const close=panel.querySelector('[data-ai-inline-close]');if(close)close.onclick=()=>panel.hidden=true;
-  updateInlineApplyState(panel);updateInlineContextV33(panel);
+  updateInlineApplyState(panel);
+  renderInlineDiff(panel,sg);
+  renderInlineContext(panel,section,rowFromPanel(panel));
+  ensureInlineV33Tools(panel);
 }
 function updateInlineApplyState(panel){
   const ta=panel.querySelector('[data-ai-inline-selected]');
@@ -1012,9 +771,9 @@ function recordInlineDecision(panel,decision,textOverride=null){
   const ta=panel.querySelector('[data-ai-inline-selected]');
   const text=textOverride??ta?.value??sg.message;
   sg.status=decision;
-  aiDecisions.push({document:activeTab==='tqf5'?'TQF5':'TQF3',section,suggestion_id:sg.id,decision,text,source_basis:aiEvidenceBasis(section).label,action_type:sg.action_type||panel.dataset.actionType||'SECTION_ANALYSIS',target:sg.target||panel.dataset.target||null,working_version:docCtx?.tqf3?.current_version_no??null,decided_at:new Date().toISOString()});
+  aiDecisions.push({document:activeTab==='tqf5'?'TQF5':'TQF3',section,suggestion_id:sg.id,decision,text,source_basis:aiEvidenceBasis(section).label,decided_at:new Date().toISOString()});
   aiSectionSuggestionCache[section]=list;
-  renderAiRail();renderAiDecisionHistory();renderReadiness();renderSectionCompletionV33();renderReviewQueueV33();
+  renderAiRail();renderAiDecisionHistory();renderReadiness();
   renderInlineAi(section,panel.dataset.row===''?null:Number(panel.dataset.row),null,panel,index);
 }
 function acceptInlineSuggestion(panel){
@@ -1173,6 +932,113 @@ async function copyAiProposedText(){
   try{await navigator.clipboard.writeText(text);say('คัดลอกข้อความเสนอแล้ว','ok');}
   catch{say('ไม่สามารถคัดลอกอัตโนมัติได้ กรุณาเลือกข้อความในกล่อง','warn');}
 }
+function rowFromPanel(panel){return panel.dataset.row===''?null:Number(panel.dataset.row);}
+function ensureInlineV33Tools(panel){
+  if(panel.querySelector('[data-ai-v33-tools]'))return;
+  const wrap=document.createElement('div');
+  wrap.setAttribute('data-ai-v33-tools','');
+  wrap.className='ai-v33-tools';
+  wrap.innerHTML=
+    '<div class="ai-diff-preview" data-ai-diff></div>'+
+    '<details class="ai-context-drawer"><summary>ดูบริบทที่ AI ใช้</summary><div data-ai-context-body></div></details>'+
+    '<div class="actions"><button type="button" class="btn small ai-next-gap">ไปจุดถัดไปที่ต้องแก้</button></div>';
+  const actions=panel.querySelector('.actions:last-child');
+  panel.insertBefore(wrap,actions||null);
+  wrap.querySelector('.ai-next-gap').onclick=()=>goToNextGap(panel.dataset.target||null);
+}
+function renderInlineDiff(panel,sg){
+  ensureInlineV33Tools(panel);
+  const host=panel.querySelector('[data-ai-diff]');if(!host)return;
+  const old=sg?.target?targetValue(sg.target):'';
+  const proposed=panel.querySelector('[data-ai-inline-selected]')?.value||sg?.message||'';
+  host.innerHTML='<div><small>ข้อความเดิม</small><pre>'+esc(old||'— ว่าง —')+'</pre></div><div><small>ข้อความเสนอ</small><pre>'+esc(proposed||'—')+'</pre></div>';
+}
+function renderInlineContext(panel,section,row){
+  ensureInlineV33Tools(panel);
+  const host=panel.querySelector('[data-ai-context-body]');if(!host)return;
+  const c=curriculumCtx?.course||{},d=curriculumCtx?.description||{},basis=aiEvidenceBasis(section);
+  let related='';
+  if(section==='clo'){const x=row!=null?collectClos()[row]:null;related=x?('CLO '+esc(x.code||'')+' · PLO '+esc(x.plo||'ยังไม่ระบุ')):'ทั้งหมวด CLO';}
+  if(section==='weekly'){const x=row!=null?collectWeeks()[row]:null;related=x?('สัปดาห์ '+(row+1)+' · CLO '+esc(x.clo||'ยังไม่ระบุ')+' · PLO '+esc(x.plo||'ยังไม่ระบุ')):'ทั้งแผนรายสัปดาห์';}
+  if(section==='assessment'){const x=row!=null?collectAssessments()[row]:null;related=x?('Assessment '+esc(x.item||'ยังไม่ระบุ')+' · CLO '+esc(x.clos||'ยังไม่ระบุ')):'ทั้งหมวด assessment';}
+  host.innerHTML='<div class="context-grid">'+
+    '<div><small>รายวิชา</small><strong>'+esc((c.course_code||'')+' '+(c.title_th||''))+'</strong></div>'+
+    '<div><small>Evidence basis</small><strong>'+esc(basis.level+' · '+basis.label)+'</strong></div>'+
+    '<div><small>บริบทส่วนนี้</small><strong>'+related+'</strong></div>'+
+    '<div><small>Curriculum source</small><span>'+esc(d.source_locator||d.source_reference||'ไม่พบ')+'</span></div>'+
+    '</div>';
+}
+function goToNextGap(currentTarget=null){
+  const r=readinessState();
+  const gaps=r.checks.filter(x=>x.state!=='PASS'&&x.target);
+  if(!gaps.length){say('ไม่พบ BLOCKING/WARNING ที่มีจุดให้ไปต่อ','ok');return;}
+  let idx=currentTarget?gaps.findIndex(x=>x.target===currentTarget):-1;
+  const next=gaps[(idx+1+gaps.length)%gaps.length];
+  jumpToReadinessTarget(next.target);
+  say('ไปยังจุดถัดไป: '+next.name,next.state==='BLOCKING'?'danger':'warn');
+}
+function sectionCompletionState(section){
+  if(section==='clo'){const a=collectClos();if(!a.some(x=>x.description))return'NOT STARTED';if(a.some(x=>!x.description||!x.plo))return'NEEDS REVIEW';return'READY';}
+  if(section==='weekly'){const a=collectWeeks();if(!a.some(x=>x.topic))return'NOT STARTED';if(a.some(x=>x.topic&&(!x.clo||!x.activities||!x.assessment)))return'NEEDS REVIEW';return'READY';}
+  if(section==='assessment'){const a=collectAssessments();if(!a.some(x=>x.item))return'NOT STARTED';const total=a.reduce((n,x)=>n+Number(x.weight||0),0);if(Math.abs(total-100)>.01||a.some(x=>x.item&&(!x.clos||!x.evidence)))return'NEEDS REVIEW';return'READY';}
+  if(section==='overview'){if(!$('#t3-resources')?.value.trim()&&!$('#t3-improvement')?.value.trim())return'NOT STARTED';return'IN PROGRESS';}
+  return'IN PROGRESS';
+}
+function renderSectionCompletion(){
+  [['clo','#section-status-clo'],['weekly','#section-status-weekly'],['assessment','#section-status-assessment'],['overview','#section-status-overview']].forEach(([sec,sel])=>{
+    const el=$(sel);if(!el)return;const st=sectionCompletionState(sec);
+    setBadge(el,st,st==='READY'?'ok':st==='NEEDS REVIEW'?'warn':st==='NOT STARTED'?'info':'info');
+  });
+}
+function buildReviewQueue(){
+  const order={BLOCKING:0,WARNING:1,INFO:2};
+  reviewQueueState.items=readinessState().checks.filter(x=>x.state!=='PASS').sort((a,b)=>(order[a.state]??9)-(order[b.state]??9));
+  reviewQueueState.index=Math.min(reviewQueueState.index,Math.max(0,reviewQueueState.items.length-1));
+  renderReviewQueue();
+}
+function renderReviewQueue(){
+  const host=$('#review-queue-current'),prog=$('#review-queue-progress');if(!host||!prog)return;
+  const a=reviewQueueState.items||[];
+  if(!a.length){host.innerHTML='<div class="notice ok">ไม่พบ BLOCKING/WARNING ใน readiness ปัจจุบัน</div>';prog.textContent='0 / 0';return;}
+  const i=Math.max(0,Math.min(reviewQueueState.index,a.length-1)),x=a[i];
+  prog.textContent=(i+1)+' / '+a.length;
+  host.innerHTML='<div class="review-queue-item"><span class="badge '+(x.state==='BLOCKING'?'danger':'warn')+'">'+esc(x.state)+'</span><strong>'+esc(x.name)+'</strong><div>'+esc(x.detail)+'</div>'+(x.target?'<button type="button" class="btn small review-queue-jump">ไปยังจุดแก้</button>':'')+'</div>';
+  const b=host.querySelector('.review-queue-jump');if(b)b.onclick=()=>jumpToReadinessTarget(x.target);
+}
+function reviewQueueMove(delta){
+  const n=reviewQueueState.items.length;if(!n)return;
+  reviewQueueState.index=(reviewQueueState.index+delta+n)%n;renderReviewQueue();
+}
+function previousWorkingVersion(){
+  if(versionHistory.length<2)return null;
+  const sorted=versionHistory.slice().sort((a,b)=>Number(b.version_no)-Number(a.version_no));
+  return sorted[1]||null;
+}
+function renderReuseUpdate(){
+  const host=$('#reuse-update-body'),badge=$('#reuse-source-version');if(!host||!badge)return;
+  const prev=previousWorkingVersion();
+  if(!prev){badge.textContent='ยังไม่มีรุ่นก่อน';host.innerHTML='<div class="help">ต้องมี Working Version อย่างน้อย 2 รุ่นจึงจะใช้ Reuse → Update ได้</div>';return;}
+  badge.textContent='Version '+prev.version_no;
+  const pf=prev.content?.form_sections||{},cur=collectTqf3().form_sections||{};
+  const rows=[
+    ['objectives','วัตถุประสงค์',pf.objectives||'',cur.objectives||'','#t3-objectives'],
+    ['resources','ทรัพยากร',pf.resources||'',cur.resources||'','#t3-resources'],
+    ['improvement_notes','แนวทางปรับปรุง',pf.improvement_notes||'',cur.improvement_notes||'','#t3-improvement']
+  ];
+  host.innerHTML=rows.map((r,i)=>'<div class="reuse-row"><div><strong>'+esc(r[1])+'</strong><div class="help">'+(r[2]===r[3]?'เหมือน Version ก่อน':'มีความต่างจาก Version ก่อน')+'</div></div><div class="reuse-preview"><small>ก่อน</small><span>'+esc((r[2]||'—').slice(0,180))+'</span></div><div class="reuse-preview"><small>ปัจจุบัน</small><span>'+esc((r[3]||'—').slice(0,180))+'</span></div><button type="button" class="btn small reuse-previous" data-i="'+i+'">นำ Version ก่อนมาเป็น Working</button></div>').join('');
+  $('.reuse-previous').forEach(b=>b.onclick=()=>{
+    const r=rows[Number(b.dataset.i)],el=$(r[4]);if(!el)return;
+    aiUndoStack.push({target:r[4],previous:el.value,next:r[2],section:'REUSE_UPDATE',at:new Date().toISOString()});
+    el.value=r[2];el.dispatchEvent(new Event('input',{bubbles:true}));renderAiUndoState();scheduleLocalSave();renderReadiness();say('นำ '+r[1]+' จาก Version '+prev.version_no+' มาเป็น working draft แล้ว','ok');
+  });
+}
+function fieldQuickMode(btn){
+  const target=btn.dataset.target;
+  return $('.ai-field-mode[data-for="'+target+'"]')?.value||'check';
+}
+function bindFieldQuickAi(){
+  $('.ai-field-quick').forEach(b=>b.onclick=()=>runSectionAi(b.dataset.section,null,b,{mode:fieldQuickMode(b),target:b.dataset.target}));
+}
 function aiPrompt(){
   const section=activeAiSection,data=sectionData(section);
   return 'คุณเป็นผู้ช่วยวิเคราะห์ระบบ มคอ. ภายใต้หลัก Evidence-First และ Human-in-the-Loop\n'+
@@ -1321,6 +1187,7 @@ function renderAdvancedCrossDocumentQA(){
   const cqiAccepted=aiDecisions.filter(x=>x.section==='CQI_CARRY_FORWARD'&&x.decision==='IMPLEMENT').length;
   if($('#cqi-lineage'))$('#cqi-lineage').textContent='CQI source '+cqiSources+' · carry-forward accepted '+cqiAccepted;
   const accepted=aiDecisions.filter(x=>['ACCEPTED','EDITED_AND_ACCEPTED'].includes(x.decision));
+  const aiTrail=accepted.slice(-8);
   if($('#accepted-ai-trace'))$('#accepted-ai-trace').textContent='Accepted '+accepted.length+' · with source/evidence basis '+accepted.filter(x=>x.source_basis||x.source_reference).length;
 }
 
@@ -1334,7 +1201,7 @@ function renderReadiness(){
   $('#readiness-list').innerHTML=r.checks.map(x=>'<div class="check-row"><span>'+esc(x.name)+'<div class="help">'+esc(x.detail)+'</div></span><span class="readiness-actions">'+readinessBadge(x.state)+(x.target?'<button class="btn tiny readiness-jump" data-target="'+esc(x.target)+'">ไปยังจุดแก้</button>':'')+'</span></div>').join('');
   $$('.readiness-jump').forEach(b=>b.onclick=()=>jumpToReadinessTarget(b.dataset.target));
   $('#consistency-list').innerHTML=r.checks.filter(x=>['ALIGNMENT','ASSESSMENT','CROSS_DOCUMENT','VERIFICATION','EVIDENCE'].includes(x.category)).map(x=>'<div class="check-row"><span>'+esc(x.name)+'</span><span>'+esc(x.detail)+' '+readinessBadge(x.state)+'</span></div>').join('');
-  renderReadinessSectionScores(r);renderWeeklyCoverageHeatmap();renderAssessmentMap();renderSourceGapQueue();renderAdvancedCrossDocumentQA();renderReviewPackagePreview();renderSectionCompletionV33();renderReviewQueueV33();enhanceAccessibility();
+  renderReadinessSectionScores(r);renderWeeklyCoverageHeatmap();renderAssessmentMap();renderSourceGapQueue();renderAdvancedCrossDocumentQA();renderReviewPackagePreview();enhanceAccessibility();
 }
 function renderReviewPackagePreview(){
   const host=$('#review-package-preview');if(!host)return;
@@ -1362,7 +1229,7 @@ function renderReviewPackagePreview(){
       '<div class="review-appendix"><h4>Appendix C · Evidence candidates</h4><ul>'+(candidates.length?candidates.map(x=>'<li>'+esc(x.evidence_id)+' · '+esc(x.admission_status)+' · '+esc(candidateReviewState(x))+'</li>').join(''):'<li>ยังไม่มี evidence candidate</li>')+'</ul></div>'+
       '<div class="review-appendix"><h4>Appendix D · Version diff</h4><div>'+esc(buildVersionChangeNarrative())+'</div></div>'+
       '<div class="review-appendix"><h4>Appendix E · CQI lineage</h4><div>CQI source '+cqiSources+' · carry-forward accepted '+aiDecisions.filter(x=>x.section==='CQI_CARRY_FORWARD'&&x.decision==='IMPLEMENT').length+'</div></div>'+
-      '<div class="review-appendix"><h4>Appendix F · Source / provenance</h4><div>'+esc(curriculumCtx?.description?.source_reference||'No curriculum source')+' · '+esc(curriculumCtx?.description?.source_locator||'')+'</div></div>'+'<div class="review-appendix"><h4>Appendix G · AI Decision / Evidence Trail</h4><ul>'+(aiDecisions.length?aiDecisions.slice(-20).map(x=>'<li>'+esc(x.decided_at||'')+' · '+esc(x.document||'')+' · '+esc(x.section||'')+' · '+esc(x.action_type||'')+' · '+esc(x.decision||'')+' · '+esc(x.target||'no target')+' · basis: '+esc(x.source_basis||'not recorded')+' · working v'+esc(x.working_version??'—')+'</li>').join(''):'<li>ยังไม่มี AI decision trail ใน session/working content ปัจจุบัน</li>')+'</ul></div>'+
+      '<div class="review-appendix"><h4>Appendix F · Source / provenance</h4><div>'+esc(curriculumCtx?.description?.source_reference||'No curriculum source')+' · '+esc(curriculumCtx?.description?.source_locator||'')+'</div></div>'+
     '</div><div class="provenance-footer">DRAFT · NON-PRODUCTION · Internal review only · not institutional approval</div>';
 }
 
@@ -1501,7 +1368,6 @@ function compareVersions(){
   out.innerHTML='<div class="table-wrap"><table><thead><tr><th>ส่วน</th><th>สถานะ</th><th>Version '+va.version_no+'</th><th>Version '+vb.version_no+'</th></tr></thead><tbody>'+
     rows.map(r=>'<tr><td>'+esc(r[0])+'</td><td><span class="badge '+(r[1]?'warn':'ok')+'">'+(r[1]?'เปลี่ยน':'เหมือนเดิม')+'</span></td><td>'+esc(r[2])+'</td><td>'+esc(r[3])+'</td></tr>').join('')+
     '</tbody></table></div>';
-  renderReuseUpdateV33();
 }
 
 /* ---------- V27 Evidence Workspace ---------- */
@@ -1792,7 +1658,7 @@ async function saveTqf3(){
 }
 async function saveTqf5(){
   if(!docCtx?.course?.course_offering_id)throw new Error('ยังไม่พบ Course Offering สำหรับปี/ภาคนี้');
-  const {data,error}=await client.rpc('hepe_create_tqf5_working_draft_by_code',{...courseArgs(),p_payload:collectTqf5(),p_source_reference:'HEPE Fast TQF Portal v33 / guided-ai-review-queue / NON-PRODUCTION'});if(error)throw error;
+  const {data,error}=await client.rpc('hepe_create_tqf5_working_draft_by_code',{...courseArgs(),p_payload:collectTqf5(),p_source_reference:'HEPE Fast TQF Portal v32 / completed-accessibility-crossdoc-review / NON-PRODUCTION'});if(error)throw error;
   clearLocalBuffer();say('บันทึก มคอ.5 Draft สำเร็จ — '+data.result_snapshot_id,'ok');await loadSelectedCourse();
 }
 async function createVerification(){const {data,error}=await client.rpc('hepe_ensure_verification_draft_by_code',courseArgs());if(error)throw error;say(data.created?'สร้างรายการทวนสอบแล้ว':'มีรายการอยู่แล้ว','ok');await loadSelectedCourse();}
@@ -1817,7 +1683,11 @@ function bindStatic(){
   $('#sync-tqf5-from-tqf3').onclick=syncTqf5FromTqf3;
   $('#submission-mode').onclick=toggleSubmissionMode;
   $('#save-tqf3').onclick=()=>saveTqf3().catch(e=>say(friendlyError(e),'danger'));$('#save-tqf5').onclick=()=>saveTqf5().catch(e=>say(friendlyError(e),'danger'));$('#save-verification-note').onclick=()=>saveVerificationNote().catch(e=>say(friendlyError(e),'danger'));
-  $$('.ai-section').forEach(b=>b.onclick=()=>runSectionAi(b.dataset.section,null,b));
+  $('.ai-section').forEach(b=>b.onclick=()=>runSectionAi(b.dataset.section,null,b));
+  bindFieldQuickAi();
+  if($('#review-queue-prev'))$('#review-queue-prev').onclick=()=>reviewQueueMove(-1);
+  if($('#review-queue-next'))$('#review-queue-next').onclick=()=>reviewQueueMove(1);
+  if($('#review-queue-refresh'))$('#review-queue-refresh').onclick=buildReviewQueue;
   $('#ai-chatgpt').onclick=()=>openChatGPT().catch(e=>say(friendlyError(e),'danger'));$('#ai-show-prompt').onclick=()=>{$('#ai-prompt-wrap').hidden=!$('#ai-prompt-wrap').hidden;$('#ai-prompt').value=aiPrompt();};
   $('#print-form').onclick=()=>window.print();$('#logout').onclick=()=>logout().catch(e=>say(friendlyError(e),'danger'));
   $('#login-form').addEventListener('submit',e=>loginMagic(e).catch(x=>say(friendlyError(x),'danger')));$('#password-login').onclick=()=>loginPassword().catch(x=>say(friendlyError(x),'danger'));
@@ -1831,7 +1701,6 @@ function bindStatic(){
   if($('#check-evidence-duplicate'))$('#check-evidence-duplicate').onclick=()=>checkEvidenceDuplicate().catch(e=>say(friendlyError(e),'danger'));
   if($('#evidence-candidate-filter'))$('#evidence-candidate-filter').onchange=renderEvidenceWorkspace;
   $$('[data-ai-inline-close]').forEach(b=>b.onclick=()=>{const p=b.closest('.ai-inline-result');if(p)p.hidden=true;});
-  ensureV33Ui();
   if($('#ai-copy-proposed'))$('#ai-copy-proposed').onclick=()=>copyAiProposedText();
   if($('#ai-undo-apply'))$('#ai-undo-apply').onclick=undoLastAiApply;
   if($('#review-package-print'))$('#review-package-print').onclick=()=>window.print();
@@ -1844,7 +1713,7 @@ function bindStatic(){
 }
 
 async function boot(){
-  cfg=await fetch('./config/state.json?v=33',{cache:'no-store'}).then(r=>r.json()).catch(()=>({}));
+  cfg=await fetch('./config/state.json?v=32.2',{cache:'no-store'}).then(r=>r.json()).catch(()=>({}));
   const {data:{session}}=await client.auth.getSession();
   $('#login-view').hidden=!!session;$('#app-view').hidden=!session;
   bindStatic();enhanceAccessibility();
