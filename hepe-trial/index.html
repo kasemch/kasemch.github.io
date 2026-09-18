@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>HEPE Fast TQF Portal v32</title>
-  <link rel="stylesheet" href="./assets/css/portal-v32.css?v=32">
+  <link rel="stylesheet" href="./assets/css/portal-v32.css?v=32.2">
 </head>
-<body><div id="draft-watermark" class="draft-watermark">DRAFT · NON-PRODUCTION</div>
+<body><a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหาหลัก</a><div id="draft-watermark" class="draft-watermark">DRAFT · NON-PRODUCTION</div>
   <header class="topbar">
     <div class="topbar-inner">
       <div class="brand">
@@ -21,8 +21,8 @@
     </div>
   </header>
 
-  <main class="shell">
-    <div id="status" class="status">กำลังเตรียมระบบ…</div>
+  <main class="shell" id="main-content" tabindex="-1">
+    <div id="status" class="status" role="status" aria-live="polite" aria-atomic="true">กำลังเตรียมระบบ…</div>
     <div id="recovery-banner" class="recovery-banner" hidden>
       <div>
         <strong>พบ Draft ที่บันทึกไว้ในเครื่อง</strong>
@@ -106,19 +106,27 @@
             <div id="course-offering-id" class="mono help">—</div>
             <div id="offering-note" class="no-offering" hidden>ยังไม่พบ Course Offering สำหรับปี/ภาคนี้ จึงดูข้อมูลหลักสูตรได้ แต่ยังบันทึก มคอ. ไม่ได้</div>
           </div>
+          <div class="source-box responsibility-box">
+            <div class="source-box-head">
+              <strong>Controlled Course Responsibility</strong>
+              <span id="course-responsibility-state" class="badge info">—</span>
+            </div>
+            <div id="course-responsibility-list" class="responsibility-list help">ยังไม่โหลดข้อมูล</div>
+            <div id="course-responsibility-source" class="help"></div>
+          </div>
         </div>
       </section>
 
-      <div class="tabs">
-        <button class="tab active" data-tab="tqf3">มคอ.3</button>
-        <button class="tab" data-tab="tqf5">มคอ.5</button>
-        <button class="tab" data-tab="verification">ทวนสอบ</button>
-        <button class="tab" data-tab="overview">Readiness</button><button class="tab" data-tab="dashboard">Programme Dashboard</button>
+      <div class="tabs" role="tablist" aria-label="ส่วนงาน มคอ.">
+        <button id="tab-tqf3" class="tab active" data-tab="tqf3" role="tab" aria-selected="true" aria-controls="panel-tqf3">มคอ.3</button>
+        <button id="tab-tqf5" class="tab" data-tab="tqf5" role="tab" aria-selected="false" aria-controls="panel-tqf5">มคอ.5</button>
+        <button id="tab-verification" class="tab" data-tab="verification" role="tab" aria-selected="false" aria-controls="panel-verification">ทวนสอบ</button>
+        <button id="tab-overview" class="tab" data-tab="overview" role="tab" aria-selected="false" aria-controls="panel-overview">Readiness</button><button id="tab-dashboard" class="tab" data-tab="dashboard" role="tab" aria-selected="false" aria-controls="panel-dashboard">Programme Dashboard</button>
       </div>
 
       <div class="main-grid">
         <div>
-          <section id="panel-tqf3" class="panel">
+          <section id="panel-tqf3" class="panel" role="tabpanel" aria-labelledby="tab-tqf3">
             <section class="card">
               <div class="section-title">
                 <div>
@@ -381,7 +389,7 @@
             </section>
           </section>
 
-          <section id="panel-tqf5" class="panel" hidden>
+          <section id="panel-tqf5" class="panel" hidden role="tabpanel" aria-labelledby="tab-tqf5">
             <section class="card">
               <div class="section-title">
                 <div>
@@ -452,7 +460,7 @@
             </section>
           </section>
 
-          <section id="panel-verification" class="panel" hidden>
+          <section id="panel-verification" class="panel" hidden role="tabpanel" aria-labelledby="tab-verification">
             <section class="card">
               <div class="section-title">
                 <div>
@@ -553,7 +561,7 @@
             </section>
           </section>
 
-          <section id="panel-overview" class="panel" hidden>
+          <section id="panel-overview" class="panel" hidden role="tabpanel" aria-labelledby="tab-overview">
             <section class="card">
               <div class="section-title">
                 <div>
@@ -591,6 +599,35 @@
                 </div>
               </div>
               <hr>
+              <div class="review-subsection">
+                <div class="section-title">
+                  <div>
+                    <h3>Advanced Cross-document QA</h3>
+                    <div class="help">ตรวจเฉพาะความเชื่อมโยงที่ข้อมูลปัจจุบันรองรับ ไม่อนุมาน item-level result ที่ไม่มีหลักฐาน</div>
+                  </div>
+                  <span class="badge info">READ-ONLY QA</span>
+                </div>
+                <div id="cross-doc-detail" class="check-list"></div>
+                <div class="review-grid compact-review-grid">
+                  <div><small>Version Change Narrative</small><div id="version-change-narrative" class="help">—</div></div>
+                  <div><small>CQI Lineage</small><div id="cqi-lineage" class="help">—</div></div>
+                  <div><small>Accepted AI Traceability</small><div id="accepted-ai-trace" class="help">—</div></div>
+                </div>
+              </div>
+              <hr>
+              <div class="review-subsection">
+                <div class="section-title">
+                  <div>
+                    <h3>มคอ.4 / มคอ.6 Structural v2 Review</h3>
+                    <div class="help">แสดงเปรียบเทียบ v1 ↔ v2 เท่านั้น · v2 ยัง UNDER_REVIEW และยังไม่ถูก activate</div>
+                  </div>
+                  <span class="badge warn">ACTIVATION = HUMAN GATE</span>
+                </div>
+                <div id="template-review" class="template-review-grid">
+                  <div class="help">เปิดแท็บ Readiness เพื่อโหลด structural review</div>
+                </div>
+              </div>
+              <hr>
               <div class="section-title">
                 <div>
                   <h3>Internal Review Package Preview</h3>
@@ -602,7 +639,7 @@
             </section>
           </section>
 
-          <section id="panel-dashboard" class="panel" hidden>
+          <section id="panel-dashboard" class="panel" hidden role="tabpanel" aria-labelledby="tab-dashboard">
             <section class="card" id="dashboard-panel">
               <div class="section-title">
                 <div>
@@ -651,6 +688,11 @@
                   <option value="READINESS">Readiness ต่ำก่อน</option>
                   <option value="RECENT">อัปเดตทวนสอบล่าสุด</option>
                 </select>
+                <select id="dashboard-instructor">
+                  <option value="ALL">ผู้รับผิดชอบทั้งหมด</option>
+                  <option value="CONTROLLED_ONLY">มี controlled responsibility</option>
+                  <option value="MISSING">ยังไม่มี controlled responsibility</option>
+                </select>
                 <label class="filter-check"><input id="dashboard-attention" type="checkbox"> Needs Attention เท่านั้น</label>
                 <label class="filter-check"><input id="dashboard-source-gap" type="checkbox"> Source gap เท่านั้น</label>
               </div>
@@ -662,9 +704,9 @@
               <div class="table-wrap">
                 <table>
                   <thead><tr>
-                    <th>รายวิชา</th><th>คำอธิบาย</th><th>Offering</th><th>มคอ.3</th><th>มคอ.5</th><th>ทวนสอบ</th><th>TQF3 Version</th><th>Attention</th>
+                    <th>รายวิชา</th><th>ผู้รับผิดชอบ</th><th>คำอธิบาย</th><th>Offering</th><th>มคอ.3</th><th>มคอ.5</th><th>ทวนสอบ</th><th>Readiness</th><th>Attention</th>
                   </tr></thead>
-                  <tbody id="dashboard-body"><tr><td colspan="8">เลือกแท็บเพื่อโหลดข้อมูล</td></tr></tbody>
+                  <tbody id="dashboard-body"><tr><td colspan="9">เลือกแท็บเพื่อโหลดข้อมูล</td></tr></tbody>
                 </table>
               </div>
 
@@ -686,7 +728,7 @@
           </section>
         </div>
 
-        <aside class="ai-rail no-print">
+        <aside class="ai-rail no-print" aria-label="AI Assistant">
           <div class="ai-card">
             <div class="section-title">
               <div>
@@ -706,7 +748,7 @@
 
             <div class="field">
               <label for="ai-analysis-box">ผลวิเคราะห์ทันที</label>
-              <textarea id="ai-analysis-box" class="ai-analysis-box" readonly>กดปุ่ม AI วิเคราะห์ในหมวดที่ต้องการ ผลวิเคราะห์จะปรากฏในกล่องนี้ทันที</textarea>
+              <textarea id="ai-analysis-box" class="ai-analysis-box" aria-live="polite" readonly>กดปุ่ม AI วิเคราะห์ในหมวดที่ต้องการ ผลวิเคราะห์จะปรากฏในกล่องนี้ทันที</textarea>
             </div>
 
             <div class="field">
@@ -745,9 +787,9 @@
         </aside>
       </div>
     </section>
-  </main>
+  <p id="table-scroll-instruction" class="sr-only">ตารางนี้อาจเลื่อนในแนวนอนได้ ใช้ปุ่มลูกศรหรือเลื่อนหน้าจอเพื่อดูคอลัมน์เพิ่มเติม</p></main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./assets/js/portal-v32.js?v=32"></script>
+  <script src="./assets/js/portal-v32.js?v=32.2"></script>
 </body>
 </html>
