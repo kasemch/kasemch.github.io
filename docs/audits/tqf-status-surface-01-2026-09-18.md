@@ -2,7 +2,7 @@
 
 Date: 2026-09-18
 
-Status: PASS WITH LIVE AUTHENTICATED UI VERIFICATION GATE
+Status: PASS WITH VISUAL-EVIDENCE LIMITATION — HUMAN ACCEPTANCE RECORDED
 
 Environment: NON-PRODUCTION / GitHub Pages + Supabase Sandbox
 
@@ -150,16 +150,36 @@ An unauthenticated external fetch of the GitHub Pages route could not be indepen
 
 The repository state on `master` was verified directly.
 
-The remaining acceptance gate is a real authenticated browser session/Magic Link visual-runtime check.
+Human acceptance was explicitly recorded in the project conversation on 2026-09-18. A real authenticated browser/Magic Link visual-runtime capture remains unavailable from the current tool environment and is retained as a visual-evidence limitation rather than being fabricated.
 
 ## Final assessment
 
 TQF-STATUS-SURFACE-01:
 
-**PASS WITH LIVE AUTHENTICATED UI VERIFICATION GATE**
+**PASS WITH VISUAL-EVIDENCE LIMITATION — HUMAN ACCEPTANCE RECORDED**
 
 The data/state architecture is complete for this phase.
 
 The next true human gate is authenticated visual acceptance of the rendered status surface.
 
 No database or release-state correction should be made merely to change the displayed label.
+
+
+## Human acceptance record
+
+On 2026-09-18, the project owner explicitly approved continuation after the reconciled status-surface design and expected state model were presented.
+
+This approval is recorded as governance acceptance of the state model and static UI change.
+
+It is not represented as independent browser-visual evidence.
+
+Attempts to independently retrieve the rendered GitHub Pages route from the current web/runtime environment were unsuccessful because the route was not accessible from the available fetch environment. Repository evidence and Supabase runtime state remain verified.
+
+Accordingly:
+
+- governance acceptance = RECORDED
+- repository implementation = VERIFIED
+- Supabase reconciliation runtime = VERIFIED
+- live authenticated browser visual proof = NOT INDEPENDENTLY OBSERVED
+- production authorization = FALSE
+- R1 mutation = NONE
