@@ -1,6 +1,6 @@
 {
-  "phase": "FAST-SUBMISSION-PORTAL-08",
-  "status": "V29_SCOPE_FILTER_DESCRIPTION_FIX_INSTANT_AI_READY",
+  "phase": "FAST-SUBMISSION-PORTAL-09",
+  "status": "V30_ADVANCED_AI_READINESS_DASHBOARD_EVIDENCE_INTAKE_READY",
   "updated_at": "2026-09-18",
   "route": "./hepe-trial/",
   "programme_code": "25510071103503",
@@ -158,11 +158,40 @@
       "draft_watermark": true,
       "non_production_label": true,
       "official_claim": false
+    },
+    "advanced_readiness": {
+      "status": "READY",
+      "states": [
+        "BLOCKING",
+        "WARNING",
+        "PASS"
+      ],
+      "review_package_preview": true
+    },
+    "dashboard_filters": {
+      "status": "READY",
+      "prefix": true,
+      "course_role": true,
+      "document_state": true,
+      "verification_state": true,
+      "needs_attention": true,
+      "description_status": true
+    },
+    "evidence_candidate_intake": {
+      "status": "READY",
+      "verification_status": "UNVERIFIED",
+      "admission_status": "NOT_ADMITTED",
+      "creates_system_authority": false,
+      "auto_admit": false
+    },
+    "review_package": {
+      "status": "READY",
+      "mode": "DRAFT_INTERNAL_REVIEW_PRINT_PREVIEW"
     }
   },
   "environment": "NON-PRODUCTION",
   "production_authorized": false,
-  "ui_version": "29",
+  "ui_version": "30",
   "ai_assistant": {
     "status": "READY",
     "mode": "LOCAL_SMART_QA_PLUS_CHATGPT_HANDOFF",
@@ -179,7 +208,11 @@
     "instant_textbox": true,
     "textbox_id": "ai-analysis-box",
     "behavior": "CLICK_ANALYZE_POPULATES_TEXT_IMMEDIATELY",
-    "canonical_auto_edit": false
+    "canonical_auto_edit": false,
+    "proposed_text_box": true,
+    "undo_last_apply": true,
+    "decision_history": true,
+    "unresolved_counter": true
   },
   "catalog": {
     "programme_count_verified": 1,
@@ -202,7 +235,8 @@
       "EDU": "education-core courses excluded from this HEPE portal",
       "RAM": "general-education courses excluded from this HEPE portal"
     },
-    "eligible_course_count_verified": 65
+    "eligible_course_count_verified": 65,
+    "backend_enforced": true
   },
   "curriculum_descriptions": {
     "source_file_id": "1E0fXyoOc-v2z-GzEyfGq-JHHKMK9C0xk",
@@ -224,6 +258,7 @@
     "missing_course_codes": [
       "HED3701"
     ],
-    "fallback_rule": "WORKING_TQF3_MAY_DISPLAY_AS_NON_CANONICAL_FALLBACK_WITH_PROVENANCE; AI_MUST_NOT_INVENT_CANONICAL_DESCRIPTION"
+    "fallback_rule": "WORKING_TQF3_MAY_DISPLAY_AS_NON_CANONICAL_FALLBACK_WITH_PROVENANCE; AI_MUST_NOT_INVENT_CANONICAL_DESCRIPTION",
+    "hed3701_source_gap": "AUTHORITATIVE_SOURCE_NOT_FOUND; SAMPLE_TQF4_TQF6_REJECTED_FOR_FACTUAL_ADMISSION"
   }
 }
