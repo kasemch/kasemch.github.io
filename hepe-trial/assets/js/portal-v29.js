@@ -155,21 +155,30 @@ async function loadSelectedCourse(){
 
 function renderCourseContext(){
   const c=curriculumCtx?.course||{},p=curriculumCtx?.programme||{},cv=curriculumCtx?.curriculum||{},d=curriculumCtx?.description;
+  const workingDesc=
+    docCtx?.tqf3?.content?.form_sections?.course_description ||
+    docCtx?.tqf3?.content?.source_supported_content?.course_description ||
+    docCtx?.tqf3?.content?.course_description ||
+    '';
   $('#course-title').textContent=(c.course_code||'')+' · '+(c.title_th||'');
   $('#course-subtitle').textContent=(c.title_en||'')+(c.credit_value!=null?' · '+c.credit_value+' หน่วยกิต':'');
   $('#curriculum-title').textContent=p.title_th||'—';
   $('#curriculum-version').textContent=cv.version_label||cv.version_code||'—';
-  $('#canonical-desc').value=d?.description_th||'';
+  $('#canonical-desc').value=d?.description_th||workingDesc||'';
   $('#canonical-desc-en').value=d?.description_en||'';
   $('#desc-provenance').innerHTML='';
   if(d){
+    setBadge(makeSpan('#desc-provenance'),'CURRICULUM DESCRIPTION','ok');
     setBadge(makeSpan('#desc-provenance'),d.verification_status||'UNKNOWN',kind(d.verification_status));
     setBadge(makeSpan('#desc-provenance'),d.authority_status||'UNKNOWN',kind(d.authority_status));
     if(d.source_reference)setBadge(makeSpan('#desc-provenance'),'Curriculum source connected','ok');
     $('#desc-locator').textContent=(d.source_locator||'ไม่ระบุตำแหน่งแหล่งข้อมูล')+(d.source_reference?' · '+d.source_reference:'');
+  }else if(workingDesc){
+    setBadge(makeSpan('#desc-provenance'),'WORKING FALLBACK — NON-CANONICAL','warn');
+    $('#desc-locator').textContent='ใช้ข้อความจาก Working TQF3 ชั่วคราว โดยยังต้องยืนยันจากเล่มหลักสูตรก่อนถือเป็น canonical description';
   }else if(c.course_code==='HED3701'){
-    setBadge(makeSpan('#desc-provenance'),'TQF4/TQF6 SOURCE ROUTE','warn');
-    $('#desc-locator').textContent='HED3701 เป็นรายวิชาฝึกปฏิบัติวิชาชีพ ใช้ workflow มคอ.4/6 และยังไม่สร้างคำอธิบายขึ้นเองจาก AI';
+    setBadge(makeSpan('#desc-provenance'),'MISSING CANONICAL DESCRIPTION','warn');
+    $('#desc-locator').textContent='HED3701 เป็นรายวิชาเดียวใน scope ปัจจุบันที่ยังไม่มีคำอธิบายที่รับเข้า course_description_versions; ห้ามให้ AI สร้างแทนข้อมูลหลักสูตร';
   }else{
     setBadge(makeSpan('#desc-provenance'),'NEEDS CURRICULUM-SOURCE IMPORT','warn');
     $('#desc-locator').textContent='ยังไม่พบข้อความจากแหล่งหลักสูตรที่ยืนยันได้ ระบบจะไม่สร้างคำอธิบายแทนด้วย AI';
@@ -536,8 +545,11 @@ function runSectionAi(section,row=null){
   const box=$('#ai-analysis-box');
   if(box){
     const labels={curriculum:'ข้อมูลหลักสูตร',clo:'CLO–PLO',weekly:'แผนรายสัปดาห์',assessment:'การประเมิน',tqf5:'มคอ.5',verification:'ทวนสอบ',overview:'Readiness'};
-    box.value='ผลวิเคราะห์ทันที — '+(labels[section]||section)+'\n\n'+
-      aiSuggestions.map((x,i)=>(i+1)+'. ['+x.severity+'] '+x.title+'\n   '+x.message+'\n   เหตุผล: '+x.why+'\n   Action: '+x.action).join('\n\n');
+    const c=curriculumCtx?.course||{};
+    const header='ผลวิเคราะห์ทันที — '+(labels[section]||section)+'\nรายวิชา: '+(c.course_code||'')+' '+(c.title_th||'')+'\n\n';
+    box.value=header+
+      aiSuggestions.map((x,i)=>(i+1)+'. ['+x.severity+'] '+x.title+'\n   '+x.message+'\n   เหตุผล: '+x.why+'\n   Action: '+x.action).join('\n\n')+
+      '\n\nการตัดสินใจสุดท้ายเป็นของผู้ใช้ ระบบจะไม่แก้ canonical data อัตโนมัติ';
     box.scrollTop=0;
   }
 }
