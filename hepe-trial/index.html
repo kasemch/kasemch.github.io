@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>HEPE Fast TQF Portal v30</title>
-  <link rel="stylesheet" href="./assets/css/portal-v30.css?v=30">
+  <title>HEPE Fast TQF Portal v31</title>
+  <link rel="stylesheet" href="./assets/css/portal-v31.css?v=31">
 </head>
 <body><div id="draft-watermark" class="draft-watermark">DRAFT · NON-PRODUCTION</div>
   <header class="topbar">
@@ -395,10 +395,29 @@
                     <div class="field"><label for="evidence-sha">SHA-256 (ถ้ามี)</label><input id="evidence-sha" class="mono"></div>
                   </div>
                   <div class="field"><label for="evidence-note">หมายเหตุ</label><textarea id="evidence-note"></textarea></div>
-                  <button id="register-evidence-candidate" class="btn">ลงทะเบียนเป็น Evidence Candidate</button>
+                  <div class="actions">
+                    <button id="check-evidence-duplicate" class="btn">ตรวจซ้ำ / ตรวจ SHA</button>
+                    <span id="evidence-duplicate-state" class="badge info">ยังไม่ตรวจ</span>
+                    <button id="register-evidence-candidate" class="btn primary">ลงทะเบียนเป็น Evidence Candidate</button>
+                  </div>
                 </div>
-                <hr>
+                <div class="evidence-review-toolbar">
+                  <label for="evidence-candidate-filter">กรอง Candidate</label>
+                  <select id="evidence-candidate-filter">
+                    <option value="ALL">ทั้งหมด</option>
+                    <option value="UNVERIFIED">UNVERIFIED</option>
+                    <option value="NOT_ADMITTED">NOT_ADMITTED</option>
+                    <option value="ADMITTED_BY_SEPARATE_AUTHORITY">ADMITTED_BY_SEPARATE_AUTHORITY</option>
+                    <option value="REJECTED">REJECTED</option>
+                  </select>
+                </div>
                 <div id="evidence-workspace"></div>
+                <hr>
+                <div>
+                  <h4>Admission Review Queue</h4>
+                  <div class="help">รายการนี้เป็น shell สำหรับติดตามเท่านั้น ไม่มีปุ่ม admission ใน V31 เพราะ admission เป็น Human Gate</div>
+                  <div id="admission-review-queue"></div>
+                </div>
               </div>
 
               <div class="actions">
@@ -421,7 +440,9 @@
                 <div class="kpi"><small>BLOCKING</small><strong id="readiness-blocking">0</strong></div>
                 <div class="kpi"><small>WARNING</small><strong id="readiness-warning">0</strong></div>
                 <div class="kpi"><small>PASS</small><strong id="readiness-pass">0</strong></div>
+                <div class="kpi"><small>Export readiness</small><strong><span id="export-readiness" class="badge info">—</span></strong></div>
               </div>
+              <div id="readiness-section-scores" class="readiness-section-scores"></div>
               <div class="readiness">
                 <div class="ring" id="readiness-ring" style="--p:0"><strong id="readiness-score">0%</strong></div>
                 <div id="readiness-list" class="check-list"></div>
@@ -429,6 +450,20 @@
               <hr>
               <h3>Cross-document consistency</h3>
               <div id="consistency-list" class="check-list"></div>
+              <div class="readiness-visuals">
+                <div>
+                  <h4>Weekly Coverage</h4>
+                  <div id="weekly-coverage-heatmap" class="week-heatmap"></div>
+                </div>
+                <div>
+                  <h4>Assessment Map</h4>
+                  <div id="assessment-map" class="assessment-map"></div>
+                </div>
+                <div>
+                  <h4>Curriculum Source Gap Queue</h4>
+                  <div id="source-gap-queue"></div>
+                </div>
+              </div>
               <hr>
               <div class="section-title">
                 <div>
@@ -480,7 +515,22 @@
                 <select id="dashboard-verification">
                   <option value="ALL">ทุกสถานะทวนสอบ</option><option value="NO_RECORD">ยังไม่มีรายการ</option><option value="DRAFT">DRAFT</option><option value="IN_REVIEW">IN_REVIEW</option><option value="INSUFFICIENT_EVIDENCE">INSUFFICIENT_EVIDENCE</option><option value="VERIFIED">VERIFIED</option>
                 </select>
+                <select id="dashboard-readiness">
+                  <option value="ALL">ทุกระดับ readiness</option>
+                  <option value="READY">Operational readiness 100%</option>
+                  <option value="NOT_READY">ยังไม่ครบ 100%</option>
+                </select>
+                <select id="dashboard-sort">
+                  <option value="COURSE">เรียงตามรหัสวิชา</option>
+                  <option value="READINESS">Readiness ต่ำก่อน</option>
+                  <option value="RECENT">อัปเดตทวนสอบล่าสุด</option>
+                </select>
                 <label class="filter-check"><input id="dashboard-attention" type="checkbox"> Needs Attention เท่านั้น</label>
+                <label class="filter-check"><input id="dashboard-source-gap" type="checkbox"> Source gap เท่านั้น</label>
+              </div>
+              <div class="field">
+                <label for="dashboard-ai-summary">Programme Smart QA Summary</label>
+                <textarea id="dashboard-ai-summary" readonly></textarea>
               </div>
 
               <div class="table-wrap">
@@ -516,6 +566,10 @@
               <div>
                 <h3>AI Assistant</h3>
                 <div class="help">กำลังดู: <strong id="ai-context">ข้อมูลหลักสูตร</strong></div>
+                <div class="actions" style="margin-top:5px">
+                  <span id="ai-evidence-basis" class="badge info">Evidence basis —</span>
+                  <span id="ai-section-state" class="badge info">NOT_ANALYZED</span>
+                </div>
               </div>
               <div id="ai-readiness-score" class="score">—</div>
             </div>
@@ -568,6 +622,6 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./assets/js/portal-v30.js?v=30"></script>
+  <script src="./assets/js/portal-v31.js?v=31"></script>
 </body>
 </html>
