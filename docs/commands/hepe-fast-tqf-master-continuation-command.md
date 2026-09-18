@@ -1,9 +1,7 @@
 # HEPE FAST TQF PORTAL — MASTER CONTINUATION COMMAND
 
 Effective date: 2026-09-18
-
-Revision: POST-V32 CLOSURE
-
+Revision: POST-V33 GUIDED FIELD AI / REVIEW QUEUE
 Status: ACTIVE MASTER CONTINUATION COMMAND
 
 Project:
@@ -15,16 +13,13 @@ Repository:
 Public route:
 `https://kasemch.github.io/hepe-trial/`
 
-Current UI version:
-V32
-
-Current asset cache key:
-32.2
+Current UI:
+V33
 
 Environment:
 NON-PRODUCTION
 
-Core operating principles:
+Operating principles:
 
 EVIDENCE-FIRST
 NO FABRICATION
@@ -41,54 +36,59 @@ MAXIMUM SAFE CONTINUATION
 0. PERMANENT EXECUTION RULE
 ==================================================
 
-After every implementation batch, source review, UI revision, migration, evidence workflow change, template review, audit, or governance decision:
+After every material implementation, source review, defect fix, UI revision, audit, migration, template change, or governance decision:
 
 1. Continue all clear, reversible, non-destructive work automatically.
 2. Batch related work.
 3. Do not ask the user to repeat known information.
-4. Reuse controlled structures before creating new structures.
-5. Preserve approved locks and baselines.
-6. Prefer read-only or append-only operations.
-7. Stop only at a genuine Human Gate.
-8. Refresh this continuation command after material state changes.
+4. Preserve approved locks and baselines.
+5. Reuse existing schema, RPCs, read models, UI components, and version history before creating parallel structures.
+6. Prefer read-only, append-only, or user-confirmed updates.
+7. Stop only at true Human Gates.
+8. Refresh this command after material state changes.
 9. Never infer Production authorization.
-10. Never infer institutional authority from working/source-observed records.
-11. Never fabricate curriculum text, CLO/PLO mappings, responsible persons, evidence, results, grades, signatures, CQI outcomes, or verification conclusions.
-12. Keep canonical curriculum data separate from working-document data.
-13. Keep controlled responsibility separate from inferred/historical responsibility.
-14. Keep AI suggestions separate from user-approved content.
-15. Keep readiness separate from institutional approval.
-16. Keep evidence candidates separate from admitted evidence.
-17. Keep structural template drafts separate from activated templates.
-18. Keep all GitHub Pages paths relative.
-19. Maintain client-side/static-web compatibility.
-20. Run frontend syntax/DOM/selector/accessibility regression and backend ACL/scope/invariant checks before closure.
-
-True Human Gates:
-
-- Production authorization
-- secret / credential change
-- destructive migration
-- immutable R1 mutation
-- historical lifecycle rewrite
-- evidence admission
-- VERIFIED transition
-- TQF4/TQF6 v2 activation
-- official template authority
-- master UI unlock
-- protected direct AI API architecture
-- ambiguous canonical-source adoption
-- authenticated visual acceptance when the tool cannot observe the logged-in browser
+10. Never infer institutional authority from source-observed or working data.
+11. Never fabricate curriculum facts, PLO/CLO authority, evidence, grades, attainment, satisfaction, signatures, approvals, CQI outcomes, or verification outcomes.
+12. Separate canonical curriculum data from working-document data.
+13. Separate AI suggestions from user-approved content.
+14. Separate readiness from institutional approval.
+15. Separate evidence candidates from admitted evidence.
+16. Separate structural template drafts from activated templates.
+17. Preserve relative GitHub Pages asset paths.
+18. Maintain static-web compatibility.
+19. Regression-test JavaScript syntax, selector helpers, DOM IDs, event bindings, user-decision flow, and immutable-release invariants.
+20. Do not use replacement logic that accidentally converts required `$$()` collection selectors into `$()`.
+21. Preserve AI decision traceability whenever user-approved AI text enters a working document.
+22. Never allow AI to silently overwrite a canonical or working field.
 
 ==================================================
-1. CURRENT MASTER UI / UX
+1. CURRENT LIVE RELEASE
 ==================================================
 
-Master UI direction:
+UI VERSION:
+V33
 
-APPROVED / LOCKED
+LIVE FILES:
 
-Primary live architecture:
+`./hepe-trial/index.html`
+
+`./hepe-trial/assets/js/portal-v33.js`
+
+`./hepe-trial/assets/css/portal-v33.css`
+
+`./hepe-trial/config/state.json`
+
+PUBLIC ROUTE:
+
+`https://kasemch.github.io/hepe-trial/?v=33`
+
+Do not downgrade to V32 or earlier.
+
+==================================================
+2. MASTER UI LOCK
+==================================================
+
+Primary live architecture remains:
 
 1. Login
 2. Programme / Course Selection
@@ -101,58 +101,29 @@ Primary live architecture:
 9. Readiness
 10. Programme Dashboard
 
-No major live-screen architecture change without explicit unlock.
+Master UI remains APPROVED / LOCKED.
 
-==================================================
-2. CURRENT LIVE FRONTEND
-==================================================
-
-Version:
-V32
-
-Files:
-
-`./hepe-trial/index.html`
-
-`./hepe-trial/assets/js/portal-v32.js`
-
-`./hepe-trial/assets/css/portal-v32.css`
-
-`./hepe-trial/config/state.json`
-
-Asset references:
-
-`./assets/js/portal-v32.js?v=32.2`
-
-`./assets/css/portal-v32.css?v=32.2`
-
-Public route:
-
-`https://kasemch.github.io/hepe-trial/?v=32.2`
+V33 changes are interaction improvements inside the approved architecture.
 
 ==================================================
 3. COURSE SCOPE LOCK
 ==================================================
 
 Current curriculum:
-
 92 courses
 
 Excluded:
-
 EDU* = 13
-
 RAM* = 14
 
 Portal in-scope:
-
 65
 
-Backend rule:
+Scope helper:
 
 `private.hepe_fast_tqf_course_in_scope(text)`
 
-Out-of-scope direct call:
+Out-of-scope result:
 
 `COURSE_OUT_OF_SCOPE`
 
@@ -160,507 +131,376 @@ Out-of-scope direct call:
 4. COURSE DESCRIPTION COVERAGE
 ==================================================
 
-In-scope:
-
+In-scope courses:
 65
 
-Current source-observed descriptions:
-
+Descriptions available:
 65
 
 Missing:
-
 0
 
-Coverage:
-
-`65 / 65`
-
-Do not generate canonical descriptions with AI.
-
-==================================================
-5. HED3701 SOURCE
-==================================================
+HED3701 source:
 
 Google Drive file:
-
 `หลักสูตรศึกษาศาสตรบัณฑิต HE - PE 67 (1).docx`
 
-File ID:
-
+Google Drive ID:
 `1E0fXyoOc-v2z-GzEyfGq-JHHKMK9C0xk`
 
 Locator:
-
 `3.1.5 คำอธิบายรายวิชา | HED3701`
 
-State:
-
+Status:
 DRAFT
 
+Verification:
 SOURCE_TEXT_EXTRACTED
 
+Authority:
 CURRICULUM_BOOK_SOURCE_OBSERVED
-
-approved_at = NULL
-
-activated_at = NULL
 
 Do not equate source observation with institutional approval.
 
 ==================================================
-6. CONTROLLED COURSE RESPONSIBILITY V32
+5. V33 FIELD-LEVEL AI QUICK ACTIONS
 ==================================================
 
-Source layer:
+High-value fields receive compact AI actions.
 
-`v_course_academic_responsibility_current`
+Current action types:
 
-Read-only RPCs:
+WRITE
+CHECK
+REFINE
+ALIGN
 
-`hepe_fast_tqf_course_responsibility_by_code(...)`
+Target examples:
 
-`hepe_fast_tqf_programme_responsibility_by_code(...)`
-
-ACL:
-
-anon = false
-
-authenticated = true
-
-Scope:
-
-same HED/PED portal scope
-
-==================================================
-7. RESPONSIBILITY DISPLAY RULE
-==================================================
-
-Display a named responsible person only when:
-
-- current controlled record exists
-- resolution_status = VERIFIED
-- academic_person_id exists
-- person_name_th exists
-
-If roster is pending:
-
-display ROSTER PENDING.
-
-If no controlled record:
-
-display:
-
-`ยังไม่มี controlled responsibility record`
-
-Never infer a name from:
-
-- memory
-- old working files
-- sample files
-- teaching-history assumptions
-- unrelated schedules
+- CLO statement
+- weekly learning activity
+- assessment evidence/rubric
+- TQF3 objectives
+- TQF3 resources
+- TQF3 improvement notes
+- TQF5 Plan→Actual narrative
+- TQF5 problem
+- TQF5 CQI
+- verification finding
 
 ==================================================
-8. RESPONSIBILITY VERIFIED COVERAGE
+6. WRITE ACTION RULE
 ==================================================
 
-AY2569 / Term 1:
+WRITE may provide:
 
-In-scope courses:
-65
+- structured wording scaffold
+- placeholders
+- evidence-aware text pattern
+- user-editable draft frame
 
-Courses with controlled records:
-28
+WRITE must not fabricate:
 
-Courses with verified named responsibility:
-28
+- actual learning outcome authority
+- actual activity performed
+- actual evidence
+- actual problems
+- actual CQI outcome
+- actual verification conclusion
 
-Remaining courses:
+If factual content is not supported:
 
-must remain missing/pending unless controlled evidence is added.
-
-==================================================
-9. RESPONSIBILITY EXAMPLES
-==================================================
-
-HED2502:
-
-current controlled named responsibility exists.
-
-HED2503:
-
-current controlled record count = 0.
-
-Therefore HED2503 UI must not auto-fill a responsible instructor name.
-
-PED2305:
-
-controlled lead instructor exists.
-
-Pending roster state may also exist.
-
-Display both facts without inference.
+use placeholders and explicitly require user completion.
 
 ==================================================
-10. ACCESSIBILITY V32
+7. CHECK ACTION RULE
 ==================================================
 
-Required:
+CHECK uses existing field / section content.
 
-- skip link
-- aria-live status
-- semantic tablist/tab/tabpanel
-- keyboard arrow/Home/End tab navigation
-- visible focus state
-- reduced-motion support
-- accessible table regions
-- horizontal-scroll hint
-- sticky table headers
-- mobile touch target support
-- aria-busy loading state
-- consistent friendly error display
+CHECK may identify:
 
-Do not remove these in future releases.
+- missing measurable behavior
+- missing CLO/PLO linkage
+- missing activity
+- missing assessment evidence
+- incomplete Plan→Actual
+- weak traceability
+- evidence gap
+
+CHECK must not auto-change data.
 
 ==================================================
-11. AI ASSISTANT
+8. REFINE ACTION RULE
 ==================================================
 
-AI remains:
+REFINE helps restructure user-entered text.
 
-LOCAL SMART QA
-+
-OPTIONAL CHATGPT HANDOFF
+REFINE must preserve user meaning unless the user explicitly edits/approves.
 
-No private API key in GitHub Pages.
-
-Clicking AI analyze must populate visible text immediately.
-
-Inline AI recommendation UX remains active.
+REFINE cannot invent facts to make a sentence look more complete.
 
 ==================================================
-12. AI DECISION MODEL
+9. ALIGN ACTION RULE
 ==================================================
 
-States:
+ALIGN may inspect relationships such as:
 
-SUGGESTED
+CLO ↔ PLO
 
-ACCEPTED
+Week ↔ CLO
 
-EDITED_AND_ACCEPTED
+Activity ↔ CLO
 
-REJECTED
+Assessment ↔ CLO
 
-Undo stack:
+Evidence ↔ Assessment
 
-maximum 20 applied changes.
+TQF3 ↔ TQF5
 
-Every accepted AI suggestion should preserve:
+Verification ↔ Evidence
 
-- section
-- decision
-- text
-- source/evidence basis when available
-- decision timestamp
+ALIGN remains advisory.
 
 ==================================================
-13. TQF3 SAVE GOVERNANCE
+10. GAP-FIRST AI
 ==================================================
 
-New user-edited TQF3 working versions must default to:
+Default suggestion order:
 
-`UNVERIFIED`
+BLOCKING
+→ WARNING
+→ SUGGESTION
 
-Do not automatically use:
+Inline panel shows gaps first.
 
-`LATEST_WORKING_CONFIRMED`
+User can choose:
 
-Saving a user-edited working document does not itself verify the source/content.
+ดูทั้งหมด
 
-Working history remains append-only.
+or
 
-==================================================
-14. ADVANCED CROSS-DOCUMENT QA V32
-==================================================
+แสดงเฉพาะ Gap
 
-Checks:
+Suggestion identity must remain tied to the full cache.
 
-1. TQF3 assessment plan → TQF5 Plan/Actual narrative
-2. weekly evidence expectation → Evidence Workspace presence
-3. TQF3 CLO → TQF5 CLO attainment
-4. CQI source → next-cycle TQF3 carry-forward
-5. accepted AI decision → source/evidence-basis traceability
+Filtered display must never change the underlying suggestion selected.
 
 ==================================================
-15. CROSS-DOCUMENT LIMITATION
+11. INLINE AI
 ==================================================
 
-Do not infer item-level executed assessment results when the current data model does not contain them.
+From TQF3 Section 2 onward:
 
-Allowed language:
+AI trigger
+→ analyze
+→ inline panel opens
+→ panel scrolls into view
+→ suggestion appears immediately
+→ user selects
+→ user decides
 
-- plan exists
-- Plan/Actual narrative exists
-- CLO code exists
-- evidence workspace has items
-- carry-forward decision exists
+Inline AI remains primary immediate UX.
 
-Forbidden inference:
-
-- a specific assessment item was executed successfully
-- a specific weekly evidence item proves attainment
-- evidence is admitted merely because it appears as a candidate
+Right AI rail remains secondary detail.
 
 ==================================================
-16. VERSION CHANGE NARRATIVE
+12. DIFF PREVIEW
 ==================================================
 
-Compare the two latest working TQF3 versions by structured sections:
+Before targeted apply:
+
+show
+
+CURRENT TEXT
+
+vs
+
+PROPOSED / EDITED TEXT
+
+Highlight:
+
+deleted segment
+
+added segment
+
+Diff is for review.
+
+Diff does not write data.
+
+==================================================
+13. SAFE APPLY
+==================================================
+
+For suggestions targeting a form field:
+
+1. show recommendation
+2. user selects
+3. user edits into actual intended text
+4. Apply becomes available
+5. user explicitly applies
+6. previous value enters Undo stack
+7. decision trail records the action
+
+Generic AI guidance must not be inserted directly as factual form content.
+
+==================================================
+14. CONTEXT MINI DRAWER
+==================================================
+
+Inline AI can show compact context:
+
+- course code/title
+- curriculum description source
+- source locator
+- authority status
+- CLO context
+- week context
+- assessment context
+- TQF5 source status
+- verification/evidence counts
+- target field
+
+Context drawer is explanatory.
+
+It does not change authority status.
+
+==================================================
+15. NEXT-GAP NAVIGATION
+==================================================
+
+Actionable readiness gaps are ordered:
+
+BLOCKING
+→ WARNING
+→ other non-PASS with target
+
+“ไปจุดถัดไป” jumps to the next actionable target.
+
+No data is changed by navigation.
+
+==================================================
+16. SECTION COMPLETION
+==================================================
+
+Operational states:
+
+NOT_STARTED
+
+IN_PROGRESS
+
+NEEDS_REVIEW
+
+READY_FOR_INTERNAL_REVIEW
+
+These states describe workflow completeness only.
+
+They do not mean:
+
+APPROVED
+
+VERIFIED
+
+OFFICIAL
+
+PRODUCTION READY
+
+==================================================
+17. REVIEW QUEUE MODE
+==================================================
+
+Readiness panel includes guided Review Queue.
+
+Flow:
+
+Issue N / Total
+→ inspect issue
+→ jump to field
+→ resolve / edit
+→ next issue
+
+Queue priority:
+
+BLOCKING first
+then WARNING
+
+No automatic resolution.
+
+==================================================
+18. REUSE → UPDATE
+==================================================
+
+V33 may use prior working TQF3 version.
+
+Choices:
+
+KEEP CURRENT
+
+UPDATE
+
+REVIEW FROM GAP
+
+UPDATE rule:
+
+fill only blank top-level fields from the prior working version.
+
+Do not overwrite existing user-entered values.
+
+Current safe top-level fields include:
 
 - objectives
-- CLO
-- weekly plan
-- assessment
 - resources
 - improvement notes
 
-Output is descriptive only.
-
-Do not score quality improvement automatically.
+Do not mass-copy prior CLO/weekly/assessment values automatically.
 
 ==================================================
-17. CQI LINEAGE
+19. CQI CONTEXT
 ==================================================
 
-Track:
+Reuse → Update may show CQI source count.
 
-prior TQF5 improvement source
-→ carry-forward decision
-→ next TQF3 improvement notes
+CQI context does not automatically create a change.
 
-User decision remains required.
-
-No auto-adoption.
+User must decide what is carried forward.
 
 ==================================================
-18. EVIDENCE CANDIDATE REVIEW V32
+20. AI DECISION / EVIDENCE TRAIL
 ==================================================
 
-Display:
+Decision records include:
 
-- evidence ID
-- evidence type
-- source
-- authority owner
-- document/version date
-- source locator
-- optional SHA-256
-- verification status
-- admission status
+document
 
-Operational review states:
+section
 
-READY_FOR_HUMAN_REVIEW
+suggestion_id
 
-NEEDS_METADATA
+decision
 
-These are review-preparation states only.
+text
 
-They do not admit evidence.
+source_basis
 
-==================================================
-19. EVIDENCE DUPLICATE / SHA RULE
-==================================================
+action_type
 
-Duplicate detection uses:
+target
 
-source + locator
+working_version
 
-OR
+decided_at
 
-SHA-256
+TQF3 saves AI decision trail in working form content.
 
-SHA-256, when supplied:
+TQF5 saves TQF5 AI decisions in working payload.
 
-64 hexadecimal characters.
-
-Invalid:
-
-`INVALID_SHA256_FORMAT`
-
-Do not invent a hash.
+Verification AI decisions remain advisory unless separately captured through the governed verification workflow.
 
 ==================================================
-20. EVIDENCE ADMISSION
+21. REVIEW PACKAGE
 ==================================================
 
-Evidence candidate default:
-
-UNVERIFIED
-
-NOT_ADMITTED
-
-creates_system_authority = false
-
-Admission Review Queue:
-
-display only.
-
-No admission button.
-
-Evidence admission remains a Human Gate.
-
-==================================================
-21. READINESS V32
-==================================================
-
-States:
-
-BLOCKING
-
-WARNING
-
-PASS
-
-Includes:
-
-- source state
-- CLO completeness
-- CLO→PLO working linkage
-- weekly coverage
-- weekly alignment
-- assessment total
-- assessment→CLO/evidence
-- TQF3↔TQF5 CLO consistency
-- verification
-- evidence
-- unresolved AI decisions
-
-Readiness is internal-review readiness only.
-
-==================================================
-22. PROGRAMME DASHBOARD V32
-==================================================
-
-Filters:
-
-- text
-- HED/PED
-- REQUIRED/ELECTIVE
-- document state
-- verification
-- operational readiness
-- source gap
-- Needs Attention
-- controlled responsibility
-- missing controlled responsibility
-- verified responsible-person name
-
-Dashboard responsibility is read-only.
-
-==================================================
-23. PROGRAMME SMART QA
-==================================================
-
-May summarize:
-
-- courses in view
-- operational readiness
-- missing TQF3
-- missing TQF5
-- INSUFFICIENT_EVIDENCE
-- source gaps
-- controlled responsibility coverage
-
-Do not present these as academic rankings.
-
-==================================================
-24. TQF4 / TQF6 TEMPLATE REVIEW V32
-==================================================
-
-Read-only RPC:
-
-`hepe_document_template_version_review(text,integer)`
-
-Portal can compare:
-
-TQF4 v1 ↔ v2
-
-TQF6 v1 ↔ v2
-
-Review includes:
-
-- sections
-- added sections
-- field counts
-- synthetic-data guards
-- canonical/linkage bindings
-- execution-sensitive fields
-- approval/signature gates
-
-==================================================
-25. TQF4 V2
-==================================================
-
-Template:
-
-HEPE-TQF4-GENERIC
-
-v2:
-
-UNDER_REVIEW
-
-approved_at:
-
-NULL
-
-registry current_version_no:
-
-1
-
-No Activate button.
-
-==================================================
-26. TQF6 V2
-==================================================
-
-Template:
-
-HEPE-TQF6-GENERIC
-
-v2:
-
-UNDER_REVIEW
-
-approved_at:
-
-NULL
-
-registry current_version_no:
-
-1
-
-No Activate button.
-
-==================================================
-27. TEMPLATE ACTIVATION
-==================================================
-
-Do not:
-
-- change current_version_no to 2
-- mark v2 APPROVED
-- claim institutional-official authority
-
-without explicit Human Gate approval.
-
-==================================================
-28. INTERNAL REVIEW PACKAGE V32
-==================================================
-
-Core summary plus appendices:
+Internal Review Package includes:
 
 A. Section findings
 
@@ -668,242 +508,320 @@ B. Accepted AI decisions
 
 C. Evidence candidates
 
-D. Version diff narrative
+D. Version diff
 
 E. CQI lineage
 
 F. Source / provenance
 
-Output:
+G. AI Decision / Evidence Trail
+
+Classification:
 
 DRAFT
-
 NON-PRODUCTION
-
 INTERNAL REVIEW ONLY
 
+Do not label as institutional approval.
+
 ==================================================
-29. HED2503 CURRENT INVARIANTS
+22. READINESS
 ==================================================
 
-TQF3 record:
+Readiness states:
 
-`26e00a55-f545-49cc-aec6-959ac07809eb`
+BLOCKING
+WARNING
+PASS
 
-Current working version:
+Checks include:
+
+- source completeness
+- CLO completeness
+- CLO/PLO working linkage
+- weekly plan coverage
+- weekly alignment
+- assessment total
+- assessment→CLO/evidence
+- TQF3↔TQF5 CLO consistency
+- verification state
+- evidence presence
+- unresolved AI decisions
+
+==================================================
+23. PROGRAMME DASHBOARD
+==================================================
+
+Retain:
+
+- HED/PED filters
+- Required/Elective
+- Offered
+- Missing TQF3
+- Missing TQF5
+- Verification
+- Operational readiness
+- Source gap
+- Needs Attention
+- sorting
+- course drill-down
+- controlled responsibility where authorized
+- Programme Smart QA summary
+
+Operational readiness is not an academic ranking.
+
+==================================================
+24. EVIDENCE
+==================================================
+
+Candidate registration remains:
+
+UNVERIFIED
+
+NOT_ADMITTED
+
+creates_system_authority = FALSE
+
+Retain:
+
+- duplicate detection
+- SHA validation
+- candidate filters
+- metadata review
+- admission-review shell
+
+No auto-admit.
+
+==================================================
+25. TQF4 / TQF6
+==================================================
+
+TQF4 generic v2:
+
+UNDER_REVIEW
+
+TQF4 registry current_version_no:
+
+1
+
+TQF6 generic v2:
+
+UNDER_REVIEW
+
+TQF6 active-review registry current_version_no:
+
+1
+
+A separate RETIRED TQF6 registry row exists.
+
+Do not modify it unless separately reviewed.
+
+Do not activate v2 automatically.
+
+==================================================
+26. HED2503 INVARIANTS
+==================================================
+
+Working TQF3 current version:
 
 5
 
-Working version count:
+Version count:
 
 5
 
 Verification:
 
-`INSUFFICIENT_EVIDENCE`
+INSUFFICIENT_EVIDENCE
 
-==================================================
-30. IMMUTABLE R1
-==================================================
-
-Release:
-
-`HEPE-HED2503-TQF3-2569-1-R1`
-
-Status:
+R1:
 
 PUBLIC_PUBLISHED
 
-SHA-256:
+R1 SHA-256:
 
-`799818a46e8e0f931a156526f5e592088680c044ba8c62c04add3d5b40912256`
+799818a46e8e0f931a156526f5e592088680c044ba8c62c04add3d5b40912256
 
-Never mutate.
+R1 is immutable.
 
 ==================================================
-31. V32 REGRESSION
+27. V33 FRONTEND REGRESSION
 ==================================================
 
-JavaScript syntax:
+Required:
 
+JavaScript parse:
 PASS
 
-Invalid collection selectors:
-
-0
+Single-element selector used with collection method:
+NONE
 
 Duplicate DOM IDs:
+NONE
 
-0
+Live assets:
+portal-v33.js
+portal-v33.css
 
-Tab/panel ARIA contract:
+Required V33 contracts:
 
+field-level AI
 PASS
 
-Static DOM reference exception:
-
-`create-verification`
-
-Reason:
-
-dynamic by design.
-
-Description coverage:
-
-65 / 65
-
-Responsibility ACL:
-
+action types
 PASS
 
-Responsibility out-of-scope guard:
-
+gap-first
 PASS
 
-TQF4 v2 activation lock:
-
+suggestion index reconciliation
 PASS
 
-TQF6 v2 activation lock:
-
+diff preview
 PASS
 
-HED2503 R1 immutable:
+context drawer
+PASS
 
+next-gap navigation
+PASS
+
+section completion
+PASS
+
+review queue
+PASS
+
+reuse-update
+PASS
+
+decision trail
 PASS
 
 ==================================================
-32. PUBLIC ROUTE VERIFICATION LIMITATION
+28. LATEST AUDIT
 ==================================================
 
-Repository state and asset references are verified.
-
-The external web inspection tool could not fetch the public GitHub Pages route in this run.
-
-Do not claim independent authenticated browser visual verification from tooling.
+`docs/audits/hepe-fast-tqf-v33-guided-ai-review-2026-09-18.md`
 
 ==================================================
-33. CURRENT AUDIT
+29. CURRENT HUMAN GATE
 ==================================================
 
-`docs/audits/hepe-fast-tqf-v32-closure-2026-09-18.md`
+Authenticated visual acceptance of V33.
+
+Expected visible behavior:
+
+- Quick AI actions next to high-value fields
+- WRITE / CHECK / REFINE / ALIGN
+- Gap-first inline suggestions
+- “ดูทั้งหมด” toggle
+- Before/After diff
+- Context mini drawer
+- “ไปจุดถัดไป”
+- section completion badges
+- Review Queue Mode
+- Reuse → Update assistant
+- expanded AI audit trail in internal review package
+
+Repository/static regression is complete.
+
+Logged-in browser rendering still requires visual acceptance in the user session.
 
 ==================================================
-34. CURRENT HUMAN GATE
+30. NEXT SAFE PHASE AFTER VISUAL ACCEPTANCE
 ==================================================
 
-Authenticated V32 visual acceptance.
+V34-A — FIELD AI USABILITY
 
-Expected visible additions:
+1. Review field-button density on desktop.
+2. Review button density on mobile.
+3. Collapse low-frequency actions into a small menu if needed.
+4. Preserve one-click CHECK.
+5. Keep action labels understandable in Thai.
+6. Add keyboard shortcuts only if they do not conflict with browser/system shortcuts.
 
-- keyboard-accessible tabs
-- focus states
-- sticky table headers
-- table scroll hints on narrow screens
-- Controlled Course Responsibility card
-- explicit no-record state for HED2503 where applicable
-- Dashboard responsible-person column/filter
-- Advanced Cross-document QA
-- Version Change Narrative
-- CQI Lineage
-- Accepted AI Traceability
-- richer Evidence Candidate metadata
-- READY_FOR_HUMAN_REVIEW / NEEDS_METADATA
-- TQF4/TQF6 v1↔v2 structural review
-- expanded Review Package appendices
+V34-B — SMART PROPOSAL QUALITY
 
-==================================================
-35. NEXT PHASE AFTER V32 VISUAL ACCEPTANCE
-==================================================
+7. Add section-specific proposal templates based on verified source context.
+8. Improve CLO scaffold using curriculum description terms without asserting canonical CLO authority.
+9. Improve weekly activity scaffold from selected CLO and topic.
+10. Improve assessment evidence scaffold from selected CLO and assessment method.
+11. Improve CQI scaffold from actual TQF5 issues only.
+12. Improve verification wording only from admitted/linked evidence.
 
-V33-A — RESPONSIBILITY GAP QUEUE
+V34-C — REVIEW QUEUE
 
-1. Create programme-level missing-responsibility queue.
-2. Separate MISSING / ROSTER_PENDING / VERIFIED.
-3. Link only controlled sources.
-4. Do not infer missing names.
-5. Add source-document locator preview.
-6. Add course drill-down.
-7. Keep mutation outside this portal unless separately authorized.
+13. Add resolved/remaining counters.
+14. Add “resolve and next”.
+15. Add queue filters by BLOCKING/WARNING.
+16. Add queue grouping by TQF3/TQF5/Verification.
+17. Keep queue read/write separation explicit.
 
-V33-B — DOCUMENT EXECUTION MODEL
+V34-D — VERSION / CQI
 
-8. Add explicit PLAN / EXECUTED / EVIDENCED distinctions.
-9. Apply to TQF5 fields where possible.
-10. Apply to verification evidence.
-11. Prevent plan text from being displayed as executed fact.
-12. Add source-state badges to actual/result fields.
+18. Add field-level prior-version comparison.
+19. Add CQI-to-field suggestion mapping.
+20. Require user approval before any carry-forward.
+21. Add change rationale for accepted updates.
+22. Add source version reference to carried-forward text.
 
-V33-C — CROSS-DOCUMENT TRACEABILITY GRAPH
+V34-E — REVIEW PACKAGE
 
-13. Build read-only graph:
-Curriculum
-→ TQF3
-→ TQF5
-→ Verification
-→ CQI
-→ Next TQF3
+23. Add AI decision count by section.
+24. Add unresolved AI appendix.
+25. Add Review Queue remaining items.
+26. Add field-level diff appendix.
+27. Add reuse/update lineage.
+28. Preserve DRAFT watermark.
 
-14. Add node source status.
-15. Add missing-link flags.
-16. Add working/canonical distinction.
-17. Do not create inferred edges.
+V34-F — TQF4/TQF6
 
-V33-D — REVIEW PACKAGE HARDENING
-
-18. Add responsibility appendix.
-19. Add cross-document QA appendix.
-20. Add evidence metadata appendix.
-21. Add template review appendix.
-22. Add explicit unresolved-human-gates section.
-23. Preserve DRAFT watermark.
-
-V33-E — TQF4/TQF6 FIELD-BINDING REVIEW
-
-24. Review every v2 structural field.
-25. Classify source requirement:
-   - canonical curriculum
-   - programme-controlled
-   - course-plan
-   - execution evidence
-   - approval/signature
-26. Do not populate values.
-27. Produce activation-readiness report.
-28. Stop at activation Human Gate.
-
-V33-F — SECURITY / RELEASE HARDENING
-
-29. Recheck anon RPC privileges.
-30. Recheck RLS exposure.
-31. Recheck no secret in static assets.
-32. Recheck relative paths.
-33. Recheck immutable release.
-34. Recheck Production false.
-35. Recheck rollback safety.
+29. Continue structural-preview validation.
+30. Do not activate v2.
+31. Map canonical fields to v2 placeholders.
+32. Identify fields that require actual placement/supervisor evidence.
+33. Identify signature gates.
+34. Stop at activation Human Gate.
 
 ==================================================
-36. HUMAN GATES AFTER V32
+31. TRUE HUMAN GATES
 ==================================================
 
-Stop for:
+Stop only for:
 
-- Production authorization
-- secret / credential change
-- evidence admission
-- VERIFIED transition
-- TQF4/TQF6 v2 activation
-- official template authority
-- immutable R1 mutation
-- destructive migration
-- master UI unlock
-- direct protected AI integration
+Production authorization
+
+secret / credential change
+
+institutional SSO
+
+destructive migration
+
+immutable R1 mutation
+
+evidence admission
+
+VERIFIED decision
+
+TQF4 v2 activation
+
+TQF6 v2 activation
+
+official template authority
+
+master UI unlock
+
+protected direct AI API integration
+
+ambiguous canonical source adoption
 
 Everything else clear and reversible:
 
-continue automatically after the visual-acceptance gate.
+continue automatically.
 
 ==================================================
-37. EXECUTION TRIGGER
+32. EXECUTION TRIGGER
 ==================================================
 
 When user says:
@@ -918,16 +836,16 @@ Continue
 ต่อ
 ทำต่อ
 
-after V32 visual acceptance:
+and V33 visual acceptance is satisfactory:
 
 continue automatically:
 
-V33-A
-→ V33-B
-→ V33-C
-→ V33-D
-→ V33-E
-→ V33-F
+V34-A
+→ V34-B
+→ V34-C
+→ V34-D
+→ V34-E
+→ V34-F
 
 until a true Human Gate.
 
