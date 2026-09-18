@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>HEPE Fast TQF Portal v27</title>
-  <link rel="stylesheet" href="./assets/css/portal-v27.css?v=27">
+  <title>HEPE Fast TQF Portal v28</title>
+  <link rel="stylesheet" href="./assets/css/portal-v28.css?v=28">
 </head>
 <body>
   <header class="topbar">
@@ -62,7 +62,7 @@
         <div class="section-title">
           <div>
             <h2>เลือกหลักสูตรและรายวิชา</h2>
-            <div class="help">เลือกจากชื่อหลักสูตร ระบบกรองรายวิชาและดึงข้อมูลหลักสูตรให้อัตโนมัติ</div>
+            <div class="help">เลือกจากชื่อหลักสูตร ระบบแสดงเฉพาะรายวิชา HED/PED ที่ภาควิชารับผิดชอบ และดึงข้อมูลหลักสูตรให้อัตโนมัติ</div>
           </div>
           <button id="reload-course" class="btn">รีโหลดข้อมูล</button>
         </div>
@@ -424,13 +424,18 @@
               AI ช่วยวิเคราะห์และเสนอทางเลือก แต่ผู้ใช้เป็นผู้ตัดสินใจทุกครั้ง
             </div>
 
+            <div class="field">
+              <label for="ai-analysis-box">ผลวิเคราะห์ทันที</label>
+              <textarea id="ai-analysis-box" class="ai-analysis-box" readonly>กดปุ่ม AI วิเคราะห์ในหมวดที่ต้องการ ผลวิเคราะห์จะปรากฏในกล่องนี้ทันที</textarea>
+            </div>
+
             <div id="ai-suggestions">
               <div class="help">กด “AI วิเคราะห์” ในแต่ละหมวดเพื่อเริ่มต้น</div>
             </div>
 
             <hr>
             <div class="actions">
-              <button id="ai-chatgpt" class="btn ai">เปิด ChatGPT วิเคราะห์หมวดนี้</button>
+              <button id="ai-chatgpt" class="btn ai">วิเคราะห์เชิงลึกเพิ่มด้วย ChatGPT</button>
               <button id="ai-show-prompt" class="btn small">ดู Prompt</button>
             </div>
             <div id="ai-prompt-wrap" hidden>
@@ -447,6 +452,6 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./assets/js/portal-v27.js?v=27"></script>
+  <script src="./assets/js/portal-v28.js?v=28"></script>
 </body>
 </html>
