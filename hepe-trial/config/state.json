@@ -1,34 +1,31 @@
 {
-  "phase_range": "B03.17A.3 → B03.20",
-  "status": "GOVERNED_WRITE_RPC_READY_HUMAN_MAGIC_LINK_GATE",
+  "phase_range": "TQF-STATE-RECONCILIATION-01 → TQF-STATUS-SURFACE-01",
+  "status": "RECONCILED_STATUS_SURFACE_READY",
   "course_code": "HED2503",
   "programme_code": "25510071103503",
   "academic_year": "2569",
   "term_code": "1",
-  "working_source": {
-    "classification": "LATEST_WORKING_CONFIRMED",
-    "authority": "NON_AUTHORITATIVE_WORKING_SOURCE"
+  "effective_state_model": {
+    "working_state": "DRAFT",
+    "frozen_release_state": "FINAL",
+    "publication_state": "PUBLIC_PUBLISHED",
+    "effective_state": "PUBLIC_PUBLISHED_WITH_ACTIVE_WORKING_DRAFT",
+    "state_relation": "PARALLEL_LIFECYCLES_EXPECTED"
   },
-  "canonical": {
-    "credit_pattern": "3(3-0-6)"
-  },
-  "working_conflict": {
-    "credit_pattern": "3(2-2-5)",
-    "resolution": "KEEP_CANONICAL_AND_LOG_CONFLICT"
-  },
-  "template_authority": {
-    "template_code": "HEPE-TQF3-GENERIC",
-    "template_status": "UNDER_REVIEW",
-    "current_version": 2,
-    "version_status": "UNDER_REVIEW",
-    "approved_at": null,
-    "drive_search": "NO_AUTHORITATIVE_BLANK_TEMPLATE_FOUND"
+  "immutable_release": {
+    "release_code": "HEPE-HED2503-TQF3-2569-1-R1",
+    "sha256": "799818a46e8e0f931a156526f5e592088680c044ba8c62c04add3d5b40912256",
+    "institutional_official_claim": false
   },
   "available_rpcs": [
-    "hepe_create_tqf3_working_draft_by_code(text,text,text,text,jsonb,text)",
-    "hepe_create_tqf3_preview_by_code(text,text,text,text,text)",
-    "hepe_release_readiness_by_code(text,text,text,text)"
+    "hepe_authoritative_release_registry_by_code(text,text,text,text)",
+    "hepe_tqf3_state_reconciliation_by_code(text,text,text,text)"
   ],
-  "human_gate": "Real user Magic Link sign-in required.",
+  "ui_surface": {
+    "route": "./hepe-trial/",
+    "auth_required": true,
+    "anon_status_access": false,
+    "read_only": true
+  },
   "production_changed": false
 }
