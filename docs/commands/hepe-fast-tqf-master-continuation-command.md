@@ -2,7 +2,7 @@
 
 Effective date: 2026-09-18
 
-Revision: POST-V26 CURRICULUM-FIRST UX
+Revision: POST-V27 OPERATIONAL ENHANCEMENT
 
 Status: ACTIVE MASTER CONTINUATION COMMAND
 
@@ -20,7 +20,7 @@ Public route:
 
 Current UI query:
 
-`?v=26`
+`?v=27`
 
 Environment:
 
@@ -52,32 +52,38 @@ MAXIMUM SAFE CONTINUATION
 0. PERMANENT LONG-COMMAND RULE
 ==================================================
 
-After every major processing batch, implementation phase, audit, architecture change, data reconciliation, UI revision, evidence admission, or governance decision:
+After every major processing batch, implementation phase, audit, architecture change, data reconciliation, UI revision, evidence admission, workflow enhancement, or governance decision:
 
 1. Continue all clear and reversible work automatically.
-2. Batch related steps together.
+2. Batch related tasks together.
 3. Do not stop after minor successes.
 4. Do not ask unnecessary clarification questions.
-5. Stop only at a true Human Gate.
+5. Stop only at a genuine Human Gate.
 6. Refresh this continuation command after material state changes.
 7. Record important commits, IDs, versions, limitations, and invariants.
-8. Preserve all approved locks and boundaries.
+8. Preserve approved locks and environment boundaries.
 9. Never convert examples/mockups into factual course data.
-10. Never infer authority that the source does not support.
+10. Never infer institutional authority from ordinary working documents.
+11. Never create VERIFIED merely to demonstrate a positive workflow.
+12. Never rewrite immutable or historical states for convenience.
+13. Prefer read-only and append-only changes before mutable changes.
+14. Reuse existing tables, views, RPCs, and evidence structures before creating new parallel structures.
+15. Separate UI readiness from institutional approval.
 
 True Human Gates include:
 
 - Production authorization
-- secret / credential changes
+- secret/credential changes
 - destructive database actions
 - immutable R1 mutation
 - historical lifecycle rewrite
 - institutional-official authority claims
 - template authority escalation
-- automatic VERIFIED transition
-- design unlock of approved master UI
+- VERIFIED transition when human evidence judgment is required
+- design unlock of the approved master UI
 - adoption of uncertain canonical curriculum values
-- authenticated visual acceptance when the current tool environment cannot observe the page itself
+- authenticated visual acceptance when current tools cannot independently observe the live authenticated browser
+- direct AI API integration requiring protected credentials/privacy review
 
 ==================================================
 1. ROLE
@@ -119,20 +125,20 @@ Do not add:
 - Express
 - PHP
 - Flask/Django
-- server-side custom runtime
+- custom server runtime
 
 unless separately authorized.
 
-All local paths must remain relative.
+All local asset paths must remain relative.
 
 Examples:
 
-`./assets/css/portal-v26.css`
+`./assets/css/portal-v27.css`
 
-`./assets/js/portal-v26.js`
+`./assets/js/portal-v27.js`
 
 ==================================================
-3. CURRENT ENVIRONMENT
+3. ENVIRONMENT BOUNDARY
 ==================================================
 
 Supabase project:
@@ -143,6 +149,10 @@ Name:
 
 HEPE Curriculum Command Center Sandbox
 
+Environment:
+
+NON-PRODUCTION
+
 Production authorization:
 
 FALSE
@@ -151,7 +161,16 @@ Production deployment:
 
 NOT AUTHORIZED
 
-Do not infer Production authorization from UI approval, testing, commits, repository deployment, or successful Sandbox writes.
+Do not infer Production authorization from:
+
+- visual approval
+- feature approval
+- successful login
+- successful sandbox writes
+- repository commits
+- GitHub Pages deployment
+- user acceptance of mockups
+- document readiness score
 
 ==================================================
 4. MASTER UI/UX LOCK
@@ -173,7 +192,7 @@ Commit:
 
 `74b41597a8353b9b7b19674f476311f59ed2b1b7`
 
-Locked 10-screen architecture:
+Locked conceptual screens:
 
 1. Login
 2. Academic Dashboard / Course Selection
@@ -186,7 +205,7 @@ Locked 10-screen architecture:
 9. Readiness / Cross-document Consistency
 10. Programme Dashboard
 
-No major redesign of these directions without explicit Unlock / Change Request.
+No major redesign without explicit Unlock / Change Request.
 
 ==================================================
 5. VISUAL LANGUAGE LOCK
@@ -195,22 +214,24 @@ No major redesign of these directions without explicit Unlock / Change Request.
 Use:
 
 - academic professional design
-- white / off-white surfaces
+- white / off-white background
 - navy structural color
-- crimson/red accent
-- green = complete/pass
-- amber = review/warning
-- red = evidence gap/block
-- light blue/slate = supporting information
+- crimson accent
+- green for complete/pass
+- amber for review/warning
+- red for evidence gap/blocking
+- blue/slate for supporting data
 
-UI should be:
+UI principles:
 
 - Thai-first
-- dense but readable
-- evidence/governance oriented
+- high information density without clutter
+- evidence/governance orientation
 - desktop-first responsive
-- suitable for academic staff
-- clear about state and provenance
+- clear state visibility
+- source/provenance visible near canonical data
+- ordinary users should not see internal IDs unless useful
+- JSON is advanced/debug only, not primary interaction
 
 ==================================================
 6. CURRENT FRONTEND BASELINE
@@ -218,110 +239,111 @@ UI should be:
 
 Current release:
 
-v26
+V27
 
 Route:
 
 `./hepe-trial/`
 
+Expected public URL:
+
+`https://kasemch.github.io/hepe-trial/?v=27`
+
 Main files:
 
 `./hepe-trial/index.html`
 
-`./hepe-trial/assets/css/portal-v26.css`
+`./hepe-trial/assets/css/portal-v27.css`
 
-`./hepe-trial/assets/js/portal-v26.js`
+`./hepe-trial/assets/js/portal-v27.js`
 
 `./hepe-trial/config/state.json`
 
-Important commits:
+Important V27 commits:
 
-v26 CSS:
+V27 runtime:
 
-`38803773e6ba60b2925afc813ff81906beb3c7d4`
+`6dd6f5c412169f383d2ef7658b0bb454d06f0e84`
 
-v26 runtime:
+V27 CSS:
 
-`e0015740883bdafa15f5d75bb656a4aca4bd836e`
+`5ff32e197eca68703559deed45584f2d364a209c`
 
-v26 index:
+V27 index:
 
-`748e83bf6d9d47a3f3a2d5134d474acc81a00017`
+`d6e0ebcbba870fbc611f76f5c89109c834e61ef6`
 
-v26 state config:
+V27 config:
 
-`8c8bde4eb9ccb11d8ddd21097f16e5aca847177a`
+`4af931d9aef6b5432322fff368eb6e63802a3591`
 
-v26 audit:
+V27 audit:
 
-`a12695e472c1f18f80b061f40e1045db022b03f7`
+`03fef8c16ac20258de9815832405e9bcdfd13245`
 
 ==================================================
-7. V26 CURRICULUM-FIRST UX
+7. CURRICULUM-FIRST UX
 ==================================================
 
-Ordinary users must not type programme codes manually.
+Normal user flow:
 
-Flow:
-
-Programme Name
+Login
+→ Programme Name
 → Course
 → Academic Year
 → Term
 → Curriculum Context
-→ TQF3 / TQF5 / Verification
+→ TQF3 / TQF5 / Verification / Readiness / Dashboard
 
-Programme selector:
+Do not require users to type:
 
-human-readable programme title
+programme_code
+programme_id
+curriculum_version_id
+course_id
+course_offering_id
 
-Course selector:
-
-`COURSECODE — ชื่อรายวิชา`
-
-Internal codes/IDs remain hidden from normal users.
+These remain internal identifiers.
 
 ==================================================
-8. CURRENT CATALOG RUNTIME
+8. CURRENT RUNTIME CATALOG
 ==================================================
 
-Verified values:
+Verified current values:
 
 real programme count:
 
 `1`
 
-current curriculum course count:
+current curriculum courses:
 
 `92`
 
-academic term count:
+academic terms:
 
 `2`
 
-programme PLO code count:
+programme PLO codes:
 
 `7`
 
-HED2503 canonical course→PLO mapping count:
+HED2503 canonical course→PLO mappings:
 
 `0`
 
 Critical rule:
 
-Do not filter the course dropdown by `curriculum_courses.is_active=true` alone.
+Do not filter course dropdown only by:
 
-Use membership in the current curriculum version.
+`curriculum_courses.is_active=true`
 
-Reason:
-
-The current curriculum contains 92 courses while the existing is_active flag is too narrow for catalogue display.
+Use current curriculum membership.
 
 ==================================================
 9. CATALOG RPC BASELINE
 ==================================================
 
-Current authenticated read-only catalog functions:
+Authenticated read models:
 
 `hepe_fast_tqf_programme_catalog()`
 
@@ -331,21 +353,13 @@ Current authenticated read-only catalog functions:
 
 `hepe_fast_tqf_term_catalog()`
 
-ACL invariant:
+ACL:
 
-anon execute:
+anon = denied
 
-FALSE
+authenticated = allowed
 
-authenticated execute:
-
-TRUE
-
-service_role:
-
-TRUE
-
-Preserve these ACLs unless separately reviewed.
+service_role = allowed
 
 ==================================================
 10. PROGRAMME DROPDOWN
@@ -359,84 +373,72 @@ optional curriculum version label
 
 course count
 
-Store internally:
-
-programme_code
-
-programme_id
-
-curriculum_version_id
-
-Do not require users to memorize programme codes.
+Store codes/IDs internally.
 
 ==================================================
-11. DEPENDENT COURSE DROPDOWN
+11. COURSE DROPDOWN
 ==================================================
 
 After programme selection:
 
-load all curriculum-member courses.
+load all courses belonging to the current curriculum.
 
 Display:
 
-course code + Thai title.
+`COURSECODE — ชื่อรายวิชา`
 
-If matching course offering exists for the selected year/term:
+Show marker when a matching course offering exists for the selected year/term.
 
-show a marker.
+If curriculum course exists but offering does not:
 
-If course belongs to the curriculum but no offering exists:
+allow curriculum viewing
 
-allow viewing curriculum context
-
-but disable document save actions that require an offering.
+disable operational document save requiring offering.
 
 ==================================================
-12. ACADEMIC YEAR / TERM DROPDOWN
+12. ACADEMIC YEAR / TERM
 ==================================================
 
-Use:
+Use runtime:
 
 `academic_terms`
 
-Current controlled periods:
+Current controlled terms:
 
 AY2569/T1
 
 AY2569/T2
 
-Display:
-
-term_label
-
-Show source metadata when useful.
-
-Do not hard-code year/term in future versions when runtime catalog exists.
+Do not hard-code future terms when runtime catalog can supply them.
 
 ==================================================
-13. CURRICULUM AUTO-FILL
+13. CANONICAL CURRICULUM AUTO-FILL
 ==================================================
 
-Current auto-fill includes:
+Current auto-fill:
 
 - programme title
 - curriculum version
 - course code
-- Thai title
-- English title
+- Thai course title
+- English course title
 - credit value
 - course description
-- course description provenance
+- description provenance
 - programme PLO codes
-- canonical course→PLO mappings when available
+- canonical course→PLO mapping when present
 
-Canonical fields are read-only in the standard form.
+Canonical fields are read-only in ordinary form.
 
 ==================================================
-14. COURSE DESCRIPTION PROVENANCE
+14. COURSE DESCRIPTION AUTHORITY
 ==================================================
 
-Never label text as “official curriculum-book text” without authority evidence.
+Never label a course description:
+
+`official curriculum-book text`
+
+unless source authority establishes it.
 
 Current HED2503 description:
 
@@ -448,92 +450,81 @@ authority_status:
 
 `WORKING_SOURCE_CANDIDATE`
 
-source locator:
-
-available
-
 Therefore:
 
-The UI may display the text as current curriculum-context data.
+display text and provenance
 
-The UI must display provenance.
-
-The UI must not overstate institutional authority.
+do not overstate authority.
 
 ==================================================
 15. PLO DATA QUALITY
 ==================================================
 
-PLO codes currently exist:
+Current programme PLO codes:
 
 PLO1–PLO7
 
-Current runtime statement versions may be incomplete/null.
+Runtime PLO statement text may still be incomplete.
+
+HED2503 canonical course→PLO mapping:
+
+not currently present.
 
 Therefore:
 
-show codes when available.
+working mapping may be entered.
 
-Do not fabricate PLO wording.
+canonical mapping may not be fabricated.
 
-Course→PLO canonical mapping for HED2503 currently:
+AI may suggest possible issues with working mappings.
 
-none located.
-
-Therefore:
-
-working mapping may be entered by users
-
-but must remain distinct from canonical mapping.
-
-AI must not create canonical mappings automatically.
+AI may not create authoritative mapping.
 
 ==================================================
 16. TQF3 SECTION 1
 ==================================================
 
-General information and course description are curriculum-driven.
+Curriculum-driven read-only context:
 
-User should not repeatedly enter:
-
-- programme name
+- programme
 - course code
 - titles
 - credits
 - curriculum version
-- canonical course description
+- course description
+- provenance
 
-Display provenance near source-derived values.
+User edits belong to working-document layer only.
 
 ==================================================
-17. TQF3 SECTION 2 — CLO
+17. TQF3 SECTION 2
 ==================================================
 
-Current structured CLO table includes:
+Structured CLO table:
 
 - CLO code
 - CLO statement
 - working PLO linkage
 - per-row AI review
-- add CLO
-- delete CLO
+- add
+- delete
 
-AI checks may include:
+AI checks:
 
-- measurable verb
+- measurable wording
+- action verbs
 - ambiguity
-- missing statement
-- missing PLO linkage
 - duplication
+- missing PLO
 - overly broad scope
 
-AI suggestions remain advisory.
-
 ==================================================
-18. CLO–PLO MASTER DIRECTION
+18. CLO–PLO DIRECTION
 ==================================================
 
-Future refinement should provide matrix mode.
+Master direction:
+
+matrix
 
 Rows:
 
@@ -543,41 +534,38 @@ Columns:
 
 PLO1–PLO7
 
-Cell state:
+Cell values:
 
-I / R / M / none
+I
+R
+M
+none
 
-Canonical mapping must remain distinct from working course-design mapping.
-
-If canonical mapping is absent:
-
-display:
-
-`Canonical mapping not available`
-
-Do not synthesize it.
+Keep canonical and working mappings separate.
 
 ==================================================
 19. TQF3 SECTION 3 — WEEKLY PLANNER
 ==================================================
 
-LOCKED direction.
+LOCKED.
 
-The free-text teaching-plan area is replaced by weekly rows.
+Primary interface:
+
+weekly rows.
 
 Current columns:
 
-1. Week
-2. Topic / Content
-3. CLO
-4. PLO
-5. Learning Activities
-6. Lecture Hours
-7. Practice Hours
-8. Self-study Hours
-9. Assessment / Evidence
-10. Learning Resources
-11. AI / row actions
+- week
+- topic/content
+- CLO
+- PLO
+- learning activities
+- lecture hours
+- practice hours
+- self-study hours
+- assessment/evidence
+- learning resources
+- AI/action
 
 Current actions:
 
@@ -585,27 +573,19 @@ Current actions:
 - duplicate week
 - delete week
 - AI analyze row
-- AI analyze whole term
+- AI analyze term
 
-Default planning slots:
+Default UI planning slots:
 
 15
 
-Important:
-
-These are UI planning slots, not evidence that every course officially has exactly 15 teaching weeks.
-
-Users may add/delete rows.
-
-Future enhancement:
-
-derive expected week structure from verified academic-calendar/term configuration if available.
+This is not an authoritative academic-calendar claim.
 
 ==================================================
 20. WEEKLY PLAN AI
 ==================================================
 
-AI checks:
+Check:
 
 Topic
 → CLO
@@ -614,128 +594,110 @@ Topic
 → Assessment/Evidence
 → Resources
 
-Examples:
+Flag:
 
-Topic but no CLO:
+topic without CLO
 
-flag
+CLO without activity
 
-CLO but no activity:
+CLO without evidence
 
-flag
+topic without resource
 
-CLO but no assessment/evidence:
-
-flag
-
-Topic but no learning resource:
-
-flag
-
-Do not auto-fill claims without user approval.
+hour assumptions without verified credit pattern
 
 ==================================================
-21. CREDIT-HOUR CHECK
+21. CREDIT-HOUR RULE
 ==================================================
 
-Only calculate authoritative expected hours when the credit pattern source is verified.
+Only calculate expected hours when source authority supports the credit pattern.
 
-If only total credit value is known:
+Do not infer:
 
-do not infer lecture/practice/self-study pattern.
+lecture
+practice
+self-study
 
-Display:
-
-`Credit-hour pattern requires source verification`
-
-Future:
-
-bind to verified curriculum credit pattern.
+from total credits alone.
 
 ==================================================
-22. TQF3 SECTION 4 — ASSESSMENT
+22. TQF3 ASSESSMENT
 ==================================================
 
-Current assessment table:
+Current structured fields:
 
-- assessment item
+- item
 - method
 - weight
-- linked CLO
+- CLO
 - evidence/rubric
 - AI review
 
 Current validation:
 
-assessment weights sum to 100%.
+total = 100%
 
-Future checks:
+Approved future validation:
 
-- every assessed CLO has evidence
-- no orphan assessment
-- formative/summative balance
-- assessment timing
+- orphan assessment
+- missing evidence
+- assessment burden
+- timing
 - rubric availability
-- duplicate assessment burden
+- formative/summative balance
 
 ==================================================
-23. TQF3 SECTION 5
+23. AI GOVERNANCE
 ==================================================
 
-Current fields:
+AI:
 
-- learning resources
-- improvement notes
+advisory co-pilot
 
-Future integration:
+not autonomous decision-maker
 
-CQI carry-forward from prior TQF5.
+Suggestion lifecycle:
+
+SUGGESTED
+→ ACCEPTED
+
+or
+
+→ EDITED_AND_ACCEPTED
+
+or
+
+→ REJECTED
+
+User:
+
+final decision-maker
+
+AI must not:
+
+- alter canonical curriculum data
+- invent PLO/CLO authority
+- fabricate evidence
+- fabricate results
+- mark VERIFIED
+- claim institutional approval
+- alter immutable R1
 
 ==================================================
-24. AI ASSISTANT MODEL
+24. AI CURRENT MODE
 ==================================================
-
-Current safe implementation:
 
 Local Smart QA
-+
-section-specific ChatGPT handoff
 
-No secret AI key is embedded in GitHub Pages.
+plus
 
-AI is a co-pilot.
+ChatGPT handoff
 
-AI is not an autonomous academic decision-maker.
+No private AI key in GitHub Pages.
 
-==================================================
-25. AI DECISION LIFECYCLE
-==================================================
+Per-section analysis:
 
-Every suggestion supports:
-
-`SUGGESTED`
-
-→ `ACCEPTED`
-
-or
-
-→ `EDITED_AND_ACCEPTED`
-
-or
-
-→ `REJECTED`
-
-Current decisions are stored in working-document metadata when the user saves.
-
-Do not silently modify user content.
-
-==================================================
-26. AI PER SECTION
-==================================================
-
-Current AI targets:
-
-- curriculum context
+- curriculum
 - CLO
 - weekly plan
 - assessment
@@ -743,87 +705,52 @@ Current AI targets:
 - verification
 - readiness
 
-Future:
-
-expand natural-language drafting while preserving human decision controls.
-
 ==================================================
-27. CHATGPT HANDOFF
+25. TQF5
 ==================================================
 
-Current direct AI handoff:
+Mode:
 
-- construct section-specific structured prompt
-- copy prompt to clipboard when possible
-- open ChatGPT
-- user decides whether/how to use response
-
-This avoids embedding private AI secrets in static frontend code.
-
-==================================================
-28. TQF5 CURRENT DESIGN
-==================================================
-
-TQF5 is Plan→Actual oriented.
+Plan → Actual
 
 Current fields:
 
 - registered students
 - students at end
-- plan vs actual summary
+- plan vs actual narrative
 - grade distribution
 - CLO attainment
-- problems/issues
+- problems
 - CQI plan
 - AI review
 
-TQF5 save creates:
+Save state:
 
-DRAFT / UNVERIFIED snapshot
+DRAFT / UNVERIFIED
 
-until evidence/verification supports escalation.
-
-==================================================
-29. TQF3 → TQF5 REUSE
-==================================================
-
-Current UI reuses CLO structure when possible.
-
-Future expansion:
-
-carry forward:
-
-- CLO list
-- assessment plan
-- weekly plan
-- rubric references
-- expected evidence
-
-User should mainly enter actual results and variance.
+until evidence permits escalation.
 
 ==================================================
-30. TQF5 VALIDATION
+26. TQF3→TQF5 REUSE
 ==================================================
 
-Current/approved checks:
+Current:
 
-- student count sanity
-- grade percentages ≈ 100%
-- TQF3 CLO set vs TQF5 CLO attainment
-- plan/actual narrative
-- CQI presence
+reuse CLO context.
 
 Future:
 
-add stronger plan/actual variance engine.
+reuse assessment plan, weekly plan, rubric references and evidence expectations.
+
+Avoid duplicate entry.
 
 ==================================================
-31. VERIFICATION WORKSPACE
+27. VERIFICATION
 ==================================================
 
-Current verification UI contains an evidence checklist.
+Evidence-first.
 
-Evidence categories:
+Current checklist categories:
 
 - committee appointment/order
 - minutes
@@ -834,97 +761,326 @@ Evidence categories:
 - reviewer comparison
 - signed/controlled decision
 
-Status options remain governed.
+No VERIFIED shortcut.
 
 ==================================================
-32. VERIFIED GATE
+28. CURRENT HED2503 VERIFICATION
 ==================================================
 
-No shortcut to VERIFIED.
+Verification record:
 
-Current HED2503 status:
+`67105933-55ce-4252-8519-94ad0ed45cf9`
+
+Status:
 
 `INSUFFICIENT_EVIDENCE`
 
-Current VERIFIED count:
+Evidence candidate count in V27 workspace:
 
-do not infer from UI.
+`1`
 
-Server-side evidence gate remains authoritative.
+Linked controlled evidence count:
 
-==================================================
-33. READINESS ENGINE
-==================================================
+`0`
 
-Current readiness checks:
+The current candidate remains:
 
-- curriculum context loaded
-- course description available/provenance
-- CLO completeness
-- weekly-plan coverage
-- assessment total
-- TQF3↔TQF5 CLO consistency
-- verification status
-- AI decision tracking
+NOT_ADMITTED
 
-Readiness label means:
-
-`Ready for internal review`
-
-not:
-
-`Officially approved`
+Do not promote.
 
 ==================================================
-34. CROSS-DOCUMENT CONSISTENCY
+29. V27 AUTOSAVE
 ==================================================
 
-Current comparison includes:
+Current implementation:
 
-TQF3 CLO
-↔
-TQF5 CLO attainment
+browser localStorage
 
-Approved future checks:
+debounced save
 
-- CLO count
-- CLO code
-- assessment-weight consistency
-- plan/actual assessment variance
-- result-without-plan
-- verification evidence references
-- student-count consistency
-- CQI linkage
+identity key includes:
+
+programme
+course
+academic year
+term
+
+Autosave does not create a server version on every keystroke.
+
+Visible save states include:
+
+- ready
+- unsaved
+- saved locally
+- saved on server
+- autosave failed
 
 ==================================================
-35. CURRENT HED2503 WORKING STATE
+30. V27 DRAFT RECOVERY
 ==================================================
 
-Current TQF3 record:
+When a matching local buffer exists:
 
-`26e00a55-f545-49cc-aec6-959ac07809eb`
+show recovery banner.
 
-Current working version:
+User options:
+
+- restore draft
+- discard draft
+
+Cross-course restore is prevented by document identity key.
+
+Restore is local working state only.
+
+It does not mutate server state until explicit save.
+
+==================================================
+31. V27 PROGRAMME DASHBOARD
+==================================================
+
+Read-only RPC:
+
+`hepe_fast_tqf_programme_dashboard(text,text,text)`
+
+Current verified AY2569/T1 summary:
+
+curriculum courses:
+
+`92`
+
+offered courses:
+
+`30`
+
+TQF3 present:
+
+`1`
+
+TQF5 present:
+
+`1`
+
+verification present:
+
+`1`
+
+VERIFIED:
+
+`0`
+
+INSUFFICIENT_EVIDENCE:
+
+`1`
+
+Dashboard must never invent missing document states.
+
+==================================================
+32. PROGRAMME DASHBOARD UI
+==================================================
+
+Current columns:
+
+- course
+- offering
+- TQF3
+- TQF5
+- verification
+- TQF3 version
+- verification update date
+
+Current filter:
+
+text search by code/title
+
+Approved future filters:
+
+- document state
+- evidence state
+- course group
+- responsible instructor
+- readiness
+
+==================================================
+33. V27 VERSION HISTORY
+==================================================
+
+Read-only RPC:
+
+`hepe_fast_tqf_version_history_by_code(text,text,text,text,integer)`
+
+Current HED2503 working version count:
 
 `5`
 
-Current version count:
+No history rewrite.
+
+==================================================
+34. V27 VERSION COMPARE
+==================================================
+
+Current compare dimensions:
+
+- objectives
+- CLO
+- weekly plan
+- assessment
+- resources
+- improvement notes
+
+Current output:
+
+changed
+or
+same
+
+with basic counts/presence.
+
+Approved future refinement:
+
+- field-level text diff
+- changed week highlighting
+- assessment weight diff
+- AI decision diff
+- user edit vs curriculum change distinction
+
+==================================================
+35. V27 EVIDENCE WORKSPACE
+==================================================
+
+Read-only RPC:
+
+`hepe_fast_tqf_evidence_workspace_by_code(text,text,text,text)`
+
+Current display:
+
+- linked evidence
+- evidence candidates
+- evidence type
+- status
+- source
+- authority
+
+Do not convert:
+
+candidate
+→ admitted evidence
+
+without governed review.
+
+==================================================
+36. V27 CQI CONTEXT
+==================================================
+
+Read-only RPC:
+
+`hepe_fast_tqf_cqi_context_by_code(text,text,text,text)`
+
+Current HED2503 AY2569/T1:
+
+prior TQF5 carry-forward snapshots:
+
+`0`
+
+improvement items:
+
+`0`
+
+Therefore UI correctly states:
+
+no carry-forward CQI source available.
+
+Do not invent CQI.
+
+==================================================
+37. CQI USER DECISION MODEL
+==================================================
+
+When a prior CQI item exists:
+
+user decision:
+
+IMPLEMENT
+
+or
+
+NOT_ADOPTED
+
+Future extension:
+
+MODIFY
+
+with rationale.
+
+Decision metadata is stored in working-document context when saved.
+
+No canonical change is implied.
+
+==================================================
+38. READINESS ENGINE
+==================================================
+
+Current checks:
+
+- curriculum context
+- course description/provenance
+- CLO completeness
+- weekly plan coverage
+- assessment total
+- TQF3↔TQF5 CLO consistency
+- verification state
+- AI decision tracking
+
+Readiness means:
+
+READY FOR INTERNAL REVIEW
+
+not institutional approval.
+
+==================================================
+39. CROSS-DOCUMENT CONSISTENCY
+==================================================
+
+Current:
+
+TQF3 CLO ↔ TQF5 CLO attainment
+
+Approved future checks:
+
+- assessment weight
+- result without plan
+- plan/actual variance
+- student counts
+- evidence references
+- CQI linkage
+
+==================================================
+40. CURRENT HED2503 WORKING STATE
+==================================================
+
+TQF3 record:
+
+`26e00a55-f545-49cc-aec6-959ac07809eb`
+
+Current version:
+
+`5`
+
+Version count:
 
 `5`
 
 These are working versions.
 
-Do not confuse them with immutable R1.
-
 ==================================================
-36. HED2503 R1 INVARIANT
+41. IMMUTABLE R1
 ==================================================
 
 Release:
 
 `HEPE-HED2503-TQF3-2569-1-R1`
 
-Publication:
+Status:
 
 `PUBLIC_PUBLISHED`
 
@@ -936,49 +1092,43 @@ R1:
 
 IMMUTABLE
 
-Never mutate R1 in place.
+Never mutate in place.
 
 ==================================================
-37. TQF5 CURRENT RUNTIME
+42. SAMPLE FILE RULE
 ==================================================
 
-HED2503 TQF5 snapshot count:
+If user says:
 
-`1`
+ตัวอย่าง
 
-Keep evidence status fail-closed.
+แบบฟอร์มตัวอย่าง
 
-Do not convert draft data into verified outcome without governed evidence.
+ตัวอย่างการเขียน
 
-==================================================
-38. SAMPLE FILE RULE
-==================================================
+sample
 
-Any file explicitly labelled:
+example
 
-- ตัวอย่าง
-- ตัวอย่างแบบฟอร์ม
-- ตัวอย่างการเขียน
-- sample
-- example
-- mockup
-- prototype
+mockup
 
-must default to:
+prototype
 
-`REFERENCE_SAMPLE_ONLY`
+default classification:
+
+REFERENCE_SAMPLE_ONLY
 
 Allowed:
 
 - layout
 - structure
-- wording style
-- UI testing
-- rendering
+- writing pattern
+- UI reference
+- renderer testing
 
-Forbidden unless separately confirmed:
+Forbidden without separate factual confirmation:
 
-- real course values
+- course values
 - names
 - dates
 - students
@@ -989,10 +1139,10 @@ Forbidden unless separately confirmed:
 - approvals
 
 ==================================================
-39. TEMPLATE AUTHORITY
+43. TEMPLATE AUTHORITY
 ==================================================
 
-Current governance baseline:
+Current baseline:
 
 TQF4:
 
@@ -1006,177 +1156,28 @@ TQF6:
 
 UNDER_REVIEW
 
-Do not claim institutional-official status without stronger evidence.
+Do not label as institutional official without stronger evidence.
 
 ==================================================
-40. LOGIN
+44. LOGIN
 ==================================================
 
-Current supported methods:
+Current:
 
-- Magic Link
-- password if configured
+Magic Link
+
+Password if account configured
 
 Future institutional SSO:
 
-allowed only when technically available and separately authorized/configured.
+requires separate configuration and authorization.
 
-Anonymous authenticated-data access:
+Anonymous operational data access:
 
 not allowed.
 
 ==================================================
-41. AUTOSAVE — NEXT SAFE PHASE
-==================================================
-
-After v26 visual acceptance:
-
-implement Smart Autosave.
-
-Recommended layers:
-
-Layer 1:
-
-local buffer
-
-Layer 2:
-
-controlled draft save
-
-Do not create a server version on every keystroke.
-
-Recommended save states:
-
-- Unsaved
-- Saving
-- Saved locally
-- Saved to server
-- Save failed
-
-==================================================
-42. DRAFT RECOVERY — NEXT SAFE PHASE
-==================================================
-
-Implement:
-
-- localStorage recovery
-- document identity key
-- programme/course/year/term binding
-- timestamp
-- restore prompt
-- discard option
-
-Never restore draft into a different course identity.
-
-==================================================
-43. PROGRAMME DASHBOARD — NEXT SAFE PHASE
-==================================================
-
-Build read-only dashboard first.
-
-Metrics:
-
-- curriculum courses
-- offered courses
-- TQF3 state
-- TQF5 state
-- verification state
-- evidence gaps
-- readiness
-- recently updated
-
-Filters:
-
-- academic year
-- term
-- document state
-- evidence state
-
-Do not fabricate missing course states.
-
-==================================================
-44. VERSION COMPARE — APPROVED FUTURE PHASE
-==================================================
-
-Compare:
-
-- current working version vs previous working version
-- current term vs prior term
-- current TQF3 vs prior TQF3
-
-Highlight:
-
-- added
-- removed
-- edited
-- curriculum-derived changes
-- user edits
-- AI-assisted accepted changes
-
-==================================================
-45. CQI CLOSED LOOP — APPROVED FUTURE PHASE
-==================================================
-
-Flow:
-
-TQF5 problem
-→ CQI action
-→ next TQF3 prompt
-→ user decision
-→ implementation status
-
-User decisions:
-
-- implement
-- modify
-- reject with rationale
-
-==================================================
-46. EVIDENCE PROVENANCE DRAWER
-==================================================
-
-Future provenance drawer should expose:
-
-- source type
-- source reference
-- version
-- page/locator
-- verification status
-- authority status
-- hash where available
-
-Use for:
-
-- course description
-- PLO
-- course mappings
-- credits
-- results
-- verification evidence
-
-==================================================
-47. EXPORT
-==================================================
-
-Current safe export:
-
-browser print / Save as PDF
-
-Future:
-
-controlled PDF/DOCX generation
-
-with:
-
-- document version
-- watermark
-- readiness status
-- provenance metadata
-
-Never label draft export as official.
-
-==================================================
-48. SECURITY
+45. SECURITY
 ==================================================
 
 Never embed:
@@ -1186,110 +1187,127 @@ Never embed:
 - database password
 - private credentials
 
-Static frontend may use intended publishable key only under the established authorization/RLS/RPC model.
+Use:
+
+- authenticated session
+- RLS
+- authority-aware RPC
+- minimal data exposure
 
 ==================================================
-49. PERFORMANCE
+46. V27 READ-MODEL ACL
 ==================================================
 
-Continue improving:
+RPCs:
 
-- cache catalogue per session
-- debounce checks
-- avoid duplicate RPCs
-- lazy render dashboards
-- cache-bust assets by version
-- avoid unnecessary writes
+`hepe_fast_tqf_programme_dashboard`
 
-==================================================
-50. ACCESSIBILITY
-==================================================
+`hepe_fast_tqf_version_history_by_code`
 
-Continue improving:
+`hepe_fast_tqf_evidence_workspace_by_code`
 
-- keyboard navigation
-- focus visibility
-- semantic labels
-- contrast
-- responsive tables
-- clear errors
-- ARIA where appropriate
+`hepe_fast_tqf_cqi_context_by_code`
+
+ACL verified:
+
+anon:
+
+FALSE
+
+authenticated:
+
+TRUE
 
 ==================================================
-51. CURRENT AUDITS
-==================================================
-
-Master UI lock:
-
-`docs/design/hepe-fast-tqf-master-ui-design-lock-v1.md`
-
-v26 audit:
-
-`docs/audits/hepe-fast-tqf-v26-curriculum-first-2026-09-18.md`
-
-Current long continuation command:
-
-`docs/commands/hepe-fast-tqf-master-continuation-command.md`
-
-==================================================
-52. CURRENT REGRESSION STATUS
+47. V27 REGRESSION STATUS
 ==================================================
 
 JavaScript syntax:
 
 PASS
 
-DOM contract:
+Required DOM IDs:
 
 PASS
 
-Relative asset paths:
+V27 CSS link:
 
 PASS
 
-Programme catalog:
+V27 JS link:
 
 PASS
 
-Course catalog:
+localStorage autosave:
+
+PRESENT
+
+Dashboard RPC binding:
+
+PRESENT
+
+Evidence RPC binding:
+
+PRESENT
+
+Version RPC binding:
+
+PRESENT
+
+CQI RPC binding:
+
+PRESENT
+
+Database runtime:
 
 PASS
 
-Term catalog:
-
-PASS
-
-Curriculum context:
-
-PASS
-
-Anonymous catalog RPC execute:
-
-DENIED
-
-Authenticated catalog RPC execute:
-
-ALLOWED
-
-Rollback-safe TQF3 write:
-
-PASS
-
-R1 immutability:
+R1 invariant:
 
 PASS
 
 Production:
 
-UNCHANGED / NOT AUTHORIZED
+UNCHANGED
 
 ==================================================
-53. CURRENT VISUAL LIMITATION
+48. CURRENT AUDITS
 ==================================================
 
-The internal web-check tool cannot retrieve:
+Master UI lock:
 
-`https://kasemch.github.io/hepe-trial/?v=26`
+`docs/design/hepe-fast-tqf-master-ui-design-lock-v1.md`
+
+V26 audit:
+
+`docs/audits/hepe-fast-tqf-v26-curriculum-first-2026-09-18.md`
+
+V27 audit:
+
+`docs/audits/hepe-fast-tqf-v27-operational-enhancement-2026-09-18.md`
+
+Master continuation:
+
+`docs/commands/hepe-fast-tqf-master-continuation-command.md`
+
+==================================================
+49. CURRENT TRUE HUMAN GATE
+==================================================
+
+AUTHENTICATED VISUAL ACCEPTANCE OF V27
+
+Expected new visible elements:
+
+1. save-state badge in top bar
+2. local Draft recovery banner when a buffer exists
+3. CQI Carry-forward area
+4. Version Compare area
+5. Evidence Workspace inside Verification
+6. Programme Dashboard tab
+7. dashboard KPIs
+8. dashboard course table
+
+Internal tools cannot independently observe the authenticated live page.
 
 Therefore:
 
@@ -1297,127 +1315,152 @@ repository implementation = VERIFIED
 
 database runtime = VERIFIED
 
-live authenticated visual result = NOT INDEPENDENTLY OBSERVED
-
-True current Human Gate:
-
-USER BROWSER VISUAL ACCEPTANCE OF V26
-
-Expected visible changes:
-
-- programme name dropdown
-- dependent course dropdown
-- year dropdown
-- term dropdown
-- canonical course description with provenance
-- structured CLO table
-- weekly teaching planner
-- structured assessment table
-- AI Assistant with Accept / Edited & Accept / Reject
-- TQF5 Plan→Actual
-- verification evidence checklist
-- Readiness tab
+live visual acceptance = USER BROWSER GATE
 
 ==================================================
-54. NEXT AUTOMATIC CONTINUATION AFTER VISUAL ACCEPTANCE
+50. NEXT AUTOMATIC PHASE AFTER V27 VISUAL ACCEPTANCE
 ==================================================
 
-PHASE V27-A — AUTOSAVE / RECOVERY
+V28-A — UX / ACCESSIBILITY POLISH
 
-1. Add local working buffer.
-2. Key buffer by programme/course/year/term/document.
-3. Add Unsaved/Saved status.
-4. Add restore prompt.
-5. Prevent cross-course restore.
-6. Add controlled server-save debounce.
-7. Regression test.
+1. Test keyboard navigation.
+2. Add visible focus states.
+3. Improve mobile table behavior.
+4. Improve error states.
+5. Add loading/skeleton states.
+6. Reduce visual density where appropriate.
+7. Add sticky weekly-table headers.
+8. Add course-search enhancement.
+9. Add dropdown search if needed.
+10. Re-run visual regression.
 
-PHASE V27-B — PROGRAMME DASHBOARD
+V28-B — ADVANCED READINESS
 
-8. Create read-only status RPC.
-9. Aggregate curriculum course list.
-10. Aggregate offerings.
-11. Aggregate TQF3 status.
-12. Aggregate TQF5 status.
-13. Aggregate verification status.
-14. Compute readiness categories.
-15. Add filters.
-16. Add programme AI insight shell.
-17. Keep missing data explicit.
+11. Add blocking vs warning classification.
+12. Add section-level readiness score.
+13. Add unresolved AI suggestion count.
+14. Add plan/actual mismatch checks.
+15. Add assessment-to-CLO orphan check.
+16. Add weekly plan coverage map.
+17. Add evidence gap count.
+18. Add export readiness indicator.
 
-PHASE V27-C — EVIDENCE WORKSPACE
+V28-C — EVIDENCE INTAKE ACTIONS
 
-18. Add evidence-item list.
-19. Add status:
-    PRESENT / INCOMPLETE / CONFLICT / MISSING.
-20. Add evidence metadata.
-21. Add source link/locator.
-22. Add reviewer note.
-23. Add AI evidence-gap summary.
-24. Preserve VERIFIED gate.
+19. Add “register evidence reference” workflow without uploading private files by default.
+20. Bind evidence reference to verification record.
+21. Capture source type.
+22. Capture date.
+23. Capture authority owner.
+24. Capture source locator.
+25. Capture integrity hash when available.
+26. Keep initial status as candidate/unverified.
+27. Require governed admission review.
+28. Never auto-admit.
 
-PHASE V27-D — VERSION COMPARE
+V28-D — VERSION DIFF ENHANCEMENT
 
-25. Load two working versions.
-26. Compute field-level diff.
-27. Weekly-plan diff.
-28. Assessment diff.
-29. CLO diff.
-30. Show accepted AI-assisted changes separately.
+29. Add detailed text diff.
+30. Highlight weekly rows changed.
+31. Highlight CLO added/removed.
+32. Highlight assessment weight changes.
+33. Highlight accepted AI-assisted changes.
+34. Preserve historical immutability.
 
-PHASE V27-E — CQI CLOSED LOOP
+V28-E — CQI CLOSED LOOP
 
-31. Extract TQF5 CQI action.
-32. Link to next-cycle TQF3.
-33. User decision:
-    implement / modify / reject.
-34. Record rationale.
-35. Show closure state.
+35. Add MODIFY decision.
+36. Add rationale.
+37. Add planned implementation term.
+38. Add implementation status.
+39. Link accepted CQI to next TQF3.
+40. Link resulting change back to source TQF5.
+41. Keep provenance.
 
-==================================================
-55. HUMAN GATES AFTER V26
-==================================================
+V28-F — DASHBOARD DRILL-DOWN
 
-Stop and ask only for:
+42. Add filters for TQF3/TQF5/verification states.
+43. Add evidence-gap filter.
+44. Add course group filter.
+45. Add readiness filter.
+46. Add direct course drill-down.
+47. Add recently updated sorting.
+48. Add programme AI summary shell.
 
-1. Visual acceptance if user reports display/interaction problem.
-2. Production authorization.
-3. Secret/API credential change.
-4. Institutional SSO configuration.
-5. Institutional-official template authority.
-6. Immutable R1 mutation.
-7. Destructive migration.
-8. Historical state rewrite.
-9. VERIFIED transition where evidence review needs human judgment.
-10. Master UI design unlock.
+V28-G — EXPORT / PREVIEW
 
-Everything else that is clear, reversible, and non-destructive should continue automatically.
+49. Improve print layout.
+50. Add controlled Preview mode.
+51. Add draft watermark.
+52. Add document version.
+53. Add provenance footer.
+54. Add readiness status.
+55. Do not label as official unless authority exists.
 
-==================================================
-56. RESPONSE RULE
-==================================================
+V28-H — DEFERRED TQF4/TQF6 RETURN
 
-Use Thai.
-
-Clearly distinguish:
-
-- verified fact
-- curriculum source
-- working source
-- source-observed
-- AI suggestion
-- user-approved AI suggestion
-- future claim
-- missing evidence
-- institutional authority
-
-Avoid overclaiming.
+56. Re-open TQF4/TQF6 development after urgent TQF3/TQF5/verification flow is stable.
+57. Use sample forms only for structure/layout.
+58. Do not import sample values as course facts.
+59. Preserve UNDER_REVIEW authority.
+60. Continue TQF4→TQF6→Verification architecture.
 
 ==================================================
-57. EXECUTION TRIGGER
+51. HUMAN GATES AFTER V27
 ==================================================
 
-When the user says:
+Stop only for:
+
+- V27 visual defect/acceptance
+- Production authorization
+- secret/credential action
+- institutional SSO setup
+- institutional-official template authority
+- immutable R1 mutation
+- destructive migration
+- historical rewrite
+- evidence admission requiring human judgment
+- VERIFIED decision requiring human judgment
+- master UI unlock
+- direct AI API secret/privacy architecture
+
+Everything else that is reversible and clear:
+
+continue automatically.
+
+==================================================
+52. RESPONSE RULE
+==================================================
+
+Respond in Thai.
+
+Distinguish:
+
+verified fact
+
+curriculum source
+
+working source
+
+source-observed
+
+AI suggestion
+
+user-approved AI suggestion
+
+future claim
+
+missing evidence
+
+institutional authority
+
+Do not overclaim.
+
+==================================================
+53. EXECUTION TRIGGER
+==================================================
+
+When user says:
 
 Approve
 
@@ -1437,58 +1480,49 @@ Continue
 
 ทำต่อ
 
-if the current visual acceptance gate has been satisfied, continue immediately with V27-A.
+If V27 visual acceptance is satisfied:
 
-If the user reports a visual/UI defect:
+continue immediately through V28-A onward.
 
-repair the defect first,
+Do not ask unnecessary questions.
 
-run regression,
-
-then continue.
-
-If the user sends a screenshot:
-
-inspect it as acceptance/defect evidence.
-
-Do not ask the user to repeat information already available.
+Stop only at a true Human Gate.
 
 ==================================================
-58. END-STATE TARGET
+54. END-STATE TARGET
 ==================================================
-
-Desired end-to-end workflow:
 
 Login
 → Programme
 → Course
 → Year/Term
 → Curriculum Auto-fill
-→ TQF3 General/CLO
-→ CLO–PLO
+→ TQF3 CLO
 → Weekly Plan
 → Assessment
 → AI Review + User Decision
+→ Autosave / Recovery
 → Readiness
-→ Teaching
 → TQF5 Plan→Actual
 → Verification Evidence
-→ Governed Review
-→ CQI
 → Programme Dashboard
-→ Next-cycle TQF3 Reuse
+→ CQI Closed Loop
+→ Version Compare
+→ Controlled Export
+→ Next-cycle Reuse
 
 System qualities:
 
 - evidence-first
-- human-controlled
 - no fabrication
+- human-controlled
 - minimal duplicate entry
 - traceable provenance
-- auditable versions
+- append-only working history
 - AI-assisted
 - static-web compatible
 - fail-closed
+- auditable
 - NON-PRODUCTION until explicitly authorized
 
 END MASTER CONTINUATION COMMAND
