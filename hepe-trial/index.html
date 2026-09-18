@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>HEPE Fast TQF Portal v29</title>
-  <link rel="stylesheet" href="./assets/css/portal-v29.css?v=29">
+  <title>HEPE Fast TQF Portal v30</title>
+  <link rel="stylesheet" href="./assets/css/portal-v30.css?v=30">
 </head>
 <body><div id="draft-watermark" class="draft-watermark">DRAFT · NON-PRODUCTION</div>
   <header class="topbar">
@@ -380,6 +380,24 @@
                     <div class="help">แสดงหลักฐานที่ผูกกับรายการทวนสอบและ evidence candidates ที่เกี่ยวข้อง</div>
                   </div>
                 </div>
+                <div class="evidence-intake">
+                  <h4>ลงทะเบียน Evidence Candidate</h4>
+                  <div class="help">บันทึกเป็น UNVERIFIED / NOT_ADMITTED เท่านั้น การรับเข้าเป็นหลักฐานต้องผ่าน governed review แยกต่างหาก</div>
+                  <div class="grid cols-2" style="margin-top:10px">
+                    <div class="field"><label for="evidence-type">ประเภทหลักฐาน</label><input id="evidence-type" placeholder="เช่น MINUTES / SAMPLING_LIST / STUDENT_ARTIFACT"></div>
+                    <div class="field"><label for="evidence-date">วันที่เอกสาร/หลักฐาน</label><input id="evidence-date" type="date"></div>
+                    <div class="field"><label for="evidence-source">แหล่งที่มา</label><input id="evidence-source" placeholder="ชื่อไฟล์ / Drive / repository / เลขที่คำสั่ง"></div>
+                    <div class="field"><label for="evidence-authority">Authority owner</label><input id="evidence-authority" placeholder="หน่วยงาน/ผู้ถืออำนาจของเอกสาร"></div>
+                  </div>
+                  <div class="field"><label for="evidence-assertion">สิ่งที่หลักฐานนี้สนับสนุน</label><textarea id="evidence-assertion"></textarea></div>
+                  <div class="grid cols-2">
+                    <div class="field"><label for="evidence-locator">Locator / หน้า / ตำแหน่ง</label><input id="evidence-locator"></div>
+                    <div class="field"><label for="evidence-sha">SHA-256 (ถ้ามี)</label><input id="evidence-sha" class="mono"></div>
+                  </div>
+                  <div class="field"><label for="evidence-note">หมายเหตุ</label><textarea id="evidence-note"></textarea></div>
+                  <button id="register-evidence-candidate" class="btn">ลงทะเบียนเป็น Evidence Candidate</button>
+                </div>
+                <hr>
                 <div id="evidence-workspace"></div>
               </div>
 
@@ -399,6 +417,11 @@
                 </div>
                 <button class="btn small ai ai-section" data-section="overview">AI ตรวจภาพรวม</button>
               </div>
+              <div class="readiness-summary">
+                <div class="kpi"><small>BLOCKING</small><strong id="readiness-blocking">0</strong></div>
+                <div class="kpi"><small>WARNING</small><strong id="readiness-warning">0</strong></div>
+                <div class="kpi"><small>PASS</small><strong id="readiness-pass">0</strong></div>
+              </div>
               <div class="readiness">
                 <div class="ring" id="readiness-ring" style="--p:0"><strong id="readiness-score">0%</strong></div>
                 <div id="readiness-list" class="check-list"></div>
@@ -406,6 +429,15 @@
               <hr>
               <h3>Cross-document consistency</h3>
               <div id="consistency-list" class="check-list"></div>
+              <hr>
+              <div class="section-title">
+                <div>
+                  <h3>Internal Review Package Preview</h3>
+                  <div class="help">สรุปก่อนพิมพ์/PDF — ยังเป็น DRAFT และไม่ใช่ institutional approval</div>
+                </div>
+                <button id="review-package-print" class="btn">พิมพ์ / Save PDF</button>
+              </div>
+              <div id="review-package-preview" class="review-package"></div>
             </section>
           </section>
 
@@ -431,17 +463,32 @@
               <div class="dashboard-toolbar">
                 <div>
                   <strong>สถานะรายวิชา</strong>
-                  <div class="help">ไม่เติมสถานะที่ไม่มีข้อมูลจริง</div>
+                  <div class="help">แสดงเฉพาะ scope HED/PED · ผลกรอง <span id="dashboard-filter-count">—</span></div>
                 </div>
                 <input id="dashboard-search" type="search" placeholder="ค้นหารหัสหรือชื่อวิชา">
+              </div>
+              <div class="dashboard-filters">
+                <select id="dashboard-prefix">
+                  <option value="ALL">ทุกกลุ่ม</option><option value="HED">HED</option><option value="PED">PED</option>
+                </select>
+                <select id="dashboard-role">
+                  <option value="ALL">Required + Elective</option><option value="REQUIRED">Required</option><option value="ELECTIVE">Elective</option>
+                </select>
+                <select id="dashboard-doc">
+                  <option value="ALL">ทุกสถานะเอกสาร</option><option value="OFFERED_ONLY">เฉพาะเปิดสอน</option><option value="MISSING_TQF3">ยังไม่มี มคอ.3</option><option value="MISSING_TQF5">ยังไม่มี มคอ.5</option>
+                </select>
+                <select id="dashboard-verification">
+                  <option value="ALL">ทุกสถานะทวนสอบ</option><option value="NO_RECORD">ยังไม่มีรายการ</option><option value="DRAFT">DRAFT</option><option value="IN_REVIEW">IN_REVIEW</option><option value="INSUFFICIENT_EVIDENCE">INSUFFICIENT_EVIDENCE</option><option value="VERIFIED">VERIFIED</option>
+                </select>
+                <label class="filter-check"><input id="dashboard-attention" type="checkbox"> Needs Attention เท่านั้น</label>
               </div>
 
               <div class="table-wrap">
                 <table>
                   <thead><tr>
-                    <th>รายวิชา</th><th>Offering</th><th>มคอ.3</th><th>มคอ.5</th><th>ทวนสอบ</th><th>TQF3 Version</th><th>อัปเดตทวนสอบ</th>
+                    <th>รายวิชา</th><th>คำอธิบาย</th><th>Offering</th><th>มคอ.3</th><th>มคอ.5</th><th>ทวนสอบ</th><th>TQF3 Version</th><th>Attention</th>
                   </tr></thead>
-                  <tbody id="dashboard-body"><tr><td colspan="7">เลือกแท็บเพื่อโหลดข้อมูล</td></tr></tbody>
+                  <tbody id="dashboard-body"><tr><td colspan="8">เลือกแท็บเพื่อโหลดข้อมูล</td></tr></tbody>
                 </table>
               </div>
 
@@ -482,10 +529,26 @@
               <textarea id="ai-analysis-box" class="ai-analysis-box" readonly>กดปุ่ม AI วิเคราะห์ในหมวดที่ต้องการ ผลวิเคราะห์จะปรากฏในกล่องนี้ทันที</textarea>
             </div>
 
+            <div class="field">
+              <div class="ai-proposed-head">
+                <label for="ai-proposed-text">ข้อความเสนอให้ใช้</label>
+                <span class="badge warn">ยังไม่ตัดสินใจ <span id="ai-unresolved-count">0</span></span>
+              </div>
+              <textarea id="ai-proposed-text" placeholder="ข้อความร่างจากข้อเสนอ AI จะปรากฏที่นี่" readonly></textarea>
+              <div class="actions" style="margin-top:7px">
+                <button id="ai-copy-proposed" class="btn small">คัดลอกข้อความ</button>
+                <button id="ai-undo-apply" class="btn small" disabled>Undo การใช้ข้อความล่าสุด</button>
+              </div>
+            </div>
+
             <div id="ai-suggestions">
               <div class="help">กด “AI วิเคราะห์” ในแต่ละหมวดเพื่อเริ่มต้น</div>
             </div>
 
+            <details class="ai-history">
+              <summary>ประวัติการตัดสินใจ AI</summary>
+              <div id="ai-decision-history"><div class="help">ยังไม่มีการตัดสินใจจาก AI</div></div>
+            </details>
             <hr>
             <div class="actions">
               <button id="ai-chatgpt" class="btn ai">วิเคราะห์เชิงลึกเพิ่มด้วย ChatGPT</button>
@@ -505,6 +568,6 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./assets/js/portal-v29.js?v=29"></script>
+  <script src="./assets/js/portal-v30.js?v=30"></script>
 </body>
 </html>
