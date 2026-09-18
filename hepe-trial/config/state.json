@@ -1,6 +1,6 @@
 {
-  "phase": "FAST-SUBMISSION-PORTAL-12",
-  "status": "V32_ACCESSIBILITY_RESPONSIBILITY_CROSSDOC_TEMPLATE_REVIEW_READY",
+  "phase": "FAST-SUBMISSION-PORTAL-13",
+  "status": "V33_GUIDED_FIELD_AI_REVIEW_QUEUE_READY",
   "updated_at": "2026-09-18",
   "route": "./hepe-trial/",
   "programme_code": "25510071103503",
@@ -331,11 +331,68 @@
       ],
       "draft_only": true,
       "institutional_approval_claim": false
+    },
+    "field_ai_v33": {
+      "status": "READY",
+      "targets": [
+        "CLO_STATEMENT",
+        "WEEKLY_ACTIVITY",
+        "ASSESSMENT_EVIDENCE",
+        "TQF3_OBJECTIVES",
+        "TQF3_RESOURCES",
+        "TQF3_IMPROVEMENT",
+        "TQF5_PLAN_ACTUAL",
+        "TQF5_PROBLEMS",
+        "TQF5_CQI",
+        "VERIFICATION_FINDING"
+      ],
+      "local_smart_qa": true,
+      "direct_external_ai_required": false
+    },
+    "gap_review_v33": {
+      "status": "READY",
+      "order": [
+        "BLOCKING",
+        "WARNING",
+        "SUGGESTION"
+      ],
+      "next_gap": true,
+      "guided_queue": true
+    },
+    "diff_context_v33": {
+      "status": "READY",
+      "before_after_preview": true,
+      "source_context": true,
+      "provenance_context": true
+    },
+    "reuse_update_v33": {
+      "status": "READY",
+      "prior_working_version": true,
+      "fill_blank_only": true,
+      "overwrite_existing": false,
+      "cqi_context_visible": true
+    },
+    "ai_audit_trail_v33": {
+      "status": "READY",
+      "persisted_in_tqf3_working_content": true,
+      "persisted_in_tqf5_working_payload": true,
+      "fields": [
+        "document",
+        "section",
+        "suggestion_id",
+        "decision",
+        "text",
+        "source_basis",
+        "action_type",
+        "target",
+        "working_version",
+        "decided_at"
+      ]
     }
   },
   "environment": "NON-PRODUCTION",
   "production_authorized": false,
-  "ui_version": "32",
+  "ui_version": "33",
   "ai_assistant": {
     "status": "READY",
     "mode": "LOCAL_SMART_QA_PLUS_CHATGPT_HANDOFF",
@@ -378,7 +435,34 @@
     "scroll_to_result": true,
     "rail_kept_as_secondary_detail": true,
     "section_button_type": "button",
-    "collection_binding_regression_fixed": true
+    "collection_binding_regression_fixed": true,
+    "field_level_quick_actions": true,
+    "action_types": [
+      "WRITE",
+      "CHECK",
+      "REFINE",
+      "ALIGN"
+    ],
+    "gap_first": true,
+    "sort_order": [
+      "BLOCKING",
+      "WARNING",
+      "SUGGESTION"
+    ],
+    "inline_diff_preview": true,
+    "context_mini_drawer": true,
+    "next_gap_navigation": true,
+    "section_completion_states": [
+      "NOT_STARTED",
+      "IN_PROGRESS",
+      "NEEDS_REVIEW",
+      "READY_FOR_INTERNAL_REVIEW"
+    ],
+    "review_queue_mode": true,
+    "reuse_update": true,
+    "decision_evidence_trail": true,
+    "apply_requires_explicit_user_action": true,
+    "targeted_apply_requires_user_edit": true
   },
   "catalog": {
     "programme_count_verified": 1,
