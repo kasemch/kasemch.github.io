@@ -73,7 +73,17 @@
   const evidence = toolbar.querySelector('#td-evidence');
   const result = toolbar.querySelector('.td-result');
 
-  const cards = [...root.querySelectorAll('.sp-card')].filter(card => !card.closest('.td-toolbar'));
+  // Filter only evidence-bearing course sections. Dashboard/story cards stay visible.
+  const filterSectionIds = [
+    'retained-courses-title',
+    'cancelled-courses-title',
+    'quality-docs-title',
+    'special-teaching-title'
+  ];
+  const filterSections = filterSectionIds
+    .map(id => root.querySelector('#' + id)?.closest('.sp-section'))
+    .filter(Boolean);
+  const cards = [...new Set(filterSections.flatMap(section => [...section.querySelectorAll('.sp-card')]))];
 
   cards.forEach(card => {
     const text = card.textContent.toLowerCase();
@@ -210,8 +220,11 @@
       card.hidden = !match;
       if (match) visible += 1;
     });
-    empty.classList.toggle('is-visible', visible === 0);
-    result.textContent = `${visible} teaching evidence card${visible === 1 ? '' : 's'} shown`;
+    const hasActiveFilter = Boolean(q || s || e);
+    empty.classList.toggle('is-visible', hasActiveFilter && visible === 0);
+    result.textContent = hasActiveFilter
+      ? `${visible} teaching evidence card${visible === 1 ? '' : 's'} shown`
+      : 'Filters apply to course and course-evidence records only.';
   }
 
   [search,status,evidence].forEach(control => control.addEventListener(control.tagName === 'INPUT' ? 'input' : 'change', applyFilters));
