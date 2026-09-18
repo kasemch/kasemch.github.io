@@ -49,16 +49,57 @@
       </article>`;
   }
 
+  function renderDashboard(registry, projects, pipeline) {
+    const statusMount = document.getElementById('rps-project-status-summary');
+    const linkageMount = document.getElementById('rps-publication-linkage');
+    const lifecycleMount = document.getElementById('rps-lifecycle-dashboard');
+
+    if (statusMount) {
+      const active = projects.filter(project => project.portfolioClass === 'verified-active');
+      statusMount.innerHTML = active.length
+        ? active.map(project => `<div class="rps-status-item"><span>${esc(project.shortTitle || project.id)}</span><strong>${esc(project.statusLabel || project.status)}</strong><small>Last verified: ${esc(project.lastVerified || registry.lastVerified || 'Not asserted')}</small></div>`).join('')
+        : '<p>No Verified Active public-summary project is currently asserted.</p>';
+    }
+
+    if (linkageMount) {
+      linkageMount.innerHTML = projects.length
+        ? projects.map(project => {
+            const linked = project.publicationLinked === true;
+            const label = linked ? 'Verified publication linkage exists' : 'No verified publication linkage';
+            const note = project.publicationBindingNote || 'No relationship note asserted.';
+            return `<div class="rps-linkage-item ${linked ? 'is-linked' : 'is-unlinked'}"><span>${esc(project.shortTitle || project.id)}</span><strong>${esc(label)}</strong><p>${esc(note)}</p></div>`;
+          }).join('')
+        : '<p>No public-summary project record is available.</p>';
+    }
+
+    if (lifecycleMount) {
+      lifecycleMount.innerHTML = projects.length
+        ? projects.map(project => {
+            const milestones = Array.isArray(project.milestones) ? project.milestones : [];
+            const milestoneById = new Map(milestones.map(item => [item.id, item]));
+            const ids = ['project-core','protocol','ethics','instrument','data-collection','analysis','manuscript','publication'];
+            const stages = pipeline.map((label, index) => {
+              const state = milestoneById.get(ids[index])?.state || 'not-publicly-confirmed';
+              return `<div class="${stageClass(state)}"><b>${String(index + 1).padStart(2,'0')}</b><span>${esc(label)}</span></div>`;
+            }).join('');
+            return `<div class="rps-lifecycle-row"><div class="rps-lifecycle-row-head"><strong>${esc(project.shortTitle || project.title)}</strong><span>Current stage: ${esc(project.stage || 'Not asserted')}</span></div><div class="rps-lifecycle">${stages}</div></div>`;
+          }).join('')
+        : '<p>No lifecycle record is currently available.</p>';
+    }
+  }
+
   fetch(registryUrl, {cache:'no-store'})
     .then(response => {
       if (!response.ok) throw new Error('Registry unavailable');
       return response.json();
     })
     .then(registry => {
-      const projects = Array.isArray(registry.projects)
-        ? registry.projects.filter(project => project.visibility === 'public-summary' && project.portfolioClass === 'verified-active')
+      const publicProjects = Array.isArray(registry.projects)
+        ? registry.projects.filter(project => project.visibility === 'public-summary')
         : [];
+      const projects = publicProjects.filter(project => project.portfolioClass === 'verified-active');
       const pipeline = Array.isArray(registry.pipeline) ? registry.pipeline : [];
+      renderDashboard(registry, publicProjects, pipeline);
       if (!projects.length) {
         mount.innerHTML = '<article class="sp-card rps-loading-card">No Verified Active public-summary project is currently asserted.</article>';
         return;
@@ -67,5 +108,9 @@
     })
     .catch(() => {
       mount.innerHTML = '<article class="sp-card rps-loading-card">Verified research registry is temporarily unavailable. Existing research profile content remains unchanged.</article>';
+      ['rps-project-status-summary','rps-publication-linkage','rps-lifecycle-dashboard'].forEach(id => {
+        const node = document.getElementById(id);
+        if (node) node.innerHTML = '<p>Verified registry unavailable; no project status or relationship is inferred.</p>';
+      });
     });
 })();

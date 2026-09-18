@@ -65,6 +65,64 @@ author_profile: false
     </div>
   </section>
 
+  <section class="sp-section sp-shell rps-dashboard-section" aria-labelledby="rps-dashboard-title">
+    <div class="sp-section-head">
+      <div class="sp-eyebrow">Research Dashboard</div>
+      <h2 id="rps-dashboard-title">Project state, lifecycle, outputs and evidence boundary</h2>
+      <p class="sp-intro">A descriptive public dashboard. Counts come from the verified publication collection and current public research registry; lifecycle stages are categorical states, not completion percentages.</p>
+    </div>
+    <div class="rps-dashboard-grid">
+      <article class="sp-card rps-dashboard-card">
+        <div class="rps-card-head"><div><span class="sp-eyebrow">Project Status</span><h3>Verified public project registry</h3></div><span class="rps-badge">Registry-driven</span></div>
+        <div id="rps-project-status-summary" class="rps-status-summary" aria-live="polite"><p>Loading current verified project state…</p></div>
+      </article>
+
+      <article class="sp-card rps-dashboard-card">
+        <div class="rps-card-head"><div><span class="sp-eyebrow">Publication Linkage</span><h3>Verified relationship only</h3></div><span class="rps-badge">Fail-closed</span></div>
+        <div id="rps-publication-linkage" class="rps-linkage-panel" aria-live="polite">
+          <p>Loading publication-binding status…</p>
+        </div>
+      </article>
+
+      <article class="sp-card rps-dashboard-card rps-dashboard-wide">
+        <div class="rps-card-head"><div><span class="sp-eyebrow">Research Lifecycle</span><h3>Latest verified stage by project</h3></div><span class="rps-badge">No % complete</span></div>
+        <div id="rps-lifecycle-dashboard" class="rps-lifecycle-dashboard" aria-live="polite"><p>Loading lifecycle…</p></div>
+      </article>
+
+      <article class="sp-card rps-dashboard-card">
+        <div class="rps-card-head"><div><span class="sp-eyebrow">Outputs by Year</span><h3>Verified journal publication timeline</h3></div><span class="rps-badge">{{ publication_count }} records</span></div>
+        <div class="rps-output-bars">
+          {% for year in year_groups %}
+          {% assign year_count = year.items | size %}
+          {% assign year_share = year_count | times: 100 | divided_by: publication_count %}
+          <div><span>{{ year.name }}</span><i><b style="width:{{ year_share }}%"></b></i><strong>{{ year_count }}</strong></div>
+          {% endfor %}
+        </div>
+      </article>
+
+      <article class="sp-card rps-dashboard-card">
+        <div class="rps-card-head"><div><span class="sp-eyebrow">Outputs by Venue</span><h3>Verified journal venue distribution</h3></div><span class="rps-badge">{{ venue_groups | size }} venues</span></div>
+        <div class="rps-output-bars rps-output-bars--venue">
+          {% for venue in venue_groups %}
+          {% assign venue_count = venue.items | size %}
+          {% assign venue_share = venue_count | times: 100 | divided_by: publication_count %}
+          <div><span>{{ venue.name }}</span><i><b style="width:{{ venue_share }}%"></b></i><strong>{{ venue_count }}</strong></div>
+          {% endfor %}
+        </div>
+        <p class="rps-dashboard-note">Venue frequency is descriptive only; it does not imply journal ranking, indexing, impact or quality.</p>
+      </article>
+
+      <article class="sp-card rps-dashboard-card rps-dashboard-wide rps-evidence-boundary-card">
+        <div class="rps-card-head"><div><span class="sp-eyebrow">Evidence Boundary</span><h3>What the Research Portfolio does and does not claim</h3></div></div>
+        <div class="rps-boundary-grid">
+          <div><strong>Displayed</strong><p>Verified publication metadata, controlled public project state, documented lifecycle stage, public-safe outputs and explicitly verified project-publication relationships.</p></div>
+          <div><strong>Not inferred</strong><p>Completion percentage, publication linkage by topic similarity, unpublished findings, ethics approval, data collection completion or manuscript status without explicit evidence.</p></div>
+          <div><strong>Private by design</strong><p>Participant data, confidential protocols, internal Drive records, reviewer correspondence and controlled research-vault material remain outside the public site.</p></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
   <section class="sp-section sp-shell rps-active-section" aria-labelledby="rps-active-title">
     <div class="sp-section-head">
       <div class="sp-eyebrow">Verified Active Research</div>
