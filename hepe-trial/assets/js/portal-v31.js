@@ -1060,7 +1060,7 @@ function renderProgrammeAiSummary(rows=dashboardCtx?.courses||[]){
   box.value='สรุปเชิงปฏิบัติการ (Local Smart QA)\nรายวิชาในมุมมอง: '+rows.length+'\nOperational readiness 100%: '+ready+'\nยังไม่มี มคอ.3: '+missingT3+'\nยังไม่มี มคอ.5: '+missingT5+'\nINSUFFICIENT_EVIDENCE: '+evidence+'\nSource gap: '+sourceGaps+'\n\nหมายเหตุ: เป็นสรุปสถานะระบบ ไม่ใช่การประเมินคุณภาพทางวิชาการหรือ institutional approval';
 }
 
-function badgeHtmlfunction badgeHtml(text,k){return '<span class="badge '+(k||kind(text))+'">'+esc(text||'—')+'</span>';}
+function badgeHtml(text,k){return '<span class="badge '+(k||kind(text))+'">'+esc(text||'—')+'</span>';}
 
 function renderEvidenceQueue(){
   const s=evidenceQueueCtx?.summary||{},rows=evidenceQueueCtx?.items||[];
