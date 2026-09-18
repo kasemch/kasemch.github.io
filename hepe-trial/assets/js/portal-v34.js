@@ -729,7 +729,7 @@ function aiQuickButtons(section,target,row=null,actions=['write','check','refine
 }
 
 function bindAiFieldButtons(){
-  $('.ai-field').forEach(b=>b.onclick=()=>{
+  $$('.ai-field').forEach(b=>b.onclick=()=>{
     const menu=b.closest('details.ai-field-menu');
     runFieldAi(b);
     if(menu)menu.open=false;
