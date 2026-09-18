@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>HEPE Fast TQF Portal v26</title>
-  <link rel="stylesheet" href="./assets/css/portal-v26.css?v=26">
+  <title>HEPE Fast TQF Portal v27</title>
+  <link rel="stylesheet" href="./assets/css/portal-v27.css?v=27">
 </head>
 <body>
   <header class="topbar">
@@ -14,7 +14,7 @@
         <p>มคอ.3 · มคอ.5 · ทวนสอบ · AI-assisted Academic QA — NON-PRODUCTION</p>
       </div>
       <div class="actions">
-        <span id="identity" class="help"></span>
+        <span id="identity" class="help"></span><span id="save-state" class="badge info">พร้อม</span>
         <button id="print-form" class="btn">พิมพ์ / PDF</button>
         <button id="logout" class="btn">ออกจากระบบ</button>
       </div>
@@ -23,6 +23,16 @@
 
   <main class="shell">
     <div id="status" class="status">กำลังเตรียมระบบ…</div>
+    <div id="recovery-banner" class="recovery-banner" hidden>
+      <div>
+        <strong>พบ Draft ที่บันทึกไว้ในเครื่อง</strong>
+        <div class="help">บันทึกล่าสุด: <span id="recovery-time">—</span></div>
+      </div>
+      <div class="actions">
+        <button id="restore-local" class="btn primary">กู้ Draft</button>
+        <button id="discard-local" class="btn">ไม่ใช้ Draft นี้</button>
+      </div>
+    </div>
 
     <section id="login-view" class="card login-box">
       <div class="section-title">
@@ -98,7 +108,7 @@
         <button class="tab active" data-tab="tqf3">มคอ.3</button>
         <button class="tab" data-tab="tqf5">มคอ.5</button>
         <button class="tab" data-tab="verification">ทวนสอบ</button>
-        <button class="tab" data-tab="overview">Readiness</button>
+        <button class="tab" data-tab="overview">Readiness</button><button class="tab" data-tab="dashboard">Programme Dashboard</button>
       </div>
 
       <div class="main-grid">
@@ -220,6 +230,30 @@
                 </div>
               </div>
 
+              <div class="form-section">
+                <div class="form-section-header">
+                  <div>
+                    <h3>CQI Carry-forward จากรอบก่อน</h3>
+                    <div class="help">แสดงเฉพาะข้อมูลที่ระบบหาแหล่งที่มาได้ ผู้ใช้เลือกว่าจะนำไปใช้หรือไม่</div>
+                  </div>
+                </div>
+                <div id="cqi-carry" class="cqi-carry"></div>
+              </div>
+
+              <div class="form-section">
+                <div class="form-section-header">
+                  <div>
+                    <h3>Version Compare</h3>
+                    <div class="help">เปรียบเทียบ Working Version โดยไม่แก้ประวัติเดิม</div>
+                  </div>
+                </div>
+                <div class="version-compare-grid">
+                  <div class="field"><label for="version-a">Version A</label><select id="version-a"></select></div>
+                  <div class="field"><label for="version-b">Version B</label><select id="version-b"></select></div>
+                </div>
+                <div id="version-diff"></div>
+              </div>
+
               <div class="actions">
                 <button id="save-tqf3" class="btn primary">บันทึก มคอ.3 Working Draft</button>
               </div>
@@ -301,6 +335,16 @@
                 <label for="verification-note">ข้อค้นพบ / ข้อสรุปการทวนสอบ</label>
                 <textarea id="verification-note" class="tall"></textarea>
               </div>
+              <div class="form-section evidence-workspace">
+                <div class="form-section-header">
+                  <div>
+                    <h3>Evidence Workspace</h3>
+                    <div class="help">แสดงหลักฐานที่ผูกกับรายการทวนสอบและ evidence candidates ที่เกี่ยวข้อง</div>
+                  </div>
+                </div>
+                <div id="evidence-workspace"></div>
+              </div>
+
               <div class="actions">
                 <button id="save-verification-note" class="btn primary">บันทึกทวนสอบ</button>
                 <div id="verification-actions" class="actions"></div>
@@ -324,6 +368,44 @@
               <hr>
               <h3>Cross-document consistency</h3>
               <div id="consistency-list" class="check-list"></div>
+            </section>
+          </section>
+
+          <section id="panel-dashboard" class="panel" hidden>
+            <section class="card" id="dashboard-panel">
+              <div class="section-title">
+                <div>
+                  <h2>Programme Dashboard</h2>
+                  <div class="help">ภาพรวมหลักสูตรตามปีการศึกษา/ภาคที่เลือก</div>
+                </div>
+                <span class="badge info">READ-ONLY</span>
+              </div>
+
+              <div class="dashboard-kpis">
+                <div class="kpi"><small>รายวิชาในหลักสูตร</small><strong id="dash-curriculum">0</strong></div>
+                <div class="kpi"><small>เปิดสอน</small><strong id="dash-offered">0</strong></div>
+                <div class="kpi"><small>มี มคอ.3</small><strong id="dash-tqf3">0</strong></div>
+                <div class="kpi"><small>มี มคอ.5</small><strong id="dash-tqf5">0</strong></div>
+                <div class="kpi"><small>VERIFIED</small><strong id="dash-verified">0</strong></div>
+                <div class="kpi"><small>หลักฐานไม่พอ</small><strong id="dash-insufficient">0</strong></div>
+              </div>
+
+              <div class="dashboard-toolbar">
+                <div>
+                  <strong>สถานะรายวิชา</strong>
+                  <div class="help">ไม่เติมสถานะที่ไม่มีข้อมูลจริง</div>
+                </div>
+                <input id="dashboard-search" type="search" placeholder="ค้นหารหัสหรือชื่อวิชา">
+              </div>
+
+              <div class="table-wrap">
+                <table>
+                  <thead><tr>
+                    <th>รายวิชา</th><th>Offering</th><th>มคอ.3</th><th>มคอ.5</th><th>ทวนสอบ</th><th>TQF3 Version</th><th>อัปเดตทวนสอบ</th>
+                  </tr></thead>
+                  <tbody id="dashboard-body"><tr><td colspan="7">เลือกแท็บเพื่อโหลดข้อมูล</td></tr></tbody>
+                </table>
+              </div>
             </section>
           </section>
         </div>
@@ -365,6 +447,6 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./assets/js/portal-v26.js?v=26"></script>
+  <script src="./assets/js/portal-v27.js?v=27"></script>
 </body>
 </html>
