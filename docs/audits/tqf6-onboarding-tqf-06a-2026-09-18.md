@@ -2,7 +2,7 @@
 
 Date: 2026-09-18
 
-Status: PASS WITH EXECUTION-EVIDENCE GAPS
+Status: CONTROLLED-DRAFT OPERATIONAL — PASS WITH EXECUTION-EVIDENCE GAPS; HARDENING PREVIEW READY_FOR_REVIEW
 
 Environment: NON-PRODUCTION / Supabase Sandbox + Google Drive
 
@@ -172,7 +172,7 @@ Template/version status:
 
 Required bindings:
 
-8 / 8 BOUND
+16 / 16 BOUND
 
 Bindings include:
 
@@ -301,3 +301,102 @@ Before TQF6 can become result-bearing/controlled:
 - post-execution verification.
 
 Production remains unchanged.
+
+
+## Evidence-gap coverage hardening — 18 September 2026
+
+A non-destructive Sandbox migration was applied:
+
+`tqf06a_evidence_gap_coverage_hardening`
+
+The active TQF6 template now has **16 / 16 BOUND** field bindings and **0 non-bound** fields.
+
+Additional explicit bindings added during hardening:
+
+- TQF4_REFERENCE
+- FIELDWORK_STUDENT_COUNT
+- PASSED_STUDENT_COUNT
+- PLACEMENT_SUMMARY
+- FIELDWORK_HOURS
+- CLO_ATTAINMENT
+- FIELDWORK_PROBLEMS
+- APPROVAL
+
+All factual execution fields above retain `synthetic_data_forbidden = true`.
+
+The TQF6 document model was hardened to preserve explicit warnings when executed evidence is absent for student counts, passed counts, grade distribution, CLO attainment, feedback, placements, supervisors, executed hours, problems/variances, approval, and the future-dated working report claim.
+
+The generic document export-readiness function was also reconciled to recognize TQF4/TQF6 planning/result-reporting semantics without enabling authoritative export.
+
+A follow-up Sandbox hardening migration was applied:
+
+`tqf06a_export_readiness_search_path_hardening`
+
+This locks the function search path to `pg_catalog, public`.
+
+## Fresh hardening preview
+
+Preview session:
+
+`7e83620e-6a24-4ea2-823e-a12576298ce4`
+
+Target:
+
+`DOCX`
+
+Current state:
+
+`READY_FOR_REVIEW`
+
+Validation state:
+
+- blocking findings: 0
+- warnings: 11
+- informational findings: 1
+- required watermark: `DRAFT / UNDER REVIEW`
+- authoritative_export_allowed: `false`
+
+Warnings preserved by the fresh preview:
+
+- fieldwork student count not evidenced;
+- passed student count not evidenced;
+- grade distribution not evidenced;
+- CLO attainment not evidenced;
+- feedback not evidenced as executed;
+- placement execution not evidenced;
+- supervisor execution not evidenced;
+- executed fieldwork hours not evidenced;
+- fieldwork problems/variance evidence not executed;
+- TQF6 approval not executed;
+- future-dated working report claim dated 25 March 2570 is excluded from executed evidence.
+
+The prior controlled-draft preview
+
+`77911ea0-fbc2-4dba-b15a-a260a6763077`
+
+remains the previously reviewed `APPROVED_FOR_CONTROLLED_EXPORT` baseline with `authoritative_export_allowed = false`.
+
+The fresh hardening preview has **not** been force-approved. Its reviewer decision is a true Human Decision Gate and must go through the governed review action. No direct status update, fabricated reviewer decision, future-result promotion, production change, or R1 mutation was performed.
+
+## TQF-06A closure state after hardening
+
+TQF6 remains:
+
+**CONTROLLED-DRAFT OPERATIONAL**
+
+The controlled runtime, TQF4→TQF6 lineage, template registry, renderer bundle, fail-closed preview, and future-data exclusion policy are operational.
+
+The current HED3701 result-bearing state remains deliberately non-final:
+
+- TQF6 lifecycle: `DRAFT`
+- current version: `DRAFT`
+- source status: `SOURCE_OBSERVED`
+- executed fieldwork results: not admitted
+- authoritative export: disabled
+- production: unchanged
+
+Next governed action:
+
+Reviewer decision on preview `7e83620e-6a24-4ea2-823e-a12576298ce4`.
+
+After that gate is resolved, proceed to `CROSS-DOCUMENT-TRACEABILITY-01`.
