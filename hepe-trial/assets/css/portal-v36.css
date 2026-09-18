@@ -598,3 +598,30 @@ hr{border:0;border-top:1px solid var(--line);margin:18px 0}
 @media print{
   .finish-section-tools,.finish-section-result,.reuse-rationale-field{display:none!important}
 }
+
+
+/* ===== V36-A live form UX hardening ===== */
+.ai-inline-head{
+  position:sticky;
+  top:64px;
+  z-index:6;
+  background:rgba(251,253,255,.96);
+  backdrop-filter:blur(8px);
+  padding:7px 0;
+}
+.ai-field-actions .btn,
+.finish-section-tools .btn{
+  min-height:34px;
+}
+@media(max-width:720px){
+  .ai-field-actions{gap:6px}
+  .ai-field-actions .btn,
+  .finish-section-tools .btn,
+  .ai-inline-result .btn{
+    min-height:42px;
+  }
+  .ai-inline-head{top:52px}
+}
+@media(prefers-reduced-motion:reduce){
+  .ai-inline-head{backdrop-filter:none}
+}
