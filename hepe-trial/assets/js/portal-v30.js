@@ -45,7 +45,7 @@ function option(value,label,selected=false){return '<option value="'+esc(value)+
 
 function setTab(name){
   activeTab=name;
-  $('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===name));
+  $$('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===name));
   $$('.panel').forEach(x=>x.hidden=x.id!=='panel-'+name);
   activeAiSection=name==='tqf3'?'curriculum':name;
   renderAiRail();
@@ -271,20 +271,20 @@ function assessmentRow(x,i){
   '</tr>';
 }
 function bindDynamicButtons(){
-  $('.clo-ai').forEach(b=>b.onclick=()=>runSectionAi('clo',Number(b.dataset.row)));
-  $('.week-ai').forEach(b=>b.onclick=()=>runSectionAi('weekly',Number(b.dataset.row)));
-  $('.assess-ai').forEach(b=>b.onclick=()=>runSectionAi('assessment',Number(b.dataset.row)));
-  $('.delete-clo').forEach(b=>b.onclick=()=>deleteRow('clo',Number(b.dataset.row)));
-  $('.delete-week').forEach(b=>b.onclick=()=>deleteRow('week',Number(b.dataset.row)));
-  $('.duplicate-week').forEach(b=>b.onclick=()=>duplicateWeek(Number(b.dataset.row)));
-  $('.delete-assessment').forEach(b=>b.onclick=()=>deleteRow('assessment',Number(b.dataset.row)));
+  $$('.clo-ai').forEach(b=>b.onclick=()=>runSectionAi('clo',Number(b.dataset.row)));
+  $$('.week-ai').forEach(b=>b.onclick=()=>runSectionAi('weekly',Number(b.dataset.row)));
+  $$('.assess-ai').forEach(b=>b.onclick=()=>runSectionAi('assessment',Number(b.dataset.row)));
+  $$('.delete-clo').forEach(b=>b.onclick=()=>deleteRow('clo',Number(b.dataset.row)));
+  $$('.delete-week').forEach(b=>b.onclick=()=>deleteRow('week',Number(b.dataset.row)));
+  $$('.duplicate-week').forEach(b=>b.onclick=()=>duplicateWeek(Number(b.dataset.row)));
+  $$('.delete-assessment').forEach(b=>b.onclick=()=>deleteRow('assessment',Number(b.dataset.row)));
   $$('.as-weight').forEach(x=>x.oninput=()=>{updateAssessmentTotal();renderWeeklyCoverage();});
   $$('.t3-clo-code,.t3-clo-desc,.t3-clo-plo').forEach(x=>x.addEventListener('input',()=>{renderCloPloMatrix(collectPloMatrix());renderWeeklyCoverage();}));
   $$('.wk-topic,.wk-clo,.wk-plo,.wk-assess').forEach(x=>x.addEventListener('input',renderWeeklyCoverage));
 }
-function collectClos(){return $('.t3-clo-code').map((el,i)=>({code:el.value.trim()||('CLO'+(i+1)),description:$('.t3-clo-desc[data-row="'+i+'"]')?.value.trim()||'',plo:$('.t3-clo-plo[data-row="'+i+'"]')?.value.trim()||''}));}
-function collectWeeks(){return $('.wk-topic').map((el,i)=>({week:i+1,topic:el.value.trim(),clo:$('.wk-clo[data-row="'+i+'"]')?.value.trim()||'',plo:$('.wk-plo[data-row="'+i+'"]')?.value.trim()||'',activities:$('.wk-act[data-row="'+i+'"]')?.value.trim()||'',lecture_hours:Number($('.wk-lec[data-row="'+i+'"]')?.value||0),practice_hours:Number($('.wk-prac[data-row="'+i+'"]')?.value||0),self_hours:Number($('.wk-self[data-row="'+i+'"]')?.value||0),assessment:$('.wk-assess[data-row="'+i+'"]')?.value.trim()||'',resources:$('.wk-res[data-row="'+i+'"]')?.value.trim()||''}));}
-function collectAssessments(){return $('.as-item').map((el,i)=>({item:el.value.trim(),method:$('.as-method[data-row="'+i+'"]')?.value.trim()||'',weight:Number($('.as-weight[data-row="'+i+'"]')?.value||0),clos:$('.as-clo[data-row="'+i+'"]')?.value.trim()||'',evidence:$('.as-evidence[data-row="'+i+'"]')?.value.trim()||''}));}
+function collectClos(){return $$('.t3-clo-code').map((el,i)=>({code:el.value.trim()||('CLO'+(i+1)),description:$('.t3-clo-desc[data-row="'+i+'"]')?.value.trim()||'',plo:$('.t3-clo-plo[data-row="'+i+'"]')?.value.trim()||''}));}
+function collectWeeks(){return $$('.wk-topic').map((el,i)=>({week:i+1,topic:el.value.trim(),clo:$('.wk-clo[data-row="'+i+'"]')?.value.trim()||'',plo:$('.wk-plo[data-row="'+i+'"]')?.value.trim()||'',activities:$('.wk-act[data-row="'+i+'"]')?.value.trim()||'',lecture_hours:Number($('.wk-lec[data-row="'+i+'"]')?.value||0),practice_hours:Number($('.wk-prac[data-row="'+i+'"]')?.value||0),self_hours:Number($('.wk-self[data-row="'+i+'"]')?.value||0),assessment:$('.wk-assess[data-row="'+i+'"]')?.value.trim()||'',resources:$('.wk-res[data-row="'+i+'"]')?.value.trim()||''}));}
+function collectAssessments(){return $$('.as-item').map((el,i)=>({item:el.value.trim(),method:$('.as-method[data-row="'+i+'"]')?.value.trim()||'',weight:Number($('.as-weight[data-row="'+i+'"]')?.value||0),clos:$('.as-clo[data-row="'+i+'"]')?.value.trim()||'',evidence:$('.as-evidence[data-row="'+i+'"]')?.value.trim()||''}));}
 
 function matrixKey(clo,plo){return clo+'::'+plo;}
 function collectPloMatrix(){
@@ -434,8 +434,8 @@ function collectTqf5(){
   base.general_information.registered_students=num($('#registered-students').value);base.general_information.students_at_end=num($('#students-at-end').value);
   base.plan_actual={summary:$('#t5-plan-actual').value.trim(),source_status:'WORKING_SOURCE'};
   base.results=base.results||{};
-  base.results.grade_distribution=$('.grade-count').map(el=>({grade:el.dataset.grade,count:Number(el.value||0),percent:Number($('.grade-percent[data-grade="'+CSS.escape(el.dataset.grade)+'"]')?.value||0)}));
-  base.results.clo_attainment=$('.clo-code').map((el,i)=>({clo:el.value.trim(),target_percent:Number($('.clo-target[data-row="'+i+'"]')?.value||0),attainment_percent:Number($('.clo-attain[data-row="'+i+'"]')?.value||0)}));
+  base.results.grade_distribution=$$('.grade-count').map(el=>({grade:el.dataset.grade,count:Number(el.value||0),percent:Number($('.grade-percent[data-grade="'+CSS.escape(el.dataset.grade)+'"]')?.value||0)}));
+  base.results.clo_attainment=$$('.clo-code').map((el,i)=>({clo:el.value.trim(),target_percent:Number($('.clo-target[data-row="'+i+'"]')?.value||0),attainment_percent:Number($('.clo-attain[data-row="'+i+'"]')?.value||0)}));
   base.issues=base.issues||{};base.issues.course_problems=$('#t5-problems').value.split('\n').map(x=>x.trim()).filter(Boolean);
   base.improvement_plan=$('#improvement-plan').value.split('\n').map(x=>x.trim()).filter(Boolean).map(line=>{const [a,...r]=line.split('|');return{action:a.trim(),target_term:r.join('|').trim()||null};});
   base.ai_decisions=aiDecisions.filter(x=>x.document==='TQF5');
@@ -458,8 +458,8 @@ function renderVerification(){
   a.querySelectorAll('[data-state]').forEach(b=>b.onclick=()=>transitionVerification(b.dataset.state));
 }
 function verificationNote(){
-  const have=$('.vcheck').filter(x=>x.checked).map(x=>evidenceChecks.find(c=>c[0]===x.dataset.id)?.[1]).filter(Boolean);
-  const miss=$('.vcheck').filter(x=>!x.checked).map(x=>evidenceChecks.find(c=>c[0]===x.dataset.id)?.[1]).filter(Boolean);
+  const have=$$('.vcheck').filter(x=>x.checked).map(x=>evidenceChecks.find(c=>c[0]===x.dataset.id)?.[1]).filter(Boolean);
+  const miss=$$('.vcheck').filter(x=>!x.checked).map(x=>evidenceChecks.find(c=>c[0]===x.dataset.id)?.[1]).filter(Boolean);
   return ($('#verification-note').value.trim()+'\n\n[Evidence checklist]\nมี: '+(have.join('; ')||'ยังไม่มีรายการที่ยืนยัน')+'\nขาด: '+(miss.join('; ')||'ไม่พบรายการที่ขาด')).trim();
 }
 
@@ -470,7 +470,7 @@ function sectionData(section,row){
   if(section==='weekly')return row!=null?collectWeeks()[row]:collectWeeks();
   if(section==='assessment')return row!=null?collectAssessments()[row]:collectAssessments();
   if(section==='tqf5')return collectTqf5();
-  if(section==='verification')return{status:docCtx?.verification?.status,note:$('#verification-note').value,checked:$('.vcheck').filter(x=>x.checked).map(x=>x.dataset.id)};
+  if(section==='verification')return{status:docCtx?.verification?.status,note:$('#verification-note').value,checked:$$('.vcheck').filter(x=>x.checked).map(x=>x.dataset.id)};
   return readinessState();
 }
 function analyze(section,row){
@@ -519,7 +519,7 @@ function analyze(section,row){
     if(!(p.improvement_plan||[]).length)out.push(sug('t5-cqi','ยังไม่มีแผน CQI','เชื่อมปัญหาหรือผลที่ต่ำกว่าเป้าหมายกับ action รอบถัดไป'));
   }
   if(section==='verification'){
-    const checked=$('.vcheck').filter(x=>x.checked).length;if(checked<evidenceChecks.length)out.push(sug('v-evidence','หลักฐานยังครบ '+checked+'/'+evidenceChecks.length,'คงสถานะไม่ VERIFIED จนกว่าจะมีหลักฐานจริงครบตาม gate'));
+    const checked=$$('.vcheck').filter(x=>x.checked).length;if(checked<evidenceChecks.length)out.push(sug('v-evidence','หลักฐานยังครบ '+checked+'/'+evidenceChecks.length,'คงสถานะไม่ VERIFIED จนกว่าจะมีหลักฐานจริงครบตาม gate'));
   }
   return out.length?out:[sug('ok','ไม่พบช่องว่างสำคัญจาก Smart QA รอบนี้','ยังควรให้ผู้รับผิดชอบตรวจเนื้อหาทางวิชาการและหลักฐานก่อนส่ง')];
 }
@@ -907,8 +907,8 @@ function renderCqiCarryForward(){
     return;
   }
   host.innerHTML=blocks.map((x,i)=>'<div class="suggestion"><div class="title">'+esc(x.source)+'</div><div>'+esc(x.text||'')+'</div><div class="actions"><button class="btn small good cqi-use" data-i="'+i+'">นำไปใช้</button><button class="btn small cqi-skip" data-i="'+i+'">ไม่ใช้</button></div></div>').join('');
-  $('.cqi-use').forEach(b=>b.onclick=()=>decideCqi(blocks[Number(b.dataset.i)],'IMPLEMENT'));
-  $('.cqi-skip').forEach(b=>b.onclick=()=>decideCqi(blocks[Number(b.dataset.i)],'NOT_ADOPTED'));
+  $$('.cqi-use').forEach(b=>b.onclick=()=>decideCqi(blocks[Number(b.dataset.i)],'IMPLEMENT'));
+  $$('.cqi-skip').forEach(b=>b.onclick=()=>decideCqi(blocks[Number(b.dataset.i)],'NOT_ADOPTED'));
 }
 function decideCqi(item,decision){
   aiDecisions.push({
@@ -1040,7 +1040,7 @@ async function logout(){await client.auth.signOut();location.reload();}
 
 function bindStatic(){
   if(staticBound)return; staticBound=true;
-  $('.tab').forEach(b=>b.onclick=()=>setTab(b.dataset.tab));
+  $$('.tab').forEach(b=>b.onclick=()=>setTab(b.dataset.tab));
   $('#programme-select').onchange=()=>{cfg.course_code='';loadCourses().catch(e=>say(e.message,'danger'));};
   $('#year-select').onchange=()=>{renderTermOptions();loadCourses().catch(e=>say(e.message,'danger'));};
   $('#term-select').onchange=()=>loadCourses().catch(e=>say(e.message,'danger'));
@@ -1051,7 +1051,7 @@ function bindStatic(){
   $('#sync-tqf5-from-tqf3').onclick=syncTqf5FromTqf3;
   $('#submission-mode').onclick=toggleSubmissionMode;
   $('#save-tqf3').onclick=()=>saveTqf3().catch(e=>say(e.message,'danger'));$('#save-tqf5').onclick=()=>saveTqf5().catch(e=>say(e.message,'danger'));$('#save-verification-note').onclick=()=>saveVerificationNote().catch(e=>say(e.message,'danger'));
-  $('.ai-section').forEach(b=>b.onclick=()=>runSectionAi(b.dataset.section));
+  $$('.ai-section').forEach(b=>b.onclick=()=>runSectionAi(b.dataset.section));
   $('#ai-chatgpt').onclick=()=>openChatGPT().catch(e=>say(e.message,'danger'));$('#ai-show-prompt').onclick=()=>{$('#ai-prompt-wrap').hidden=!$('#ai-prompt-wrap').hidden;$('#ai-prompt').value=aiPrompt();};
   $('#print-form').onclick=()=>window.print();$('#logout').onclick=()=>logout().catch(e=>say(e.message,'danger'));
   $('#login-form').addEventListener('submit',e=>loginMagic(e).catch(x=>say(x.message,'danger')));$('#password-login').onclick=()=>loginPassword().catch(x=>say(x.message,'danger'));
