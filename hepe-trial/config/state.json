@@ -1,6 +1,6 @@
 {
-  "phase": "FAST-SUBMISSION-PORTAL-10",
-  "status": "V31_AI_READINESS_DASHBOARD_EVIDENCE_REVIEW_READY",
+  "phase": "FAST-SUBMISSION-PORTAL-11",
+  "status": "V32_INLINE_AI_RECOMMENDATION_UX_READY",
   "updated_at": "2026-09-18",
   "route": "./hepe-trial/",
   "programme_code": "25510071103503",
@@ -246,11 +246,18 @@
       "field_bindings": 21,
       "source_scope": "STRUCTURE_LAYOUT_ONLY",
       "synthetic_data_forbidden": true
+    },
+    "inline_ai_v32": {
+      "status": "READY",
+      "scope": "TQF3_SECTION_2_ONWARD_PLUS_TQF5_VERIFICATION",
+      "trigger": "ONE_CLICK",
+      "result_location": "INLINE_UNDER_ACTIVE_SECTION",
+      "user_decision_required": true
     }
   },
   "environment": "NON-PRODUCTION",
   "production_authorized": false,
-  "ui_version": "31",
+  "ui_version": "32",
   "ai_assistant": {
     "status": "READY",
     "mode": "LOCAL_SMART_QA_PLUS_CHATGPT_HANDOFF",
@@ -274,7 +281,26 @@
     "unresolved_counter": true,
     "evidence_basis": true,
     "section_state": true,
-    "undo_stack_depth": 20
+    "undo_stack_depth": 20,
+    "inline_recommendations": true,
+    "inline_sections": [
+      "clo",
+      "weekly",
+      "assessment",
+      "overview",
+      "tqf5",
+      "verification"
+    ],
+    "immediate_inline_text": true,
+    "inline_selected_textbox": true,
+    "inline_accept": true,
+    "inline_reject": true,
+    "inline_copy": true,
+    "inline_apply_requires_user_edit_when_targeted": true,
+    "scroll_to_result": true,
+    "rail_kept_as_secondary_detail": true,
+    "section_button_type": "button",
+    "collection_binding_regression_fixed": true
   },
   "catalog": {
     "programme_count_verified": 1,
