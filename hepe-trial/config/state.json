@@ -1,6 +1,6 @@
 {
-  "phase": "FAST-SUBMISSION-PORTAL-05",
-  "status": "V28_SCOPE_DESCRIPTION_AI_IMMEDIATE_READY",
+  "phase": "FAST-SUBMISSION-PORTAL-06",
+  "status": "V29_AI_MATRIX_WEEKLY_REUSE_EVIDENCE_SUBMISSION_READY",
   "updated_at": "2026-09-18",
   "route": "./hepe-trial/",
   "programme_code": "25510071103503",
@@ -96,11 +96,73 @@
       "prior_tqf5": true,
       "improvement_items": true,
       "user_decision_required": true
+    },
+    "ai_quality": {
+      "status": "READY",
+      "severity_levels": [
+        "BLOCKING",
+        "WARNING",
+        "SUGGESTION"
+      ],
+      "immediate_analysis": true,
+      "why_it_matters": true,
+      "recommended_action": true,
+      "apply_to_field_guard": "USER_MUST_EDIT_SUGGESTION_FIRST"
+    },
+    "clo_plo_matrix": {
+      "status": "READY_WORKING_LAYER",
+      "canonical_separate": true,
+      "irm_values": [
+        "I",
+        "R",
+        "M"
+      ],
+      "canonical_fabrication": false
+    },
+    "weekly_productivity": {
+      "status": "READY",
+      "bulk_apply_range": true,
+      "apply_empty_only": true,
+      "overwrite_mode": true,
+      "coverage_summary": true,
+      "sticky_header": true
+    },
+    "tqf5_reuse": {
+      "status": "READY",
+      "sync_clo_from_tqf3": true,
+      "preserve_existing_attainment_by_clo_code": true,
+      "plan_baseline_summary": true
+    },
+    "evidence_queue": {
+      "status": "READY_READ_ONLY",
+      "rpc": "hepe_fast_tqf_evidence_queue",
+      "offered_courses_verified": 30,
+      "no_verification_record_verified": 29,
+      "insufficient_evidence_verified": 1,
+      "verified_verified": 0,
+      "with_candidates_verified": 2,
+      "with_linked_evidence_verified": 0,
+      "auto_admission": false
+    },
+    "source_drawer": {
+      "status": "READY",
+      "fields": [
+        "source_reference",
+        "source_locator",
+        "verification_status",
+        "authority_status"
+      ]
+    },
+    "submission_mode": {
+      "status": "READY",
+      "draft_watermark": true,
+      "non_production_label": true,
+      "official_claim": false
     }
   },
   "environment": "NON-PRODUCTION",
   "production_authorized": false,
-  "ui_version": "28",
+  "ui_version": "29",
   "ai_assistant": {
     "status": "READY",
     "mode": "LOCAL_SMART_QA_PLUS_CHATGPT_HANDOFF",
