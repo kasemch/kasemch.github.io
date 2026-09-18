@@ -2,7 +2,7 @@
 
 Date: 2026-09-18
 
-Status: CONTROLLED-DRAFT OPERATIONAL — PASS WITH EXECUTION-EVIDENCE GAPS; HARDENING PREVIEW READY_FOR_REVIEW
+Status: CONTROLLED-DRAFT OPERATIONAL — PASS WITH EXECUTION-EVIDENCE GAPS; HARDENING PREVIEW APPROVED_FOR_CONTROLLED_EXPORT
 
 Environment: NON-PRODUCTION / Supabase Sandbox + Google Drive
 
@@ -400,3 +400,67 @@ Next governed action:
 Reviewer decision on preview `7e83620e-6a24-4ea2-823e-a12576298ce4`.
 
 After that gate is resolved, proceed to `CROSS-DOCUMENT-TRACEABILITY-01`.
+
+
+## Post-review handoff and cross-document bridge
+
+The fresh hardening preview:
+
+`7e83620e-6a24-4ea2-823e-a12576298ce4`
+
+was reviewed through the governed preview workflow and received:
+
+`APPROVE_CONTROLLED_EXPORT`
+
+Decision record:
+
+`545ecc78-53e0-4cd5-a059-30e3be33f81b`
+
+The approval remains limited to controlled-draft export:
+
+- authoritative_export_allowed = false
+- watermark = `DRAFT / UNDER REVIEW`
+- future HED3701 result claims remain excluded
+- no fieldwork result was verified or promoted
+
+A governed TQF6 controlled-draft export/handoff was then created.
+
+Export run:
+
+`a3a33b8d-0c9c-4454-8d08-a8c29d271ab8`
+
+Verification record:
+
+`cbb1e2d0-14e8-4bcc-a3d0-03cc58110610`
+
+Verification status:
+
+`DRAFT`
+
+The verification record points to TQF6 version:
+
+`21a17c0d-03bc-4106-98b9-a796a9319693`
+
+No verification conclusion has been made.
+
+Cross-document traceability identified and closed a structural verification gap via Sandbox migration:
+
+`cross_document_traceability_01_tqf6_verification_bridge`
+
+The migration creates a governed TQF6→Verification path and extends VERIFIED_ONLY aggregation without weakening fail-closed rules.
+
+A fresh Term 2 VERIFIED_ONLY programme snapshot was created:
+
+`8c088199-0c70-45d9-8ecc-5eb9171eb45c`
+
+Snapshot code:
+
+`TQF7-SAFE-20260918013658565`
+
+Result:
+
+- 25 opened courses
+- 0 verified eligible
+- 25 excluded
+
+This confirms that the current HED3701 TQF6 draft is excluded from programme aggregation.
