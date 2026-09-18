@@ -15,12 +15,32 @@ const num=v=>v===''||v==null?null:Number(v);
 
 let cfg={},programmeCatalog=[],courseCatalog=[],termCatalog=[],curriculumCtx=null,docCtx=null;
 let versionHistory=[],evidenceWorkspace=null,cqiContext=null,dashboardCtx=null,evidenceQueueCtx=null;
+let courseResponsibilityCtx=null,programmeResponsibilityCtx=null,templateReviewCtx=null,templateReviewLoaded=false;
 let activeTab='tqf3',activeAiSection='curriculum',aiSuggestions=[],aiDecisions=[];
 let saveTimer=null,staticBound=false,aiUndoStack=[],aiSectionRuns={},aiSectionSuggestionCache={};
 
 function say(msg,kind='info'){
   const el=$('#status'); if(!el)return;
   el.textContent=msg; el.className='status '+(kind==='info'?'':kind);
+}
+
+function friendlyError(err){
+  const m=String(err?.message||err||'เกิดข้อผิดพลาด');
+  const map=[
+    ['AUTH_REQUIRED','กรุณาเข้าสู่ระบบใหม่'],
+    ['INSUFFICIENT_AUTHORITY','บัญชีนี้ไม่มีสิทธิ์สำหรับรายการที่เลือก'],
+    ['PROGRAMME_AUTHORITY_REQUIRED','ต้องใช้สิทธิ์ระดับหลักสูตรเพื่อดูข้อมูลนี้'],
+    ['COURSE_OUT_OF_SCOPE','รายวิชานี้อยู่นอกขอบเขต HED/PED ของระบบ'],
+    ['COURSE_OFFERING_NOT_FOUND','ยังไม่พบ Course Offering สำหรับปี/ภาคที่เลือก'],
+    ['INVALID_SHA256_FORMAT','SHA-256 ต้องเป็นเลขฐาน 16 จำนวน 64 ตัวอักษร']
+  ];
+  const hit=map.find(([k])=>m.includes(k));
+  return hit?hit[1]:m;
+}
+function setBusy(on,label='กำลังโหลดข้อมูล…'){
+  const app=$('#app-view');
+  if(app)app.setAttribute('aria-busy',on?'true':'false');
+  if(on)say(label,'info');
 }
 function setBadge(elOrSel,text,kind='info'){
   const el=typeof elOrSel==='string'?$(elOrSel):elOrSel;if(!el)return;
@@ -45,15 +65,24 @@ function option(value,label,selected=false){return '<option value="'+esc(value)+
 
 function setTab(name){
   activeTab=name;
-  $$('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===name));
+  $$('.tab').forEach(x=>{
+    const active=x.dataset.tab===name;
+    x.classList.toggle('active',active);
+    x.setAttribute('aria-selected',active?'true':'false');
+    x.tabIndex=active?0:-1;
+  });
   $$('.panel').forEach(x=>x.hidden=x.id!=='panel-'+name);
   activeAiSection=name==='tqf3'?'curriculum':name;
   renderAiRail();
-  if(name==='overview')renderReadiness();
-  if(name==='dashboard')loadDashboard().catch(e=>say(e.message,'danger'));
+  if(name==='overview'){
+    renderReadiness();
+    loadTemplateReview().catch(e=>say(friendlyError(e),'danger'));
+  }
+  if(name==='dashboard')loadDashboard().catch(e=>say(friendlyError(e),'danger'));
+  enhanceAccessibility();
 }
 
-async function loadInitialCatalogs(){
+async function loadInitialCatalogs(){async function loadInitialCatalogs(){
   say('กำลังโหลดหลักสูตรและภาคการศึกษา…');
   const [p,t]=await Promise.all([
     client.rpc('hepe_fast_tqf_programme_catalog'),
@@ -125,35 +154,43 @@ function renderSelectorMeta(){
 async function loadSelectedCourse(){
   const p=$('#programme-select').value,c=$('#course-select').value;
   if(!p||!c)return;
-  say('กำลังดึงข้อมูลหลักสูตร เอกสาร หลักฐาน และประวัติรุ่น…');
-  const args=courseArgs();
-  const [cc,d,vh,ew,cqi]=await Promise.all([
-    client.rpc('hepe_fast_tqf_curriculum_context',{p_programme_code:p,p_course_code:c}),
-    client.rpc('hepe_fast_tqf_portal_context_by_code',args),
-    client.rpc('hepe_fast_tqf_version_history_by_code',{...args,p_limit:10}),
-    client.rpc('hepe_fast_tqf_evidence_workspace_by_code',args),
-    client.rpc('hepe_fast_tqf_cqi_context_by_code',args)
-  ]);
-  if(cc.error)throw cc.error;
-  curriculumCtx=cc.data;
-  docCtx=d.error?null:d.data;
-  versionHistory=vh.error?[]:(Array.isArray(vh.data)?vh.data:[]);
-  evidenceWorkspace=ew.error?null:ew.data;
-  cqiContext=cqi.error?null:cqi.data;
-  renderCourseContext();
-  renderTqf3();
-  renderTqf5();
-  renderVerification();
-  renderEvidenceWorkspace();
-  renderVersionCompare();
-  renderCqiCarryForward();
-  renderReadiness();
-  renderAiRail();
-  offerLocalRecovery();
-  say(d.error?'โหลดข้อมูลหลักสูตรแล้ว แต่ยังไม่พบ Course Offering ในปี/ภาคนี้':'พร้อมกรอกและบันทึก Draft','ok');
+  setBusy(true,'กำลังดึงข้อมูลหลักสูตร เอกสาร หลักฐาน และความรับผิดชอบรายวิชา…');
+  try{
+    const args=courseArgs();
+    const [cc,d,vh,ew,cqi,resp]=await Promise.all([
+      client.rpc('hepe_fast_tqf_curriculum_context',{p_programme_code:p,p_course_code:c}),
+      client.rpc('hepe_fast_tqf_portal_context_by_code',args),
+      client.rpc('hepe_fast_tqf_version_history_by_code',{...args,p_limit:10}),
+      client.rpc('hepe_fast_tqf_evidence_workspace_by_code',args),
+      client.rpc('hepe_fast_tqf_cqi_context_by_code',args),
+      client.rpc('hepe_fast_tqf_course_responsibility_by_code',args)
+    ]);
+    if(cc.error)throw cc.error;
+    curriculumCtx=cc.data;
+    docCtx=d.error?null:d.data;
+    versionHistory=vh.error?[]:(Array.isArray(vh.data)?vh.data:[]);
+    evidenceWorkspace=ew.error?null:ew.data;
+    cqiContext=cqi.error?null:cqi.data;
+    courseResponsibilityCtx=resp.error?null:resp.data;
+    renderCourseContext();
+    renderCourseResponsibility();
+    renderTqf3();
+    renderTqf5();
+    renderVerification();
+    renderEvidenceWorkspace();
+    renderVersionCompare();
+    renderCqiCarryForward();
+    renderReadiness();
+    renderAiRail();
+    offerLocalRecovery();
+    enhanceAccessibility();
+    say(d.error?'โหลดข้อมูลหลักสูตรแล้ว แต่ยังไม่พบ Course Offering ในปี/ภาคนี้':'พร้อมกรอกและบันทึก Draft','ok');
+  } finally {
+    const app=$('#app-view');if(app)app.setAttribute('aria-busy','false');
+  }
 }
 
-function renderCourseContext(){
+function renderCourseContext(){function renderCourseContext(){
   const c=curriculumCtx?.course||{},p=curriculumCtx?.programme||{},cv=curriculumCtx?.curriculum||{},d=curriculumCtx?.description;
   const workingDesc=
     docCtx?.tqf3?.content?.form_sections?.course_description ||
@@ -222,6 +259,29 @@ function baseForm(){
     ai_decisions:Array.isArray(fs.ai_decisions)?fs.ai_decisions:[]
   };
 }
+function renderCourseResponsibility(){
+  const host=$('#course-responsibility-list'),state=$('#course-responsibility-state'),src=$('#course-responsibility-source');
+  if(!host||!state)return;
+  const rows=courseResponsibilityCtx?.records||[];
+  const named=rows.filter(x=>x.display_as_responsible_person);
+  const pending=rows.filter(x=>!x.academic_person_id&&(x.team_state==='ROSTER_PENDING'||x.responsibility_type==='ROSTER_PENDING'));
+  if(named.length){
+    setBadge(state,'CONTROLLED '+named.length,'ok');
+    host.innerHTML=named.map(x=>'<div class="responsibility-person"><span><strong>'+esc((x.academic_position_th?x.academic_position_th+' ':'')+(x.person_name_th||''))+'</strong><span class="help">'+esc(x.responsibility_type||'')+'</span></span><span class="meta">'+esc(x.verification_status||'')+'</span></div>').join('')+
+      (pending.length?'<div class="notice warn">ยังมี roster บางส่วนรอยืนยัน ไม่เติมชื่อแทนโดยการอนุมาน</div>':'');
+    const sources=[...new Set(named.map(x=>x.source_document_id).filter(Boolean))];
+    if(src)src.textContent='Controlled source: '+(sources.join(', ')||'—');
+  }else if(pending.length){
+    setBadge(state,'ROSTER PENDING','warn');
+    host.innerHTML='<div class="notice warn">มี controlled responsibility record แบบ roster pending แต่ยังไม่มีชื่อบุคคลที่ยืนยันได้</div>';
+    if(src)src.textContent='ระบบจะไม่อนุมานชื่อผู้สอนจากเอกสารหรือความจำ';
+  }else{
+    setBadge(state,'NO CONTROLLED RECORD','info');
+    host.innerHTML='<div>ยังไม่มี controlled responsibility record สำหรับปี/ภาคที่เลือก</div>';
+    if(src)src.textContent='ไม่เติมชื่อผู้สอนจาก historical/sample source โดยอัตโนมัติ';
+  }
+}
+
 function renderTqf3(){
   const f=baseForm(),d=docCtx?.tqf3;
   aiDecisions=clone(f.ai_decisions||[]);
@@ -395,7 +455,7 @@ function collectTqf3(){
     improvement_notes:$('#t3-improvement').value.trim(),
     plo_matrix:collectPloMatrix(),
     ai_decisions:aiDecisions,
-    ui_version:'v29'
+    ui_version:'v32'
   };
   return base;
 }
@@ -909,6 +969,75 @@ function renderSourceGapQueue(){
   const gaps=courseCatalog.filter(x=>!x.description?.description_th);
   host.innerHTML=gaps.length?gaps.map(x=>'<div class="check-row"><span><b>'+esc(x.course_code)+'</b> '+esc(x.title_th||'')+'</span><span class="badge danger">MISSING SOURCE</span></div>').join(''):'<div class="notice ok">คำอธิบายรายวิชาครบ '+courseCatalog.length+'/'+courseCatalog.length+' วิชาใน scope</div>';
 }
+function advancedCrossDocumentChecks(){
+  const t3=collectTqf3(),t5=collectTqf5();
+  const assessments=t3.form_sections?.assessment_items||[];
+  const weeks=t3.form_sections?.weekly_plan||[];
+  const t3Clos=new Set((t3.form_sections?.clos||[]).map(x=>x.code).filter(Boolean));
+  const t5Clos=new Set((t5.results?.clo_attainment||[]).map(x=>x.clo).filter(Boolean));
+  const cqiSources=(cqiContext?.prior_tqf5||[]).reduce((n,x)=>n+(Array.isArray(x.improvement_plan)?x.improvement_plan.length:0),0)+(cqiContext?.improvement_items||[]).length;
+  const cqiAccepted=aiDecisions.filter(x=>x.section==='CQI_CARRY_FORWARD'&&x.decision==='IMPLEMENT').length;
+  const acceptedAi=aiDecisions.filter(x=>['ACCEPTED','EDITED_AND_ACCEPTED'].includes(x.decision));
+  const evidenceTotal=(evidenceWorkspace?.linked_evidence||[]).length+(evidenceWorkspace?.candidates||[]).length;
+  const expectedWeeklyEvidence=weeks.filter(x=>x.topic&&x.assessment).length;
+  const planActual=(t5.plan_actual?.summary||'').trim();
+  const mismatch=[...t3Clos].filter(x=>!t5Clos.has(x));
+  return[
+    {
+      name:'TQF3 Assessment Plan → TQF5 Plan/Actual',
+      state:!docCtx?.tqf5?'WARNING':assessments.length&&planActual?'PASS':'WARNING',
+      detail:!docCtx?.tqf5?'ยังไม่มี มคอ.5 สำหรับเทียบผลจริง':assessments.length&&!planActual?'มีแผนการประเมินใน มคอ.3 แต่ มคอ.5 ยังไม่มี Plan→Actual narrative':'มีแผน '+assessments.length+' รายการ และมี Plan→Actual narrative; ระบบยังไม่อ้าง item-level result เพราะฐานไม่มีข้อมูลระดับนั้น'
+    },
+    {
+      name:'Weekly evidence expectation → Verification evidence',
+      state:expectedWeeklyEvidence===0?'INFO':evidenceTotal===0?'WARNING':'INFO',
+      detail:expectedWeeklyEvidence===0?'ยังไม่มี weekly assessment expectation ที่กรอก':evidenceTotal===0?'มี '+expectedWeeklyEvidence+' สัปดาห์ที่คาด evidence แต่ Evidence Workspace ยังว่าง':'มี weekly expectation '+expectedWeeklyEvidence+' สัปดาห์ และ evidence workspace '+evidenceTotal+' รายการ; ยังไม่ยืนยัน one-to-one mapping'
+    },
+    {
+      name:'TQF3 CLO → TQF5 CLO attainment',
+      state:!docCtx?.tqf5?'WARNING':mismatch.length?'WARNING':'PASS',
+      detail:!docCtx?.tqf5?'ยังไม่มี มคอ.5':mismatch.length?'มคอ.5 ยังไม่มี '+mismatch.join(', '):'รหัส CLO ที่มีใน มคอ.3 ปรากฏในตาราง CLO attainment ของ มคอ.5'
+    },
+    {
+      name:'CQI source → next-cycle TQF3',
+      state:cqiSources===0?'INFO':cqiAccepted>0?'PASS':'WARNING',
+      detail:cqiSources===0?'ยังไม่มี CQI source จากรอบก่อนใน context':'พบ CQI source '+cqiSources+' รายการ · carry-forward decision '+cqiAccepted+' รายการ'
+    },
+    {
+      name:'Accepted AI change traceability',
+      state:acceptedAi.length===0?'INFO':acceptedAi.every(x=>x.source_basis||x.source_reference)?'PASS':'WARNING',
+      detail:acceptedAi.length===0?'ยังไม่มี AI suggestion ที่ผู้ใช้รับ':acceptedAi.length+' การตัดสินใจที่รับไว้ · '+acceptedAi.filter(x=>x.source_basis||x.source_reference).length+' มี source/evidence basis'
+    }
+  ];
+}
+function qaBadge(state){
+  return state==='PASS'?'<span class="badge ok">PASS</span>':state==='WARNING'?'<span class="badge warn">WARNING</span>':'<span class="badge info">INFO</span>';
+}
+function buildVersionChangeNarrative(){
+  if(versionHistory.length<2)return'ยังมี Working Version ไม่พอสำหรับสร้าง change narrative';
+  const sorted=versionHistory.slice().sort((a,b)=>Number(b.version_no)-Number(a.version_no));
+  const newer=sorted[0],older=sorted[1],a=older.content?.form_sections||{},b=newer.content?.form_sections||{};
+  const parts=[];
+  if(a.objectives!==b.objectives)parts.push('วัตถุประสงค์');
+  if(JSON.stringify(a.clos||[])!==JSON.stringify(b.clos||[]))parts.push('CLO');
+  if(JSON.stringify(a.weekly_plan||[])!==JSON.stringify(b.weekly_plan||[]))parts.push('แผนรายสัปดาห์');
+  if(JSON.stringify(a.assessment_items||[])!==JSON.stringify(b.assessment_items||[]))parts.push('การประเมิน');
+  if(a.resources!==b.resources)parts.push('ทรัพยากร');
+  if(a.improvement_notes!==b.improvement_notes)parts.push('แนวทางปรับปรุง');
+  return 'Version '+older.version_no+' → '+newer.version_no+': '+(parts.length?'เปลี่ยน '+parts.join(', '):'ไม่พบความต่างใน structured sections ที่ตรวจ');
+}
+function renderAdvancedCrossDocumentQA(){
+  const host=$('#cross-doc-detail');if(!host)return;
+  const checks=advancedCrossDocumentChecks();
+  host.innerHTML=checks.map(x=>'<div class="cross-doc-row"><strong>'+esc(x.name)+'</strong><span>'+qaBadge(x.state)+'</span><span class="help">'+esc(x.detail)+'</span></div>').join('');
+  if($('#version-change-narrative'))$('#version-change-narrative').textContent=buildVersionChangeNarrative();
+  const cqiSources=(cqiContext?.prior_tqf5||[]).reduce((n,x)=>n+(Array.isArray(x.improvement_plan)?x.improvement_plan.length:0),0)+(cqiContext?.improvement_items||[]).length;
+  const cqiAccepted=aiDecisions.filter(x=>x.section==='CQI_CARRY_FORWARD'&&x.decision==='IMPLEMENT').length;
+  if($('#cqi-lineage'))$('#cqi-lineage').textContent='CQI source '+cqiSources+' · carry-forward accepted '+cqiAccepted;
+  const accepted=aiDecisions.filter(x=>['ACCEPTED','EDITED_AND_ACCEPTED'].includes(x.decision));
+  if($('#accepted-ai-trace'))$('#accepted-ai-trace').textContent='Accepted '+accepted.length+' · with source/evidence basis '+accepted.filter(x=>x.source_basis||x.source_reference).length;
+}
+
 function renderReadiness(){
   const r=readinessState();
   $('#readiness-ring').style.setProperty('--p',r.score);$('#readiness-score').textContent=r.score+'%';
@@ -919,26 +1048,39 @@ function renderReadiness(){
   $('#readiness-list').innerHTML=r.checks.map(x=>'<div class="check-row"><span>'+esc(x.name)+'<div class="help">'+esc(x.detail)+'</div></span><span class="readiness-actions">'+readinessBadge(x.state)+(x.target?'<button class="btn tiny readiness-jump" data-target="'+esc(x.target)+'">ไปยังจุดแก้</button>':'')+'</span></div>').join('');
   $$('.readiness-jump').forEach(b=>b.onclick=()=>jumpToReadinessTarget(b.dataset.target));
   $('#consistency-list').innerHTML=r.checks.filter(x=>['ALIGNMENT','ASSESSMENT','CROSS_DOCUMENT','VERIFICATION','EVIDENCE'].includes(x.category)).map(x=>'<div class="check-row"><span>'+esc(x.name)+'</span><span>'+esc(x.detail)+' '+readinessBadge(x.state)+'</span></div>').join('');
-  renderReadinessSectionScores(r);renderWeeklyCoverageHeatmap();renderAssessmentMap();renderSourceGapQueue();renderReviewPackagePreview();
+  renderReadinessSectionScores(r);renderWeeklyCoverageHeatmap();renderAssessmentMap();renderSourceGapQueue();renderAdvancedCrossDocumentQA();renderReviewPackagePreview();enhanceAccessibility();
 }
 function renderReviewPackagePreview(){
   const host=$('#review-package-preview');if(!host)return;
   const r=readinessState(),c=curriculumCtx?.course||{},p=curriculumCtx?.programme||{},t3=collectTqf3(),t5=collectTqf5();
-  const linked=(evidenceWorkspace?.linked_evidence||[]).length,cand=(evidenceWorkspace?.candidates||[]).length;
+  const linked=(evidenceWorkspace?.linked_evidence||[]).length,candidates=evidenceWorkspace?.candidates||[],cand=candidates.length;
   const unresolved=aiSuggestions.filter(x=>!['ACCEPTED','EDITED_AND_ACCEPTED','REJECTED'].includes(x.status)).length;
+  const accepted=aiDecisions.filter(x=>['ACCEPTED','EDITED_AND_ACCEPTED'].includes(x.decision));
+  const findings=r.checks.filter(x=>x.state!=='PASS');
+  const resp=(courseResponsibilityCtx?.records||[]).filter(x=>x.display_as_responsible_person);
+  const cqiSources=(cqiContext?.prior_tqf5||[]).reduce((n,x)=>n+(Array.isArray(x.improvement_plan)?x.improvement_plan.length:0),0)+(cqiContext?.improvement_items||[]).length;
   host.innerHTML='<div class="review-grid">'+
     '<div><small>หลักสูตร</small><strong>'+esc(p.title_th||'—')+'</strong></div>'+
     '<div><small>รายวิชา</small><strong>'+esc((c.course_code||'')+' '+(c.title_th||''))+'</strong></div>'+
+    '<div><small>Controlled responsibility</small><strong>'+esc(resp.length?resp.map(x=>x.person_name_th).join(', '):'ยังไม่มี controlled record')+'</strong></div>'+
     '<div><small>TQF3 Working Version</small><strong>'+esc(docCtx?.tqf3?.current_version_no??'—')+'</strong></div>'+
     '<div><small>Readiness</small><strong>'+r.score+'% · B '+r.blocking+' · W '+r.warnings+'</strong></div>'+
     '<div><small>TQF3</small><strong>CLO '+(t3.form_sections?.clos||[]).length+' · Weeks '+(t3.form_sections?.weekly_plan||[]).length+' · Assess '+(t3.form_sections?.assessment_items||[]).length+'</strong></div>'+
     '<div><small>TQF5</small><strong>'+esc(docCtx?.tqf5?.lifecycle_status||'NO_RECORD')+' · CLO Results '+((t5.results?.clo_attainment||[]).length)+'</strong></div>'+
     '<div><small>Verification / Evidence</small><strong>'+esc(docCtx?.verification?.status||'NO_RECORD')+' · Linked '+linked+' · Candidate '+cand+'</strong></div>'+
-    '<div><small>AI / Source gaps</small><strong>Unresolved '+unresolved+' · Source gaps '+courseCatalog.filter(x=>!x.description?.description_th).length+'</strong></div>'+
-    '</div><div class="provenance-footer">DRAFT · NON-PRODUCTION · '+esc(curriculumCtx?.description?.source_reference||'No curriculum source')+' · '+esc(curriculumCtx?.description?.source_locator||'')+'</div>';
+    '<div><small>AI / Source gaps</small><strong>Unresolved '+unresolved+' · Accepted '+accepted.length+' · Source gaps '+courseCatalog.filter(x=>!x.description?.description_th).length+'</strong></div>'+
+    '</div>'+
+    '<div class="review-appendices">'+
+      '<div class="review-appendix"><h4>Appendix A · Section findings</h4><ul>'+(findings.length?findings.map(x=>'<li>'+esc(x.name)+' — '+esc(x.state)+' — '+esc(x.detail)+'</li>').join(''):'<li>ไม่พบ BLOCKING/WARNING ใน checks ปัจจุบัน</li>')+'</ul></div>'+
+      '<div class="review-appendix"><h4>Appendix B · Accepted AI decisions</h4><ul>'+(accepted.length?accepted.slice(-12).map(x=>'<li>'+esc(x.section||'')+' · '+esc(x.decision)+' · '+esc(x.source_basis||x.source_reference||'basis not recorded')+'</li>').join(''):'<li>ยังไม่มี AI decision ที่ผู้ใช้รับ</li>')+'</ul></div>'+
+      '<div class="review-appendix"><h4>Appendix C · Evidence candidates</h4><ul>'+(candidates.length?candidates.map(x=>'<li>'+esc(x.evidence_id)+' · '+esc(x.admission_status)+' · '+esc(candidateReviewState(x))+'</li>').join(''):'<li>ยังไม่มี evidence candidate</li>')+'</ul></div>'+
+      '<div class="review-appendix"><h4>Appendix D · Version diff</h4><div>'+esc(buildVersionChangeNarrative())+'</div></div>'+
+      '<div class="review-appendix"><h4>Appendix E · CQI lineage</h4><div>CQI source '+cqiSources+' · carry-forward accepted '+aiDecisions.filter(x=>x.section==='CQI_CARRY_FORWARD'&&x.decision==='IMPLEMENT').length+'</div></div>'+
+      '<div class="review-appendix"><h4>Appendix F · Source / provenance</h4><div>'+esc(curriculumCtx?.description?.source_reference||'No curriculum source')+' · '+esc(curriculumCtx?.description?.source_locator||'')+'</div></div>'+
+    '</div><div class="provenance-footer">DRAFT · NON-PRODUCTION · Internal review only · not institutional approval</div>';
 }
 
-/* ---------- V27 Autosave / Recovery ---------- *//* ---------- V27 Autosave / Recovery ---------- */
+/* ---------- V27 Autosave / Recovery ---------- *//* ---------- V27 Autosave / Recovery ---------- *//* ---------- V27 Autosave / Recovery ---------- */
 function bufferKey(){
   const a=courseArgs();
   return ['hepe-tqf-v27',a.p_programme_code,a.p_course_code,a.p_academic_year,a.p_term_code].join(':');
@@ -1040,26 +1182,60 @@ function compareVersions(){
 }
 
 /* ---------- V27 Evidence Workspace ---------- */
+function candidateReviewState(c){
+  const sm=c.summary||{};
+  const locator=sm.source_locator||'';
+  const hash=sm.integrity_sha256||'';
+  const required=!!(c.source&&c.version_date&&c.authority_owner&&c.relevant_assertion);
+  const locatorReady=!!locator;
+  const hashValid=!hash||/^[A-Fa-f0-9]{64}$/.test(hash);
+  if(!required||!locatorReady||!hashValid)return'NEEDS_METADATA';
+  return'READY_FOR_HUMAN_REVIEW';
+}
+function candidateDuplicateGroups(candidates){
+  const groups=new Map();
+  candidates.forEach(c=>{
+    const sm=c.summary||{},hash=(sm.integrity_sha256||'').toLowerCase().trim(),loc=(sm.source_locator||'').toLowerCase().trim();
+    const key=hash?'hash:'+hash:'source:'+(c.source||'').toLowerCase().trim()+'|'+loc;
+    if(!key||key==='source:|')return;
+    const arr=groups.get(key)||[];arr.push(c);groups.set(key,arr);
+  });
+  return [...groups.values()].filter(x=>x.length>1);
+}
 function renderEvidenceWorkspace(){
   const host=$('#evidence-workspace');if(!host)return;
   const linked=evidenceWorkspace?.linked_evidence||[],cand=evidenceWorkspace?.candidates||[];
   const filter=$('#evidence-candidate-filter')?.value||'ALL';
   const filteredCand=cand.filter(x=>filter==='ALL'||x.admission_status===filter||x.verification_status===filter);
+  const dupGroups=candidateDuplicateGroups(cand);
   let html='';
+  if(dupGroups.length)html+='<div class="notice warn">พบ candidate metadata ที่จัดกลุ่มซ้ำได้ '+dupGroups.length+' กลุ่ม — ตรวจด้วยมนุษย์ก่อน admission</div>';
   if(linked.length){
     html+='<h4>Linked controlled evidence</h4><div class="table-wrap"><table><thead><tr><th>หลักฐาน</th><th>ประเภท</th><th>สถานะ</th><th>แหล่งที่มา</th></tr></thead><tbody>'+
       linked.map(x=>'<tr><td>'+esc(x.title||x.evidence_code)+'</td><td>'+esc(x.evidence_type_code||'LINKED_EVIDENCE')+'</td><td>'+badgeHtml(x.status_code||'PRESENT','ok')+'</td><td>'+esc(x.source_reference||'')+'</td></tr>').join('')+
       '</tbody></table></div>';
   }
   html+='<h4>Evidence candidates</h4>';
-  html+=filteredCand.length?'<div class="table-wrap"><table><thead><tr><th>ID</th><th>ประเภท</th><th>Verification</th><th>Admission</th><th>Source</th></tr></thead><tbody>'+
-    filteredCand.map(x=>'<tr><td>'+esc(x.evidence_id)+'</td><td>'+esc(x.evidence_type)+'</td><td>'+badgeHtml(x.verification_status,kind(x.verification_status))+'</td><td>'+badgeHtml(x.admission_status,x.admission_status==='ADMITTED_BY_SEPARATE_AUTHORITY'?'ok':'warn')+'</td><td>'+esc(x.source||'')+'</td></tr>').join('')+
-    '</tbody></table></div>':'<div class="help">ไม่มี candidate ตามตัวกรอง</div>';
+  html+=filteredCand.length?'<div class="table-wrap"><table><thead><tr><th>ID / Metadata</th><th>ประเภท</th><th>Verification</th><th>Admission</th><th>Human-review readiness</th></tr></thead><tbody>'+
+    filteredCand.map(x=>{
+      const sm=x.summary||{},locator=sm.source_locator||'',hash=sm.integrity_sha256||'',state=candidateReviewState(x);
+      const authority=x.authority_owner||'';
+      return '<tr><td><b>'+esc(x.evidence_id)+'</b><div>'+esc(x.source||'')+'</div><div class="evidence-meta">'+
+        '<span>Authority: '+esc(authority||'MISSING')+'</span>'+
+        '<span>Locator: '+esc(locator||'MISSING')+'</span>'+
+        '<span>Date: '+esc(x.version_date||'MISSING')+'</span>'+
+        '<span>SHA: '+(hash?'<code>'+esc(hash)+'</code>':'<span>not supplied</span>')+'</span>'+
+        '</div></td><td>'+esc(x.evidence_type||'')+'</td>'+
+        '<td>'+badgeHtml(x.verification_status,kind(x.verification_status))+'</td>'+
+        '<td>'+badgeHtml(x.admission_status,x.admission_status==='ADMITTED_BY_SEPARATE_AUTHORITY'?'ok':'warn')+'</td>'+
+        '<td>'+badgeHtml(state,state==='READY_FOR_HUMAN_REVIEW'?'ok':'warn')+'</td></tr>';
+    }).join('')+'</tbody></table></div>':'<div class="help">ไม่มี candidate ตามตัวกรอง</div>';
   if(!linked.length&&!cand.length)html='<div class="notice danger">ยังไม่พบ linked evidence หรือ evidence candidate สำหรับรายวิชานี้</div>';
   host.innerHTML=html;
   renderAdmissionReviewQueue();
+  enhanceAccessibility();
 }
-function validSha256(v){return !v||/^[A-Fa-f0-9]{64}$/.test(v);}
+function validSha256function validSha256(v){return !v||/^[A-Fa-f0-9]{64}$/.test(v);}
 async function checkEvidenceDuplicate(){
   const source=$('#evidence-source')?.value.trim()||'',locator=$('#evidence-locator')?.value.trim()||'',sha=$('#evidence-sha')?.value.trim()||'';
   if(!source){if($('#evidence-duplicate-state'))setBadge($('#evidence-duplicate-state'),'กรอก source ก่อน','info');return null;}
@@ -1134,25 +1310,28 @@ function decideCqi(item,decision){
 /* ---------- V27 Programme Dashboard ---------- */
 async function loadDashboard(){
   if(!$('#dashboard-body'))return;
-  $('#dashboard-body').innerHTML='<tr><td colspan="7">กำลังโหลด…</td></tr>';
-  const dash=await client.rpc('hepe_fast_tqf_programme_dashboard',{
-    p_programme_code:$('#programme-select').value,
-    p_academic_year:$('#year-select').value,
-    p_term_code:$('#term-select').value
-  });
-  if(dash.error)throw dash.error;
-  const queue=await client.rpc('hepe_fast_tqf_evidence_queue',{
-    p_programme_code:$('#programme-select').value,
-    p_academic_year:$('#year-select').value,
-    p_term_code:$('#term-select').value
-  });
-  if(queue.error)throw queue.error;
-  dashboardCtx=dash.data;
-  evidenceQueueCtx=queue.data;
-  renderDashboard();
-  renderEvidenceQueue();
+  $('#dashboard-body').innerHTML='<tr><td colspan="9">กำลังโหลด…</td></tr>';
+  setBusy(true,'กำลังโหลด Programme Dashboard และ controlled responsibility…');
+  try{
+    const args={
+      p_programme_code:$('#programme-select').value,
+      p_academic_year:$('#year-select').value,
+      p_term_code:$('#term-select').value
+    };
+    const [dash,queue,resp]=await Promise.all([
+      client.rpc('hepe_fast_tqf_programme_dashboard',args),
+      client.rpc('hepe_fast_tqf_evidence_queue',args),
+      client.rpc('hepe_fast_tqf_programme_responsibility_by_code',args)
+    ]);
+    if(dash.error)throw dash.error;if(queue.error)throw queue.error;
+    dashboardCtx=dash.data;evidenceQueueCtx=queue.data;programmeResponsibilityCtx=resp.error?null:resp.data;
+    renderDashboard();renderEvidenceQueue();enhanceAccessibility();
+    say('โหลด Programme Dashboard แล้ว','ok');
+  } finally {
+    const app=$('#app-view');if(app)app.setAttribute('aria-busy','false');
+  }
 }
-function renderDashboard(){
+function renderDashboard(){function renderDashboard(){
   const s=dashboardCtx?.summary||{},rows=dashboardCtx?.courses||[];
   $('#dash-curriculum').textContent=s.curriculum_courses??0;
   $('#dash-offered').textContent=s.offered_courses??0;
@@ -1160,6 +1339,7 @@ function renderDashboard(){
   $('#dash-tqf5').textContent=s.tqf5_present??0;
   $('#dash-verified').textContent=s.verified_courses??0;
   $('#dash-insufficient').textContent=s.insufficient_evidence??0;
+  renderDashboardInstructorOptions();
   filterDashboardRows(rows);
 }
 function dashboardDescriptionStatus(code){
@@ -1171,42 +1351,61 @@ function dashboardOperationalReadiness(x){
 }
 function dashboardAttention(x){return dashboardOperationalReadiness(x)<100;}
 function dashboardRecentTs(x){return x.verification_updated_at?new Date(x.verification_updated_at).getTime():0;}
+function programmeResponsibilityFor(code){
+  return (programmeResponsibilityCtx?.courses||[]).find(x=>x.course_code===code)||{responsible_people:[],has_pending_roster:false};
+}
+function dashboardResponsibleNames(code){
+  return (programmeResponsibilityFor(code).responsible_people||[]).map(x=>x.person_name_th).filter(Boolean);
+}
+function renderDashboardInstructorOptions(){
+  const sel=$('#dashboard-instructor');if(!sel)return;
+  const current=sel.value||'ALL';
+  const names=[...new Set((programmeResponsibilityCtx?.courses||[]).flatMap(x=>(x.responsible_people||[]).map(p=>p.person_name_th)).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'th'));
+  sel.innerHTML='<option value="ALL">ผู้รับผิดชอบทั้งหมด</option><option value="CONTROLLED_ONLY">มี controlled responsibility</option><option value="MISSING">ยังไม่มี controlled responsibility</option>'+names.map(n=>'<option value="PERSON:'+esc(n)+'">'+esc(n)+'</option>').join('');
+  if([...sel.options].some(o=>o.value===current))sel.value=current;
+}
 function filterDashboardRows(rows=dashboardCtx?.courses||[]){
-  const q=($('#dashboard-search')?.value||'').trim().toLowerCase(),prefix=$('#dashboard-prefix')?.value||'ALL',role=$('#dashboard-role')?.value||'ALL',doc=$('#dashboard-doc')?.value||'ALL',ver=$('#dashboard-verification')?.value||'ALL',readiness=$('#dashboard-readiness')?.value||'ALL',sort=$('#dashboard-sort')?.value||'COURSE';
+  const q=($('#dashboard-search')?.value||'').trim().toLowerCase(),prefix=$('#dashboard-prefix')?.value||'ALL',role=$('#dashboard-role')?.value||'ALL',doc=$('#dashboard-doc')?.value||'ALL',ver=$('#dashboard-verification')?.value||'ALL',readiness=$('#dashboard-readiness')?.value||'ALL',sort=$('#dashboard-sort')?.value||'COURSE',instructor=$('#dashboard-instructor')?.value||'ALL';
   const attention=$('#dashboard-attention')?.checked||false,sourceGap=$('#dashboard-source-gap')?.checked||false;
   let filtered=rows.filter(x=>{
-    const score=dashboardOperationalReadiness(x);
-    if(q&&!(x.course_code+' '+x.title_th+' '+(x.title_en||'')).toLowerCase().includes(q))return false;
+    const score=dashboardOperationalReadiness(x),names=dashboardResponsibleNames(x.course_code);
+    if(q&&!(x.course_code+' '+x.title_th+' '+(x.title_en||'')+' '+names.join(' ')).toLowerCase().includes(q))return false;
     if(prefix!=='ALL'&&!x.course_code.startsWith(prefix))return false;
     if(role!=='ALL'&&x.course_role!==role)return false;
     if(doc==='MISSING_TQF3'&&x.tqf3_record_id)return false;if(doc==='MISSING_TQF5'&&x.tqf5_record_id)return false;if(doc==='OFFERED_ONLY'&&!x.course_offering_id)return false;
     if(ver!=='ALL'&&(x.verification_status||'NO_RECORD')!==ver)return false;
     if(readiness==='READY'&&score!==100)return false;if(readiness==='NOT_READY'&&score===100)return false;
+    if(instructor==='CONTROLLED_ONLY'&&!names.length)return false;
+    if(instructor==='MISSING'&&names.length)return false;
+    if(instructor.startsWith('PERSON:')&&!names.includes(instructor.slice(7)))return false;
     if(sourceGap&&dashboardDescriptionStatus(x.course_code)!=='MISSING')return false;if(attention&&!dashboardAttention(x))return false;return true;
   });
   if(sort==='RECENT')filtered=filtered.slice().sort((a,b)=>dashboardRecentTs(b)-dashboardRecentTs(a)||a.course_code.localeCompare(b.course_code));
   if(sort==='READINESS')filtered=filtered.slice().sort((a,b)=>dashboardOperationalReadiness(a)-dashboardOperationalReadiness(b)||a.course_code.localeCompare(b.course_code));
   if($('#dashboard-filter-count'))$('#dashboard-filter-count').textContent=filtered.length+' / '+rows.length;
   $('#dashboard-body').innerHTML=filtered.map(x=>{
-    const score=dashboardOperationalReadiness(x);
-    return '<tr><td><button class="link-btn dashboard-open-course" data-course="'+esc(x.course_code)+'"><b>'+esc(x.course_code)+'</b></button><div class="help">'+esc(x.title_th)+'</div></td>'+
+    const score=dashboardOperationalReadiness(x),rr=programmeResponsibilityFor(x.course_code),names=dashboardResponsibleNames(x.course_code);
+    const respCell=names.length?names.map(n=>'<div>'+esc(n)+'</div>').join('')+(rr.has_pending_roster?'<span class="badge warn">roster pending</span>':''):'<span class="help">ยังไม่มี controlled record</span>';
+    return '<tr><td><button type="button" class="link-btn dashboard-open-course" data-course="'+esc(x.course_code)+'"><b>'+esc(x.course_code)+'</b></button><div class="help">'+esc(x.title_th)+'</div></td>'+
+      '<td>'+respCell+'</td>'+
       '<td>'+badgeHtml(dashboardDescriptionStatus(x.course_code),dashboardDescriptionStatus(x.course_code)==='AVAILABLE'?'ok':'danger')+'</td>'+
       '<td>'+badgeHtml(x.course_offering_id?'OFFERED':'NOT_OFFERED',x.course_offering_id?'ok':'info')+'</td>'+
       '<td>'+badgeHtml(x.tqf3_status||'—',kind(x.tqf3_status))+'</td><td>'+badgeHtml(x.tqf5_status||'—',kind(x.tqf5_status))+'</td><td>'+badgeHtml(x.verification_status||'—',kind(x.verification_status))+'</td>'+
       '<td>'+badgeHtml(score+'%',score===100?'ok':score>=60?'warn':'danger')+'</td><td>'+badgeHtml(dashboardAttention(x)?'NEEDS ATTENTION':'OK',dashboardAttention(x)?'warn':'ok')+'</td></tr>';
-  }).join('')||'<tr><td colspan="8">ไม่พบรายวิชา</td></tr>';
+  }).join('')||'<tr><td colspan="9">ไม่พบรายวิชา</td></tr>';
   $$('.dashboard-open-course').forEach(b=>b.onclick=()=>openDashboardCourse(b.dataset.course));
   renderProgrammeAiSummary(filtered);
+  enhanceAccessibility();
 }
-async function openDashboardCourse(code){
+async function openDashboardCourseasync function openDashboardCourse(code){
   const sel=$('#course-select');if(!sel)return;
   const opt=[...sel.options].find(o=>o.value===code);if(!opt){say('รายวิชานี้ไม่อยู่ใน course selector ปัจจุบัน','warn');return;}
   sel.value=code;await loadSelectedCourse();setTab('tqf3');window.scrollTo({top:0,behavior:'smooth'});
 }
 function renderProgrammeAiSummary(rows=dashboardCtx?.courses||[]){
   const box=$('#dashboard-ai-summary');if(!box)return;
-  const ready=rows.filter(x=>dashboardOperationalReadiness(x)===100).length,missingT3=rows.filter(x=>!x.tqf3_record_id).length,missingT5=rows.filter(x=>!x.tqf5_record_id).length,evidence=rows.filter(x=>x.verification_status==='INSUFFICIENT_EVIDENCE').length,sourceGaps=rows.filter(x=>dashboardDescriptionStatus(x.course_code)==='MISSING').length;
-  box.value='สรุปเชิงปฏิบัติการ (Local Smart QA)\nรายวิชาในมุมมอง: '+rows.length+'\nOperational readiness 100%: '+ready+'\nยังไม่มี มคอ.3: '+missingT3+'\nยังไม่มี มคอ.5: '+missingT5+'\nINSUFFICIENT_EVIDENCE: '+evidence+'\nSource gap: '+sourceGaps+'\n\nหมายเหตุ: เป็นสรุปสถานะระบบ ไม่ใช่การประเมินคุณภาพทางวิชาการหรือ institutional approval';
+  const ready=rows.filter(x=>dashboardOperationalReadiness(x)===100).length,missingT3=rows.filter(x=>!x.tqf3_record_id).length,missingT5=rows.filter(x=>!x.tqf5_record_id).length,evidence=rows.filter(x=>x.verification_status==='INSUFFICIENT_EVIDENCE').length,sourceGaps=rows.filter(x=>dashboardDescriptionStatus(x.course_code)==='MISSING').length,controlled=rows.filter(x=>dashboardResponsibleNames(x.course_code).length).length;
+  box.value='สรุปเชิงปฏิบัติการ (Local Smart QA)\nรายวิชาในมุมมอง: '+rows.length+'\nOperational readiness 100%: '+ready+'\nยังไม่มี มคอ.3: '+missingT3+'\nยังไม่มี มคอ.5: '+missingT5+'\nINSUFFICIENT_EVIDENCE: '+evidence+'\nSource gap: '+sourceGaps+'\nControlled responsibility: '+controlled+'\n\nหมายเหตุ: เป็นสรุปสถานะระบบ ไม่ใช่การประเมินคุณภาพทางวิชาการหรือ institutional approval';
 }
 
 function badgeHtml(text,k){return '<span class="badge '+(k||kind(text))+'">'+esc(text||'—')+'</span>';}
@@ -1227,6 +1426,33 @@ function renderEvidenceQueue(){
 
 
 
+function enhanceAccessibility(){
+  $$('.table-wrap').forEach((el,i)=>{
+    el.tabIndex=0;el.setAttribute('role','region');
+    el.setAttribute('aria-describedby','table-scroll-instruction');
+    if(!el.getAttribute('aria-label')){
+      const section=el.closest('.form-section,.card,.review-subsection');
+      const heading=section?.querySelector('h2,h3,h4')?.textContent?.trim();
+      el.setAttribute('aria-label',heading?'ตาราง '+heading:'ตารางข้อมูล '+(i+1));
+    }
+  });
+  $$('button:not([type])').forEach(b=>b.type='button');
+  const tabs=$$('.tab[role="tab"]');
+  tabs.forEach((tab,i)=>{
+    if(tab.dataset.a11yBound==='1')return;
+    tab.dataset.a11yBound='1';
+    tab.addEventListener('keydown',e=>{
+      if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;
+      e.preventDefault();
+      let next=i;
+      if(e.key==='ArrowRight')next=(i+1)%tabs.length;
+      if(e.key==='ArrowLeft')next=(i-1+tabs.length)%tabs.length;
+      if(e.key==='Home')next=0;if(e.key==='End')next=tabs.length-1;
+      tabs[next].focus();setTab(tabs[next].dataset.tab);
+    });
+  });
+}
+
 function toggleSubmissionMode(){
   document.body.classList.toggle('submission-mode');
   const on=document.body.classList.contains('submission-mode');
@@ -1238,12 +1464,12 @@ function toggleSubmissionMode(){
 async function saveTqf3(){
   if(!docCtx?.course?.course_offering_id)throw new Error('ยังไม่พบ Course Offering สำหรับปี/ภาคนี้ จึงยังบันทึก มคอ.3 ไม่ได้');
   say('กำลังบันทึก มคอ.3 Working Version…');
-  const {data,error}=await client.rpc('hepe_save_tqf3_working_version_by_code',{...courseArgs(),p_content:collectTqf3(),p_source_status:'LATEST_WORKING_CONFIRMED'});if(error)throw error;
+  const {data,error}=await client.rpc('hepe_save_tqf3_working_version_by_code',{...courseArgs(),p_content:collectTqf3(),p_source_status:'UNVERIFIED'});if(error)throw error;
   clearLocalBuffer();say('บันทึก มคอ.3 สำเร็จ — Version '+data.version_no,'ok');await loadSelectedCourse();
 }
 async function saveTqf5(){
   if(!docCtx?.course?.course_offering_id)throw new Error('ยังไม่พบ Course Offering สำหรับปี/ภาคนี้');
-  const {data,error}=await client.rpc('hepe_create_tqf5_working_draft_by_code',{...courseArgs(),p_payload:collectTqf5(),p_source_reference:'HEPE Fast TQF Portal v32 / inline-ai-recommendation-ux / NON-PRODUCTION'});if(error)throw error;
+  const {data,error}=await client.rpc('hepe_create_tqf5_working_draft_by_code',{...courseArgs(),p_payload:collectTqf5(),p_source_reference:'HEPE Fast TQF Portal v32 / completed-accessibility-crossdoc-review / NON-PRODUCTION'});if(error)throw error;
   clearLocalBuffer();say('บันทึก มคอ.5 Draft สำเร็จ — '+data.result_snapshot_id,'ok');await loadSelectedCourse();
 }
 async function createVerification(){const {data,error}=await client.rpc('hepe_ensure_verification_draft_by_code',courseArgs());if(error)throw error;say(data.created?'สร้างรายการทวนสอบแล้ว':'มีรายการอยู่แล้ว','ok');await loadSelectedCourse();}
@@ -1258,28 +1484,28 @@ async function logout(){await client.auth.signOut();location.reload();}
 function bindStatic(){
   if(staticBound)return; staticBound=true;
   $$('.tab').forEach(b=>b.onclick=()=>setTab(b.dataset.tab));
-  $('#programme-select').onchange=()=>{cfg.course_code='';loadCourses().catch(e=>say(e.message,'danger'));};
-  $('#year-select').onchange=()=>{renderTermOptions();loadCourses().catch(e=>say(e.message,'danger'));};
-  $('#term-select').onchange=()=>loadCourses().catch(e=>say(e.message,'danger'));
-  $('#course-select').onchange=()=>loadSelectedCourse().catch(e=>say(e.message,'danger'));
-  $('#reload-course').onclick=()=>loadSelectedCourse().catch(e=>say(e.message,'danger'));
+  $('#programme-select').onchange=()=>{cfg.course_code='';loadCourses().catch(e=>say(friendlyError(e),'danger'));};
+  $('#year-select').onchange=()=>{renderTermOptions();loadCourses().catch(e=>say(friendlyError(e),'danger'));};
+  $('#term-select').onchange=()=>loadCourses().catch(e=>say(friendlyError(e),'danger'));
+  $('#course-select').onchange=()=>loadSelectedCourse().catch(e=>say(friendlyError(e),'danger'));
+  $('#reload-course').onclick=()=>loadSelectedCourse().catch(e=>say(friendlyError(e),'danger'));
   $('#add-clo').onclick=addClo;$('#add-week').onclick=addWeek;$('#add-assessment').onclick=addAssessment;
   $('#bulk-apply-empty').onclick=()=>bulkApplyWeeks(false);$('#bulk-apply-all').onclick=()=>bulkApplyWeeks(true);
   $('#sync-tqf5-from-tqf3').onclick=syncTqf5FromTqf3;
   $('#submission-mode').onclick=toggleSubmissionMode;
-  $('#save-tqf3').onclick=()=>saveTqf3().catch(e=>say(e.message,'danger'));$('#save-tqf5').onclick=()=>saveTqf5().catch(e=>say(e.message,'danger'));$('#save-verification-note').onclick=()=>saveVerificationNote().catch(e=>say(e.message,'danger'));
+  $('#save-tqf3').onclick=()=>saveTqf3().catch(e=>say(friendlyError(e),'danger'));$('#save-tqf5').onclick=()=>saveTqf5().catch(e=>say(friendlyError(e),'danger'));$('#save-verification-note').onclick=()=>saveVerificationNote().catch(e=>say(friendlyError(e),'danger'));
   $$('.ai-section').forEach(b=>b.onclick=()=>runSectionAi(b.dataset.section,null,b));
-  $('#ai-chatgpt').onclick=()=>openChatGPT().catch(e=>say(e.message,'danger'));$('#ai-show-prompt').onclick=()=>{$('#ai-prompt-wrap').hidden=!$('#ai-prompt-wrap').hidden;$('#ai-prompt').value=aiPrompt();};
-  $('#print-form').onclick=()=>window.print();$('#logout').onclick=()=>logout().catch(e=>say(e.message,'danger'));
-  $('#login-form').addEventListener('submit',e=>loginMagic(e).catch(x=>say(x.message,'danger')));$('#password-login').onclick=()=>loginPassword().catch(x=>say(x.message,'danger'));
+  $('#ai-chatgpt').onclick=()=>openChatGPT().catch(e=>say(friendlyError(e),'danger'));$('#ai-show-prompt').onclick=()=>{$('#ai-prompt-wrap').hidden=!$('#ai-prompt-wrap').hidden;$('#ai-prompt').value=aiPrompt();};
+  $('#print-form').onclick=()=>window.print();$('#logout').onclick=()=>logout().catch(e=>say(friendlyError(e),'danger'));
+  $('#login-form').addEventListener('submit',e=>loginMagic(e).catch(x=>say(friendlyError(x),'danger')));$('#password-login').onclick=()=>loginPassword().catch(x=>say(friendlyError(x),'danger'));
   $('#restore-local').onclick=restoreLocalDraft;$('#discard-local').onclick=discardLocalDraft;
   $('#version-a').onchange=compareVersions;$('#version-b').onchange=compareVersions;
   $('#dashboard-search').oninput=()=>filterDashboardRows();
-  ['#dashboard-prefix','#dashboard-role','#dashboard-doc','#dashboard-verification','#dashboard-readiness','#dashboard-sort'].forEach(id=>{if($(id))$(id).onchange=()=>filterDashboardRows();});
+  ['#dashboard-prefix','#dashboard-role','#dashboard-doc','#dashboard-verification','#dashboard-readiness','#dashboard-sort','#dashboard-instructor'].forEach(id=>{if($(id))$(id).onchange=()=>filterDashboardRows();});
   if($('#dashboard-attention'))$('#dashboard-attention').onchange=()=>filterDashboardRows();
   if($('#dashboard-source-gap'))$('#dashboard-source-gap').onchange=()=>filterDashboardRows();
-  if($('#register-evidence-candidate'))$('#register-evidence-candidate').onclick=()=>registerEvidenceCandidate().catch(e=>say(e.message,'danger'));
-  if($('#check-evidence-duplicate'))$('#check-evidence-duplicate').onclick=()=>checkEvidenceDuplicate().catch(e=>say(e.message,'danger'));
+  if($('#register-evidence-candidate'))$('#register-evidence-candidate').onclick=()=>registerEvidenceCandidate().catch(e=>say(friendlyError(e),'danger'));
+  if($('#check-evidence-duplicate'))$('#check-evidence-duplicate').onclick=()=>checkEvidenceDuplicate().catch(e=>say(friendlyError(e),'danger'));
   if($('#evidence-candidate-filter'))$('#evidence-candidate-filter').onchange=renderEvidenceWorkspace;
   $$('[data-ai-inline-close]').forEach(b=>b.onclick=()=>{const p=b.closest('.ai-inline-result');if(p)p.hidden=true;});
   if($('#ai-copy-proposed'))$('#ai-copy-proposed').onclick=()=>copyAiProposedText();
@@ -1294,14 +1520,14 @@ function bindStatic(){
 }
 
 async function boot(){
-  cfg=await fetch('./config/state.json?v=32',{cache:'no-store'}).then(r=>r.json()).catch(()=>({}));
+  cfg=await fetch('./config/state.json?v=32.2',{cache:'no-store'}).then(r=>r.json()).catch(()=>({}));
   const {data:{session}}=await client.auth.getSession();
   $('#login-view').hidden=!!session;$('#app-view').hidden=!session;
-  bindStatic();
+  bindStatic();enhanceAccessibility();
   if(!session){say('กรุณา Login เพื่อใช้งาน HEPE Fast TQF Portal','warn');return;}
   $('#identity').textContent=session.user.email||'Authenticated';
-  await loadInitialCatalogs();
+  await loadInitialCatalogs();enhanceAccessibility();
 }
-client.auth.onAuthStateChange((event,session)=>{if(event==='SIGNED_IN'&&session)setTimeout(()=>boot().catch(e=>say(e.message,'danger')),0);});
+client.auth.onAuthStateChange((event,session)=>{if(event==='SIGNED_IN'&&session)setTimeout(()=>boot().catch(e=>say(friendlyError(e),'danger')),0);});
 boot().catch(e=>say(e.message||String(e),'danger'));
 })();
