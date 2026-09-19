@@ -150,6 +150,73 @@ author_profile: false
     </section>
   </section>
 
+  <section class="sp-section sp-shell rps-story-section" aria-labelledby="rps-story-title">
+    <div class="sp-section-head">
+      <div class="sp-eyebrow">Research Story</div>
+      <h2 id="rps-story-title">From question to evidence-informed translation</h2>
+      <p class="sp-intro">This narrative shows the logic of the research portfolio while preserving the difference between a conceptual research process and the verified state of any specific project.</p>
+    </div>
+
+    <div class="rps-story-layout">
+      <article class="sp-card rps-story-card rps-story-wide">
+        <div class="rps-card-head">
+          <div><span class="sp-eyebrow">Research Journey</span><h3>Question → Design → Evidence → Analysis → Translation → Publication</h3></div>
+          <span class="rps-badge">Conceptual pathway</span>
+        </div>
+        <div class="rps-story-flow" aria-label="Conceptual research journey">
+          <div><b>01</b><span>Question</span><strong>Define the research problem</strong><p>Clarify the problem, context, population and evidence need.</p></div>
+          <i aria-hidden="true">→</i>
+          <div><b>02</b><span>Design</span><strong>Choose an appropriate approach</strong><p>Align methods, measurement and evidence sources with the research question.</p></div>
+          <i aria-hidden="true">→</i>
+          <div><b>03</b><span>Evidence</span><strong>Build traceable evidence</strong><p>Use governed records, documented methods and public-safe evidence boundaries.</p></div>
+          <i aria-hidden="true">→</i>
+          <div><b>04</b><span>Analysis</span><strong>Interpret systematically</strong><p>Analysis is reported only when supported by verified project evidence.</p></div>
+          <i aria-hidden="true">→</i>
+          <div><b>05</b><span>Translation</span><strong>Connect findings with practice</strong><p>Translate evidence into educational, health or academic-quality contexts when supported.</p></div>
+          <i aria-hidden="true">→</i>
+          <div><b>06</b><span>Publication</span><strong>Publish verified outputs</strong><p>Publication status and project linkage are asserted only through verified records.</p></div>
+        </div>
+        <p class="rps-dashboard-note">This pathway is explanatory. It does not mean that the current BMO project has completed every stage.</p>
+      </article>
+
+      <article class="sp-card rps-story-card">
+        <div class="rps-card-head"><div><span class="sp-eyebrow">Current Research Journey</span><h3>BMO: where the verified evidence currently sits</h3></div><span class="rps-badge">Instrument stage</span></div>
+        <ol class="rps-current-journey">
+          <li class="is-verified"><b>01</b><div><strong>Project Core</strong><p>Project identity and core reference are verified in the governed registry.</p></div></li>
+          <li class="is-active"><b>02</b><div><strong>Measurement development</strong><p>The current phase is measurement development and existing-instrument evidence comparison.</p></div></li>
+          <li class="is-active"><b>03</b><div><strong>Current workstream</strong><p>Existing instrument comparison for the Movement Opportunity measurement model.</p></div></li>
+          <li class="is-gate"><b>04</b><div><strong>Next evidence gate</strong><p>Complete Adopt / Adapt / Develop decisions before candidate-item development.</p></div></li>
+          <li class="is-bounded"><b>05</b><div><strong>Later lifecycle stages</strong><p>Protocol, ethics, data collection, analysis, manuscript and publication are not presented as completed unless separately verified.</p></div></li>
+        </ol>
+      </article>
+
+      <article class="sp-card rps-story-card">
+        <div class="rps-card-head"><div><span class="sp-eyebrow">Research Themes</span><h3>Four connected lines of inquiry</h3></div></div>
+        <div class="rps-theme-story-grid">
+          <div><span>01</span><strong>Movement &amp; Health Behaviour</strong><p>Physical activity, sedentary behaviour, movement opportunity and daily-life context.</p></div>
+          <div><span>02</span><strong>Health &amp; Physical Education</strong><p>Teaching, school health, learner needs, assessment and evidence translation.</p></div>
+          <div><span>03</span><strong>Curriculum &amp; Quality</strong><p>Outcome alignment, curriculum mapping, programme evaluation and academic improvement.</p></div>
+          <div><span>04</span><strong>AI &amp; Educational Innovation</strong><p>Responsible digital and AI-supported academic work, evidence synthesis and governance.</p></div>
+        </div>
+      </article>
+
+      <article class="sp-card rps-story-card rps-story-quote">
+        <div class="sp-eyebrow">Research Portfolio Principle</div>
+        <blockquote>“The research story follows the evidence trail.”</blockquote>
+        <p>Project status, milestone state, public outputs and publication relationships remain separate claims, each requiring its own evidence.</p>
+      </article>
+
+      <article class="sp-card rps-story-card">
+        <div class="rps-card-head"><div><span class="sp-eyebrow">Translation Boundary</span><h3>From research activity to public claim</h3></div></div>
+        <div class="rps-translation-stack">
+          <div><strong>Documented</strong><span>Project identity, current lifecycle state, public-safe outputs and verified publication metadata.</span></div>
+          <div><strong>Interpreted carefully</strong><span>Research themes, methodological framing and evidence-supported implications.</span></div>
+          <div><strong>Not assumed</strong><span>Unpublished findings, completion of unverified stages, project-publication links by similarity, or hidden private evidence.</span></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
   <section class="sp-section sp-shell" aria-labelledby="research-themes-title">
     <div class="sp-section-head"><div class="sp-eyebrow">Research Themes</div><h2 id="research-themes-title">Four connected areas of inquiry</h2></div>
     <div class="sp-grid">
