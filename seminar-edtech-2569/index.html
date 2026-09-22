@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#1B2040">
+<title>ระบบกิจกรรมสัมมนา HPE EdTech 2569</title><link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<header class="hero"><div class="wrap"><p class="eyebrow">HEPE • Ramkhamhaeng University</p><h1>ระบบลงทะเบียนและประเมินผลกิจกรรม</h1><p>โครงการออกแบบสื่อและนวัตกรรมเทคโนโลยีเพื่อการสอนสุขศึกษาและพลศึกษา</p><div class="chips"><span>25 ต.ค. 2569</span><span>08.30–12.30 น.</span><span>มหาวิทยาลัยรามคำแหง</span></div></div></header>
+<main class="wrap">
+<section class="notice"><strong>สถานะต้นแบบ:</strong> รุ่นนี้ใช้ Local Demo Storage เพื่อทดสอบกระบวนการก่อนเชื่อมฐานข้อมูลจริง</section>
+<nav class="steps" aria-label="ขั้นตอน"><button data-view="register">1 ลงทะเบียน</button><button data-view="pretest">2 Pre-test</button><button data-view="posttest">3 Post-test</button><button data-view="survey">4 ประเมิน</button><button data-view="certificate">5 ใบประกาศ</button><button data-view="verify">6 ตรวจสอบ</button><button data-view="admin">Admin</button></nav>
+<section id="register" class="panel active"><h2>ลงทะเบียนเข้าร่วมโครงการ</h2><form id="registerForm" class="grid"><label>คำนำหน้า<input name="title" required></label><label>ชื่อ<input name="firstName" required></label><label>นามสกุล<input name="lastName" required></label><label>อีเมล<input name="email" type="email" required></label><label>ประเภทผู้เข้าร่วม<select name="role" required><option value="">เลือก</option><option>นิสิตพลศึกษา</option><option>อาจารย์พลศึกษา</option><option>ครูพลศึกษา</option><option>วิทยากร</option><option>อื่น ๆ</option></select></label><label class="full consent"><input name="consent" type="checkbox" required> ยินยอมให้ใช้ข้อมูลที่จำเป็นเพื่อบริหารโครงการ ประเมินผล และออก E-Certificate</label><button class="primary full" type="submit">บันทึกการลงทะเบียน</button></form><div id="registerMsg" class="result"></div></section>
+<section id="pretest" class="panel"><h2>แบบประเมินก่อนเข้าร่วม (Pre-test)</h2><div id="pretestBox"></div></section>
+<section id="posttest" class="panel"><h2>แบบประเมินหลังเข้าร่วม (Post-test)</h2><div id="posttestBox"></div></section>
+<section id="survey" class="panel"><h2>แบบประเมินความพึงพอใจ</h2><form id="surveyForm"><div id="surveyItems"></div><label>ข้อเสนอแนะ<textarea name="comment" rows="4"></textarea></label><button class="primary" type="submit">ส่งแบบประเมิน</button></form><div id="surveyMsg" class="result"></div></section>
+<section id="certificate" class="panel"><h2>ตรวจสิทธิ์ E-Certificate</h2><p>ระบบจะออกใบประกาศเมื่อผ่านเกณฑ์ที่ผู้รับผิดชอบอนุมัติแล้ว</p><button id="checkEligibility" class="primary">ตรวจสถานะของฉัน</button><div id="certStatus" class="result"></div></section>
+<section id="verify" class="panel"><h2>ตรวจสอบใบประกาศ</h2><form id="verifyForm" class="inline"><input name="certNo" placeholder="เช่น HPE-2569-001" required><button class="primary">ตรวจสอบ</button></form><div id="verifyResult" class="result"></div></section>
+<section id="admin" class="panel"><h2>Admin Demo</h2><p class="muted">ต้นแบบนี้ไม่มีระบบล็อกอินจริง จึงแสดงเฉพาะข้อมูลในอุปกรณ์ปัจจุบัน ห้ามใช้กับข้อมูลจริงจนกว่าจะเชื่อม backend และสิทธิ์ผู้ดูแล</p><div class="cards" id="adminCards"></div><button id="approveDemo" class="secondary">อนุมัติสิทธิ์ใบประกาศสำหรับผู้ใช้ปัจจุบัน (Demo)</button> <button id="resetDemo" class="danger">ล้างข้อมูล Demo</button></section>
+</main><footer class="wrap footer">Evidence-first • Minimum data • Human approval before certificate issuance</footer><script src="./config.js"></script><script src="./app.js"></script></body></html>
