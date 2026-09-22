@@ -64,3 +64,9 @@ Evidence-first • Minimum necessary data • RLS fail-closed • Human academic
 - Confirmed test signer: `ผู้ช่วยศาสตราจารย์ ดร.เกษม ชูรัตน์`
 - Preview URL: https://lztxpjsuzqvtgyasfnyj.supabase.co/functions/v1/seminar-certificate-render?cert=HPE-2569-TEST-001&token=a8bdc834-c5a9-410f-af78-668ca6138622
 - Output is print-ready A4 landscape HTML with embedded QR verification; browser can Print / Save as PDF.
+
+## Participant certificate retrieval
+- `seminar-certificate-status` checks eligibility and issuance status by participant token.
+- Approved TEST certificates return a direct dynamic render URL.
+- Admin approval now returns the TEST certificate number and render URL immediately.
+- TEST certificate numbering uses `HPE-2569-TEST-xxx` in test mode.
