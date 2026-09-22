@@ -7,3 +7,4 @@
 .qr-admin{margin-top:1rem;padding:1rem;border:1px solid #d9dde5;border-radius:12px;text-align:center}.qr-admin canvas{display:block;margin:0 auto 1rem;max-width:220px}.qr-admin a{word-break:break-all}
 .report-json{white-space:pre-wrap;background:#101828;color:#f5f7fa;border-radius:12px;padding:1rem;max-height:420px;overflow:auto;font-size:.82rem}
 @media(max-width:700px){.admin-toolbar,.section-head{align-items:stretch;flex-direction:column}.toolbar-actions{width:100%}.toolbar-actions button{flex:1}}
+.participant-tools{display:flex;gap:.5rem;align-items:center}.participant-tools input{min-width:220px}@media(max-width:700px){.participant-tools{width:100%;flex-direction:column}.participant-tools input,.participant-tools button{width:100%}}
