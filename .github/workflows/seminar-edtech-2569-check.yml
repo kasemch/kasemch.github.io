@@ -18,6 +18,11 @@ jobs:
           test -f seminar-edtech-2569/admin.html
           test -f seminar-edtech-2569/admin.css
           test -f seminar-edtech-2569/admin.js
+          test -f seminar-edtech-2569/certificate.html
+          test -f seminar-edtech-2569/certificate.css
+          test -f seminar-edtech-2569/certificate.js
+          test -f seminar-edtech-2569/verify-certificate.html
+          test -f seminar-edtech-2569/verify-certificate.js
       - name: No obvious secrets
         run: |
           ! grep -RniE '(SUPABASE_SERVICE_ROLE|AIza[0-9A-Za-z_-]{20,}|sk-[0-9A-Za-z]{20,})' seminar-edtech-2569 --exclude='README.md' --exclude='supabase-schema.sql'
