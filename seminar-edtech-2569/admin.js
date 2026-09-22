@@ -5,7 +5,7 @@ const API_BASE=SUPABASE_URL+"/functions/v1";
 const PUBLIC_EVENT_URL="https://kasemch.github.io/seminar-edtech-2569/";
 const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 const $=s=>document.querySelector(s);
-let currentSession=null,currentReport=null;
+let currentSession=null,currentReport=null,currentParticipants=[];
 
 function showLogin(msg=""){ $("#loginPanel").classList.remove("hidden");$("#consolePanel").classList.add("hidden");$("#loginMsg").textContent=msg }
 function showConsole(){ $("#loginPanel").classList.add("hidden");$("#consolePanel").classList.remove("hidden") }
@@ -32,6 +32,7 @@ $("#loginForm").onsubmit=async e=>{
 $("#signOut").onclick=async()=>{await sb.auth.signOut();showLogin("ออกจากระบบแล้ว")};
 $("#refreshAll").onclick=()=>loadAll();
 $("#reloadParticipants").onclick=()=>loadParticipants();
+$("#participantSearch").oninput=e=>{const q=String(e.target.value||"").trim().toLowerCase();renderParticipants(!q?currentParticipants:currentParticipants.filter(p=>(p.name+" "+p.email).toLowerCase().includes(q)))};
 $("#loadReport").onclick=()=>loadReport();
 $("#downloadReport").onclick=()=>{
  if(!currentReport){alert("กรุณาสร้างรายงานก่อน");return}
@@ -57,12 +58,9 @@ async function loadDashboard(){
  }catch(e){$("#dashboardMsg").textContent="โหลด Dashboard ไม่สำเร็จ: "+e.message;if(e.message==="forbidden") showLogin("บัญชีนี้ไม่มีสิทธิ์ Admin")}
 }
 
-async function loadParticipants(){
- $("#participantsMsg").textContent="กำลังโหลดรายชื่อ...";
- try{
-  const j=await authApi("seminar-admin-participants",{event_code:EVENT_CODE});
+function renderParticipants(list){
   const tbody=$("#participantRows");tbody.innerHTML="";
-  j.participants.forEach(p=>{
+  list.forEach(p=>{
     const cert=p.certificate;
     const approved=cert&&cert.status==="approved";
     const certText=approved?'<span class="ok">'+esc(cert.certificate_no)+'</span>':cert?esc(cert.status):"—";
@@ -82,7 +80,14 @@ async function loadParticipants(){
     }
     tbody.appendChild(tr);
   });
-  $("#participantsMsg").textContent=j.participants.length+" รายการ • "+(j.test_mode?"TEST-PILOT":"");
+}
+async function loadParticipants(){
+ $("#participantsMsg").textContent="กำลังโหลดรายชื่อ...";
+ try{
+  const j=await authApi("seminar-admin-participants",{event_code:EVENT_CODE});
+  currentParticipants=j.participants||[];
+  renderParticipants(currentParticipants);
+  $("#participantsMsg").textContent=currentParticipants.length+" รายการ • "+(j.test_mode?"TEST-PILOT":"");
  }catch(e){$("#participantsMsg").textContent="โหลดรายชื่อไม่สำเร็จ: "+e.message}
 }
 async function approveCertificate(id,name,button){
@@ -128,5 +133,5 @@ async function boot(){
  $("#adminIdentity").textContent=session.user.email||"Admin";
  showConsole();await loadAll();
 }
-sb.auth.onAuthStateChange((event,session)=>{currentSession=session;if(session){$("#adminIdentity").textContent=session.user.email||"Admin";showConsole();loadAll()}else if(event==="SIGNED_OUT")showLogin()});
+sb.auth.onAuthStateChange((event,session)=>{currentSession=session;if(session){$("#adminIdentity").textContent=session.user.email||"Admin";showConsole();setTimeout(()=>loadAll(),150)}else if(event==="SIGNED_OUT")showLogin()});
 boot();
