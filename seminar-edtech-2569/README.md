@@ -1,37 +1,52 @@
 # Seminar EdTech Event System 2569
 
-ระบบ Production Candidate สำหรับโครงการ **ออกแบบสื่อและนวัตกรรมเทคโนโลยีเพื่อการสอนสุขศึกษาและพลศึกษา**
+Production Candidate สำหรับโครงการ **ออกแบบสื่อและนวัตกรรมเทคโนโลยีเพื่อการสอนสุขศึกษาและพลศึกษา**
 
-## Flow
-Registration → Check-in → Pre-test → Activity → Post-test → Satisfaction → Admin approval → E-Certificate → Verification
+## End-to-end flow
+Registration → Timed QR Check-in → Pre-test → Co-Creation Workshop Evidence → Post-test → Satisfaction → Eligibility → Admin Approval → E-Certificate Registry → Verification → Project Report
 
-## Current status
-- Frontend: GitHub Pages branch preview candidate
-- Backend: Supabase Sandbox project `lztxpjsuzqvtgyasfnyj`
-- Event status: **draft** (registration endpoint will refuse real registration until status changes to pilot/open)
-- Data access: direct browser table access denied; RLS explicit deny; writes/reads go through Edge Functions
-- Certificate approval: authenticated admin only; admin account binding is still a Human Gate
-- Question bank: current 5 questions are **draft content for instructor review**, not source-approved final test items
+## Current state
+- GitHub frontend อยู่ใน Draft PR #104
+- Supabase Sandbox: `lztxpjsuzqvtgyasfnyj`
+- Event `HPE-2569` status = **draft**; real registration is fail-closed
+- Direct anon/auth table access = revoked + restrictive deny policies
+- Synthetic tests are transactional and rolled back
 
-## Deployed Edge Functions
-- `seminar-register` — public registration endpoint with input validation
-- `seminar-submit` — pre/post/survey submission by participant token
-- `seminar-attendance` — pilot check-in endpoint
-- `seminar-verify` — minimum-data public certificate verification
-- `seminar-admin-approve` — JWT-required issuer/owner approval
+## Source-aligned assessment
+Pre/Post item bank expanded to 10 items based only on concepts explicitly present in the project document: Interactive Media, Motion Analysis, Gamification, Co-Creation, Learning by Doing, Coaching, Feedback, Reflection, prototype development, and real-school applicability. Instructor approval is still required before pilot.
 
-## Validation completed
-Synthetic transaction verified participant → 3 assessments → attendance relations and was rolled back. No synthetic participant was retained.
+## Backend modules
+- seminar-register
+- seminar-submit
+- seminar-attendance (timed checkpoint token)
+- seminar-admin-checkpoint
+- seminar-workshop-submit
+- seminar-verify
+- seminar-admin-approve
+- seminar-admin-dashboard
+- seminar-admin-report
 
-## Remaining Human Gates before pilot
-1. Approve final Pre-test/Post-test items and answer key.
-2. Approve E-Certificate eligibility rule and attendance threshold.
-3. Bind authorized admin/issuer account(s).
-4. Replace pilot attendance code with controlled QR/checkpoint mechanism.
-5. Approve privacy notice and data-retention period.
-6. Add server-side PDF certificate generator/template/signature.
-7. Run real-device acceptance on iPhone/Android with synthetic records.
-8. Open event status from `draft` to `pilot` only after the above gates pass.
+## Governance fields intentionally unresolved
+The database contains nullable gates for:
+- privacy_notice_version
+- retention_until
+- certificate_signer_name
+- certificate_signer_title
 
-## Governance
-Evidence-first • Minimum data • RLS fail-closed • Human academic authority • Reversible release • No service-role secrets in GitHub
+These must not be invented. They require human confirmation before opening pilot or generating final certificate PDFs.
+
+## Remaining Human Gates
+1. Instructor approval of the 10-item Pre/Post bank and answer key.
+2. Confirm eligibility/attendance rule.
+3. Bind authorized Supabase Auth user(s) as seminar issuer/owner.
+4. Approve Privacy Notice and retention end date.
+5. Confirm certificate signer name/title.
+6. Implement final server-side PDF rendering only after signer confirmation.
+7. Generate timed QR checkpoint during controlled pilot.
+8. Run iPhone/Android synthetic real-device acceptance.
+9. Change event status from `draft` → `pilot` only after gates 1–8 pass.
+
+## Release rule
+DO NOT MERGE and DO NOT OPEN REAL REGISTRATION until the Human Gates pass.
+
+Evidence-first • Minimum necessary data • RLS fail-closed • Human academic authority • Reversible release
