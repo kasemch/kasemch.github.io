@@ -1,27 +1,37 @@
 # Seminar EdTech Event System 2569
 
-ระบบต้นแบบสำหรับโครงการ **ออกแบบสื่อและนวัตกรรมเทคโนโลยีเพื่อการสอนสุขศึกษาและพลศึกษา**
+ระบบ Production Candidate สำหรับโครงการ **ออกแบบสื่อและนวัตกรรมเทคโนโลยีเพื่อการสอนสุขศึกษาและพลศึกษา**
 
-## User flow
-Registration → Pre-test → Activity → Post-test → Satisfaction survey → Human approval → E-Certificate → Verification
+## Flow
+Registration → Check-in → Pre-test → Activity → Post-test → Satisfaction → Admin approval → E-Certificate → Verification
 
 ## Current status
-**Prototype / non-production.** รุ่นปัจจุบันเก็บข้อมูลใน LocalStorage ของเบราว์เซอร์ เพื่อทดสอบ UX โดยไม่เก็บข้อมูลผู้เข้าร่วมจริง
+- Frontend: GitHub Pages branch preview candidate
+- Backend: Supabase Sandbox project `lztxpjsuzqvtgyasfnyj`
+- Event status: **draft** (registration endpoint will refuse real registration until status changes to pilot/open)
+- Data access: direct browser table access denied; RLS explicit deny; writes/reads go through Edge Functions
+- Certificate approval: authenticated admin only; admin account binding is still a Human Gate
+- Question bank: current 5 questions are **draft content for instructor review**, not source-approved final test items
 
-## ก่อนใช้งานจริง
-1. อาจารย์ตรวจรับคลังข้อสอบจริง — 5 ข้อในต้นแบบเป็นเพียง draft เพราะเอกสารโครงการไม่ได้กำหนดข้อสอบไว้
-2. ยืนยันเกณฑ์รับ E-Certificate เช่น attendance threshold และกิจกรรมบังคับ
-3. ยืนยันผู้มีอำนาจลงนาม
-4. เชื่อม backend เช่น Supabase พร้อม RLS และ admin authentication
-5. สร้าง certificate PDF และเลขที่ใบประกาศฝั่ง server
-6. ทำ verification endpoint/QR ที่เปิดเผยเฉพาะข้อมูลขั้นต่ำ
-7. เพิ่ม privacy notice, retention period, export/backup และ deletion process
-8. ทดสอบ iPhone/Android และเครือข่ายช้า
-9. pilot ด้วย synthetic data ก่อนข้อมูลจริง
-10. production release ต้องผ่าน human gate
+## Deployed Edge Functions
+- `seminar-register` — public registration endpoint with input validation
+- `seminar-submit` — pre/post/survey submission by participant token
+- `seminar-attendance` — pilot check-in endpoint
+- `seminar-verify` — minimum-data public certificate verification
+- `seminar-admin-approve` — JWT-required issuer/owner approval
 
-## โมดูลที่แนะนำ
-Participant portal • Check-in/attendance • Pre/Post • Satisfaction • Admin dashboard • Eligibility engine • Certificate queue • PDF generator • Public verification • Export • Audit log
+## Validation completed
+Synthetic transaction verified participant → 3 assessments → attendance relations and was rolled back. No synthetic participant was retained.
+
+## Remaining Human Gates before pilot
+1. Approve final Pre-test/Post-test items and answer key.
+2. Approve E-Certificate eligibility rule and attendance threshold.
+3. Bind authorized admin/issuer account(s).
+4. Replace pilot attendance code with controlled QR/checkpoint mechanism.
+5. Approve privacy notice and data-retention period.
+6. Add server-side PDF certificate generator/template/signature.
+7. Run real-device acceptance on iPhone/Android with synthetic records.
+8. Open event status from `draft` to `pilot` only after the above gates pass.
 
 ## Governance
-Evidence-first • Minimum data • Human approval • Reversible release • No secrets in repository
+Evidence-first • Minimum data • RLS fail-closed • Human academic authority • Reversible release • No service-role secrets in GitHub
