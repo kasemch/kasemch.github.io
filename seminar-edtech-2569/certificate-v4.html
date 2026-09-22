@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111827">
+<title>E-Certificate v4 • HPE EdTech 2569</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;background:#eef1f5;font-family:system-ui,-apple-system,"Noto Sans Thai",Tahoma,sans-serif;color:#1f2937}
+.toolbar{position:sticky;top:0;z-index:10;background:#111827;color:#fff;padding:14px 16px;display:flex;justify-content:space-between;gap:12px;align-items:center}
+.toolbar small{display:block;opacity:.75;margin-top:2px}.actions{display:flex;gap:8px}.actions button{border:0;border-radius:10px;padding:10px 14px;font-weight:800}.pdf{background:#b72b3a;color:#fff}.back{background:#fff;color:#111827}
+.wrap{max-width:1180px;margin:18px auto;padding:0 10px 36px}.card{background:#fff;border:1px solid #d8dde6;border-radius:14px;padding:12px;overflow:auto;-webkit-overflow-scrolling:touch}
+.cert-img{display:block;width:1120px;max-width:none;height:auto;margin:0 auto;background:#fffdfa}
+.msg{padding:18px;text-align:center;color:#667085}.error{color:#8b1e28}.note{font-size:.92rem;color:#667085;text-align:center;margin-top:12px}
+@media(max-width:800px){.toolbar{align-items:flex-start;flex-direction:column}.actions{width:100%}.actions button{flex:1}.cert-img{width:980px}.note{text-align:left}}
+@page{size:A4 landscape;margin:0}
+@media print{
+ html,body{background:#fff;width:297mm;height:210mm}
+ .toolbar,.note,.msg{display:none!important}
+ .wrap,.card{margin:0;padding:0;border:0;max-width:none;width:297mm;height:210mm;overflow:visible}
+ .cert-img{width:297mm;height:210mm;object-fit:fill;margin:0}
+}
+</style>
+</head>
+<body>
+<header class="toolbar">
+  <div><strong>E-Certificate</strong><small id="status">กำลังเปิดใบประกาศ...</small></div>
+  <div class="actions"><button id="pdfBtn" class="pdf" disabled>พิมพ์ / บันทึกเป็น PDF</button><button class="back" onclick="history.back()">กลับ</button></div>
+</header>
+<main class="wrap">
+  <div class="card">
+    <div id="msg" class="msg">กำลังโหลดใบประกาศ...</div>
+    <img id="certImg" class="cert-img" alt="E-Certificate" hidden>
+  </div>
+  <p class="note">iPhone: แตะ “พิมพ์ / บันทึกเป็น PDF” → ในหน้าตัวอย่างการพิมพ์แตะ Share → Save to Files</p>
+</main>
+<script>
+(function(){
+ const p=new URLSearchParams(location.search);
+ const cert=p.get("cert"),token=p.get("token");
+ const img=document.getElementById("certImg"),msg=document.getElementById("msg"),status=document.getElementById("status"),pdf=document.getElementById("pdfBtn");
+ if(!cert||!token){msg.textContent="ลิงก์ใบประกาศไม่สมบูรณ์";msg.classList.add("error");status.textContent="เปิดไม่ได้";return}
+ const src="https://lztxpjsuzqvtgyasfnyj.supabase.co/functions/v1/seminar-certificate-render?cert="+encodeURIComponent(cert)+"&token="+encodeURIComponent(token)+"&v=4";
+ img.onload=function(){msg.hidden=true;img.hidden=false;pdf.disabled=false;status.textContent="พร้อมใช้งาน • "+cert};
+ img.onerror=function(){msg.textContent="ไม่สามารถโหลดภาพใบประกาศได้ กรุณาเปิดใน Safari แล้วลองใหม่";msg.classList.add("error");status.textContent="เปิดไม่ได้"};
+ img.src=src;
+ pdf.onclick=function(){window.print()};
+})();
+</script>
+</body>
+</html>
