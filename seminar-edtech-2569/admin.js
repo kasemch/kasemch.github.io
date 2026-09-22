@@ -73,7 +73,7 @@ function renderParticipants(list){
     const actions=tr.querySelector(".actions");
     if(approved){
       const a=document.createElement("a");a.className="action-btn";a.target="_blank";a.rel="noopener";a.textContent="เปิดใบประกาศ";
-      a.href="./certificate.html?cert="+encodeURIComponent(cert.certificate_no)+"&token="+encodeURIComponent(cert.verification_token);actions.appendChild(a);
+      a.href="./certificate-v3.html?cert="+encodeURIComponent(cert.certificate_no)+"&token="+encodeURIComponent(cert.verification_token);actions.appendChild(a);
     }else{
       const b=document.createElement("button");b.className="action-btn";b.textContent="อนุมัติ";b.disabled=!p.eligible;
       b.onclick=()=>approveCertificate(p.participant_id,p.name,b);actions.appendChild(b);
