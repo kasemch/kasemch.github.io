@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1B2040">
+<title>E-Certificate • HPE EdTech 2569</title>
+<link rel="stylesheet" href="./certificate.css">
+</head>
+<body>
+<header class="viewer-toolbar">
+  <div>
+    <strong>E-Certificate</strong>
+    <span id="viewerStatus">กำลังตรวจสอบ...</span>
+  </div>
+  <div class="toolbar-actions">
+    <button id="pdfBtn">เปิด / บันทึก PDF</button>
+    <button id="printBtn">พิมพ์</button>
+  </div>
+</header>
+
+<main class="viewer-wrap">
+<section id="loadingBox" class="state-card">กำลังโหลดใบประกาศ...</section>
+<section id="errorBox" class="state-card error hidden"></section>
+
+<section id="certificate" class="certificate hidden" aria-label="E-Certificate">
+  <div class="frame outer"></div>
+  <div class="frame inner"></div>
+  <div class="corner corner-tl"></div>
+  <div class="corner corner-br"></div>
+  <div class="ribbon ribbon-tr"></div>
+
+  <div id="watermarkGhost" class="watermark-ghost"></div>
+
+  <div class="certificate-content">
+    <h1><span>E</span>-Certificate</h1>
+    <div class="gold-rule"></div>
+    <div id="testBadge" class="test-badge"></div>
+    <p class="grant">มอบให้แก่</p>
+    <div id="recipientName" class="recipient"></div>
+    <div class="name-rule"></div>
+    <p class="body-text">เพื่อรับรองการเข้าร่วมโครงการ</p>
+    <div id="projectTitle" class="project-title"></div>
+    <div id="eventDate" class="event-date"></div>
+  </div>
+
+  <div class="certificate-bottom">
+    <div class="certificate-number">
+      <small>Certificate No.</small>
+      <strong id="certificateNo"></strong>
+      <div class="short-rule"></div>
+      <span>EDUCATION • HEALTH • INNOVATION</span>
+    </div>
+
+    <div class="signer">
+      <div class="signature-space"></div>
+      <div class="sign-line"></div>
+      <strong id="signerName"></strong>
+      <span id="signerTitle"></span>
+    </div>
+
+    <div class="qr-card">
+      <canvas id="verifyQr"></canvas>
+      <span>QR Verification</span>
+    </div>
+  </div>
+</section>
+
+<p class="mobile-note">บน iPhone หากเปิด PDF แล้ว ให้แตะ Share → Save to Files เพื่อเก็บไฟล์</p>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
+<script src="./certificate.js"></script>
+</body>
+</html>
