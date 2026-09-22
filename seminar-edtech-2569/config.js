@@ -4,6 +4,10 @@ window.EVENT_CONFIG={
   eventDate:"25 ตุลาคม 2569",
   apiBase:"https://lztxpjsuzqvtgyasfnyj.supabase.co/functions/v1",
   certificateRule:"ต้องลงทะเบียน เช็กอิน ทำ Pre-test และ Post-test ส่งแบบประเมิน และได้รับการอนุมัติจากผู้รับผิดชอบ",
+  testMode:true,
+  certificateWatermark:"TEST / รุ่นทดสอบ",
+  certificateSignerName:"ผู้ช่วยศาสตราจารย์ ดร.เกษม ชูรัตน์",
+  certificateSignerTitle:"ผู้ลงนามรับรองโครงการ (รุ่นทดสอบ)",
   questionNote:"ข้อคำถาม 10 ข้อนี้พัฒนาจากสาระที่ระบุในโครงการเดิม ได้แก่ Interactive Media, Motion Analysis, Gamification, Co-Creation, Learning by Doing, Coaching, Feedback, Reflection และการประยุกต์ใช้เทคโนโลยีเพื่อการสอน",
   questions:[
     {q:"สื่อมัลติมีเดียแบบโต้ตอบ (Interactive Media) มีลักษณะสำคัญข้อใด",choices:["ผู้เรียนสามารถมีปฏิสัมพันธ์กับสื่อและได้รับการตอบสนอง","ใช้สำหรับอ่านเนื้อหาอย่างเดียว","ใช้เฉพาะการพิมพ์เอกสาร","ใช้เฉพาะในสนามกีฬา"],a:0},
