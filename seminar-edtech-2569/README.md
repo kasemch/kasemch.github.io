@@ -55,3 +55,12 @@ These must not be invented. They require human confirmation before opening pilot
 DO NOT MERGE and DO NOT OPEN REAL REGISTRATION until the Human Gates pass.
 
 Evidence-first • Minimum necessary data • RLS fail-closed • Human academic authority • Reversible release
+
+## Dynamic E-Certificate Test Renderer
+- Function: `seminar-certificate-render`
+- Test certificate: `HPE-2569-TEST-001`
+- Synthetic recipient only; no real participant data.
+- Mandatory watermark: `TEST / รุ่นทดสอบ`
+- Confirmed test signer: `ผู้ช่วยศาสตราจารย์ ดร.เกษม ชูรัตน์`
+- Preview URL: https://lztxpjsuzqvtgyasfnyj.supabase.co/functions/v1/seminar-certificate-render?cert=HPE-2569-TEST-001&token=a8bdc834-c5a9-410f-af78-668ca6138622
+- Output is print-ready A4 landscape HTML with embedded QR verification; browser can Print / Save as PDF.
