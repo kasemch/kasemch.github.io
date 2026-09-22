@@ -22,6 +22,7 @@ jobs:
           test -f seminar-edtech-2569/certificate.css
           test -f seminar-edtech-2569/certificate.js
           test -f seminar-edtech-2569/certificate-v3.html
+          test -f seminar-edtech-2569/certificate-v4.html
           test -f seminar-edtech-2569/verify-certificate.html
           test -f seminar-edtech-2569/verify-certificate.js
       - name: No obvious secrets
