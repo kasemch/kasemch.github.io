@@ -41,3 +41,14 @@ A synthetic participant fixture has been prepared for Admin Console acceptance:
 Expected Admin Console behavior: show the participant as eligible and enable the TEST E-Certificate approval action.
 
 This fixture contains no real participant data.
+
+## Acceptance result — synthetic certificate issuance
+On 22 September 2026, the project owner explicitly approved issuance for the synthetic participant `pilot-tester-02@example.invalid`.
+
+Result:
+- certificate number: `HPE-2569-TEST-002`
+- approval status: `approved`
+- TEST-PILOT signer and TEST watermark remain governed by the event configuration
+- approval was recorded as an operator-authorized test action; `approved_by` was intentionally not falsified as a user-session approval
+
+This validates the controlled backend issuance path for the synthetic fixture. It does not by itself claim that the Magic Link login + UI approval click path has been observed end-to-end.
