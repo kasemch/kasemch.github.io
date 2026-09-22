@@ -7,14 +7,30 @@
 <body>
 <header class="hero"><div class="wrap"><p class="eyebrow">HEPE • Ramkhamhaeng University</p><h1>ระบบลงทะเบียนและประเมินผลกิจกรรม</h1><p>โครงการออกแบบสื่อและนวัตกรรมเทคโนโลยีเพื่อการสอนสุขศึกษาและพลศึกษา</p><div class="chips"><span>25 ต.ค. 2569</span><span>08.30–12.30 น.</span><span>มหาวิทยาลัยรามคำแหง</span></div></div></header>
 <main class="wrap">
-<section class="notice"><strong>สถานะ Production Candidate:</strong> เชื่อม Supabase Sandbox แล้ว แต่ยังเป็น PILOT และยังไม่เปิดใช้กับผู้เข้าร่วมจริงจนกว่าจะผ่าน Human Gate</section>
-<nav class="steps" aria-label="ขั้นตอน"><button data-view="register">1 ลงทะเบียน</button><button data-view="attendance">2 เช็กอิน</button><button data-view="pretest">3 Pre-test</button><button data-view="posttest">4 Post-test</button><button data-view="survey">5 ประเมิน</button><button data-view="certificate">6 ใบประกาศ</button><button data-view="verify">7 ตรวจสอบ</button><button data-view="admin">Admin</button></nav>
+<section class="notice"><strong>สถานะ Production Candidate:</strong> เชื่อม Supabase Sandbox แล้ว แต่ Event status ยังเป็น <code>draft</code> จึงยังไม่รับข้อมูลผู้เข้าร่วมจริง</section>
+<nav class="steps" aria-label="ขั้นตอน"><button data-view="register">1 ลงทะเบียน</button><button data-view="attendance">2 เช็กอิน</button><button data-view="pretest">3 Pre-test</button><button data-view="workshop">4 Workshop</button><button data-view="posttest">5 Post-test</button><button data-view="survey">6 ประเมิน</button><button data-view="certificate">7 ใบประกาศ</button><button data-view="verify">8 ตรวจสอบ</button><button data-view="admin">Admin</button></nav>
+
 <section id="register" class="panel active"><h2>ลงทะเบียนเข้าร่วมโครงการ</h2><form id="registerForm" class="grid"><label>คำนำหน้า<input name="title" required></label><label>ชื่อ<input name="firstName" required></label><label>นามสกุล<input name="lastName" required></label><label>อีเมล<input name="email" type="email" required></label><label>ประเภทผู้เข้าร่วม<select name="role" required><option value="">เลือก</option><option>นิสิตพลศึกษา</option><option>อาจารย์พลศึกษา</option><option>ครูพลศึกษา</option><option>วิทยากร</option><option>อื่น ๆ</option></select></label><label class="full consent"><input name="consent" type="checkbox" required> ยินยอมให้ใช้ข้อมูลที่จำเป็นเพื่อบริหารโครงการ ประเมินผล และออก E-Certificate</label><button class="primary full" type="submit">บันทึกการลงทะเบียน</button></form><div id="registerMsg" class="result"></div></section>
-<section id="attendance" class="panel"><h2>เช็กอินเข้าร่วมกิจกรรม</h2><p>ในวันจริง QR จะเติมรหัสจุดเช็กอินให้อัตโนมัติ รุ่นนี้ใช้รหัส PILOT สำหรับทดสอบเท่านั้น</p><form id="attendanceForm" class="inline"><input name="checkpointCode" placeholder="รหัสเช็กอิน" required><button class="primary">เช็กอิน</button></form><div id="attendanceMsg" class="result"></div></section>
-<section id="pretest" class="panel"><h2>แบบประเมินก่อนเข้าร่วม (Pre-test)</h2><div id="pretestBox"></div></section>
+
+<section id="attendance" class="panel"><h2>เช็กอินเข้าร่วมกิจกรรม</h2><p>QR ในวันจริงจะเปิดหน้านี้พร้อม Checkpoint Token ซึ่งมีช่วงเวลาใช้งานจำกัด</p><form id="attendanceForm" class="inline"><input name="checkpointToken" placeholder="Checkpoint Token จาก QR" required><button class="primary">เช็กอิน</button></form><div id="attendanceMsg" class="result"></div></section>
+
+<section id="pretest" class="panel"><h2>แบบประเมินก่อนเข้าร่วม (Pre-test)</h2><p class="muted" id="questionNote"></p><div id="pretestBox"></div></section>
+
+<section id="workshop" class="panel"><h2>Co-Creation Workshop Evidence</h2><p>บันทึกผลผลิตของกลุ่มเพื่อใช้เป็นหลักฐานโครงการและรายงานผล</p><form id="workshopForm" class="grid">
+<label>ชื่อกลุ่ม<input name="groupName" required></label>
+<label>ชื่อต้นแบบ<input name="prototypeTitle" required></label>
+<label class="full">ปัญหาหรือความต้องการที่ต้องการแก้<textarea name="problemStatement" rows="3"></textarea></label>
+<label>กลุ่มเป้าหมาย<input name="targetGroup"></label>
+<label>เครื่องมือ/เทคโนโลยีที่ใช้<input name="toolSummary"></label>
+<label class="full">แนวคิดของต้นแบบ<textarea name="innovationSummary" rows="4"></textarea></label>
+<label class="full">ลิงก์หลักฐาน/ผลงาน (ถ้ามี)<input name="evidenceUrl" type="url"></label>
+<label class="full">Reflection / สิ่งที่ได้เรียนรู้<textarea name="reflection" rows="4"></textarea></label>
+<button class="primary full" type="submit">บันทึกหลักฐาน Workshop</button>
+</form><div id="workshopMsg" class="result"></div></section>
+
 <section id="posttest" class="panel"><h2>แบบประเมินหลังเข้าร่วม (Post-test)</h2><div id="posttestBox"></div></section>
 <section id="survey" class="panel"><h2>แบบประเมินความพึงพอใจ</h2><form id="surveyForm"><div id="surveyItems"></div><label>ข้อเสนอแนะ<textarea name="comment" rows="4"></textarea></label><button class="primary" type="submit">ส่งแบบประเมิน</button></form><div id="surveyMsg" class="result"></div></section>
 <section id="certificate" class="panel"><h2>ตรวจสิทธิ์ E-Certificate</h2><p>การออกใบประกาศจริงต้องผ่านการตรวจครบกิจกรรมและอนุมัติโดยผู้รับผิดชอบ</p><div id="certStatus" class="result">สถานะจะอัปเดตจากขั้นตอนที่ทำบนอุปกรณ์นี้ ส่วนการอนุมัติจริงอยู่ใน Admin workflow</div></section>
 <section id="verify" class="panel"><h2>ตรวจสอบใบประกาศ</h2><form id="verifyForm" class="grid"><label>เลขที่ใบประกาศ<input name="certNo" placeholder="HPE-2569-001" required></label><label>Verification Token<input name="verifyToken" placeholder="จาก QR บนใบประกาศ" required></label><button class="primary full">ตรวจสอบ</button></form><div id="verifyResult" class="result"></div></section>
-<section id="admin" class="panel"><h2>Admin Gate</h2><p class="muted">ผู้ดูแลต้องเข้าสู่ระบบ Supabase Auth และถูกผูกสิทธิ์เป็น issuer/owner ก่อนอนุมัติใบประกาศ รุ่นนี้ยังไม่ผูกบัญชีผู้ดูแลจริง</p><div class="cards" id="adminCards"></div><button id="resetPilot" class="danger">ล้าง token/สถานะ PILOT บนอุปกรณ์นี้</button></section>
+<section id="admin" class="panel"><h2>Admin Gate</h2><p class="muted">Admin API พร้อมแล้ว แต่บัญชีผู้ดูแลจริงยังไม่ถูกผูกสิทธิ์ issuer/owner จึงยังเป็น Human Gate</p><div class="cards" id="adminCards"></div><button id="resetPilot" class="danger">ล้าง token/สถานะ PILOT บนอุปกรณ์นี้</button></section>
 </main><footer class="wrap footer">Evidence-first • Minimum data • RLS fail-closed • Human approval before certificate issuance</footer><script src="./config.js"></script><script src="./app.js"></script></body></html>
