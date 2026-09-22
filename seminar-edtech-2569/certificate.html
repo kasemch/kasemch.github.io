@@ -25,26 +25,26 @@
 <body>
 <header class="toolbar">
   <div><strong>E-Certificate</strong><small id="status">กำลังเปิดใบประกาศ...</small></div>
-  <div class="actions"><button id="pdfBtn" class="pdf" disabled>พิมพ์ / บันทึกเป็น PDF</button><button class="back" onclick="history.back()">กลับ</button></div>
+  <div class="actions"><button id="downloadBtn" class="pdf" disabled>ดาวน์โหลดไฟล์ใบประกาศ</button><button id="pdfBtn" class="back" disabled>พิมพ์ / PDF</button><button class="back" onclick="history.back()">กลับ</button></div>
 </header>
 <main class="wrap">
   <div class="card">
     <div id="msg" class="msg">กำลังโหลดใบประกาศ...</div>
     <img id="certImg" class="cert-img" alt="E-Certificate" hidden>
   </div>
-  <p class="note">iPhone: แตะ “พิมพ์ / บันทึกเป็น PDF” → ในหน้าตัวอย่างการพิมพ์แตะ Share → Save to Files</p>
+  <p class="note">iPhone: ใช้ “ดาวน์โหลดไฟล์ใบประกาศ” เพื่อบันทึกลง Files โดยตรง หรือเปิดใน Safari แล้วใช้ “พิมพ์ / PDF”</p>
 </main>
 <script>
 (function(){
  const p=new URLSearchParams(location.search);
  const cert=p.get("cert"),token=p.get("token");
- const img=document.getElementById("certImg"),msg=document.getElementById("msg"),status=document.getElementById("status"),pdf=document.getElementById("pdfBtn");
+ const img=document.getElementById("certImg"),msg=document.getElementById("msg"),status=document.getElementById("status"),pdf=document.getElementById("pdfBtn"),download=document.getElementById("downloadBtn");
  if(!cert||!token){msg.textContent="ลิงก์ใบประกาศไม่สมบูรณ์";msg.classList.add("error");status.textContent="เปิดไม่ได้";return}
  const src="https://lztxpjsuzqvtgyasfnyj.supabase.co/functions/v1/seminar-certificate-render?cert="+encodeURIComponent(cert)+"&token="+encodeURIComponent(token)+"&v=4";
- img.onload=function(){msg.hidden=true;img.hidden=false;pdf.disabled=false;status.textContent="พร้อมใช้งาน • "+cert};
+ img.onload=function(){msg.hidden=true;img.hidden=false;pdf.disabled=false;download.disabled=false;status.textContent="พร้อมใช้งาน • "+cert};
  img.onerror=function(){msg.textContent="ไม่สามารถโหลดภาพใบประกาศได้ กรุณาเปิดใน Safari แล้วลองใหม่";msg.classList.add("error");status.textContent="เปิดไม่ได้"};
  img.src=src;
- pdf.onclick=function(){window.print()};
+ const downloadUrl="https://lztxpjsuzqvtgyasfnyj.supabase.co/functions/v1/seminar-certificate-download?cert="+encodeURIComponent(cert)+"&token="+encodeURIComponent(token); download.onclick=function(){location.href=downloadUrl}; pdf.onclick=function(){window.print()};
 })();
 </script>
 </body>
