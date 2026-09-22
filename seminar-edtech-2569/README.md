@@ -8,7 +8,7 @@ Registration → Timed QR Check-in → Pre-test → Co-Creation Workshop Evidenc
 ## Current state
 - GitHub frontend อยู่ใน Draft PR #104
 - Supabase Sandbox: `lztxpjsuzqvtgyasfnyj`
-- Event `HPE-2569` status = **draft**; real registration is fail-closed
+- Event `HPE-2569` status = **pilot / test_mode=true**; ใช้เฉพาะข้อมูลทดสอบและผู้ทดสอบที่ได้รับอนุญาต
 - Direct anon/auth table access = revoked + restrictive deny policies
 - Synthetic tests are transactional and rolled back
 
@@ -26,12 +26,17 @@ Pre/Post item bank expanded to 10 items based only on concepts explicitly presen
 - seminar-admin-dashboard
 - seminar-admin-report
 
+## Test-pilot certificate signer
+- Signer: **ผู้ช่วยศาสตราจารย์ ดร.เกษม ชูรัตน์**
+- Certificate watermark: **TEST / รุ่นทดสอบ**
+- Certificate signer title currently marked as test-pilot approval text and is not a production release assertion.
+
 ## Governance fields intentionally unresolved
 The database contains nullable gates for:
 - privacy_notice_version
 - retention_until
-- certificate_signer_name
-- certificate_signer_title
+- certificate_signer_name = ผู้ช่วยศาสตราจารย์ ดร.เกษม ชูรัตน์ (confirmed for test-pilot)
+- certificate_signer_title = test-pilot approval text
 
 These must not be invented. They require human confirmation before opening pilot or generating final certificate PDFs.
 
@@ -44,7 +49,7 @@ These must not be invented. They require human confirmation before opening pilot
 6. Implement final server-side PDF rendering only after signer confirmation.
 7. Generate timed QR checkpoint during controlled pilot.
 8. Run iPhone/Android synthetic real-device acceptance.
-9. Change event status from `draft` → `pilot` only after gates 1–8 pass.
+9. Keep production release locked; test-pilot may run only with synthetic/authorized test records until all remaining gates pass.
 
 ## Release rule
 DO NOT MERGE and DO NOT OPEN REAL REGISTRATION until the Human Gates pass.
