@@ -22,8 +22,7 @@ async function load(){
   $("#watermarkGhost").textContent=j.watermark||"";
   if(!j.watermark){$("#testBadge").classList.add("hidden")}
   fitText($("#recipientName"),54,36,25);fitText($("#projectTitle"),30,21,58);
-  const verifyUrl=VERIFY_PAGE+"?cert="+encodeURIComponent(j.certificate_no)+"&token="+encodeURIComponent(j.verification_token);
-  await QRCode.toCanvas($("#verifyQr"),verifyUrl,{width:220,margin:1,errorCorrectionLevel:"M"});
+  $("#verifyQr").src=j.qr_data_url;
   $("#loadingBox").classList.add("hidden");$("#certificate").classList.remove("hidden");$("#viewerStatus").textContent="ตรวจสอบแล้ว • "+j.certificate_no;
  }catch(e){fail("ไม่สามารถเปิดใบประกาศได้: "+e.message)}
 }
