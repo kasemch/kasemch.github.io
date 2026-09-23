@@ -8,7 +8,7 @@ Pilot code: `HEPE-PILOT-RUN-01`
 
 - Programme: B.Ed. Health Education and Physical Education
 - Programme code: `25510071103503`
-- Course: `HED2503`
+- Course: `HED3505` — โปรแกรมสุขภาพในโรงเรียนและการประเมินผล
 - Academic year / term: `2569/1`
 - Lead user: current governed HEPE lead account
 - Co-instructor: PENDING HUMAN SELECTION
@@ -44,3 +44,8 @@ Only blocker:
 - A co-instructor without verified account binding may be recorded as teaching-team member but must not receive edit authority.
 - A bound co-instructor receives preparation/edit authority only; review/approve/publish authority is not implied.
 - R1/R2 public release immutability remains unchanged.
+
+
+## Target change log
+
+- 2026-09-24: Explicit user decision changed Pilot Run 01 target course from HED2503 to HED3505. Programme, academic year/term, lead user, governance boundary and remaining co-instructor selection gate are unchanged.
