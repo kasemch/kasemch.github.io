@@ -10,19 +10,55 @@ author_profile: false
 
 <link rel="stylesheet" href="{{ '/assets/css/curriculum-quality-hub.css' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/css/progress-visual-system.css' | relative_url }}">
-<div class="curriculum-quality-hub">
-  <section class="cq-hero">
+<div class="curriculum-quality-hub cqp-studio">
+  <section class="cq-hero cqp-hero" aria-labelledby="cqp-title">
+    <div class="cq-shell cqp-hero-grid">
+      <div class="cqp-hero-copy">
+        <div class="cq-kicker">Curriculum &amp; Quality Portfolio</div>
+        <h1 id="cqp-title">Aligning intent,<br><span>evidence and improvement.</span></h1>
+        <p class="cq-lead">A public-facing explanatory portfolio of curriculum design, learning outcomes, teaching, assessment, academic quality and evidence-informed improvement. Restricted governance and implementation records remain outside the public site.</p>
+        <nav class="cq-nav" aria-label="Curriculum and quality related pages">
+          <a href="#cqp-architecture-title">Quality Architecture</a>
+          <a href="#flow-title">Improvement Cycle</a>
+          <a href="{{ '/teaching/' | relative_url }}">Teaching</a>
+          <a href="{{ '/hepe-public-releases/' | relative_url }}">Public Releases</a>
+        </nav>
+      </div>
+      <div class="cqp-hero-visual" aria-hidden="true">
+        <div class="cqp-ring cqp-ring-a"></div>
+        <div class="cqp-ring cqp-ring-b"></div>
+        <div class="cqp-core"><strong>Quality</strong><span>Evidence-informed</span></div>
+        <div class="cqp-node cqp-node-a">PLO</div>
+        <div class="cqp-node cqp-node-b">CLO</div>
+        <div class="cqp-node cqp-node-c">Assessment</div>
+        <div class="cqp-node cqp-node-d">Evidence</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cq-shell cqp-pillar-strip" aria-label="Curriculum and quality portfolio structure">
+    <a href="#cqp-architecture-title"><span>01</span><strong>Programme Intent</strong><small>Purpose, outcomes and alignment</small></a>
+    <a href="#flow-title"><span>02</span><strong>Learning &amp; Assessment</strong><small>Teaching, tasks and evidence</small></a>
+    <a href="#domains-title"><span>03</span><strong>Quality Domains</strong><small>Curriculum, assessment, QA, evidence</small></a>
+    <a href="#contribution-title"><span>04</span><strong>Improvement</strong><small>Review, interpretation and refinement</small></a>
+  </section>
+
+  <section class="cq-section cqp-architecture-section" aria-labelledby="cqp-architecture-title">
     <div class="cq-shell">
-      <div class="cq-kicker">Curriculum · Evidence · Improvement</div>
-      <h1>Curriculum &amp; Academic Quality Hub</h1>
-      <p class="cq-lead">A public-facing overview of curriculum design, learning-outcome alignment, assessment, quality assurance and evidence-informed improvement. Internal governance records and restricted implementation evidence remain excluded.</p>
-      <nav class="cq-nav" aria-label="Curriculum and quality related pages">
-        <a href="{{ '/teaching/' | relative_url }}">Teaching</a>
-        <a href="{{ '/research/' | relative_url }}">Research</a>
-        <a href="{{ '/publications/' | relative_url }}">Publications</a>
-        <a href="{{ '/hepe-public-releases/' | relative_url }}">HEPE Public Releases</a>
-        <a href="{{ '/cv/' | relative_url }}">Academic CV</a>
-      </nav>
+      <div class="cq-eyebrow">Public Explanatory Architecture</div>
+      <h2 id="cqp-architecture-title">Programme Intent → PLO → Courses → CLO → Teaching → Assessment → Evidence → Improvement</h2>
+      <p class="cq-lead">This chain explains how curriculum and academic-quality components connect conceptually. It does not assert that every programme document, approval step or implementation record is publicly available.</p>
+      <div class="cqp-quality-chain" aria-label="Curriculum and quality architecture">
+        <div><b>01</b><strong>Programme Intent</strong><small>Purpose and educational direction</small></div><i aria-hidden="true">→</i>
+        <div><b>02</b><strong>PLO</strong><small>Programme learning outcomes</small></div><i aria-hidden="true">→</i>
+        <div><b>03</b><strong>Courses</strong><small>Curriculum structure and mapping</small></div><i aria-hidden="true">→</i>
+        <div><b>04</b><strong>CLO</strong><small>Course learning outcomes</small></div><i aria-hidden="true">→</i>
+        <div><b>05</b><strong>Teaching</strong><small>Learning activities and delivery</small></div><i aria-hidden="true">→</i>
+        <div><b>06</b><strong>Assessment</strong><small>Tasks, rubrics and measurement</small></div><i aria-hidden="true">→</i>
+        <div><b>07</b><strong>Evidence</strong><small>Interpretation and traceability</small></div><i aria-hidden="true">→</i>
+        <div><b>08</b><strong>Improvement</strong><small>Review, refine and feed forward</small></div>
+      </div>
+      <div class="cq-policy"><strong>Authority boundary.</strong> This is a public explanatory model. Programme approval status, restricted committee evidence, internal SAR material and confidential implementation records are not inferred from this diagram.</div>
     </div>
   </section>
 
