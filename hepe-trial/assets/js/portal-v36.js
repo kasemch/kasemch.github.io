@@ -504,7 +504,7 @@ function renderWorkingMappingReview(){
     }).join('')+'</div>';
   const allBtn=$('#programme-review-all');
   if(allBtn) allBtn.onclick=()=>programmeReviewAllWorkingMappings().catch(e=>say(friendlyError(e),'danger'));
-  $('.mapping-review-action').filter(btn=>btn.id!=='programme-review-all').forEach(btn=>btn.onclick=()=>runWorkingMappingReview(btn.dataset.id,btn.dataset.action));
+  $$('.mapping-review-action').filter(btn=>btn.id!=='programme-review-all').forEach(btn=>btn.onclick=()=>runWorkingMappingReview(btn.dataset.id,btn.dataset.action));
 }
 
 function syncCloPloTextFromMatrix(){
