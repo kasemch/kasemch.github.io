@@ -8,12 +8,46 @@ author_profile: false
 {% assign ru_hepe = site.data.ru_hepe_learning %}
 
 <link rel="stylesheet" href="{{ '/assets/css/signature-pages.css' | relative_url }}">
-<div class="signature-page">
-  <section class="sp-hero sp-shell">
-    <div class="sp-kicker">Innovation · Systems · Public Impact</div>
-    <h1>Innovation &amp; Projects</h1>
-    <p>Selected public-facing academic innovation connecting health and physical education, curriculum and quality, digital technology, artificial intelligence and community-oriented academic service.</p>
-    <div class="sp-navchips"><a class="sp-chip" href="{{ '/current-work/' | relative_url }}">Current Work</a><a class="sp-chip" href="{{ '/research/' | relative_url }}">Research</a><a class="sp-chip" href="{{ '/curriculum-quality/' | relative_url }}">Curriculum &amp; Quality</a><a class="sp-chip" href="{{ '/about/' | relative_url }}">About</a></div>
+<div class="signature-page aip-studio">
+  <section class="sp-hero sp-shell aip-hero" aria-labelledby="aip-title">
+    <div class="aip-hero-copy">
+      <div class="sp-kicker">Academic Innovation Portfolio</div>
+      <h1 id="aip-title">Innovation with<br><span>clear evidence boundaries.</span></h1>
+      <p class="aip-hero-lead">Selected public-facing academic innovation connecting Health &amp; Physical Education, curriculum and quality, digital technology, responsible AI, learning infrastructure and community-oriented academic service.</p>
+      <div class="sp-navchips">
+        <a class="sp-chip aip-chip-primary" href="#aip-status-title">Project Status</a>
+        <a class="sp-chip" href="#ru-hepe-learning-title">Digital Learning</a>
+        <a class="sp-chip" href="{{ '/current-work/' | relative_url }}">Current Work</a>
+      </div>
+      <blockquote class="aip-note">Prototype · Pilot · Evidence · Responsible Scale</blockquote>
+    </div>
+    <div class="aip-hero-visual" aria-hidden="true">
+      <div class="aip-core"><strong>Innovation</strong><span>Public-safe by design</span></div>
+      <div class="aip-node aip-node-a">AI</div>
+      <div class="aip-node aip-node-b">Learning</div>
+      <div class="aip-node aip-node-c">Quality</div>
+      <div class="aip-node aip-node-d">Community</div>
+    </div>
+  </section>
+
+  <section class="aip-pillar-strip sp-shell" aria-label="Academic innovation portfolio structure">
+    <a href="#aip-status-title"><span>01</span><strong>Status</strong><small>Prototype, pilot and public ecosystem</small></a>
+    <a href="#reflective-lab-title"><span>02</span><strong>AI &amp; Systems</strong><small>Responsible academic prototypes</small></a>
+    <a href="#hed3505-title"><span>03</span><strong>Teaching Innovation</strong><small>Verified pilot learning workspace</small></a>
+    <a href="#ru-hepe-learning-title"><span>04</span><strong>Public Infrastructure</strong><small>Verified public repositories</small></a>
+  </section>
+
+  <section class="sp-section sp-shell" aria-labelledby="aip-status-title">
+    <div class="sp-section-head">
+      <div class="sp-eyebrow">Public Status Architecture</div>
+      <h2 id="aip-status-title">Different innovation states remain visibly distinct</h2>
+      <p class="sp-intro">This portfolio separates prototype, pilot and public learning infrastructure so experimental work is not mistaken for institutional production deployment.</p>
+    </div>
+    <div class="aip-status-grid">
+      <article class="aip-status-card"><span>Public-Safe Prototype</span><h3>AI-Assisted Reflective Curriculum Improvement Lab</h3><p>Educator-led prototype for responsible AI-supported reflective curriculum improvement. Not an institutional administration system.</p></article>
+      <article class="aip-status-card"><span>Verified Pilot</span><h3>HED3505 Learning Workspace</h3><p>Verified pilot course workspace connecting public teaching resources and reusable learning structures.</p></article>
+      <article class="aip-status-card"><span>Public Course Ecosystem</span><h3>{{ ru_hepe.name }}</h3><p>Verified public GitHub-based learning repositories and reusable teaching structures, subject to the stated institutional-status disclaimer.</p></article>
+    </div>
   </section>
 
   <section class="sp-section sp-shell">
