@@ -2427,17 +2427,21 @@ async function admitTqf3ProjectControlledSource(){
     ...courseArgs(),
     p_admission_basis:basis
   });
-  if(error){
+  if(error || data?.admitted===false){
+    const raw=data?.error_code
+      ? data.error_code+(data.error_message?' · '+data.error_message:'')
+      : friendlyError(error);
     if(note){
       note.className='notice danger';
-      note.innerHTML='<strong>Source Admission ไม่สำเร็จ</strong><div class="help">'+esc(friendlyError(error))+'</div>';
+      note.innerHTML='<strong>Source Admission ไม่สำเร็จ</strong><div class="help">'+esc(raw)+'</div>';
     }
     if(btn){
       btn.dataset.busy='0';
       btn.disabled=false;
       btn.textContent='ยืนยันรับรองเป็น HEPE Project-Controlled Source';
     }
-    throw error;
+    if(error)throw error;
+    throw new Error(raw);
   }
 
   if(note){
