@@ -9,18 +9,34 @@ author_profile: false
 {% assign now_ts = site.time | date: "%s" | plus: 0 %}
 <link rel="stylesheet" href="{{ '/assets/css/professional-development.css' | relative_url }}">
 
-<div class="pd-page">
-  <section class="pd-hero">
-    <div class="pd-shell">
-      <div class="pd-kicker">Option 17A · Professional Learning</div>
-      <h1>Professional Development &amp; Credentials</h1>
-      <p class="pd-lead">Selected professional learning records that support research ethics, responsible conduct of research and academic integrity. Only records already verified in the public website data layer are shown here.</p>
-      <div class="pd-actions">
-        <a href="{{ '/cv/' | relative_url }}">Academic CV</a>
-        <a href="{{ '/evidence-explorer/' | relative_url }}">Evidence Explorer</a>
-        <a href="{{ '/knowledge-map/' | relative_url }}">Knowledge Map</a>
+<div class="pd-page pdp-studio">
+  <section class="pd-hero pdp-hero" aria-labelledby="pdp-title">
+    <div class="pd-shell pdp-hero-grid">
+      <div class="pdp-hero-copy">
+        <div class="pd-kicker">Professional Development Portfolio</div>
+        <h1 id="pdp-title">Professional learning,<br><span>with verified credentials.</span></h1>
+        <p class="pd-lead">Selected verified professional learning records supporting research ethics, responsible conduct, research integrity and evidence-informed academic practice.</p>
+        <div class="pd-actions">
+          <a class="pdp-action-primary" href="#credentials-title">Verified Registry</a>
+          <a href="{{ '/evidence-explorer/' | relative_url }}">Evidence Explorer</a>
+          <a href="{{ '/cv/' | relative_url }}">Academic CV</a>
+        </div>
+      </div>
+      <div class="pdp-hero-visual" aria-hidden="true">
+        <div class="pdp-core"><strong>Learning</strong><span>Verified records</span></div>
+        <div class="pdp-node pdp-node-a">Ethics</div>
+        <div class="pdp-node pdp-node-b">Integrity</div>
+        <div class="pdp-node pdp-node-c">Quality</div>
+        <div class="pdp-node pdp-node-d">Evidence</div>
       </div>
     </div>
+  </section>
+
+  <section class="pd-shell pdp-pillar-strip" aria-label="Professional development portfolio structure">
+    <a href="#credentials-title"><span>01</span><strong>Verified Credentials</strong><small>Public-safe training records</small></a>
+    <a href="#development-title"><span>02</span><strong>Academic Development</strong><small>How learning connects to academic work</small></a>
+    <a href="{{ '/evidence-explorer/' | relative_url }}"><span>03</span><strong>Evidence</strong><small>Traceable public-safe records</small></a>
+    <a href="{{ '/cv/' | relative_url }}"><span>04</span><strong>Academic Profile</strong><small>Connect development with the CV</small></a>
   </section>
 
   <section class="pd-section" aria-labelledby="credentials-title">
