@@ -2258,6 +2258,14 @@ document.addEventListener('click',e=>{
 },true);
 
 document.addEventListener('click',e=>{
+  const btn=e.target.closest?.('#tqf3-finalize-release');
+  if(!btn)return;
+  e.preventDefault();
+  e.stopPropagation();
+  finalizeTqf3Release().catch(err=>say(friendlyError(err),'danger'));
+},true);
+
+document.addEventListener('click',e=>{
   const btn=e.target.closest?.('#tqf3-review-version');
   if(!btn)return;
   e.preventDefault();
@@ -2368,6 +2376,52 @@ async function submitTqf3HumanReview(){
   }finally{
     btn.textContent=original;
     btn.disabled=true;
+  }
+}
+
+async function finalizeTqf3Release(){
+  const btn=$('#tqf3-finalize-release');
+  const out=$('#tqf3-finalize-release-status');
+  if(btn?.dataset.busy==='1')return;
+  if(btn){
+    btn.dataset.busy='1';
+    btn.disabled=true;
+    btn.textContent='กำลัง Finalize…';
+  }
+  if(out){
+    out.hidden=false;
+    out.className='notice info';
+    out.innerHTML='<strong>รับคำสั่งแล้ว</strong><div class="help">กำลังสร้าง immutable final record จาก B03.15 READY gate…</div>';
+  }
+  try{
+    const {data,error}=await client.rpc('hepe_finalize_tqf3_release_by_code',courseArgs());
+    if(error)throw error;
+    if(out){
+      out.className='notice ok';
+      out.innerHTML=
+        '<strong>TQF3 Release Finalized</strong>'+
+        '<div class="help">Record ID: '+esc(data?.record_id||'—')+'</div>'+
+        '<div class="help">SHA-256: '+esc(data?.bundle_sha256||'—')+'</div>'+
+        '<div class="help">Status: '+esc(data?.status||'FINAL')+' · ยังไม่ใช่ public publication</div>';
+    }
+    if(btn){
+      btn.textContent='Finalized';
+      btn.disabled=true;
+    }
+    say('TQF3 immutable final record สร้างแล้ว','ok');
+  }catch(err){
+    if(out){
+      out.hidden=false;
+      out.className='notice danger';
+      out.innerHTML='<strong>Finalize ไม่สำเร็จ</strong><div class="help">'+esc(friendlyError(err))+'</div>';
+    }
+    throw err;
+  }finally{
+    if(btn && btn.textContent!=='Finalized'){
+      btn.dataset.busy='0';
+      btn.disabled=false;
+      btn.textContent='Finalize TQF3 Release';
+    }
   }
 }
 
