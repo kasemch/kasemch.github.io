@@ -2258,6 +2258,15 @@ document.addEventListener('click',e=>{
 },true);
 
 document.addEventListener('click',e=>{
+  const btn=e.target.closest?.('[data-tqf3-controlled-export]');
+  if(!btn)return;
+  e.preventDefault();
+  e.stopPropagation();
+  generateTqf3ControlledExport(btn.dataset.tqf3ControlledExport,btn)
+    .catch(err=>say(friendlyError(err),'danger'));
+},true);
+
+document.addEventListener('click',e=>{
   const btn=e.target.closest?.('#tqf3-finalize-release');
   if(!btn)return;
   e.preventDefault();
@@ -2376,6 +2385,52 @@ async function submitTqf3HumanReview(){
   }finally{
     btn.textContent=original;
     btn.disabled=true;
+  }
+}
+
+async function generateTqf3ControlledExport(format,btn){
+  const out=$('#tqf3-controlled-export-status');
+  if(btn?.dataset.busy==='1')return;
+  if(btn){
+    btn.dataset.busy='1';
+    btn.disabled=true;
+    btn.textContent='กำลังสร้าง '+format+'…';
+  }
+  if(out){
+    out.hidden=false;
+    out.className='notice info';
+    out.innerHTML='<strong>กำลังสร้าง Controlled Export Run</strong><div class="help">Format: '+esc(format)+' · ยึด immutable FINAL record และ SHA-256 เดิม</div>';
+  }
+  try{
+    const {data,error}=await client.rpc('hepe_generate_tqf3_controlled_export_by_code',{
+      ...courseArgs(),
+      p_export_format:format
+    });
+    if(error)throw error;
+    if(out){
+      out.className='notice ok';
+      out.innerHTML=
+        '<strong>Controlled Export Run พร้อม</strong>'+
+        '<div class="help">Format: '+esc(data?.export_format||format)+'</div>'+
+        '<div class="help">Export Run ID: '+esc(data?.document_export_run_id||'—')+'</div>'+
+        '<div class="help">Final Record ID: '+esc(data?.hepe_b03_15_final_record_id||'—')+'</div>'+
+        '<div class="help">SHA-256: '+esc(data?.bundle_sha256||'—')+'</div>'+
+        '<div class="help">Public publication: NO · Institutional official: NO</div>';
+    }
+    say(format+' Controlled Export Run สร้างแล้ว','ok');
+  }catch(err){
+    if(out){
+      out.hidden=false;
+      out.className='notice danger';
+      out.innerHTML='<strong>Controlled Export Run ไม่สำเร็จ</strong><div class="help">'+esc(friendlyError(err))+'</div>';
+    }
+    throw err;
+  }finally{
+    if(btn){
+      btn.dataset.busy='0';
+      btn.disabled=false;
+      btn.textContent=format;
+    }
   }
 }
 
