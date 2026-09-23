@@ -2266,7 +2266,7 @@ document.addEventListener('click',e=>{
 },true);
 
 document.addEventListener('click',e=>{
-  const btn=e.target.closest?.('#hed2503-v13-long-continue');
+  const btn=e.target.closest?.('#hed2503-v13-long-continue, #hed2503-v13-long-continue-top');
   if(!btn)return;
   e.preventDefault();e.stopPropagation();
   continueHed2503V13ToSourceGate(btn).catch(err=>say(friendlyError(err),'danger'));
@@ -2512,8 +2512,10 @@ async function finalizeTqf3Release(){
 
 async function loadHed2503RubricReviewContext(){
   const panel=$('#hed2503-rubric-review-panel');
+  const topLongBtn=$('#hed2503-v13-long-continue-top');
   if(!panel)return;
   const courseCode=$('#course-select')?.value||curriculumCtx?.course?.course_code||'';
+  if(topLongBtn)topLongBtn.hidden=courseCode!=='HED2503';
   if(courseCode!=='HED2503'){
     panel.hidden=true;
     hed2503RubricReviewCtx=null;
