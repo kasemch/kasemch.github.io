@@ -1,8 +1,12 @@
 (() => {
   'use strict';
 
-  const DATA_URL = '../assets/data/research-projects.json';
-  const DEFAULT_MATRIX_URL = '../assets/data/research-evidence-matrix.json';
+  const script = document.currentScript;
+  const DATA_URL = script?.dataset?.registryUrl;
+  const DEFAULT_MATRIX_URL = script?.dataset?.matrixUrl;
+  const PUBLICATIONS_BASE = script?.dataset?.publicationsBase;
+  const EVIDENCE_BASE = script?.dataset?.evidenceBase;
+  const STATUS_BASE = script?.dataset?.statusBase;
   const root = document.querySelector('#rpd-root');
 
   const escapeHtml = (value = '') => String(value)
@@ -136,7 +140,7 @@
       <section class="rpd-section rpd-section-wide"><p class="rpd-eyebrow">Outputs</p><h2>Public-safe project outputs</h2><div class="rpd-output-grid">${outputs}</div></section>
 
       <section class="rpd-section rpd-section-wide"><p class="rpd-eyebrow">Publication binding</p><h2>Verified publications linked to this project</h2><div class="rpd-publication-grid">${publicationBlock}</div>
-        <div class="rpd-actions"><a class="rpd-btn" href="${escapeHtml(project.publicationRegisterPath || '../publications/')}">Open publication register</a></div>
+        <div class="rpd-actions">${PUBLICATIONS_BASE ? `<a class="rpd-btn" href="${escapeHtml(PUBLICATIONS_BASE)}">Open publication register</a>` : ''}</div>
       </section>
 
       <section class="rpd-section rpd-section-readable"><p class="rpd-eyebrow">Evidence binding</p><h2>Traceability without exposing private records</h2>
@@ -145,7 +149,7 @@
           <p>${escapeHtml(evidence.note || project.evidenceNote)}</p>
           <p><strong>Matrix status:</strong> ${matrixRows.length} public-safe relationship row${matrixRows.length === 1 ? '' : 's'} loaded; matrix last verified ${escapeHtml(formatDate(matrix?.lastVerified))}.</p>
           <p><strong>Project-publication link:</strong> ${project.publicationLinked ? 'Verified' : 'Not yet verified'}</p>
-          <div class="rpd-actions"><a class="rpd-btn rpd-btn-primary" href="${escapeHtml(evidence.explorerPath || '../evidence-explorer/')}">Browse public Evidence Explorer</a><a class="rpd-btn" href="../research-progress/">Research Command Center</a></div>
+          <div class="rpd-actions">${EVIDENCE_BASE ? `<a class="rpd-btn rpd-btn-primary" href="${escapeHtml(EVIDENCE_BASE)}">Browse public Evidence Explorer</a>` : ''}${STATUS_BASE ? `<a class="rpd-btn" href="${escapeHtml(STATUS_BASE)}">Research Command Center</a>` : ''}</div>
         </article>
       </section>
 
@@ -153,7 +157,7 @@
   };
 
   const failClosed = (message) => {
-    root.innerHTML = `<div class="rpd-error"><strong>Project record unavailable.</strong><p>${escapeHtml(message)}</p><a class="rpd-btn" href="../research-progress/">Return to Research Command Center</a></div>`;
+    root.innerHTML = `<div class="rpd-error"><strong>Project record unavailable.</strong><p>${escapeHtml(message)}</p>${STATUS_BASE ? `<a class="rpd-btn" href="${escapeHtml(STATUS_BASE)}">Return to Research Command Center</a>` : ''}</div>`;
   };
 
   const init = async () => {
@@ -161,11 +165,12 @@
       const projectId = new URLSearchParams(window.location.search).get('id');
       if (!projectId) return failClosed('No project identifier was supplied.');
 
+      if (!DATA_URL || !DEFAULT_MATRIX_URL) return failClosed('The repository-safe research data routes are unavailable.');
       const registryResponse = await fetch(DATA_URL, { cache: 'no-store' });
       if (!registryResponse.ok) throw new Error(`Registry HTTP ${registryResponse.status}`);
       const data = await registryResponse.json();
 
-      const matrixResponse = await fetch(data.matrixPath || DEFAULT_MATRIX_URL, { cache: 'no-store' });
+      const matrixResponse = await fetch(DEFAULT_MATRIX_URL, { cache: 'no-store' });
       if (!matrixResponse.ok) throw new Error(`Matrix HTTP ${matrixResponse.status}`);
       const matrix = await matrixResponse.json();
 
