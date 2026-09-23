@@ -416,7 +416,33 @@
                   <button id="tqf3-review-reject" type="button" class="btn" data-tqf3-review-decision="REJECT">Reject</button>
                   <button id="tqf3-review-approve-export" type="button" class="btn primary" data-tqf3-review-decision="APPROVE_CONTROLLED_EXPORT" disabled>Approve Controlled Export</button>
                 </div>
-              </div>
+
+
+              <div id="tqf3-source-control-panel" class="form-section" hidden>
+                <div class="form-section-header">
+                  <div>
+                    <h3>Project-Controlled Source Admission</h3>
+                    <div class="help">รับรอง provenance สำหรับการใช้งานภายใน HEPE Project เท่านั้น ไม่ใช่ institutional official approval</div>
+                  </div>
+                  <span id="tqf3-source-control-version" class="badge">—</span>
+                </div>
+
+                <div id="tqf3-source-control-checks" class="notice info"></div>
+                <div id="tqf3-source-control-note" class="help"></div>
+
+                <div class="field">
+                  <label for="tqf3-source-control-basis">เหตุผลการรับรอง Source Control</label>
+                  <textarea id="tqf3-source-control-basis" placeholder="เช่น Version 11 ผ่าน validation, mapping Programme Review 6/6, credit 3(3-0-6) ยืนยันจากหลักสูตร และ preview ไม่มี blocker"></textarea>
+                </div>
+
+                <div class="notice warn">
+                  การรับรองนี้จะเปลี่ยน source provenance เป็น CONTROLLED_SOURCE สำหรับ HEPE Project เท่านั้น และจะสร้าง Fresh Controlled Preview ใหม่หลังรับรอง
+                </div>
+
+                <div class="actions">
+                  <button id="tqf3-admit-controlled-source" type="button" class="btn primary" disabled>รับรองเป็น HEPE Project-Controlled Source</button>
+                </div>
+              </div>              </div>
             </section>
           </section>
 
@@ -822,6 +848,6 @@
   <p id="table-scroll-instruction" class="sr-only">ตารางนี้อาจเลื่อนในแนวนอนได้ ใช้ปุ่มลูกศรหรือเลื่อนหน้าจอเพื่อดูคอลัมน์เพิ่มเติม</p></main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./assets/js/portal-v36.js?v=36.18"></script>
+  <script src="./assets/js/portal-v36.js?v=36.19"></script>
 </body>
 </html>
