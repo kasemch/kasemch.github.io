@@ -231,9 +231,21 @@ function renderCourseContext(){
   $('#save-tqf5').disabled=!offering;
   $('#save-verification-note').disabled=!offering;
   $('#course-offering-id').textContent=offering||'—';
-  $('#course-plo-source').textContent=(curriculumCtx?.course_plo_mappings||[]).length
-    ?'พบ canonical course→PLO mapping '+curriculumCtx.course_plo_mappings.length+' รายการ'
-    :'ยังไม่พบ canonical course→PLO mapping ใน runtime — ห้ามสร้าง mapping แทนโดยอัตโนมัติ';
+  const canonicalMappings=curriculumCtx?.course_plo_mappings||[];
+  const workingMappings=curriculumCtx?.working_clo_plo_mappings||[];
+  const sourceBoundPlos=curriculumCtx?.source_bound_programme_plos||[];
+  $('#course-plo-source').textContent=canonicalMappings.length
+    ?'พบ canonical course→PLO mapping '+canonicalMappings.length+' รายการ'
+    :workingMappings.length
+      ?'ยังไม่มี canonical course→PLO mapping · พบ working CLO→PLO/I-R-M candidate '+workingMappings.length+' รายการ (PROPOSED / รอ Human Academic Review)'
+      :sourceBoundPlos.length
+        ?'พบ PLO จากแหล่งหลักสูตร '+sourceBoundPlos.length+' ข้อ แต่ยังไม่มี course→PLO mapping ที่ผ่านการทบทวน'
+        :'ยังไม่พบ canonical course→PLO mapping ใน runtime — ห้ามสร้าง mapping แทนโดยอัตโนมัติ';
+  if(curriculumCtx?.credit_pattern?.raw_credit_notation){
+    const creditEl=$('#course-credit');
+    if(creditEl) creditEl.textContent=curriculumCtx.credit_pattern.raw_credit_notation+
+      (curriculumCtx.credit_pattern.verification_status?' · '+curriculumCtx.credit_pattern.verification_status:'');
+  }
 }
 function makeSpan(parentSel){const s=document.createElement('span');$(parentSel).appendChild(s);return s;}
 
@@ -359,12 +371,25 @@ function collectPloMatrix(){
 function renderCloPloMatrix(seed=null){
   const host=$('#clo-plo-matrix');if(!host)return;
   const clos=collectClos();
-  const plos=(curriculumCtx?.programme_plos||[]).map(x=>x.code).filter(Boolean);
-  const current=seed&&Object.keys(seed).length?seed:collectPloMatrix();
+  const canonicalPlos=(curriculumCtx?.programme_plos||[]).filter(x=>x.statement_th||x.statement_en);
+  const sourceBoundPlos=curriculumCtx?.source_bound_programme_plos||[];
+  const ploRows=canonicalPlos.length?canonicalPlos:sourceBoundPlos;
+  const plos=ploRows.map(x=>x.code).filter(Boolean);
+  const proposed=curriculumCtx?.working_clo_plo_mappings||[];
+  const proposedSeed={};
+  proposed.forEach(x=>{ if(x.clo_code&&x.plo_code&&x.irm_level) proposedSeed[matrixKey(x.clo_code.replace(/^HED2503-CLO-P0?/,'CLO'),x.plo_code)]=x.irm_level; });
+  const current=seed&&Object.keys(seed).length?seed:
+    Object.keys(collectPloMatrix()).length?collectPloMatrix():proposedSeed;
   const canonical=curriculumCtx?.course_plo_mappings||[];
   setBadge('#canonical-mapping-state',
-    canonical.length?'Canonical mapping: '+canonical.length+' รายการ':'Canonical mapping: ไม่พบใน runtime',
-    canonical.length?'ok':'warn'
+    canonical.length
+      ?'Canonical mapping: '+canonical.length+' รายการ'
+      :proposed.length
+        ?'Working candidate: '+proposed.length+' รายการ · รอ Human Review'
+        :ploRows.length
+          ?'PLO source-bound: '+ploRows.length+' ข้อ · ยังไม่มี canonical mapping'
+          :'Canonical mapping: ไม่พบใน runtime',
+    canonical.length?'ok':proposed.length?'warn':'info'
   );
   if(!clos.length||!plos.length){
     host.innerHTML='<div class="help">ยังไม่มี CLO หรือ PLO สำหรับสร้าง matrix</div>';return;
