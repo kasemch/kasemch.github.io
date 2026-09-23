@@ -16,7 +16,17 @@
     .admin-table th{font-size:.85rem}
     .admin-pill{display:inline-block;padding:3px 8px;border-radius:999px;background:#eef2f7;font-size:.8rem}
     .admin-pill.good{background:#e8f6ed}.admin-pill.warn{background:#fff4d6}
-    @media(max-width:800px){.admin-grid{grid-template-columns:1fr}.admin-table{font-size:.88rem}}
+    .course-picker{border:1px solid #dfe3ea;border-radius:12px;overflow:hidden;background:#fff}
+    .course-picker-head{display:flex;gap:8px;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid #e8ebf0;background:#f8fafc;position:sticky;top:0;z-index:2}
+    .course-picker-actions{display:flex;gap:6px;flex-wrap:wrap}
+    .course-list{max-height:310px;overflow:auto;-webkit-overflow-scrolling:touch}
+    .course-option{display:flex;align-items:flex-start;gap:10px;padding:12px;border-bottom:1px solid #eef1f5;cursor:pointer}
+    .course-option:last-child{border-bottom:0}
+    .course-option input{width:22px;height:22px;min-width:22px;margin-top:2px}
+    .course-option strong{display:block;line-height:1.35}
+    .course-option .help{line-height:1.35;margin-top:2px}
+    .course-selected-summary{font-weight:700}
+    @media(max-width:800px){.admin-grid{grid-template-columns:1fr}.admin-table{font-size:.88rem}.course-list{max-height:360px}.course-picker-head{align-items:flex-start;flex-direction:column}.course-picker-actions{width:100%}.course-picker-actions .btn{flex:1}}
   </style>
 </head>
 <body>
@@ -46,7 +56,19 @@
         <div class="field"><label>ผู้ใช้</label><select id="user-select"></select><div id="user-meta" class="help"></div></div>
         <div class="field"><label>ชื่อที่แสดง (ใช้เมื่อยังไม่มี HEPE actor)</label><input id="display-label"></div>
         <div class="field"><label>หลักสูตร</label><select id="programme-select"></select><div id="programme-meta" class="help"></div></div>
-        <div class="field"><label>รายวิชา</label><select id="course-select"></select></div>
+        <div class="field">
+          <label>รายวิชา <span id="course-selected-count" class="admin-pill good">เลือก 0 วิชา</span></label>
+          <div class="course-picker">
+            <div class="course-picker-head">
+              <span class="help">เลือกได้มากกว่า 1 วิชา</span>
+              <div class="course-picker-actions">
+                <button id="select-all-courses" type="button" class="btn small">เลือกทั้งหมด</button>
+                <button id="clear-all-courses" type="button" class="btn small">ล้างทั้งหมด</button>
+              </div>
+            </div>
+            <div id="course-list" class="course-list" role="group" aria-label="เลือกรายวิชา"></div>
+          </div>
+        </div>
         <div class="field"><label>ปีการศึกษา</label><input id="academic-year" value="2569"></div>
         <div class="field"><label>ภาคเรียน</label><select id="term-code"><option value="1">1</option><option value="2">2</option></select><div class="help">ใช้เป็นบริบทการทำงาน; authority assignment ผูกที่ระดับรายวิชา</div></div>
         <div class="field"><label>บทบาท</label><select id="role-select"></select></div>
@@ -73,5 +95,5 @@
   </section>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./assets/js/assignment-admin-v1.js?v=1"></script>
+<script src="./assets/js/assignment-admin-v1.js?v=2"></script>
 </body></html>
