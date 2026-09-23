@@ -2215,6 +2215,38 @@ function toggleSubmissionMode(){
 }
 
 /* ---------- Save / workflow ---------- */
+document.addEventListener('click',e=>{
+  const btn=e.target.closest?.('#preview-tqf3-readiness');
+  if(!btn)return;
+  e.preventDefault();
+  e.stopPropagation();
+  if(btn.dataset.busy==='1')return;
+  btn.dataset.busy='1';
+  const original=btn.textContent;
+  btn.textContent='กำลังตรวจ…';
+  btn.disabled=true;
+  const out=$('#tqf3-preview-readiness-result');
+  if(out){
+    out.hidden=false;
+    out.className='notice info';
+    out.innerHTML='<strong>รับคำสั่งแล้ว</strong><div class="help">กำลังเรียก Preview Revalidation…</div>';
+  }
+  createTqf3PreviewReadiness()
+    .catch(err=>{
+      if(out){
+        out.hidden=false;
+        out.className='notice danger';
+        out.innerHTML='<strong>Preview error</strong><div class="help">'+esc(friendlyError(err))+'</div>';
+      }
+      say(friendlyError(err),'danger');
+    })
+    .finally(()=>{
+      btn.dataset.busy='0';
+      btn.textContent=original;
+      btn.disabled=false;
+    });
+},true);
+
 async function createTqf3PreviewReadiness(){
   if(!docCtx?.course?.course_offering_id)throw new Error('ยังไม่พบ Course Offering สำหรับปี/ภาคนี้');
   const out=$('#tqf3-preview-readiness-result');
@@ -2296,7 +2328,7 @@ function bindStatic(){
   $('#bulk-apply-empty').onclick=()=>bulkApplyWeeks(false);$('#bulk-apply-all').onclick=()=>bulkApplyWeeks(true);
   $('#sync-tqf5-from-tqf3').onclick=syncTqf5FromTqf3;
   $('#submission-mode').onclick=toggleSubmissionMode;
-  $('#save-tqf3').onclick=()=>saveTqf3().catch(e=>say(friendlyError(e),'danger'));if($('#preview-tqf3-readiness'))$('#preview-tqf3-readiness').onclick=()=>createTqf3PreviewReadiness().catch(e=>say(friendlyError(e),'danger'));$('#save-tqf5').onclick=()=>saveTqf5().catch(e=>say(friendlyError(e),'danger'));$('#save-verification-note').onclick=()=>saveVerificationNote().catch(e=>say(friendlyError(e),'danger'));
+  $('#save-tqf3').onclick=()=>saveTqf3().catch(e=>say(friendlyError(e),'danger'));$('#save-tqf5').onclick=()=>saveTqf5().catch(e=>say(friendlyError(e),'danger'));$('#save-verification-note').onclick=()=>saveVerificationNote().catch(e=>say(friendlyError(e),'danger'));
   $$('.ai-section').forEach(b=>b.onclick=()=>runSectionAi(b.dataset.section,null,b));
   $('#ai-chatgpt').onclick=()=>openChatGPT().catch(e=>say(friendlyError(e),'danger'));$('#ai-show-prompt').onclick=()=>{$('#ai-prompt-wrap').hidden=!$('#ai-prompt-wrap').hidden;$('#ai-prompt').value=aiPrompt();};
   $('#print-form').onclick=()=>window.print();$('#logout').onclick=()=>logout().catch(e=>say(friendlyError(e),'danger'));
