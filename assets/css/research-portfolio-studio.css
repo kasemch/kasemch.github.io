@@ -70,3 +70,74 @@
 .rps-translation-stack{display:grid;gap:.65rem}.rps-translation-stack>div{padding:.8rem;border:1px solid #e4e8eb;border-radius:14px;background:#fbfcfd}.rps-translation-stack strong,.rps-translation-stack span{display:block}.rps-translation-stack strong{color:var(--rps-brick);font-family:Georgia,"Times New Roman",serif}.rps-translation-stack span{margin-top:.2rem;color:#5d7080;line-height:1.45}
 @media(max-width:980px){.rps-story-layout{grid-template-columns:1fr}.rps-story-wide{grid-column:auto}.rps-story-flow{justify-content:start}}
 @media(max-width:620px){.rps-story-card{padding:.9rem}.rps-theme-story-grid{grid-template-columns:1fr}.rps-story-flow>div{min-width:165px}.rps-story-quote blockquote{font-size:1.55rem}}
+
+/* Wave 05 — Visual polish & mobile acceptance */
+.rps-studio{scroll-behavior:smooth}
+.rps-studio .sp-section-head{max-width:1040px}
+.rps-studio .sp-section-head h2{max-width:980px;text-wrap:balance}
+.rps-studio .sp-intro{max-width:940px}
+.rps-studio .sp-card,.rps-dashboard-card,.rps-story-card,.rps-project-card{min-width:0}
+.rps-studio .sp-card p,.rps-studio .sp-evidence-note,.rps-studio .sp-policy,.rps-project-focus,.rps-project-boundary{overflow-wrap:anywhere}
+.rps-studio .sp-section+.sp-section{border-top:1px solid rgba(17,59,103,.05)}
+.rps-studio .sp-section:first-of-type{border-top:0}
+.rps-studio a:focus-visible,.rps-studio button:focus-visible,.rps-studio [tabindex="0"]:focus-visible{outline:3px solid rgba(200,95,61,.28);outline-offset:3px}
+.rps-project-actions a,.rps-project-actions button,.rps-inline-link,.rps-explorer-close{min-height:44px;align-items:center}
+.rps-lifecycle,.rps-story-flow{scrollbar-width:thin;overscroll-behavior-inline:contain}
+.rps-stage{display:flex;flex-direction:column;justify-content:center}
+.rps-output-bars span,.rps-project-title,.rps-explorer-panel h4,.rps-explorer-item strong{overflow-wrap:anywhere}
+.rps-hero-copy,.rps-hero-visual{min-width:0}
+.rps-project-status,.rps-badge{line-height:1.25}
+.rps-explorer-items,.rps-explorer-milestones,.rps-theme-story-grid,.rps-boundary-grid{align-items:stretch}
+.rps-explorer-item,.rps-explorer-milestone,.rps-theme-story-grid>div,.rps-boundary-grid>div{height:100%}
+@media(max-width:1100px){
+  .rps-studio .rps-hero{grid-template-columns:minmax(0,1fr) minmax(300px,.8fr)}
+  .rps-studio .rps-hero h1{font-size:clamp(2.9rem,6vw,5.2rem)}
+  .rps-dashboard-grid,.rps-story-layout{gap:.85rem}
+}
+@media(max-width:980px){
+  .rps-studio .sp-section{padding-top:3rem}
+  .rps-studio .rps-hero{grid-template-columns:1fr}
+  .rps-hero-copy{padding:2.6rem 2rem 2rem}
+  .rps-hero-visual{min-height:380px}
+  .rps-lifecycle{grid-template-columns:repeat(8,112px)}
+  .rps-story-flow>div{min-width:190px}
+}
+@media(max-width:760px){
+  .rps-studio .sp-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .rps-card-head{display:block}.rps-badge{display:inline-flex;margin-top:.55rem;white-space:normal}
+  .rps-pillar-strip{border-radius:18px}
+  .rps-output-bars>div{grid-template-columns:minmax(72px,.8fr) minmax(110px,1.2fr) auto}
+  .rps-lifecycle:after,.rps-story-flow:after{content:"";min-width:1px}
+}
+@media(max-width:620px){
+  .rps-studio{font-size:.97rem}
+  .rps-studio .sp-shell{width:min(100% - 18px,1460px)}
+  .rps-studio .sp-section{padding-top:2.5rem}
+  .rps-hero-copy{padding:1.8rem 1.1rem 1.4rem}
+  .rps-studio .rps-hero h1{font-size:clamp(2.35rem,12.5vw,3.45rem);line-height:.96}
+  .rps-hero-lead{font-size:.98rem}
+  .rps-hero-visual{min-height:300px}
+  .rps-orbit-a{width:260px;height:260px}.rps-orbit-b{width:175px;height:175px}
+  .rps-node-main{width:118px;height:118px}
+  .rps-node-one,.rps-node-two,.rps-node-three,.rps-node-four{padding:.55rem .7rem;font-size:.78rem}
+  .rps-studio .sp-navchips{display:grid;grid-template-columns:1fr;gap:.5rem}.rps-studio .sp-chip{text-align:center}
+  .rps-studio .sp-metrics{grid-template-columns:1fr 1fr;gap:.65rem}
+  .rps-dashboard-card,.rps-story-card,.rps-project-card,.rps-project-explorer{padding:.85rem}
+  .rps-output-bars>div{grid-template-columns:1fr}
+  .rps-output-bars i{width:100%}
+  .rps-lifecycle,.rps-story-flow{margin-inline:-.1rem;padding-bottom:.8rem}
+  .rps-story-flow>div{min-width:165px}
+  .rps-project-actions{display:grid;grid-template-columns:1fr}
+  .rps-project-actions a,.rps-project-actions button{justify-content:center;text-align:center;width:100%}
+  .rps-explorer-summary{align-items:flex-start;flex-direction:column}
+  .rps-story-quote blockquote{font-size:1.5rem}
+}
+@media(max-width:390px){
+  .rps-studio .sp-metrics{grid-template-columns:1fr}
+  .rps-node-four{display:none}
+  .rps-hero-visual{min-height:285px}
+}
+@media(prefers-reduced-motion:reduce){
+  .rps-studio{scroll-behavior:auto}
+  .rps-studio .sp-card,.rps-project-drill,.rps-studio .sp-chip,.rps-explorer-close{transition:none!important}
+}
