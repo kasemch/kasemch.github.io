@@ -15,7 +15,7 @@ const num=v=>v===''||v==null?null:Number(v);
 
 let cfg={},programmeCatalog=[],courseCatalog=[],termCatalog=[],curriculumCtx=null,docCtx=null;
 let versionHistory=[],evidenceWorkspace=null,cqiContext=null,dashboardCtx=null,evidenceQueueCtx=null;
-let courseResponsibilityCtx=null,programmeResponsibilityCtx=null,templateReviewCtx=null,templateReviewLoaded=false,currentTqf3Preview=null,tqf3SourceControlEligibility=null;
+let courseResponsibilityCtx=null,programmeResponsibilityCtx=null,templateReviewCtx=null,templateReviewLoaded=false,currentTqf3Preview=null,tqf3SourceControlEligibility=null,tqf3VersionReviewEligibility=null;
 let activeTab='tqf3',activeAiSection='curriculum',aiSuggestions=[],aiDecisions=[];
 let saveTimer=null,staticBound=false,aiUndoStack=[],aiSectionRuns={},aiSectionSuggestionCache={},reviewQueueIndex=0,reviewQueueFilter='ALL',reuseLineage=[],changeRationales=[];
 
@@ -34,6 +34,9 @@ function friendlyError(err){
     ['SOURCE_CONTROL_ELIGIBILITY_NOT_MET','ยังไม่ผ่านเงื่อนไข Project-Controlled Source'],
     ['ADMISSION_BASIS_REQUIRED','กรุณาระบุเหตุผลการรับรอง Source Control ก่อน'],
     ['PROGRAMME_CHAIR_AUTHORITY_REQUIRED','ต้องใช้สิทธิ์ Programme Chair สำหรับ Source Control Admission'],
+    ['TQF3_VERSION_REVIEW_ELIGIBILITY_NOT_MET','ยังไม่ผ่านเงื่อนไข Version Human Review'],
+    ['REVIEW_NOTE_REQUIRED','กรุณาระบุเหตุผล Human Review ก่อน'],
+    ['REVIEWED_PREVIEW_EXPORT_GATE_NOT_OPEN','Fresh Reviewed Preview ยังไม่เปิด Controlled Export gate'],
     ['COURSE_OUT_OF_SCOPE','รายวิชานี้อยู่นอกขอบเขต HED/PED ของระบบ'],
     ['COURSE_OFFERING_NOT_FOUND','ยังไม่พบ Course Offering สำหรับปี/ภาคที่เลือก'],
     ['INVALID_SHA256_FORMAT','SHA-256 ต้องเป็นเลขฐาน 16 จำนวน 64 ตัวอักษร']
@@ -187,6 +190,7 @@ async function loadSelectedCourse(){
     renderReadiness();
     await loadTqf3HumanReviewState();
     await loadTqf3SourceControlEligibility();
+    await loadTqf3VersionReviewEligibility();
     renderAiRail();
     ensureV33Ui();
     offerLocalRecovery();
@@ -2254,6 +2258,14 @@ document.addEventListener('click',e=>{
 },true);
 
 document.addEventListener('click',e=>{
+  const btn=e.target.closest?.('#tqf3-review-version');
+  if(!btn)return;
+  e.preventDefault();
+  e.stopPropagation();
+  reviewTqf3VersionAndPrepareExportReview().catch(err=>say(friendlyError(err),'danger'));
+},true);
+
+document.addEventListener('click',e=>{
   const btn=e.target.closest?.('#tqf3-admit-controlled-source');
   if(!btn)return;
   e.preventDefault();
@@ -2356,6 +2368,134 @@ async function submitTqf3HumanReview(){
   }finally{
     btn.textContent=original;
     btn.disabled=true;
+  }
+}
+
+async function loadTqf3VersionReviewEligibility(){
+  const panel=$('#tqf3-version-review-panel');
+  if(!panel)return;
+  const {data,error}=await client.rpc('hepe_tqf3_version_review_eligibility_by_code',courseArgs());
+  if(error){
+    panel.hidden=true;
+    tqf3VersionReviewEligibility=null;
+    return;
+  }
+  tqf3VersionReviewEligibility=data;
+  renderTqf3VersionReviewEligibility();
+}
+
+function renderTqf3VersionReviewEligibility(){
+  const panel=$('#tqf3-version-review-panel');
+  if(!panel)return;
+  const e=tqf3VersionReviewEligibility;
+  if(!e){panel.hidden=true;return;}
+
+  const relevant=e.eligible||e.already_reviewed||(
+    e.source_status==='CONTROLLED_SOURCE'&&['DRAFT','REVIEWED'].includes(e.version_status)
+  );
+  panel.hidden=!relevant;
+  if(panel.hidden)return;
+
+  $('#tqf3-version-review-version').textContent='Version '+(e.version_no??'—')+' · '+(e.version_status||'—');
+  $('#tqf3-version-review-checks').innerHTML=[
+    ['Source',e.source_status==='CONTROLLED_SOURCE',e.source_status||'—'],
+    ['Preview',e.preview_status==='SUBMITTED',e.preview_status||'—'],
+    ['Provenance',e.preview_provenance==='CONTROLLED_SOURCE',e.preview_provenance||'—'],
+    ['Blockers',Number(e.unresolved_blockers)===0,String(e.unresolved_blockers??0)]
+  ].map(x=>'<div class="help">'+(x[1]?'✓':'✕')+' <b>'+esc(x[0])+':</b> '+esc(x[2])+'</div>').join('');
+
+  const btn=$('#tqf3-review-version');
+  if(e.already_reviewed||e.version_status==='REVIEWED'){
+    btn.disabled=true;
+    btn.textContent='Version ผ่าน Human Review แล้ว';
+  }else{
+    btn.disabled=!e.eligible;
+    btn.textContent='รับรอง Version '+(e.version_no??'')+' ผ่าน Human Review';
+  }
+
+  const note=$('#tqf3-version-review-note');
+  if(note&&e.eligible&&!note.value.trim()){
+    note.value='Version '+(e.version_no??'ปัจจุบัน')+
+      ' ใช้ CONTROLLED_SOURCE, Fresh Controlled Preview อยู่ในสถานะ SUBMITTED, provenance=CONTROLLED_SOURCE และไม่มี unresolved blocking finding จึงรับรองว่าผ่าน Human Review ภายใน HEPE Project โดยไม่ถือเป็น institutional official approval';
+  }
+}
+
+async function reviewTqf3VersionAndPrepareExportReview(){
+  const e=tqf3VersionReviewEligibility;
+  if(!e?.eligible)throw new Error('TQF3_VERSION_REVIEW_ELIGIBILITY_NOT_MET');
+
+  const btn=$('#tqf3-review-version');
+  const out=$('#tqf3-version-review-action-status');
+  const reviewNote=$('#tqf3-version-review-note')?.value?.trim();
+  if(!reviewNote)throw new Error('REVIEW_NOTE_REQUIRED');
+  if(btn?.dataset.busy==='1')return;
+
+  if(btn){
+    btn.dataset.busy='1';
+    btn.disabled=true;
+    btn.textContent='กำลังบันทึก Human Review…';
+  }
+  if(out){
+    out.hidden=false;
+    out.className='notice info';
+    out.innerHTML='<strong>รับคำสั่งแล้ว</strong><div class="help">กำลังบันทึก Version Human Review และ audit trail…</div>';
+  }
+
+  try{
+    const {data:review,error:reviewError}=await client.rpc('hepe_review_tqf3_version_by_code',{
+      ...courseArgs(),
+      p_review_note:reviewNote
+    });
+    if(reviewError)throw reviewError;
+
+    if(out){
+      out.innerHTML='<strong>Version Human Review สำเร็จ</strong><div class="help">กำลังสร้าง Fresh Reviewed Preview…</div>';
+    }
+
+    const {data:preview,error:previewError}=await client.rpc('hepe_create_fresh_tqf3_preview_by_code',{
+      ...courseArgs(),
+      p_target_format:'HTML'
+    });
+    if(previewError)throw previewError;
+
+    const session=preview?.session||preview||{};
+    if(!session.authoritative_export_allowed){
+      throw new Error(
+        'REVIEWED_PREVIEW_EXPORT_GATE_NOT_OPEN · status='+(session.preview_status||'UNKNOWN')+
+        ' · model='+(session.bundle_snapshot?.model?.status||'UNKNOWN')+
+        ' · provenance='+(session.bundle_snapshot?.model?.provenance||'UNKNOWN')
+      );
+    }
+
+    if(out){
+      out.innerHTML='<strong>Fresh Reviewed Preview พร้อม</strong><div class="help">กำลังส่งเข้า Controlled Export Review…</div>';
+    }
+
+    const {data:submitted,error:submitError}=await client.rpc('hepe_submit_tqf3_preview_by_code',courseArgs());
+    if(submitError)throw submitError;
+
+    const submittedSession=submitted?.session||submitted||{};
+    if(out){
+      out.className='notice ok';
+      out.innerHTML='<strong>พร้อมสำหรับ Controlled Export Review</strong><div class="help">Version '+esc(review.version_no)+' = REVIEWED · Preview '+esc(submittedSession.preview_status||'SUBMITTED')+' · authoritative export gate = OPEN</div>';
+    }
+    say('Version Human Review ผ่านแล้ว · Controlled Export Review พร้อมให้ตัดสินใจ','ok');
+    await loadSelectedCourse();
+  }catch(err){
+    if(out){
+      out.hidden=false;
+      out.className='notice danger';
+      out.innerHTML='<strong>Version Human Review ไม่สำเร็จ</strong><div class="help">'+esc(friendlyError(err))+'</div>';
+    }
+    throw err;
+  }finally{
+    if(btn){
+      btn.dataset.busy='0';
+      if(!tqf3VersionReviewEligibility?.already_reviewed){
+        btn.disabled=false;
+        btn.textContent='รับรอง Version '+(tqf3VersionReviewEligibility?.version_no??'')+' ผ่าน Human Review';
+      }
+    }
   }
 }
 
