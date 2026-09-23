@@ -3122,9 +3122,21 @@ function renderTqf3HumanReviewPanel(){
   $('#tqf3-human-review-watermark').textContent=session.required_watermark||'—';
 
   const approve=$('#tqf3-review-approve-export');
+  const topApprove=$('#tqf3-review-approve-export-top');
+  const approveEnabled=exportAllowed&&['SUBMITTED','UNDER_REVIEW'].includes(status);
   if(approve){
-    approve.disabled=!exportAllowed||!['SUBMITTED','UNDER_REVIEW'].includes(status);
+    approve.disabled=!approveEnabled;
     approve.title=exportAllowed?'':'ยังไม่อนุญาต Controlled Export เพราะเอกสารยังเป็น DRAFT / UNVERIFIED';
+  }
+  if(topApprove){
+    topApprove.hidden=false;
+    topApprove.disabled=!approveEnabled;
+    topApprove.textContent=status==='APPROVED_FOR_CONTROLLED_EXPORT'
+      ?'✓ Controlled Export Approved'
+      :'✓ Human Gate · Approve Controlled Export';
+    topApprove.title=approveEnabled
+      ?'การกดนี้เป็น Human Review decision และจะถูกบันทึกใน audit trail'
+      :'ยังไม่พร้อมอนุมัติ Controlled Export';
   }
   const canDecide=['SUBMITTED','UNDER_REVIEW'].includes(status);
   $('#tqf3-review-request-revision').disabled=!canDecide;
