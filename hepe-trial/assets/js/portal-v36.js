@@ -2217,15 +2217,36 @@ function toggleSubmissionMode(){
 /* ---------- Save / workflow ---------- */
 async function createTqf3PreviewReadiness(){
   if(!docCtx?.course?.course_offering_id)throw new Error('ยังไม่พบ Course Offering สำหรับปี/ภาคนี้');
+  const out=$('#tqf3-preview-readiness-result');
+  if(out){
+    out.hidden=false;
+    out.className='notice info';
+    out.innerHTML='<strong>กำลังตรวจความพร้อม…</strong><div class="help">กำลังสร้าง preview ใหม่จาก Working Version ปัจจุบัน</div>';
+  }
   say('กำลังสร้าง TQF3 Preview เพื่อตรวจความพร้อม…');
-  const {data,error}=await client.rpc('hepe_create_tqf3_preview_by_code',{
+  const {data,error}=await client.rpc('hepe_revalidate_tqf3_working_preview_by_code',{
     ...courseArgs(),
     p_target_format:'HTML'
   });
-  if(error)throw error;
-  const status=data?.session?.preview_status||data?.preview_status||'UNKNOWN';
-  const findings=data?.findings||[];
-  const blocking=findings.filter(x=>x.is_blocking&&!x.is_resolved);
+  if(error){
+    if(out){
+      out.className='notice danger';
+      out.innerHTML='<strong>สร้าง Preview ไม่สำเร็จ</strong><div class="help">'+esc(friendlyError(error))+'</div>';
+    }
+    throw error;
+  }
+  const session=data?.session||data||{};
+  const status=session?.preview_status||data?.preview_status||'UNKNOWN';
+  const findings=Array.isArray(data?.findings)?data.findings:[];
+  const blocking=findings.filter(x=>x.is_blocking&&!x.resolved&&!x.is_resolved);
+  const infos=findings.filter(x=>!x.is_blocking);
+  if(out){
+    out.className='notice '+(blocking.length?'warn':'ok');
+    out.innerHTML=
+      '<strong>Preview '+esc(status)+'</strong>'+
+      '<div class="help">Blocking findings: '+blocking.length+' · Informational findings: '+infos.length+'</div>'+
+      (blocking.length?'<ul>'+blocking.map(x=>'<li><b>'+esc(x.finding_code||x.code||'BLOCKER')+'</b> — '+esc(x.message||'')+'</li>').join('')+'</ul>':'<div class="help">ไม่พบ blocking finding ใหม่ · พร้อมเข้าสู่ Human Review ขั้นถัดไป</div>');
+  }
   say(
     'Preview '+status+' · blocking findings '+blocking.length+
     (blocking.length?' · '+blocking.map(x=>x.finding_code||x.code||'BLOCKER').join(', '):' · พร้อมสำหรับ human review'),
