@@ -2604,51 +2604,57 @@ function renderHed2503RubricReviewContext(){
 
 async function continueHed2503V13ToSourceGate(btn){
   const out=$('#hed2503-v13-long-continue-status');
+  const topBtn=$('#hed2503-v13-long-continue-top');
   if(btn?.dataset.busy==='1')return;
-  if(btn){
-    btn.dataset.busy='1';
-    btn.disabled=true;
-    btn.textContent='กำลังประมวลผล Version 13 แบบยาว…';
-  }
+  [btn,topBtn].filter(Boolean).forEach(b=>{
+    b.dataset.busy='1';
+    b.disabled=true;
+    b.textContent='กำลังประมวลผล Master Continuation…';
+  });
   if(out){
     out.hidden=false;
     out.className='notice info';
     out.innerHTML='<strong>Master Continuation กำลังทำงาน</strong>'+
-      '<div class="help">Validate → Fresh Preview → Submit → Source-Control Eligibility</div>';
+      '<div class="help">ตรวจ current state แล้วเดินต่อจนถึง Human Gate ถัดไป</div>';
   }
   try{
-    const {data,error}=await client.rpc('hepe_continue_hed2503_v13_to_source_gate');
+    const {data,error}=await client.rpc('hepe_continue_hed2503_v13_to_next_human_gate');
     if(error)throw error;
-
-    const val=data?.validation||{};
-    const elig=data?.source_control_eligibility||{};
     const stop=data?.stop_reason||'UNKNOWN';
 
     if(stop==='SOURCE_CONTROL_HUMAN_GATE'){
       if(out){
         out.className='notice ok';
-        out.innerHTML=
-          '<strong>หยุดที่ Source-Control Human Gate ตาม Master Instruction</strong>'+
-          '<div class="help">Validation: '+esc(val.result||'—')+
-          ' · Preview: '+esc(elig.latest_preview_status||'—')+
-          ' · blockers='+esc(elig.unresolved_blockers??'—')+'</div>'+
-          '<div class="help">Version '+esc(elig.version_no??'—')+
-          ' · source='+esc(elig.source_status||'—')+
-          ' · eligible=YES</div>'+
-          '<div class="help">ขั้นถัดไปเป็นคำตัดสินของ Programme Chair: Admit HEPE Project-Controlled Source</div>';
+        out.innerHTML='<strong>หยุดที่ Source-Control Human Gate</strong>'+
+          '<div class="help">Version 13 ผ่าน technical continuation แล้ว และรอ Source Admission โดย Programme Chair</div>';
       }
       say('Version 13 พร้อมที่ Source-Control Human Gate','ok');
+    }else if(stop==='VERSION_HUMAN_REVIEW_GATE'){
+      const e=data?.version_review_eligibility||{};
+      if(out){
+        out.className='notice ok';
+        out.innerHTML='<strong>หยุดที่ Version Human Review Gate</strong>'+
+          '<div class="help">Version '+esc(e.version_no??13)+
+          ' · source='+esc(e.source_status||'CONTROLLED_SOURCE')+
+          ' · preview='+esc(e.preview_status||'SUBMITTED')+
+          ' · blockers='+esc(e.unresolved_blockers??0)+'</div>'+
+          '<div class="help">ขั้นถัดไปเป็น Human Review โดย Programme Chair</div>';
+      }
+      say('Version 13 พร้อมที่ Version Human Review Gate','ok');
+    }else if(stop==='CONTROLLED_EXPORT_REVIEW_HUMAN_GATE'){
+      if(out){
+        out.className='notice ok';
+        out.innerHTML='<strong>หยุดที่ Controlled Export Review Human Gate</strong>'+
+          '<div class="help">Version 13 ผ่าน Human Review แล้ว และ Fresh Reviewed Preview ถูกส่งเข้า review แล้ว</div>';
+      }
+      say('Version 13 พร้อมที่ Controlled Export Review Human Gate','ok');
     }else{
       if(out){
         out.className='notice warn';
-        out.innerHTML=
-          '<strong>Master Continuation หยุดก่อน Human Gate</strong>'+
-          '<div class="help">Reason: '+esc(stop)+'</div>'+
-          '<div class="help">Validation: '+esc(val.result||'—')+
-          ' · blockers='+esc(elig.unresolved_blockers??'—')+
-          ' · preview='+esc(elig.latest_preview_status||'—')+'</div>';
+        out.innerHTML='<strong>Master Continuation หยุดก่อน Human Gate</strong>'+
+          '<div class="help">Reason: '+esc(stop)+'</div>';
       }
-      say('Version 13 ยังมีเงื่อนไขที่ต้องแก้ก่อน Source Control','warn');
+      say('Master Continuation หยุดเพื่อตรวจเงื่อนไข','warn');
     }
     await loadSelectedCourse();
   }catch(err){
@@ -2659,11 +2665,11 @@ async function continueHed2503V13ToSourceGate(btn){
     }
     throw err;
   }finally{
-    if(btn){
-      btn.dataset.busy='0';
-      btn.disabled=false;
-      btn.textContent='ดำเนินการ Version 13 จนถึง Human Gate';
-    }
+    [btn,topBtn].filter(Boolean).forEach(b=>{
+      b.dataset.busy='0';
+      b.disabled=false;
+      b.textContent='▶ HED2503 · ดำเนินการ Version 13 จนถึง Human Gate';
+    });
   }
 }
 
