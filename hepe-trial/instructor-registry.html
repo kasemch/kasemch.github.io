@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ทะเบียนผู้สอน — HEPE Fast TQF</title>
+<link rel="stylesheet" href="./assets/css/portal-v36.css?v=36">
+<style>
+.registry-shell{max-width:1180px;margin:0 auto;padding:20px}
+.registry-card{background:#fff;border:1px solid #dfe3ea;border-radius:14px;padding:18px;margin-bottom:16px}
+.registry-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px}
+.registry-table{width:100%;border-collapse:collapse}
+.registry-table th,.registry-table td{padding:10px;border-bottom:1px solid #e8ebf0;text-align:left;vertical-align:top}
+.registry-table th{font-size:.85rem}
+.pill{display:inline-block;padding:3px 8px;border-radius:999px;background:#eef2f7;font-size:.8rem}
+.pill.good{background:#e8f6ed}.pill.warn{background:#fff4d6}
+@media(max-width:760px){.registry-grid{grid-template-columns:1fr}.registry-table{font-size:.88rem}.hide-mobile{display:none}}
+</style>
+</head>
+<body>
+<div class="draft-watermark">DRAFT · NON-PRODUCTION</div>
+<header class="topbar"><div class="topbar-inner">
+<div class="brand"><h1>HEPE Fast <em>TQF</em> Portal</h1><p>ทะเบียนผู้สอน — CONTROLLED PILOT</p></div>
+<div class="actions"><a class="btn" href="./assignment-admin.html">ผู้ใช้และรายวิชา</a><a class="btn" href="./">กลับ Portal</a><button id="logout" class="btn">ออกจากระบบ</button></div>
+</div></header>
+<main class="registry-shell">
+<div id="status" class="status" role="status" aria-live="polite">กำลังโหลด…</div>
+<section id="login-card" class="registry-card">
+<h2>เข้าสู่ระบบผู้ดูแล</h2>
+<div class="field"><label>อีเมล</label><input id="email" type="email"></div>
+<div class="field"><label>รหัสผ่าน</label><input id="password" type="password"></div>
+<button id="login" class="btn primary">เข้าสู่ระบบ</button>
+</section>
+
+<section id="app" hidden>
+<div class="notice info">ทะเบียนนี้เป็น master list สำหรับ Teaching Team และ User & Course Assignment · รายการใหม่จะเริ่มที่สถานะ UNVERIFIED และไม่กลายเป็นข้อมูลทางการโดยอัตโนมัติ</div>
+
+<section class="registry-card">
+<div class="section-title"><div><h2>ค้นหาและกรองทะเบียนผู้สอน</h2><div class="help">ชื่อที่บันทึกแล้วจะถูกใช้ซ้ำใน dropdown ของ Teaching Team</div></div><span id="count" class="pill">0 คน</span></div>
+<div class="registry-grid">
+<div class="field"><label>ค้นหา</label><input id="search" type="search" placeholder="ชื่อ / ตำแหน่ง / อีเมล / รหัสบุคคล"></div>
+<div class="field"><label>สถานะหลักฐาน</label><select id="verification-filter"><option value="">ทั้งหมด</option><option value="VERIFIED">Verified</option><option value="UNVERIFIED">Unverified</option></select></div>
+<div class="field"><label>บัญชีระบบ</label><select id="account-filter"><option value="">ทั้งหมด</option><option value="BOUND">มีบัญชี</option><option value="UNBOUND">ยังไม่มีบัญชี</option></select></div>
+</div>
+</section>
+
+<section class="registry-card">
+<h2>เพิ่มผู้สอนใหม่</h2>
+<div class="help">ใช้เฉพาะเมื่อค้นหาแล้วไม่พบชื่อเดิม ระบบจะตรวจชื่อซ้ำก่อนสร้าง candidate</div>
+<div class="registry-grid">
+<div class="field"><label>ชื่อ–นามสกุล</label><input id="new-name" placeholder="เช่น สมชาย ใจดี"></div>
+<div class="field"><label>ตำแหน่งทางวิชาการ</label><input id="new-position" placeholder="เช่น อาจารย์ / ผู้ช่วยศาสตราจารย์"></div>
+<div class="field"><label>อีเมล (ถ้ามี)</label><input id="new-email" type="email"></div>
+</div>
+<div class="actions"><button id="add-person" class="btn primary">เพิ่มเป็น Candidate</button></div>
+</section>
+
+<section class="registry-card">
+<div class="table-wrap"><table class="registry-table">
+<thead><tr><th>ผู้สอน</th><th class="hide-mobile">รหัส</th><th>อีเมล</th><th>บัญชี</th><th class="hide-mobile">งานสอนปัจจุบัน</th><th>สถานะ</th></tr></thead>
+<tbody id="registry-body"></tbody>
+</table></div>
+</section>
+</section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./assets/js/instructor-registry-v1.js?v=1"></script>
+</body></html>
