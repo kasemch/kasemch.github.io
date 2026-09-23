@@ -96,6 +96,13 @@
             <button id="reload-teaching-team" type="button" class="btn">โหลดทีมเดิม</button>
           </div>
           <div id="team-existing-summary" class="help" style="margin-top:10px"></div>
+          <hr>
+          <h3>ผูกบัญชีผู้สอน</h3>
+          <div class="help">ใช้เมื่อมีชื่ออาจารย์ในทะเบียนแล้ว แต่ยังขึ้นว่า “ยังไม่มีบัญชีระบบ” ผู้ใช้ต้องเคย Sign in มาก่อน</div>
+          <div class="field"><label>บุคคลในทะเบียน</label><select id="bind-person"></select></div>
+          <div class="field"><label>Authenticated account</label><select id="bind-account"></select></div>
+          <div class="actions"><button id="bind-account-button" type="button" class="btn">ยืนยันการผูกบัญชี</button></div>
+          <div id="bind-result" class="help" style="margin-top:8px"></div>
         </section>
         <div class="field"><label>ภาคเรียน</label><select id="term-code"><option value="1">1</option><option value="2">2</option></select><div class="help">ใช้เป็นบริบทการทำงาน; authority assignment ผูกที่ระดับรายวิชา</div></div>
         <div class="field"><label>บทบาท</label><select id="role-select"></select></div>
@@ -122,5 +129,5 @@
   </section>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./assets/js/assignment-admin-v1.js?v=2"></script>
+<script src="./assets/js/assignment-admin-v1.js?v=3"></script>
 </body></html>
