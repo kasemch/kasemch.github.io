@@ -30,6 +30,7 @@ function friendlyError(err){
     ['AUTH_REQUIRED','กรุณาเข้าสู่ระบบใหม่'],
     ['INSUFFICIENT_AUTHORITY','บัญชีนี้ไม่มีสิทธิ์สำหรับรายการที่เลือก'],
     ['PROGRAMME_AUTHORITY_REQUIRED','ต้องใช้สิทธิ์ระดับหลักสูตรเพื่อดูข้อมูลนี้'],
+    ['AUTHORITATIVE_EXPORT_NOT_ALLOWED_FOR_CURRENT_PREVIEW','ยังอนุมัติ Controlled Export ไม่ได้ เพราะ Preview ปัจจุบันเป็น DRAFT / UNVERIFIED'],
     ['COURSE_OUT_OF_SCOPE','รายวิชานี้อยู่นอกขอบเขต HED/PED ของระบบ'],
     ['COURSE_OFFERING_NOT_FOUND','ยังไม่พบ Course Offering สำหรับปี/ภาคที่เลือก'],
     ['INVALID_SHA256_FORMAT','SHA-256 ต้องเป็นเลขฐาน 16 จำนวน 64 ตัวอักษร']
