@@ -92,6 +92,30 @@ function renderCoList(){
  renderCoCount();
 }
 function renderCoCount(){$('#co-selected-count').textContent='เลือก '+coSelected.size+' คน';}
+function renderBindingControls(){
+ const ps=$('#bind-person');ps.innerHTML='';ps.appendChild(opt('','— เลือกบุคคล —'));
+ (teamCtx?.people||[]).forEach(p=>{
+   const o=opt(p.academic_person_id,personLabel(p)+(p.account_bound?' · ✓ ผูกแล้ว':' · ○ ยังไม่ผูก'));
+   o.dataset.bound=p.account_bound?'1':'0';ps.appendChild(o);
+ });
+ const as=$('#bind-account');as.innerHTML='';as.appendChild(opt('','— เลือกบัญชีที่เคย Sign in —'));
+ (ctx?.users||[]).forEach(u=>as.appendChild(opt(u.email,(u.display_label||u.email)+' · '+u.email)));
+ $('#bind-result').textContent='';
+}
+async function bindAccount(){
+ const programme=$('#programme-select').value,person=$('#bind-person').value,email=$('#bind-account').value;
+ if(!programme||!person||!email)throw new Error('กรุณาเลือกหลักสูตร บุคคล และบัญชีให้ครบ');
+ const personOpt=$('#bind-person').selectedOptions[0];
+ if(personOpt?.dataset.bound==='1')throw new Error('บุคคลนี้มีบัญชีที่ผูกไว้แล้ว');
+ say('กำลังผูกบัญชีผู้สอน…');
+ const {data,error}=await client.rpc('hepe_fast_tqf_bind_person_account',{
+   p_programme_code:programme,p_academic_person_id:person,p_email:email
+ });
+ if(error)throw error;if(!data?.ok)throw new Error(data?.error||'ACCOUNT_BINDING_FAILED');
+ $('#bind-result').textContent='ผูกบัญชี '+email+' สำเร็จ';
+ await loadTeachingTeam();
+ say('ผูกบัญชีผู้สอนสำเร็จ','ok');
+}
 function syncLeadMeta(){
  const o=$('#lead-instructor').selectedOptions[0];
  if(!o||!o.value){$('#lead-account-meta').textContent='';return;}
@@ -110,7 +134,7 @@ async function loadTeachingTeam(){
    p_programme_code:programme,p_course_codes:codes,p_academic_year:year,p_term_code:term
  });
  if(error)throw error;if(data?.error)throw new Error(data.error);
- teamCtx=data;coSelected=new Set();renderLead();renderCoList();
+ teamCtx=data;coSelected=new Set();renderLead();renderCoList();renderBindingControls();
  const teams=data.teams||[];
  const byCourse={};
  teams.forEach(t=>{(byCourse[t.course_code]??=[]).push(t);});
@@ -196,6 +220,7 @@ $('#lead-instructor').addEventListener('change',()=>{coSelected.delete($('#lead-
 $('#co-search').addEventListener('input',renderCoList);
 $('#save-teaching-team').addEventListener('click',()=>saveTeachingTeam().catch(e=>say(e.message,'bad')));
 $('#reload-teaching-team').addEventListener('click',()=>loadTeachingTeam().catch(e=>say(e.message,'bad')));
+$('#bind-account-button').addEventListener('click',()=>bindAccount().catch(e=>{say(e.message,'bad');$('#bind-result').textContent=e.message;}));
 $('#academic-year').addEventListener('change',()=>loadTeachingTeam().catch(e=>say(e.message,'bad')));
 $('#term-code').addEventListener('change',()=>loadTeachingTeam().catch(e=>say(e.message,'bad')));
 $('#activate').addEventListener('click',()=>save(true).catch(e=>say(e.message,'bad')));
