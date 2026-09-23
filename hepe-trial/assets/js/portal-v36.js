@@ -448,6 +448,31 @@ async function runWorkingMappingReview(mappingId,action){
   say('บันทึก Human Review แล้ว กำลังโหลดสถานะล่าสุด…','ok');
   setTimeout(()=>window.location.reload(),450);
 }
+async function programmeReviewAllWorkingMappings(){
+  const rows=(curriculumCtx?.working_clo_plo_mappings||[]).filter(x=>x.governance_status==='WORKING');
+  if(!rows.length){say('ไม่มีรายการ WORKING ที่รอ Programme Review','info');return;}
+  const summary=rows.map(x=>normalizedWorkingCloCode(x.clo_code)+' → '+x.plo_code+' · '+(x.irm_level||'—')).join('\n');
+  if(!window.confirm('Programme Review ทั้ง '+rows.length+' รายการ\n\n'+summary+'\n\nการยืนยันนี้เป็นการตัดสินใจทางวิชาการผ่าน authority gate ของคุณ'))return;
+  setBusy(true,'กำลัง Programme Review '+rows.length+' รายการ…');
+  const failed=[];
+  for(const row of rows){
+    const {error}=await client.rpc('hepe_review_working_mapping',{
+      p_working_mapping_proposal_id:row.working_mapping_proposal_id,
+      p_action:'PROGRAMME_REVIEW',
+      p_irm_level:null,
+      p_rationale:null
+    });
+    if(error) failed.push({id:row.working_mapping_proposal_id,message:friendlyError(error)});
+  }
+  setBusy(false);
+  if(failed.length){
+    say('Programme Review สำเร็จบางส่วน '+(rows.length-failed.length)+'/'+rows.length+' รายการ · '+failed[0].message,'danger');
+  }else{
+    say('Programme Review สำเร็จครบ '+rows.length+' รายการ','ok');
+  }
+  setTimeout(()=>window.location.reload(),650);
+}
+
 function renderWorkingMappingReview(){
   const panel=ensureMappingReviewPanel();if(!panel)return;
   const rows=curriculumCtx?.working_clo_plo_mappings||[];
@@ -456,10 +481,12 @@ function renderWorkingMappingReview(){
     return;
   }
   const reviewed=rows.filter(x=>x.governance_status==='PROGRAMME_REVIEWED').length;
+  const workingCount=rows.filter(x=>x.governance_status==='WORKING').length;
   panel.innerHTML=
     '<div class="form-section-header"><div><h4>Human Review · Working CLO→PLO/I-R-M</h4>'+
     '<div class="help">การกดปุ่มด้านล่างเป็นการตัดสินใจทางวิชาการผ่าน authority gate จริง ไม่ใช่การอนุมัติอัตโนมัติของ AI</div></div>'+
     '<span class="badge '+(reviewed===rows.length?'ok':'warn')+'">'+reviewed+'/'+rows.length+' Programme Reviewed</span></div>'+
+    (workingCount?'<div class="mapping-review-actions"><button id="programme-review-all" class="mapping-review-action">Programme Review ทั้ง '+workingCount+' รายการ</button></div>':'')+
     '<div class="mapping-review-list">'+rows.map(x=>{
       const status=x.governance_status||'PROPOSED';
       const buttons=status==='PROPOSED'
@@ -475,7 +502,9 @@ function renderWorkingMappingReview(){
         (buttons?'<div class="mapping-review-actions">'+buttons+'</div>':'')+
         '</div>';
     }).join('')+'</div>';
-  $$('.mapping-review-action').forEach(btn=>btn.onclick=()=>runWorkingMappingReview(btn.dataset.id,btn.dataset.action));
+  const allBtn=$('#programme-review-all');
+  if(allBtn) allBtn.onclick=()=>programmeReviewAllWorkingMappings().catch(e=>say(friendlyError(e),'danger'));
+  $('.mapping-review-action').filter(btn=>btn.id!=='programme-review-all').forEach(btn=>btn.onclick=()=>runWorkingMappingReview(btn.dataset.id,btn.dataset.action));
 }
 
 function syncCloPloTextFromMatrix(){
