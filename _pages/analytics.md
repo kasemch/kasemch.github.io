@@ -93,7 +93,13 @@ classes: wide
 <script type="application/json" id="paa-teaching-data">{
   "summary": {{ teaching.summary | jsonify }},
   "courses": [
-    {% for course in teaching.course_quality_matrix %}{"code":{{ course.code | jsonify }},"title":{{ course.title | jsonify }},"offeringStatus":{{ course.offering_status | jsonify }},"tqf3":{{ course.tqf3_status | default: "Not directly located" | jsonify }},"tqf5":{{ course.tqf5_status | default: "Not directly located" | jsonify }},"verification":{{ course.verification_status | default: "Not directly located" | jsonify }},"assessment":{{ course.assessment_evidence | default: "Not asserted" | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}
+    {% for course in teaching.course_quality_matrix %}{"code":{{ course.code | jsonify }},"title":{{ course.title | jsonify }},"offeringStatus":{{ course.offering_status | jsonify }},"directEvidence":true,"tqf3":{{ course.tqf3_status | default: "Not directly located" | jsonify }},"tqf5":{{ course.tqf5_status | default: "Not directly located" | jsonify }},"verification":{{ course.verification_status | default: "Not directly located" | jsonify }},"assessment":{{ course.assessment_evidence | default: "Not asserted" | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}
   ]
 }</script>
-<script src="{{ '/assets/js/public-academic-analytics.js' | relative_url }}" data-research-url="{{ '/assets/data/research-projects.json' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/public-academic-analytics.js' | relative_url }}"
+  data-research-url="{{ '/assets/data/research-projects.json' | relative_url }}"
+  data-publications-base="{{ '/publications/' | relative_url }}"
+  data-teaching-base="{{ '/teaching/' | relative_url }}"
+  data-research-status-base="{{ '/research-progress/' | relative_url }}"
+  data-project-base="{{ '/research-project/' | relative_url }}"
+  defer></script>
