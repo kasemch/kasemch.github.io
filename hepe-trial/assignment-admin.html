@@ -70,6 +70,33 @@
           </div>
         </div>
         <div class="field"><label>ปีการศึกษา</label><input id="academic-year" value="2569"></div>
+        <section class="admin-card" style="padding:14px;margin:12px 0;background:#fbfcfe">
+          <div class="section-title">
+            <div>
+              <h3 style="margin-bottom:4px">Teaching Team</h3>
+              <div class="help">ผู้สอนหลัก 1 คน + ผู้สอนร่วมหลายคน · สิทธิ์แก้เอกสารผูกแยกจากบทบาทการสอน</div>
+            </div>
+            <span id="team-apply-scope" class="admin-pill">ยังไม่ได้เลือกรายวิชา</span>
+          </div>
+          <div class="field">
+            <label>ผู้สอนหลัก</label>
+            <select id="lead-instructor"></select>
+            <div id="lead-account-meta" class="help"></div>
+          </div>
+          <div class="field">
+            <label>ค้นหาผู้สอนร่วม</label>
+            <input id="co-search" type="search" placeholder="พิมพ์ชื่อหรือชื่อย่อ">
+          </div>
+          <div class="field">
+            <label>ผู้สอนร่วม <span id="co-selected-count" class="admin-pill good">เลือก 0 คน</span></label>
+            <div id="co-instructor-list" class="course-list" style="border:1px solid #dfe3ea;border-radius:10px;max-height:260px"></div>
+          </div>
+          <div class="actions">
+            <button id="save-teaching-team" type="button" class="btn primary">บันทึก Teaching Team</button>
+            <button id="reload-teaching-team" type="button" class="btn">โหลดทีมเดิม</button>
+          </div>
+          <div id="team-existing-summary" class="help" style="margin-top:10px"></div>
+        </section>
         <div class="field"><label>ภาคเรียน</label><select id="term-code"><option value="1">1</option><option value="2">2</option></select><div class="help">ใช้เป็นบริบทการทำงาน; authority assignment ผูกที่ระดับรายวิชา</div></div>
         <div class="field"><label>บทบาท</label><select id="role-select"></select></div>
         <div class="actions">
