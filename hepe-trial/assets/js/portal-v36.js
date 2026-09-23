@@ -1047,7 +1047,7 @@ function sectionGapChecksV36(section){
   return checks.filter(x=>re.test((x.target||'')+' '+(x.name||'')+' '+(x.category||'')));
 }
 function ensureFinishSectionControlsV36(){
-  $$$('[data-ai-inline-section]').forEach(inline=>{
+  $$('[data-ai-inline-section]').forEach(inline=>{
     const section=inline.dataset.aiInlineSection||inline.getAttribute('data-ai-inline-section');
     const owner=inline.closest('.form-section')||inline.closest('.card');
     const header=owner?.querySelector('.form-section-header,.section-title');
