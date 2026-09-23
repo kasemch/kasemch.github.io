@@ -4,7 +4,7 @@ const SUPABASE_URL='https://lztxpjsuzqvtgyasfnyj.supabase.co';
 const SUPABASE_KEY='sb_publishable_7bv5GR0-ksXJn91sRHV0Mg_k4nblIGI';
 const client=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,flowType:'implicit'}});
 const $=s=>document.querySelector(s);
-let ctx=null,courses=[],selectedCourses=new Set();
+let ctx=null,courses=[],selectedCourses=new Set(),teamCtx=null,coSelected=new Set();
 function say(t,k=''){const el=$('#status');el.textContent=t;el.className='status '+k;}
 function opt(v,t){const o=document.createElement('option');o.value=v;o.textContent=t;return o;}
 async function session(){
@@ -41,7 +41,7 @@ function renderCoursePicker(){
  courses.forEach(c=>{
    const label=document.createElement('label');label.className='course-option';
    const input=document.createElement('input');input.type='checkbox';input.value=c.course_code;input.checked=selectedCourses.has(c.course_code);
-   input.addEventListener('change',()=>{if(input.checked)selectedCourses.add(c.course_code);else selectedCourses.delete(c.course_code);updateCourseCount();});
+   input.addEventListener('change',()=>{if(input.checked)selectedCourses.add(c.course_code);else selectedCourses.delete(c.course_code);updateCourseCount();loadTeachingTeam().catch(e=>say(e.message,'bad'));});
    const text=document.createElement('div');
    const strong=document.createElement('strong');strong.textContent=c.course_code+' — '+c.title_th;
    const meta=document.createElement('div');meta.className='help';meta.textContent=(c.credit_value??'')+' หน่วยกิต';
@@ -55,10 +55,95 @@ function updateCourseCount(){
  $('#course-selected-count').textContent='เลือก '+n+' วิชา';
  $('#activate').textContent=n>1?'บันทึก Active '+n+' วิชา':'บันทึก Active';
  $('#revoke').textContent=n>1?'ยกเลิก Assignment '+n+' วิชา':'ยกเลิก Assignment';
+ $('#team-apply-scope').textContent=n?('ใช้กับ '+n+' วิชา'):'ยังไม่ได้เลือกรายวิชา';
 }
 function setAllCourses(flag){
  selectedCourses=new Set(flag?courses.map(c=>c.course_code):[]);
  renderCoursePicker();
+}
+function personLabel(p){return (p.academic_position_th? p.academic_position_th+' ':'')+p.name_th;}
+function renderLead(){
+ const s=$('#lead-instructor');s.innerHTML='';
+ const blank=opt('','— เลือกผู้สอนหลัก —');s.appendChild(blank);
+ (teamCtx?.people||[]).forEach(p=>{
+   const o=opt(p.academic_person_id,personLabel(p)+(p.account_bound?' · ✓ มีบัญชี':' · ○ ยังไม่มีบัญชี'));
+   o.dataset.account=p.account_bound?'1':'0';o.dataset.email=p.account_email||'';s.appendChild(o);
+ });
+ syncLeadMeta();
+}
+function renderCoList(){
+ const q=($('#co-search').value||'').trim().toLowerCase();
+ const box=$('#co-instructor-list');box.innerHTML='';
+ const lead=$('#lead-instructor').value;
+ (teamCtx?.people||[]).filter(p=>{
+   if(p.academic_person_id===lead)return false;
+   const text=(personLabel(p)+' '+(p.person_code||'')).toLowerCase();
+   return !q||text.includes(q);
+ }).forEach(p=>{
+   const label=document.createElement('label');label.className='course-option';
+   const input=document.createElement('input');input.type='checkbox';input.value=p.academic_person_id;input.checked=coSelected.has(p.academic_person_id);
+   input.addEventListener('change',()=>{if(input.checked)coSelected.add(p.academic_person_id);else coSelected.delete(p.academic_person_id);renderCoCount();});
+   const text=document.createElement('div');
+   const strong=document.createElement('strong');strong.textContent=personLabel(p);
+   const meta=document.createElement('div');meta.className='help';meta.textContent=(p.account_bound?'✓ มีบัญชีระบบ':'○ ยังไม่มีบัญชีระบบ')+(p.account_email?' · '+p.account_email:'');
+   text.append(strong,meta);label.append(input,text);box.appendChild(label);
+ });
+ if(!box.children.length)box.innerHTML='<div class="help" style="padding:12px">ไม่พบรายชื่อ</div>';
+ renderCoCount();
+}
+function renderCoCount(){$('#co-selected-count').textContent='เลือก '+coSelected.size+' คน';}
+function syncLeadMeta(){
+ const o=$('#lead-instructor').selectedOptions[0];
+ if(!o||!o.value){$('#lead-account-meta').textContent='';return;}
+ $('#lead-account-meta').textContent=o.dataset.account==='1'
+   ?'มีบัญชีระบบ: เมื่อบันทึกจะได้รับ COURSE_OWNER สำหรับรายวิชานี้'
+   :'ยังไม่มีบัญชีระบบ: บันทึกบทบาทผู้สอนได้ แต่ยังเข้าแก้เอกสารไม่ได้จนกว่าจะ bind account';
+}
+async function loadTeachingTeam(){
+ const programme=$('#programme-select').value,codes=Array.from(selectedCourses),year=$('#academic-year').value.trim(),term=$('#term-code').value;
+ if(!programme||!codes.length||!year||!term){
+   teamCtx={people:[],teams:[]};coSelected=new Set();renderLead();renderCoList();
+   $('#team-existing-summary').textContent='เลือกรายวิชา ปีการศึกษา และภาคเรียนก่อน';
+   return;
+ }
+ const {data,error}=await client.rpc('hepe_fast_tqf_teaching_team_context',{
+   p_programme_code:programme,p_course_codes:codes,p_academic_year:year,p_term_code:term
+ });
+ if(error)throw error;if(data?.error)throw new Error(data.error);
+ teamCtx=data;coSelected=new Set();renderLead();renderCoList();
+ const teams=data.teams||[];
+ const byCourse={};
+ teams.forEach(t=>{(byCourse[t.course_code]??=[]).push(t);});
+ const lines=codes.map(code=>{
+   const arr=byCourse[code]||[];
+   if(!arr.length)return code+': ยังไม่มีทีมผู้สอน';
+   const lead=arr.find(x=>x.responsibility_type==='LEAD_INSTRUCTOR');
+   const cos=arr.filter(x=>x.responsibility_type==='CO_INSTRUCTOR');
+   return code+': '+(lead?'ผู้สอนหลัก '+lead.name_th:'ไม่มีผู้สอนหลัก')+(cos.length?' · ร่วม '+cos.map(x=>x.name_th).join(', '):'');
+ });
+ $('#team-existing-summary').innerHTML=lines.join('<br>');
+ if(codes.length===1){
+   const arr=byCourse[codes[0]]||[];
+   const lead=arr.find(x=>x.responsibility_type==='LEAD_INSTRUCTOR');
+   const cos=arr.filter(x=>x.responsibility_type==='CO_INSTRUCTOR');
+   if(lead)$('#lead-instructor').value=lead.academic_person_id;
+   coSelected=new Set(cos.map(x=>x.academic_person_id));renderCoList();syncLeadMeta();
+ }else{
+   $('#lead-instructor').value='';coSelected=new Set();renderCoList();syncLeadMeta();
+ }
+}
+async function saveTeachingTeam(){
+ const programme=$('#programme-select').value,codes=Array.from(selectedCourses),year=$('#academic-year').value.trim(),term=$('#term-code').value;
+ const lead=$('#lead-instructor').value,cos=Array.from(coSelected).filter(x=>x!==lead);
+ if(!programme||!codes.length||!year||!term||!lead)throw new Error('กรุณาเลือกหลักสูตร รายวิชา ปี/ภาค และผู้สอนหลัก');
+ say('กำลังบันทึก Teaching Team '+codes.length+' วิชา…');
+ const {data,error}=await client.rpc('hepe_fast_tqf_teaching_team_save',{
+   p_programme_code:programme,p_course_codes:codes,p_academic_year:year,p_term_code:term,
+   p_lead_academic_person_id:lead,p_co_academic_person_ids:cos
+ });
+ if(error)throw error;if(!data?.ok)throw new Error(data?.error||'TEACHING_TEAM_SAVE_FAILED');
+ await loadTeachingTeam();
+ say('บันทึก Teaching Team '+(data.courses_updated||codes.length)+' วิชาแล้ว','ok');
 }
 function renderProgrammes(){
  const box=$('#programme-list');box.innerHTML='';
@@ -104,9 +189,15 @@ $('#login').addEventListener('click',async()=>{try{const {error}=await client.au
 $('#logout').addEventListener('click',async()=>{await client.auth.signOut();await session();});
 $('#reload').addEventListener('click',()=>load().catch(e=>say(e.message,'bad')));
 $('#user-select').addEventListener('change',syncUser);
-$('#programme-select').addEventListener('change',async()=>{try{syncProgramme();await loadCourses();}catch(e){say(e.message,'bad');}});
-$('#select-all-courses').addEventListener('click',()=>setAllCourses(true));
-$('#clear-all-courses').addEventListener('click',()=>setAllCourses(false));
+$('#programme-select').addEventListener('change',async()=>{try{syncProgramme();await loadCourses();await loadTeachingTeam();}catch(e){say(e.message,'bad');}});
+$('#select-all-courses').addEventListener('click',()=>{setAllCourses(true);loadTeachingTeam().catch(e=>say(e.message,'bad'));});
+$('#clear-all-courses').addEventListener('click',()=>{setAllCourses(false);loadTeachingTeam().catch(e=>say(e.message,'bad'));});
+$('#lead-instructor').addEventListener('change',()=>{coSelected.delete($('#lead-instructor').value);syncLeadMeta();renderCoList();});
+$('#co-search').addEventListener('input',renderCoList);
+$('#save-teaching-team').addEventListener('click',()=>saveTeachingTeam().catch(e=>say(e.message,'bad')));
+$('#reload-teaching-team').addEventListener('click',()=>loadTeachingTeam().catch(e=>say(e.message,'bad')));
+$('#academic-year').addEventListener('change',()=>loadTeachingTeam().catch(e=>say(e.message,'bad')));
+$('#term-code').addEventListener('change',()=>loadTeachingTeam().catch(e=>say(e.message,'bad')));
 $('#activate').addEventListener('click',()=>save(true).catch(e=>say(e.message,'bad')));
 $('#revoke').addEventListener('click',()=>save(false).catch(e=>say(e.message,'bad')));
 client.auth.onAuthStateChange(()=>setTimeout(()=>session().catch(e=>say(e.message,'bad')),0));
