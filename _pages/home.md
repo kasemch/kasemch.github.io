@@ -1,6 +1,7 @@
 ---
 permalink: /
 title: "Asst. Prof. Dr. Kasem Chooratna"
+description: "Public academic digital hub of Asst. Prof. Dr. Kasem Chooratna covering teaching, research, publications, curriculum and quality, professional development, academic innovation and traceable public evidence."
 author_profile: false
 classes: wide
 ---
