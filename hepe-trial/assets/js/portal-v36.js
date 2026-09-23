@@ -15,7 +15,7 @@ const num=v=>v===''||v==null?null:Number(v);
 
 let cfg={},programmeCatalog=[],courseCatalog=[],termCatalog=[],curriculumCtx=null,docCtx=null;
 let versionHistory=[],evidenceWorkspace=null,cqiContext=null,dashboardCtx=null,evidenceQueueCtx=null;
-let courseResponsibilityCtx=null,programmeResponsibilityCtx=null,templateReviewCtx=null,templateReviewLoaded=false,currentTqf3Preview=null,tqf3SourceControlEligibility=null,tqf3VersionReviewEligibility=null,hed2503RubricReviewCtx=null;
+let courseResponsibilityCtx=null,programmeResponsibilityCtx=null,templateReviewCtx=null,templateReviewLoaded=false,currentTqf3Preview=null,tqf3SourceControlEligibility=null,tqf3VersionReviewEligibility=null,hed2503RubricReviewCtx=null,hed2503PublicationReadiness=null;
 let activeTab='tqf3',activeAiSection='curriculum',aiSuggestions=[],aiDecisions=[];
 let saveTimer=null,staticBound=false,aiUndoStack=[],aiSectionRuns={},aiSectionSuggestionCache={},reviewQueueIndex=0,reviewQueueFilter='ALL',reuseLineage=[],changeRationales=[];
 
@@ -199,6 +199,7 @@ async function loadSelectedCourse(){
     await loadTqf3SourceControlEligibility();
     await loadTqf3VersionReviewEligibility();
     await loadHed2503RubricReviewContext();
+    await loadHed2503PublicationReadiness();
     renderAiRail();
     ensureV33Ui();
     offerLocalRecovery();
@@ -2507,6 +2508,46 @@ async function finalizeTqf3Release(){
       btn.disabled=false;
       btn.textContent='Finalize TQF3 Release';
     }
+  }
+}
+
+async function loadHed2503PublicationReadiness(){
+  const panel=$('#hed2503-publication-readiness-panel');
+  if(!panel)return;
+  const courseCode=$('#course-select')?.value||curriculumCtx?.course?.course_code||'';
+  if(courseCode!=='HED2503'){
+    panel.hidden=true;
+    hed2503PublicationReadiness=null;
+    return;
+  }
+  const {data,error}=await client.rpc('hepe_hed2503_v13_publication_readiness');
+  if(error){
+    panel.hidden=true;
+    hed2503PublicationReadiness=null;
+    return;
+  }
+  hed2503PublicationReadiness=data;
+  panel.hidden=false;
+
+  const status=$('#hed2503-publication-readiness-status');
+  if(status){
+    status.textContent=data.current_release_state||'UNKNOWN';
+    status.className='badge '+(data.hash_lineage_match?'ok':'warn');
+  }
+  const body=$('#hed2503-publication-readiness-body');
+  if(body){
+    const req=Array.isArray(data.required_human_inputs)?data.required_human_inputs:[];
+    const gov=Array.isArray(data.required_governance_before_write)?data.required_governance_before_write:[];
+    body.innerHTML=
+      '<div class="help">FINAL Record: <b>'+esc(data.final_record_id||'—')+'</b></div>'+
+      '<div class="help">Controlled Export Run: <b>'+esc(data.controlled_export_run_id||'—')+'</b></div>'+
+      '<div class="help">SHA lineage: <b>'+(data.hash_lineage_match?'PASS':'FAIL')+'</b> · '+esc(data.bundle_sha256||'—')+'</div>'+
+      '<div class="help">Existing publication records: <b>'+esc(data.existing_publication_records??0)+'</b></div>'+
+      '<div class="help">Programme Chair A4 present: <b>'+(data.programme_chair_a4_present?'YES':'NO')+'</b></div>'+
+      '<div class="help">Publication command registered: <b>'+(data.publication_command_registered?'YES':'NO')+'</b></div>'+
+      '<div class="help">Write action available: <b>'+(data.write_action_available?'YES':'NO')+'</b></div>'+
+      '<div class="help">Institutional official claim allowed by current evidence: <b>'+(data.institutional_official_claim_allowed_by_current_evidence?'YES':'NO')+'</b></div>'+
+      '<div class="notice warn"><strong>ยังไม่พร้อม Publish</strong><div class="help">ต้องมี Human Input: '+esc(req.join(' · '))+'</div><div class="help">Governance ก่อนเปิด write path: '+esc(gov.join(' · '))+'</div></div>';
   }
 }
 
