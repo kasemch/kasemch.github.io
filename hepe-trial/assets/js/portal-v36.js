@@ -2313,7 +2313,7 @@ document.addEventListener('click',e=>{
 },true);
 
 document.addEventListener('click',e=>{
-  const btn=e.target.closest?.('#tqf3-admit-controlled-source');
+  const btn=e.target.closest?.('#tqf3-admit-controlled-source, #tqf3-admit-controlled-source-top');
   if(!btn)return;
   e.preventDefault();
   e.stopPropagation();
@@ -2880,12 +2880,24 @@ function renderTqf3SourceControlEligibility(){
     '<div class="help">'+(x[1]?'✓':'✕')+' <b>'+esc(x[0])+':</b> '+esc(x[2])+'</div>'
   ).join('');
   const btn=$('#tqf3-admit-controlled-source');
+  const topBtn=$('#tqf3-admit-controlled-source-top');
   const alreadyControlled=e.source_status==='CONTROLLED_SOURCE';
   btn.dataset.mode=alreadyControlled?'fresh-preview':'admit';
   btn.disabled=alreadyControlled?false:!e.eligible;
   btn.textContent=alreadyControlled
     ?'สร้าง Fresh Controlled Preview'
     :'ยืนยันรับรองเป็น HEPE Project-Controlled Source';
+  if(topBtn){
+    topBtn.hidden=false;
+    topBtn.dataset.mode=alreadyControlled?'fresh-preview':'admit';
+    topBtn.disabled=alreadyControlled?false:!e.eligible;
+    topBtn.textContent=alreadyControlled
+      ?'✓ Source Admission ผ่านแล้ว · สร้าง Fresh Controlled Preview'
+      :'✓ Human Gate · Admit HEPE Project-Controlled Source';
+    topBtn.title=alreadyControlled
+      ?'สร้าง Fresh Controlled Preview สำหรับ current version'
+      :(e.eligible?'ผ่าน eligibility แล้ว · การกดนี้เป็น Human Source Admission ภายใน HEPE Project':'ยังไม่ผ่าน Source-Control eligibility');
+  }
   $('#tqf3-source-control-note').textContent=alreadyControlled
     ?'Source Admission ผ่านแล้ว · เหลือสร้าง Fresh Controlled Preview สำหรับ current version'
     :(e.eligible
