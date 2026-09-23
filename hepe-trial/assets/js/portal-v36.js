@@ -408,7 +408,7 @@ function renderCloPloMatrix(seed=null){
     ).join('')+
     '</tbody></table>';
   renderWorkingMappingReview();
-  $('.irm-cell').forEach(el=>el.onchange=()=>{
+  $$('.irm-cell').forEach(el=>el.onchange=()=>{
     syncCloPloTextFromMatrix();
     scheduleLocalSave();
     renderWeeklyCoverage();
