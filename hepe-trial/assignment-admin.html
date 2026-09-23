@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>HEPE User & Course Assignment</title>
+  <link rel="stylesheet" href="./assets/css/portal-v36.css?v=36">
+  <style>
+    .admin-shell{max-width:1180px;margin:0 auto;padding:20px}
+    .admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .admin-card{background:#fff;border:1px solid #dfe3ea;border-radius:14px;padding:18px}
+    .admin-card h2,.admin-card h3{margin-top:0}
+    .admin-grid .field{margin-bottom:12px}
+    .admin-table{width:100%;border-collapse:collapse}
+    .admin-table th,.admin-table td{padding:9px;border-bottom:1px solid #e8ebf0;text-align:left;vertical-align:top}
+    .admin-table th{font-size:.85rem}
+    .admin-pill{display:inline-block;padding:3px 8px;border-radius:999px;background:#eef2f7;font-size:.8rem}
+    .admin-pill.good{background:#e8f6ed}.admin-pill.warn{background:#fff4d6}
+    @media(max-width:800px){.admin-grid{grid-template-columns:1fr}.admin-table{font-size:.88rem}}
+  </style>
+</head>
+<body>
+<div class="draft-watermark">DRAFT · NON-PRODUCTION</div>
+<header class="topbar"><div class="topbar-inner">
+  <div class="brand"><h1>HEPE Fast <em>TQF</em> Portal</h1><p>User & Course Assignment — CONTROLLED PILOT</p></div>
+  <div class="actions"><a class="btn" href="./">กลับ Portal</a><button id="logout" class="btn">ออกจากระบบ</button></div>
+</div></header>
+<main class="admin-shell">
+  <div id="status" class="status" role="status" aria-live="polite">กำลังโหลด…</div>
+
+  <section id="login-card" class="admin-card">
+    <h2>เข้าสู่ระบบผู้ดูแล</h2>
+    <p class="help">ใช้ session เดียวกับ HEPE Sandbox Portal</p>
+    <div class="field"><label>อีเมล</label><input id="email" type="email"></div>
+    <div class="field"><label>รหัสผ่าน</label><input id="password" type="password"></div>
+    <div class="actions"><button id="login" class="btn primary">เข้าสู่ระบบ</button></div>
+  </section>
+
+  <section id="app" hidden>
+    <div class="notice info">
+      Authentication ≠ Authority · หน้านี้ใช้เฉพาะ controlled pilot และไม่ทำให้เอกสารเป็น institutional official
+    </div>
+    <div class="admin-grid">
+      <section class="admin-card">
+        <h2>ผูกผู้ใช้กับรายวิชา</h2>
+        <div class="field"><label>ผู้ใช้</label><select id="user-select"></select><div id="user-meta" class="help"></div></div>
+        <div class="field"><label>ชื่อที่แสดง (ใช้เมื่อยังไม่มี HEPE actor)</label><input id="display-label"></div>
+        <div class="field"><label>หลักสูตร</label><select id="programme-select"></select><div id="programme-meta" class="help"></div></div>
+        <div class="field"><label>รายวิชา</label><select id="course-select"></select></div>
+        <div class="field"><label>ปีการศึกษา</label><input id="academic-year" value="2569"></div>
+        <div class="field"><label>ภาคเรียน</label><select id="term-code"><option value="1">1</option><option value="2">2</option></select><div class="help">ใช้เป็นบริบทการทำงาน; authority assignment ผูกที่ระดับรายวิชา</div></div>
+        <div class="field"><label>บทบาท</label><select id="role-select"></select></div>
+        <div class="actions">
+          <button id="activate" class="btn primary">บันทึก Active</button>
+          <button id="revoke" class="btn">ยกเลิก Assignment</button>
+        </div>
+        <div class="help" style="margin-top:10px">ผู้ใช้ต้องเคย Sign in อย่างน้อย 1 ครั้งก่อน หากยังไม่มี HEPE actor ระบบจะสร้าง actor จาก authenticated identity เมื่อบันทึก</div>
+      </section>
+
+      <section class="admin-card">
+        <h2>Programme readiness</h2>
+        <div id="programme-list"></div>
+        <hr>
+        <h3>Authority ของผู้ใช้งานปัจจุบัน</h3>
+        <div id="authority-summary" class="help"></div>
+      </section>
+    </div>
+
+    <section class="admin-card" style="margin-top:16px">
+      <div class="section-title"><div><h2>Course Assignments ปัจจุบัน</h2><div class="help">แสดงเฉพาะขอบเขตที่บัญชีปัจจุบันมีสิทธิ์ดูแล</div></div><button id="reload" class="btn">รีโหลด</button></div>
+      <div class="table-wrap"><table class="admin-table"><thead><tr><th>ผู้ใช้</th><th>หลักสูตร</th><th>รายวิชา</th><th>บทบาท</th><th>สถานะ</th></tr></thead><tbody id="assignment-body"></tbody></table></div>
+    </section>
+  </section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./assets/js/assignment-admin-v1.js?v=1"></script>
+</body></html>
