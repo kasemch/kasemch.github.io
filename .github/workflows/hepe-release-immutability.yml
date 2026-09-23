@@ -1,0 +1,37 @@
+name: HEPE release immutability
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-immutable-releases:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Resolve comparison range
+        shell: bash
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
+            echo "HEPE_BASE_SHA=${{ github.event.pull_request.base.sha }}" >> "$GITHUB_ENV"
+            echo "HEPE_HEAD_SHA=${{ github.event.pull_request.head.sha }}" >> "$GITHUB_ENV"
+          elif [ "$GITHUB_EVENT_NAME" = "push" ]; then
+            echo "HEPE_BASE_SHA=${{ github.event.before }}" >> "$GITHUB_ENV"
+            echo "HEPE_HEAD_SHA=${{ github.sha }}" >> "$GITHUB_ENV"
+          else
+            echo "HEPE_BASE_SHA=" >> "$GITHUB_ENV"
+            echo "HEPE_HEAD_SHA=${{ github.sha }}" >> "$GITHUB_ENV"
+          fi
+
+      - name: Validate frozen HEPE release artifacts
+        run: ruby scripts/validate_hepe_release_immutability.rb
