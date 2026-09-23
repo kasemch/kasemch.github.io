@@ -5,7 +5,7 @@ description: "Evidence-first status dashboard for current research projects, por
 author_profile: false
 ---
 
-<link rel="stylesheet" href="../assets/css/research-progress.css">
+<link rel="stylesheet" href="{{ '/assets/css/research-progress.css' | relative_url }}">
 
 <div class="rpc-page" id="research-command-center">
   <section class="rpc-hero" aria-labelledby="rpc-title">
@@ -15,9 +15,9 @@ author_profile: false
         <h1 id="rpc-title">Research in Progress</h1>
         <p class="rpc-lead">A public, evidence-first view of current research activity. Projects are classified separately as Verified Active, Candidate, Completed, or Publication-linked only when the relevant status is supported by controlled evidence.</p>
         <div class="rpc-actions">
-          <a class="rpc-btn rpc-btn-primary" href="../research/">Research profile</a>
-          <a class="rpc-btn" href="../publications/">Verified publications</a>
-          <a class="rpc-btn" href="../evidence-explorer/">Evidence Explorer</a>
+          <a class="rpc-btn rpc-btn-primary" href="{{ '/research/' | relative_url }}">Research profile</a>
+          <a class="rpc-btn" href="{{ '/publications/' | relative_url }}">Verified publications</a>
+          <a class="rpc-btn" href="{{ '/evidence-explorer/' | relative_url }}">Evidence Explorer</a>
         </div>
       </div>
       <aside class="rpc-hero-note" aria-label="Evidence policy">
@@ -101,4 +101,7 @@ author_profile: false
   </main>
 </div>
 
-<script src="../assets/js/research-progress.js" defer></script>
+<script src="{{ '/assets/js/research-progress.js' | relative_url }}"
+  data-registry-url="{{ '/assets/data/research-projects.json' | relative_url }}"
+  data-project-base="{{ '/research-project/' | relative_url }}"
+  defer></script>
