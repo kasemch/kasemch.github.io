@@ -15,7 +15,7 @@ const num=v=>v===''||v==null?null:Number(v);
 
 let cfg={},programmeCatalog=[],courseCatalog=[],termCatalog=[],curriculumCtx=null,docCtx=null;
 let versionHistory=[],evidenceWorkspace=null,cqiContext=null,dashboardCtx=null,evidenceQueueCtx=null;
-let courseResponsibilityCtx=null,programmeResponsibilityCtx=null,templateReviewCtx=null,templateReviewLoaded=false;
+let courseResponsibilityCtx=null,programmeResponsibilityCtx=null,templateReviewCtx=null,templateReviewLoaded=false,currentTqf3Preview=null;
 let activeTab='tqf3',activeAiSection='curriculum',aiSuggestions=[],aiDecisions=[];
 let saveTimer=null,staticBound=false,aiUndoStack=[],aiSectionRuns={},aiSectionSuggestionCache={},reviewQueueIndex=0,reviewQueueFilter='ALL',reuseLineage=[],changeRationales=[];
 
@@ -181,6 +181,7 @@ async function loadSelectedCourse(){
     renderVersionCompare();
     renderCqiCarryForward();
     renderReadiness();
+    await loadTqf3HumanReviewState();
     renderAiRail();
     ensureV33Ui();
     offerLocalRecovery();
@@ -2248,6 +2249,15 @@ document.addEventListener('click',e=>{
 },true);
 
 document.addEventListener('click',e=>{
+  const btn=e.target.closest?.('[data-tqf3-review-decision]');
+  if(!btn)return;
+  e.preventDefault();
+  e.stopPropagation();
+  const decision=btn.dataset.tqf3ReviewDecision;
+  decideTqf3HumanReview(decision).catch(err=>say(friendlyError(err),'danger'));
+},true);
+
+document.addEventListener('click',e=>{
   const btn=e.target.closest?.('#submit-tqf3-human-review');
   if(!btn)return;
   e.preventDefault();
@@ -2331,6 +2341,83 @@ async function submitTqf3HumanReview(){
     btn.textContent=original;
     btn.disabled=true;
   }
+}
+
+async function loadTqf3HumanReviewState(){
+  const panel=$('#tqf3-human-review-panel');
+  if(!panel)return;
+  const {data,error}=await client.rpc('hepe_latest_tqf3_preview_by_code',courseArgs());
+  if(error){
+    panel.hidden=true;
+    currentTqf3Preview=null;
+    return;
+  }
+  currentTqf3Preview=data?.found?data.detail:null;
+  renderTqf3HumanReviewPanel();
+}
+
+function renderTqf3HumanReviewPanel(){
+  const panel=$('#tqf3-human-review-panel');
+  if(!panel)return;
+  const detail=currentTqf3Preview;
+  if(!detail){panel.hidden=true;return;}
+  const session=detail?.session||detail||{};
+  const status=session.preview_status||'UNKNOWN';
+  panel.hidden=status!=='SUBMITTED'&&status!=='UNDER_REVIEW'&&status!=='REVISION_REQUIRED'&&status!=='REJECTED'&&status!=='APPROVED_FOR_CONTROLLED_EXPORT';
+  if(panel.hidden)return;
+
+  const exportAllowed=!!session.authoritative_export_allowed;
+  $('#tqf3-human-review-status').textContent=status;
+  $('#tqf3-human-review-watermark').textContent=session.required_watermark||'—';
+
+  const approve=$('#tqf3-review-approve-export');
+  if(approve){
+    approve.disabled=!exportAllowed||!['SUBMITTED','UNDER_REVIEW'].includes(status);
+    approve.title=exportAllowed?'':'ยังไม่อนุญาต Controlled Export เพราะเอกสารยังเป็น DRAFT / UNVERIFIED';
+  }
+  const canDecide=['SUBMITTED','UNDER_REVIEW'].includes(status);
+  $('#tqf3-review-request-revision').disabled=!canDecide;
+  $('#tqf3-review-reject').disabled=!canDecide;
+
+  const reason=$('#tqf3-human-review-export-note');
+  if(reason){
+    reason.textContent=exportAllowed
+      ?'Preview นี้อนุญาต authoritative export ตาม governance ปัจจุบัน'
+      :'Approve Controlled Export ถูกปิดไว้: current preview ยังไม่อนุญาต authoritative export';
+  }
+}
+
+async function decideTqf3HumanReview(decision){
+  const detail=currentTqf3Preview;
+  const session=detail?.session||detail||{};
+  const id=session.document_preview_session_id;
+  if(!id)throw new Error('ไม่พบ Preview ปัจจุบัน');
+
+  const labels={
+    REQUEST_REVISION:'Request Revision',
+    REJECT:'Reject',
+    APPROVE_CONTROLLED_EXPORT:'Approve Controlled Export'
+  };
+  const note=$('#tqf3-human-review-note')?.value?.trim()||null;
+
+  if(decision==='APPROVE_CONTROLLED_EXPORT'&&!session.authoritative_export_allowed){
+    throw new Error('AUTHORITATIVE_EXPORT_NOT_ALLOWED_FOR_CURRENT_PREVIEW');
+  }
+
+  const ok=window.confirm(
+    'ยืนยัน '+(labels[decision]||decision)+' สำหรับ Preview นี้หรือไม่? การตัดสินใจนี้จะถูกบันทึกใน Human Review audit trail'
+  );
+  if(!ok)return;
+
+  const {data,error}=await client.rpc('hepe_decide_document_preview',{
+    p_document_preview_session_id:id,
+    p_decision:decision,
+    p_note:note
+  });
+  if(error)throw error;
+  currentTqf3Preview=data;
+  renderTqf3HumanReviewPanel();
+  say('บันทึก Human Review decision แล้ว · '+(data?.session?.preview_status||data?.preview_status||decision),'ok');
 }
 
 async function saveTqf3(){
