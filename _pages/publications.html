@@ -123,6 +123,8 @@ excerpt: "Verified academic publications by Asst. Prof. Dr. Kasem Chooratna in h
         <option value="">All venues</option>
         {% for group in publication_venues %}{% if group.name and group.name != "" %}<option value="{{ group.name | escape }}">{{ group.name }} ({{ group.items | size }})</option>{% endif %}{% endfor %}
       </select>
+      <button class="pps-clear-btn" type="button" data-pd-clear>Clear filters</button>
+      <div class="pps-filter-status" data-pd-filter-status role="status" aria-live="polite">Showing all verified journal publication records.</div>
     </div>
 
     <div class="pd-eyebrow">Verified Publication Register</div>
