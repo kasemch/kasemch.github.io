@@ -2515,7 +2515,13 @@ async function loadHed2503RubricReviewContext(){
   const topLongBtn=$('#hed2503-v13-long-continue-top');
   if(!panel)return;
   const courseCode=$('#course-select')?.value||curriculumCtx?.course?.course_code||'';
-  if(topLongBtn)topLongBtn.hidden=courseCode!=='HED2503';
+  if(topLongBtn){
+    topLongBtn.hidden=false;
+    topLongBtn.disabled=courseCode!=='HED2503';
+    topLongBtn.title=courseCode==='HED2503'
+      ? 'ดำเนินการ HED2503 Version 13 แบบ Master Continuation'
+      : 'ปุ่มนี้ใช้สำหรับ HED2503 Version 13';
+  }
   if(courseCode!=='HED2503'){
     panel.hidden=true;
     hed2503RubricReviewCtx=null;
