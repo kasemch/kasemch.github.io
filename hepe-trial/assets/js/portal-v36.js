@@ -234,10 +234,17 @@ function renderCourseContext(){
   const canonicalMappings=curriculumCtx?.course_plo_mappings||[];
   const workingMappings=curriculumCtx?.working_clo_plo_mappings||[];
   const sourceBoundPlos=curriculumCtx?.source_bound_programme_plos||[];
+  const programmeReviewedCount=workingMappings.filter(x=>x.governance_status==='PROGRAMME_REVIEWED').length;
+  const workingCount=workingMappings.filter(x=>x.governance_status==='WORKING').length;
+  const proposedCount=workingMappings.filter(x=>x.governance_status==='PROPOSED').length;
   $('#course-plo-source').textContent=canonicalMappings.length
     ?'พบ canonical course→PLO mapping '+canonicalMappings.length+' รายการ'
     :workingMappings.length
-      ?'ยังไม่มี canonical course→PLO mapping · พบ working CLO→PLO/I-R-M candidate '+workingMappings.length+' รายการ (PROPOSED / รอ Human Academic Review)'
+      ?programmeReviewedCount===workingMappings.length
+        ?'ยังไม่มี canonical course→PLO mapping · working CLO→PLO/I-R-M ผ่าน Programme Review ครบ '+programmeReviewedCount+'/'+workingMappings.length+' รายการ'
+        :workingCount
+          ?'ยังไม่มี canonical course→PLO mapping · '+workingCount+' รายการอยู่ WORKING และรอ Programme Review'
+          :'ยังไม่มี canonical course→PLO mapping · '+proposedCount+' รายการเป็น PROPOSED และรอ Human Academic Review'
       :sourceBoundPlos.length
         ?'พบ PLO จากแหล่งหลักสูตร '+sourceBoundPlos.length+' ข้อ แต่ยังไม่มี course→PLO mapping ที่ผ่านการทบทวน'
         :'ยังไม่พบ canonical course→PLO mapping ใน runtime — ห้ามสร้าง mapping แทนโดยอัตโนมัติ';
@@ -381,15 +388,21 @@ function renderCloPloMatrix(seed=null){
   const current=seed&&Object.keys(seed).length?seed:
     Object.keys(collectPloMatrix()).length?collectPloMatrix():proposedSeed;
   const canonical=curriculumCtx?.course_plo_mappings||[];
+  const reviewedMappings=proposed.filter(x=>x.governance_status==='PROGRAMME_REVIEWED').length;
+  const workingMappingsCount=proposed.filter(x=>x.governance_status==='WORKING').length;
   setBadge('#canonical-mapping-state',
     canonical.length
       ?'Canonical mapping: '+canonical.length+' รายการ'
       :proposed.length
-        ?'Working candidate: '+proposed.length+' รายการ · รอ Human Review'
+        ?reviewedMappings===proposed.length
+          ?'Programme Reviewed: '+reviewedMappings+'/'+proposed.length+' · ยังไม่ใช่ canonical mapping'
+          :workingMappingsCount
+            ?'Working: '+workingMappingsCount+' รายการ · รอ Programme Review'
+            :'Proposed: '+proposed.length+' รายการ · รอ Human Review'
         :ploRows.length
           ?'PLO source-bound: '+ploRows.length+' ข้อ · ยังไม่มี canonical mapping'
           :'Canonical mapping: ไม่พบใน runtime',
-    canonical.length?'ok':proposed.length?'warn':'info'
+    canonical.length||reviewedMappings===proposed.length?'ok':proposed.length?'warn':'info'
   );
   if(!clos.length||!plos.length){
     host.innerHTML='<div class="help">ยังไม่มี CLO หรือ PLO สำหรับสร้าง matrix</div>';return;
