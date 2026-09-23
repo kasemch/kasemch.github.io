@@ -9,12 +9,30 @@ redirect_from:
 
 <link rel="stylesheet" href="{{ '/assets/css/signature-pages.css' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/css/signature-mark.css' | relative_url }}">
-<div class="signature-page">
-  <section class="sp-hero sp-shell">
-    <div class="sp-kicker">Academic Profile</div>
-    <h1>About</h1>
-    <p>Health &amp; Physical Education, curriculum and quality, research, teaching, academic leadership and responsible academic innovation.</p>
-    <div class="sp-navchips"><a class="sp-chip" href="{{ '/teaching/' | relative_url }}">Teaching</a><a class="sp-chip" href="{{ '/research/' | relative_url }}">Research</a><a class="sp-chip" href="{{ '/academic-leadership-service/' | relative_url }}">Leadership &amp; Service</a><a class="sp-chip" href="{{ '/professional-development/' | relative_url }}">Professional Development</a><a class="sp-chip" href="{{ '/cv/' | relative_url }}">Academic CV</a></div>
+<div class="signature-page pap-studio">
+  <section class="sp-hero sp-shell pap-hero" aria-labelledby="pap-title">
+    <div class="pap-hero-copy">
+      <div class="sp-kicker">Professional Academic Profile</div>
+      <h1 id="pap-title">Academic work<br><span>across learning, evidence and impact.</span></h1>
+      <p class="pap-hero-lead">Health &amp; Physical Education, curriculum and quality, research, teaching, academic service and responsible academic innovation.</p>
+      <div class="sp-navchips">
+        <a class="sp-chip pap-chip-primary" href="{{ '/teaching/' | relative_url }}">Teaching</a>
+        <a class="sp-chip" href="{{ '/research/' | relative_url }}">Research</a>
+        <a class="sp-chip" href="{{ '/curriculum-quality/' | relative_url }}">Curriculum &amp; Quality</a>
+        <a class="sp-chip" href="{{ '/innovation-projects/' | relative_url }}">Innovation</a>
+      </div>
+    </div>
+    <div class="pap-hero-visual">
+      <img src="{{ '/images/profile-selected-2026.webp' | relative_url }}" alt="Formal portrait of Asst. Prof. Dr. Kasem Chooratna" width="480" height="600" decoding="async">
+      <div class="pap-identity-note"><strong>Asst. Prof. Dr. Kasem Chooratna</strong><span>Faculty of Education · Ramkhamhaeng University</span></div>
+    </div>
+  </section>
+
+  <section class="pap-pillar-strip sp-shell" aria-label="Academic profile structure">
+    <a href="{{ '/teaching/' | relative_url }}"><span>01</span><strong>Teaching</strong><small>Learning design and academic development</small></a>
+    <a href="{{ '/research/' | relative_url }}"><span>02</span><strong>Research</strong><small>Evidence-led inquiry and scholarly outputs</small></a>
+    <a href="{{ '/curriculum-quality/' | relative_url }}"><span>03</span><strong>Quality</strong><small>Curriculum, assessment and improvement</small></a>
+    <a href="{{ '/academic-leadership-service/' | relative_url }}"><span>04</span><strong>Service</strong><small>Programme-level contribution and academic service</small></a>
   </section>
 
   <section class="sp-section sp-shell">
