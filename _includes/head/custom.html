@@ -2,6 +2,11 @@
 
 <!-- start custom head snippets -->
 
+<!-- Academic Portfolio shared tokens -->
+{% if page.url == '/teaching/' or page.url == '/research/' or page.url == '/publications/' or page.url == '/curriculum-quality/' or page.url == '/innovation-projects/' or page.url == '/about/' or page.url == '/professional-development/' or page.url == '/analytics/' %}
+<link rel="stylesheet" href="{{ '/assets/css/academic-portfolio-tokens.css' | relative_url }}">
+{% endif %}
+
 <!-- Academic Executive visual baseline -->
 <link rel="stylesheet" href="{{ '/assets/css/academic-executive-nav.css' | relative_url }}">
 {% if page.url == '/research/' or page.url == '/teaching/' or page.url == '/publications/' or page.url == '/about/' or page.url == '/curriculum-quality/' or page.url == '/innovation-projects/' or page.url == '/professional-development/' or page.url == '/cv/' %}
