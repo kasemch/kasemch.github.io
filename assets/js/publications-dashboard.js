@@ -8,6 +8,8 @@
   const cards = [...root.querySelectorAll('[data-pd-card]')];
   const empty = root.querySelector('[data-pd-empty]');
   const count = root.querySelector('[data-pd-visible-count]');
+  const clear = root.querySelector('[data-pd-clear]');
+  const status = root.querySelector('[data-pd-filter-status]');
   const norm = (v = '') => v.toLowerCase().trim();
 
   const apply = () => {
@@ -25,10 +27,22 @@
     });
     if (count) count.textContent = String(visible);
     if (empty) empty.classList.toggle('is-visible', visible === 0);
+    const active = Boolean(q || y || v);
+    if (status) status.textContent = active
+      ? `Showing ${visible} matching verified journal publication record${visible === 1 ? '' : 's'}.`
+      : 'Showing all verified journal publication records.';
+    if (clear) clear.disabled = !active;
   };
 
   search?.addEventListener('input', apply);
   year?.addEventListener('change', apply);
   venue?.addEventListener('change', apply);
+  clear?.addEventListener('click', () => {
+    if (search) search.value = '';
+    if (year) year.value = '';
+    if (venue) venue.value = '';
+    apply();
+    search?.focus();
+  });
   apply();
 })();
