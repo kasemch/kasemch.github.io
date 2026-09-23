@@ -2190,6 +2190,16 @@ async function transitionVerification(status){const {error}=await client.rpc('he
 
 /* ---------- Auth ---------- */
 async function loginMagic(e){e.preventDefault();const email=$('#login-email').value.trim();const {error}=await client.auth.signInWithOtp({email,options:{shouldCreateUser:false,emailRedirectTo:'https://kasemch.github.io/hepe-trial/'}});if(error)throw error;say('ส่ง Magic Link แล้ว กรุณาเปิดอีเมลฉบับล่าสุด','ok');}
+async function loginGoogle(){
+  const {error}=await client.auth.signInWithOAuth({
+    provider:'google',
+    options:{
+      redirectTo:'https://kasemch.github.io/hepe-trial/',
+      queryParams:{prompt:'select_account'}
+    }
+  });
+  if(error)throw error;
+}
 async function loginPassword(){const email=$('#login-email').value.trim(),password=$('#login-password').value;if(!email||!password)throw new Error('กรุณากรอกอีเมลและรหัสผ่าน');const {error}=await client.auth.signInWithPassword({email,password});if(error)throw error;}
 async function logout(){await client.auth.signOut();location.reload();}
 
@@ -2209,7 +2219,7 @@ function bindStatic(){
   $$('.ai-section').forEach(b=>b.onclick=()=>runSectionAi(b.dataset.section,null,b));
   $('#ai-chatgpt').onclick=()=>openChatGPT().catch(e=>say(friendlyError(e),'danger'));$('#ai-show-prompt').onclick=()=>{$('#ai-prompt-wrap').hidden=!$('#ai-prompt-wrap').hidden;$('#ai-prompt').value=aiPrompt();};
   $('#print-form').onclick=()=>window.print();$('#logout').onclick=()=>logout().catch(e=>say(friendlyError(e),'danger'));
-  $('#login-form').addEventListener('submit',e=>loginMagic(e).catch(x=>say(friendlyError(x),'danger')));$('#password-login').onclick=()=>loginPassword().catch(x=>say(friendlyError(x),'danger'));
+  $('#login-form').addEventListener('submit',e=>loginMagic(e).catch(x=>say(friendlyError(x),'danger')));$('#google-login').onclick=()=>loginGoogle().catch(x=>say(friendlyError(x),'danger'));$('#password-login').onclick=()=>loginPassword().catch(x=>say(friendlyError(x),'danger'));
   $('#restore-local').onclick=restoreLocalDraft;$('#discard-local').onclick=discardLocalDraft;
   $('#version-a').onchange=compareVersions;$('#version-b').onchange=compareVersions;
   $('#dashboard-search').oninput=()=>filterDashboardRows();
