@@ -2247,6 +2247,14 @@ document.addEventListener('click',e=>{
     });
 },true);
 
+document.addEventListener('click',e=>{
+  const btn=e.target.closest?.('#submit-tqf3-human-review');
+  if(!btn)return;
+  e.preventDefault();
+  e.stopPropagation();
+  submitTqf3HumanReview().catch(err=>say(friendlyError(err),'danger'));
+},true);
+
 async function createTqf3PreviewReadiness(){
   if(!docCtx?.course?.course_offering_id)throw new Error('ยังไม่พบ Course Offering สำหรับปี/ภาคนี้');
   const out=$('#tqf3-preview-readiness-result');
@@ -2279,6 +2287,12 @@ async function createTqf3PreviewReadiness(){
       '<div class="help">Blocking findings: '+blocking.length+' · Informational findings: '+infos.length+'</div>'+
       (blocking.length?'<ul>'+blocking.map(x=>'<li><b>'+esc(x.finding_code||x.code||'BLOCKER')+'</b> — '+esc(x.message||'')+'</li>').join('')+'</ul>':'<div class="help">ไม่พบ blocking finding ใหม่ · พร้อมเข้าสู่ Human Review ขั้นถัดไป</div>');
   }
+  const submitBtn=$('#submit-tqf3-human-review');
+  if(submitBtn){
+    const ready=status==='READY_FOR_REVIEW'&&blocking.length===0;
+    submitBtn.disabled=!ready;
+    submitBtn.hidden=!ready;
+  }
   say(
     'Preview '+status+' · blocking findings '+blocking.length+
     (blocking.length?' · '+blocking.map(x=>x.finding_code||x.code||'BLOCKER').join(', '):' · พร้อมสำหรับ human review'),
@@ -2286,6 +2300,39 @@ async function createTqf3PreviewReadiness(){
   );
   return data;
 }
+async function submitTqf3HumanReview(){
+  const btn=$('#submit-tqf3-human-review');
+  if(!btn||btn.disabled)return;
+  const ok=window.confirm('ส่ง Preview ปัจจุบันเข้าสู่ Human Review หรือไม่? ขั้นนี้เป็นเพียงการส่งให้ทบทวน ยังไม่ใช่การอนุมัติ Controlled Export และยังไม่ทำให้เอกสารเป็นทางการ');
+  if(!ok)return;
+  const original=btn.textContent;
+  btn.disabled=true;
+  btn.textContent='กำลังส่ง…';
+  const out=$('#tqf3-preview-readiness-result');
+  try{
+    const {data,error}=await client.rpc('hepe_submit_tqf3_preview_by_code',courseArgs());
+    if(error)throw error;
+    const session=data?.session||data||{};
+    const status=session?.preview_status||data?.preview_status||'SUBMITTED';
+    if(out){
+      out.hidden=false;
+      out.className='notice ok';
+      out.innerHTML='<strong>ส่งเข้า Human Review แล้ว</strong><div class="help">Preview status: '+esc(status)+' · ยังไม่ใช่ Controlled Export approval</div>';
+    }
+    say('ส่ง TQF3 Preview เข้า Human Review แล้ว · '+status,'ok');
+  }catch(err){
+    if(out){
+      out.hidden=false;
+      out.className='notice danger';
+      out.innerHTML='<strong>ส่งเข้า Human Review ไม่สำเร็จ</strong><div class="help">'+esc(friendlyError(err))+'</div>';
+    }
+    throw err;
+  }finally{
+    btn.textContent=original;
+    btn.disabled=true;
+  }
+}
+
 async function saveTqf3(){
   if(!docCtx?.course?.course_offering_id)throw new Error('ยังไม่พบ Course Offering สำหรับปี/ภาคนี้ จึงยังบันทึก มคอ.3 ไม่ได้');
   say('กำลังบันทึก มคอ.3 Working Version…');
