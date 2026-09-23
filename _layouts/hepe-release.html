@@ -9,15 +9,17 @@ layout: single
   <p style="font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:#667085;">HEPE · Public Release Detail</p>
   <h1 id="release-detail-title">{{ release.release_code }}</h1>
   <p style="font-size:1.1rem;"><strong>{{ release.course_code }} — {{ release.course_title_th }}</strong></p>
-  <p>รายละเอียดของกระบวนวิชา ({{ release.document_type }}) · {{ release.programme_title_th }} · ภาคเรียนที่ {{ release.term_code }} ปีการศึกษา {{ release.academic_year }}</p>
+  <p>รายละเอียดของกระบวนวิชา ({{ release.document_type }}){% if release.programme_title_th %} · {{ release.programme_title_th }}{% endif %} · ภาคเรียนที่ {{ release.term_code }} ปีการศึกษา {{ release.academic_year }}</p>
 
   <div style="display:flex;flex-wrap:wrap;gap:.6rem;margin:1rem 0 1.2rem;">
     {% if release.display_label %}<span style="padding:.3rem .65rem;border-radius:999px;background:#f8fafc;color:#344054;font-weight:700;font-size:.82rem;">{{ release.display_label }}</span>{% endif %}
     <span style="padding:.3rem .65rem;border-radius:999px;background:#e8f7ee;color:#166534;font-weight:700;font-size:.82rem;">{{ release.release_status | replace: '_', ' ' }}</span>
+    {% assign effective_predecessor = release.registry_predecessor_release_code | default: release.predecessor_release_code %}
+    {% assign effective_successor = release.registry_successor_release_code | default: release.successor_release_code %}
     {% assign is_current = release.current_release %}
     {% if is_current == nil %}
       {% assign is_current = false %}
-      {% if release.successor_release_code == nil or release.successor_release_code == empty %}{% assign is_current = true %}{% endif %}
+      {% if effective_successor == nil or effective_successor == empty %}{% assign is_current = true %}{% endif %}
     {% endif %}
     {% if is_current %}
     <span style="padding:.3rem .65rem;border-radius:999px;background:#eef2ff;color:#3730a3;font-weight:700;font-size:.82rem;">CURRENT LINEAGE HEAD</span>
@@ -36,7 +38,7 @@ layout: single
     <div><dt style="color:#667085;font-size:.82rem;">Published</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.published_on }}</dd></div>
     <div><dt style="color:#667085;font-size:.82rem;">Release Scope</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.release_scope | replace: '_', ' ' }}</dd></div>
     <div><dt style="color:#667085;font-size:.82rem;">Source Provenance</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.source_provenance }}</dd></div>
-    <div><dt style="color:#667085;font-size:.82rem;">Template Scope</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.template_scope }}</dd></div>
+    {% if release.template_scope %}<div><dt style="color:#667085;font-size:.82rem;">Template Scope</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.template_scope }}</dd></div>{% endif %}
     <div><dt style="color:#667085;font-size:.82rem;">Institutional Official Claim</dt><dd style="margin:.2rem 0 0;font-weight:650;">{% if release.institutional_official_claim %}Yes{% else %}No{% endif %}</dd></div>
   </dl>
 
@@ -44,8 +46,8 @@ layout: single
     <h2 id="lineage-heading" style="font-size:1rem;margin:.1rem 0 .7rem;">Release lineage</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.7rem;">
       <div><span style="color:#667085;font-size:.82rem;">Lineage State</span><div><strong>{{ release.lineage_status }}</strong></div></div>
-      <div><span style="color:#667085;font-size:.82rem;">Predecessor</span><div>{% if release.predecessor_release_code %}<code>{{ release.predecessor_release_code }}</code>{% else %}None — first registered release{% endif %}</div></div>
-      <div><span style="color:#667085;font-size:.82rem;">Successor</span><div>{% if release.successor_release_code %}<code>{{ release.successor_release_code }}</code>{% else %}None registered{% endif %}</div></div>
+      <div><span style="color:#667085;font-size:.82rem;">Predecessor</span><div>{% if effective_predecessor %}<code>{{ effective_predecessor }}</code>{% else %}None — first registered release{% endif %}</div></div>
+      <div><span style="color:#667085;font-size:.82rem;">Successor</span><div>{% if effective_successor %}<code>{{ effective_successor }}</code>{% else %}None registered{% endif %}</div></div>
     </div>
   </section>
 
