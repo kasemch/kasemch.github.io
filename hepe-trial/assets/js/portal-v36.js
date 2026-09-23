@@ -2392,6 +2392,16 @@ function renderTqf3SourceControlEligibility(){
   $('#tqf3-source-control-note').textContent=e.eligible
     ?'ผ่าน eligibility สำหรับ HEPE Project-Controlled Source · ไม่ใช่ institutional official approval'
     :'ยังไม่ผ่าน eligibility · ระบบจะไม่อนุญาต source admission';
+
+  const basis=$('#tqf3-source-control-basis');
+  if(basis&&e.eligible&&!basis.value.trim()){
+    basis.value='Version '+(e.version_no??'ปัจจุบัน')+' ผ่าน validation = '+(e.validation_result||'PASS')+
+      ', ยืนยันรูปแบบหน่วยกิต '+(e.credit_pattern||'3(3-0-6)')+
+      ', มี PLO source-bound '+(e.source_bound_plo_count??0)+' ข้อ'+
+      ', CLO–PLO/I-R-M ผ่าน Programme Review '+(e.mapping_reviewed_count??0)+'/'+(e.mapping_total_count??0)+
+      ', Preview อยู่ในสถานะ '+(e.latest_preview_status||'SUBMITTED')+
+      ' และไม่มี unresolved blocking finding จึงรับรองเป็น HEPE Project-Controlled Source สำหรับการใช้งานภายในโครงการ โดยไม่ถือเป็นการรับรองอย่างเป็นทางการของมหาวิทยาลัย';
+  }
 }
 
 async function admitTqf3ProjectControlledSource(){
