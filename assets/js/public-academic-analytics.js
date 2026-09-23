@@ -6,6 +6,11 @@
   const teachingEl = document.getElementById('paa-teaching-data');
   if (!publicationEl) return;
 
+   const publicationsBase = script?.dataset?.publicationsBase || './publications/';
+  const teachingBase = script?.dataset?.teachingBase || './teaching/';
+  const researchStatusBase = script?.dataset?.researchStatusBase || './research-progress/';
+  const projectBase = script?.dataset?.projectBase || './research-project/';
+
   const parseJson = (el, fallback) => {
     try { return JSON.parse(el?.textContent || ''); } catch (_) { return fallback; }
   };
@@ -42,7 +47,8 @@
     drilldownTitle.textContent = title;
     drilldownSummary.textContent = summary;
     drilldownResults.innerHTML = html + (sourceHref ? `<p class="paa-source-link"><a href="${escapeHtml(sourceHref)}">Open ${escapeHtml(sourceLabel)} →</a></p>` : '');
-    drilldown.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    drilldown.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'nearest' });
   };
 
   const publicationCards = (items) => items.length ? items
@@ -72,14 +78,14 @@
   const byYear = Object.entries(countBy(publications, (item) => item.year)).sort((a, b) => Number(a[0]) - Number(b[0]));
   renderBars(document.getElementById('paa-publication-year'), byYear, (year) => {
     const items = publications.filter((item) => String(item.year) === String(year));
-    reveal(`Journal publications · ${year}`, `${items.length} verified journal record${items.length === 1 ? '' : 's'} in the public collection.`, publicationCards(items), 'Publications', '../publications/');
+    reveal(`Journal publications · ${year}`, `${items.length} verified journal record${items.length === 1 ? '' : 's'} in the public collection.`, publicationCards(items), 'Publications', publicationsBase);
   });
 
   const byVenue = Object.entries(countBy(publications, (item) => item.venue || 'Venue not specified'))
     .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
   renderBars(document.getElementById('paa-venue-distribution'), byVenue, (venue) => {
     const items = publications.filter((item) => String(item.venue || 'Venue not specified') === String(venue));
-    reveal(`Venue · ${venue}`, `${items.length} verified journal record${items.length === 1 ? '' : 's'} use this venue name in the public metadata. No ranking or indexing inference is made.`, publicationCards(items), 'Publications', '../publications/');
+    reveal(`Venue · ${venue}`, `${items.length} verified journal record${items.length === 1 ? '' : 's'} use this venue name in the public metadata. No ranking or indexing inference is made.`, publicationCards(items), 'Publications', publicationsBase);
   });
 
   const evidenceConfig = {
@@ -102,12 +108,12 @@
     row.addEventListener('click', () => {
       setSelection(row);
       const courses = (teaching.courses || []).filter((course) => {
-        if (key === 'direct') return true;
+        if (key === 'direct') return course.directEvidence === true;
         const value = String(course[cfg.field] || '');
         return value && !cfg.missing.test(value);
       });
       const cards = courses.length ? courses.map((course) => `<article class="paa-record"><span>${escapeHtml(course.code)} · ${escapeHtml(course.offeringStatus)}</span><h3>${escapeHtml(course.title)}</h3>${key !== 'direct' ? `<p><strong>${escapeHtml(cfg.label)}:</strong> ${escapeHtml(course[cfg.field])}</p>` : `<p><strong>TQF3:</strong> ${escapeHtml(course.tqf3)}</p><p><strong>TQF5:</strong> ${escapeHtml(course.tqf5)}</p><p><strong>Verification:</strong> ${escapeHtml(course.verification)}</p>`}</article>`).join('') : '<p class="paa-caption">No course-level public metadata is available for this evidence category.</p>';
-      reveal(cfg.label, `${located}/${total} AY2569 course codes have this evidence category located in the reconciliation summary. Course cards below are limited to public-safe course-quality metadata already admitted to the site.`, cards, 'Teaching portfolio', '../teaching/');
+      reveal(cfg.label, `${located}/${total} AY2569 course codes have this evidence category located in the reconciliation summary. Course cards below are limited to public-safe course-quality metadata already admitted to the site.`, cards, 'Teaching portfolio', teachingBase);
     });
   });
 
@@ -134,8 +140,11 @@
           setSelection(button);
           const stage = button.dataset.stage;
           const matches = projects.filter((project) => project.stage === stage);
-          const cards = matches.length ? matches.map((project) => `<article class="paa-record"><span>${escapeHtml(project.portfolioClassLabel || project.portfolioClass)} · ${escapeHtml(project.statusLabel || project.status)}</span><h3>${escapeHtml(project.shortTitle || project.title)}</h3><p>${escapeHtml(project.currentPhase || project.evidenceNote || '')}</p>${project.detailPath ? `<a href="${escapeHtml(project.detailPath)}">Open project detail →</a>` : ''}</article>`).join('') : '<p class="paa-caption">No public-summary project is currently verified at this stage.</p>';
-          reveal(`Research stage · ${stage}`, `${matches.length} public-summary project${matches.length === 1 ? '' : 's'} currently sit at this latest verified public stage. This is not a completion percentage.`, cards, 'Research Status', '../research-progress/');
+          const cards = matches.length ? matches.map((project) => {
+            const detailHref = project.id ? `${projectBase}?id=${encodeURIComponent(project.id)}` : '';
+            return `<article class="paa-record"><span>${escapeHtml(project.portfolioClassLabel || project.portfolioClass)} · ${escapeHtml(project.statusLabel || project.status)}</span><h3>${escapeHtml(project.shortTitle || project.title)}</h3><p>${escapeHtml(project.currentPhase || project.evidenceNote || '')}</p>${detailHref ? `<a href="${escapeHtml(detailHref)}">Open project detail →</a>` : ''}</article>`;
+          }).join('') : '<p class="paa-caption">No public-summary project is currently verified at this stage.</p>';
+          reveal(`Research stage · ${stage}`, `${matches.length} public-summary project${matches.length === 1 ? '' : 's'} currently sit at this latest verified public stage. This is not a completion percentage.`, cards, 'Research Status', researchStatusBase);
         }));
         if (verifiedTarget) verifiedTarget.textContent = registry.lastVerified ? `Registry verified ${formatDate(registry.lastVerified)}` : 'Registry date not asserted';
       })
