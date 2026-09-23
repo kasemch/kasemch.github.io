@@ -469,7 +469,24 @@
                   <button id="tqf3-review-version" type="button" class="btn primary" disabled>รับรอง Version ผ่าน Human Review</button>
                 </div>
                 <div id="tqf3-version-review-action-status" class="notice info" hidden></div>
-              </div>
+
+
+              <div id="tqf3-finalize-release-panel" class="form-section">
+                <div class="form-section-header">
+                  <div>
+                    <h3>Finalize TQF3 Release</h3>
+                    <div class="help">สร้าง immutable final record จาก Preview ที่ผ่าน Controlled Export Approval และ B03.15 = READY แล้ว ขั้นนี้ไม่ใช่ public publication</div>
+                  </div>
+                  <span class="badge ok">READY</span>
+                </div>
+                <div class="notice info">
+                  ใช้ authenticated actor context ของผู้ใช้ที่ล็อกอินใน Portal และตรวจ bundle SHA-256 ก่อน finalization
+                </div>
+                <div class="actions">
+                  <button id="tqf3-finalize-release" type="button" class="btn primary">Finalize TQF3 Release</button>
+                </div>
+                <div id="tqf3-finalize-release-status" class="notice info" hidden></div>
+              </div>              </div>
             </section>
           </section>
 
@@ -875,6 +892,6 @@
   <p id="table-scroll-instruction" class="sr-only">ตารางนี้อาจเลื่อนในแนวนอนได้ ใช้ปุ่มลูกศรหรือเลื่อนหน้าจอเพื่อดูคอลัมน์เพิ่มเติม</p></main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./assets/js/portal-v36.js?v=36.27"></script>
+  <script src="./assets/js/portal-v36.js?v=36.28"></script>
 </body>
 </html>
