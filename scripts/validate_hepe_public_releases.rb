@@ -19,7 +19,7 @@ seen_codes = {}
 release_by_code = {}
 
 schema_version = registry['schema_version']
-errors << "Unsupported schema_version: #{schema_version.inspect}" unless [1, 2].include?(schema_version)
+errors << "Unsupported schema_version: #{schema_version.inspect}" unless [1, 2, 3].include?(schema_version)
 errors << 'Registry public_safe_only must remain true.' unless registry['public_safe_only'] == true
 
 normalize_path = lambda do |site_path|
@@ -96,16 +96,24 @@ releases.each do |release|
     'document_type' => 'document_type',
     'course_code' => 'course_code',
     'course_title_th' => 'course_title_th',
-    'programme_title_th' => 'programme_title_th',
     'academic_year' => 'academic_year',
     'term_code' => 'term_code',
     'source_provenance' => 'source_provenance',
-    'template_scope' => 'template_scope',
     'institutional_official_claim' => 'institutional_official_claim',
     'canonical_credit_pattern' => 'canonical_credit_pattern',
     'bundle_sha256' => 'bundle_sha256',
     'published_on' => 'published_on'
   }.each do |manifest_key, release_key|
+    check_equal.call(code, 'manifest', manifest_key, release[release_key], manifest[manifest_key])
+  end
+
+  # Presentation metadata is optional in schema v3. Compare it only when both
+  # the canonical discovery record and immutable manifest explicitly expose it.
+  {
+    'programme_title_th' => 'programme_title_th',
+    'template_scope' => 'template_scope'
+  }.each do |manifest_key, release_key|
+    next unless release.key?(release_key) && manifest.key?(manifest_key)
     check_equal.call(code, 'manifest', manifest_key, release[release_key], manifest[manifest_key])
   end
 
@@ -144,18 +152,24 @@ releases.each do |release|
     errors << "#{code}: display_label #{display_label.inspect} must agree with revision_number #{revision}"
   end
 
+  effective_successor = if schema_version >= 3 && release.key?('registry_successor_release_code')
+                          release['registry_successor_release_code']
+                        else
+                          release['successor_release_code']
+                        end
+
   if release.key?('current_release')
-    expected_current = release['successor_release_code'].nil?
+    expected_current = effective_successor.nil?
     check_equal.call(code, 'canonical', 'current_release', expected_current, release['current_release'])
   end
 
   if release.key?('superseded')
-    expected_superseded = !release['successor_release_code'].nil?
+    expected_superseded = !effective_successor.nil?
     check_equal.call(code, 'canonical', 'superseded', expected_superseded, release['superseded'])
   end
 
   if release.key?('superseded_by')
-    check_equal.call(code, 'canonical', 'superseded_by', release['successor_release_code'], release['superseded_by'])
+    check_equal.call(code, 'canonical', 'superseded_by', effective_successor, release['superseded_by'])
   end
 
   family = release['release_family']
@@ -182,8 +196,16 @@ releases.each do |release|
   code = release['release_code'].to_s
   next if code.empty?
 
-  predecessor = release['predecessor_release_code']
-  successor = release['successor_release_code']
+  predecessor = if schema_version >= 3 && release.key?('registry_predecessor_release_code')
+                  release['registry_predecessor_release_code']
+                else
+                  release['predecessor_release_code']
+                end
+  successor = if schema_version >= 3 && release.key?('registry_successor_release_code')
+                release['registry_successor_release_code']
+              else
+                release['successor_release_code']
+              end
 
   if predecessor == code
     errors << "#{code}: predecessor_release_code cannot reference itself"
@@ -196,8 +218,15 @@ releases.each do |release|
     referenced = release_by_code[predecessor]
     if referenced.nil?
       errors << "#{code}: predecessor_release_code references missing release #{predecessor}"
-    elsif referenced['successor_release_code'] != code
-      errors << "#{code}: predecessor #{predecessor} must reciprocally declare successor_release_code #{code}"
+    else
+      referenced_successor = if schema_version >= 3 && referenced.key?('registry_successor_release_code')
+                               referenced['registry_successor_release_code']
+                             else
+                               referenced['successor_release_code']
+                             end
+      if referenced_successor != code
+        errors << "#{code}: predecessor #{predecessor} must reciprocally declare registry successor #{code}"
+      end
     end
   end
 
@@ -205,8 +234,15 @@ releases.each do |release|
     referenced = release_by_code[successor]
     if referenced.nil?
       errors << "#{code}: successor_release_code references missing release #{successor}"
-    elsif referenced['predecessor_release_code'] != code
-      errors << "#{code}: successor #{successor} must reciprocally declare predecessor_release_code #{code}"
+    else
+      referenced_predecessor = if schema_version >= 3 && referenced.key?('registry_predecessor_release_code')
+                                 referenced['registry_predecessor_release_code']
+                               else
+                                 referenced['predecessor_release_code']
+                               end
+      if referenced_predecessor != code
+        errors << "#{code}: successor #{successor} must reciprocally declare registry predecessor #{code}"
+      end
     end
   end
 end
@@ -214,7 +250,11 @@ end
 # A release can be the predecessor of at most one successor in the linear R1→R2→R3 model.
 predecessor_claims = Hash.new { |hash, key| hash[key] = [] }
 releases.each do |release|
-  predecessor = release['predecessor_release_code']
+  predecessor = if schema_version >= 3 && release.key?('registry_predecessor_release_code')
+                  release['registry_predecessor_release_code']
+                else
+                  release['predecessor_release_code']
+                end
   predecessor_claims[predecessor] << release['release_code'] if predecessor
 end
 predecessor_claims.each do |predecessor, children|
@@ -239,7 +279,11 @@ release_by_code.each_key do |start_code|
     node = release_by_code[current]
     break unless node
 
-    current = node['successor_release_code']
+    current = if schema_version >= 3 && node.key?('registry_successor_release_code')
+                node['registry_successor_release_code']
+              else
+                node['successor_release_code']
+              end
   end
 end
 
