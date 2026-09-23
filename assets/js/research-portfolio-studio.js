@@ -200,12 +200,17 @@
     });
   }
 
-  explorerClose?.addEventListener('click', () => {
+  function closeExplorer() {
     if (!explorer) return;
     const active = document.querySelector('.rps-project-drill[aria-expanded="true"]');
     explorer.hidden = true;
     document.querySelectorAll('.rps-project-drill').forEach(button => button.setAttribute('aria-expanded','false'));
     active?.focus();
+  }
+
+  explorerClose?.addEventListener('click', closeExplorer);
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && explorer && !explorer.hidden) closeExplorer();
   });
 
   fetch(registryUrl, {cache:'no-store'})
