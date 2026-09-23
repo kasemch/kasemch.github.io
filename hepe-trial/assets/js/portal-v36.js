@@ -15,7 +15,7 @@ const num=v=>v===''||v==null?null:Number(v);
 
 let cfg={},programmeCatalog=[],courseCatalog=[],termCatalog=[],curriculumCtx=null,docCtx=null;
 let versionHistory=[],evidenceWorkspace=null,cqiContext=null,dashboardCtx=null,evidenceQueueCtx=null;
-let courseResponsibilityCtx=null,programmeResponsibilityCtx=null,templateReviewCtx=null,templateReviewLoaded=false,currentTqf3Preview=null,tqf3SourceControlEligibility=null,tqf3VersionReviewEligibility=null;
+let courseResponsibilityCtx=null,programmeResponsibilityCtx=null,templateReviewCtx=null,templateReviewLoaded=false,currentTqf3Preview=null,tqf3SourceControlEligibility=null,tqf3VersionReviewEligibility=null,hed2503RubricReviewCtx=null;
 let activeTab='tqf3',activeAiSection='curriculum',aiSuggestions=[],aiDecisions=[];
 let saveTimer=null,staticBound=false,aiUndoStack=[],aiSectionRuns={},aiSectionSuggestionCache={},reviewQueueIndex=0,reviewQueueFilter='ALL',reuseLineage=[],changeRationales=[];
 
@@ -36,6 +36,13 @@ function friendlyError(err){
     ['PROGRAMME_CHAIR_AUTHORITY_REQUIRED','ต้องใช้สิทธิ์ Programme Chair สำหรับ Source Control Admission'],
     ['TQF3_VERSION_REVIEW_ELIGIBILITY_NOT_MET','ยังไม่ผ่านเงื่อนไข Version Human Review'],
     ['REVIEW_NOTE_REQUIRED','กรุณาระบุเหตุผล Human Review ก่อน'],
+    ['RUBRIC_OUT_OF_SCOPE','Rubric นี้อยู่นอกขอบเขต HED2503 revision'],
+    ['RUBRIC_NOT_FOUND','ไม่พบ Rubric ที่เลือก'],
+    ['RUBRIC_NOT_DRAFT','Rubric นี้ไม่ได้อยู่ในสถานะ DRAFT'],
+    ['ALL_THREE_RUBRICS_MUST_BE_REVIEWED','ต้อง Review Rubric ให้ครบทั้ง 3 ชุดก่อนสร้าง Version 13'],
+    ['ACTIVE_INSTRUCTOR_ASSIGNMENT_REQUIRED','ยังไม่มี controlled instructor assignment ที่ใช้งานอยู่'],
+    ['V12_REVIEWED_CONTROLLED_BASELINE_REQUIRED','Version 12 ต้องเป็น REVIEWED + CONTROLLED_SOURCE ก่อน'],
+    ['V12_FINAL_RECORD_REQUIRED','ไม่พบ immutable FINAL record ของ Version 12'],
     ['REVIEWED_PREVIEW_EXPORT_GATE_NOT_OPEN','Fresh Reviewed Preview ยังไม่เปิด Controlled Export gate'],
     ['COURSE_OUT_OF_SCOPE','รายวิชานี้อยู่นอกขอบเขต HED/PED ของระบบ'],
     ['COURSE_OFFERING_NOT_FOUND','ยังไม่พบ Course Offering สำหรับปี/ภาคที่เลือก'],
@@ -191,6 +198,7 @@ async function loadSelectedCourse(){
     await loadTqf3HumanReviewState();
     await loadTqf3SourceControlEligibility();
     await loadTqf3VersionReviewEligibility();
+    await loadHed2503RubricReviewContext();
     renderAiRail();
     ensureV33Ui();
     offerLocalRecovery();
@@ -2258,6 +2266,21 @@ document.addEventListener('click',e=>{
 },true);
 
 document.addEventListener('click',e=>{
+  const btn=e.target.closest?.('[data-review-hed2503-rubric]');
+  if(!btn)return;
+  e.preventDefault();e.stopPropagation();
+  reviewHed2503Rubric(btn.dataset.reviewHed2503Rubric,btn)
+    .catch(err=>say(friendlyError(err),'danger'));
+},true);
+
+document.addEventListener('click',e=>{
+  const btn=e.target.closest?.('#hed2503-create-v13');
+  if(!btn)return;
+  e.preventDefault();e.stopPropagation();
+  createHed2503V13Draft().catch(err=>say(friendlyError(err),'danger'));
+},true);
+
+document.addEventListener('click',e=>{
   const btn=e.target.closest?.('[data-tqf3-controlled-export]');
   if(!btn)return;
   e.preventDefault();
@@ -2477,6 +2500,143 @@ async function finalizeTqf3Release(){
       btn.disabled=false;
       btn.textContent='Finalize TQF3 Release';
     }
+  }
+}
+
+async function loadHed2503RubricReviewContext(){
+  const panel=$('#hed2503-rubric-review-panel');
+  if(!panel)return;
+  const courseCode=$('#course-select')?.value||curriculumCtx?.course?.course_code||'';
+  if(courseCode!=='HED2503'){
+    panel.hidden=true;
+    hed2503RubricReviewCtx=null;
+    return;
+  }
+  const {data,error}=await client.rpc('hepe_hed2503_rubric_review_context');
+  if(error){
+    panel.hidden=true;
+    hed2503RubricReviewCtx=null;
+    return;
+  }
+  hed2503RubricReviewCtx=data;
+  renderHed2503RubricReviewContext();
+}
+
+function renderHed2503RubricReviewContext(){
+  const panel=$('#hed2503-rubric-review-panel');
+  const host=$('#hed2503-rubric-review-list');
+  const createBtn=$('#hed2503-create-v13');
+  const instructor=$('#hed2503-v13-instructor');
+  if(!panel||!host)return;
+  const ctx=hed2503RubricReviewCtx;
+  if(!ctx){panel.hidden=true;return;}
+  panel.hidden=false;
+
+  const ins=ctx.instructor;
+  if(instructor){
+    instructor.innerHTML=ins
+      ? '<strong>ผู้สอนที่จะเข้า Version 13:</strong> '+esc(ins.display_label||'—')+
+        ' · '+esc(ins.assignment_role||'—')+' · '+esc(ins.status||'—')
+      : '<strong>ผู้สอน:</strong> ยังไม่มี controlled instructor assignment';
+  }
+
+  const rubrics=Array.isArray(ctx.rubrics)?ctx.rubrics:[];
+  host.innerHTML=rubrics.map((r,idx)=>{
+    const content=r.content||{};
+    const criteria=Array.isArray(content.criteria)?content.criteria:[];
+    const rows=criteria.map(c=>{
+      const d=c.descriptors||{};
+      return '<tr>'+
+        '<td><strong>'+esc(c.code||'')+'</strong><br>'+esc(c.title||'')+
+        '<div class="help">น้ำหนัก '+esc(c.weight_percent??'—')+'%</div></td>'+
+        '<td>'+esc(d['4']||'—')+'</td>'+
+        '<td>'+esc(d['3']||'—')+'</td>'+
+        '<td>'+esc(d['2']||'—')+'</td>'+
+        '<td>'+esc(d['1']||'—')+'</td>'+
+      '</tr>';
+    }).join('');
+    const reviewed=r.version_status==='REVIEWED';
+    return '<div class="form-section">'+
+      '<div class="form-section-header"><div><h4>'+esc(r.title_th||r.rubric_code)+'</h4>'+
+      '<div class="help">'+esc(r.rubric_code)+' · Version '+esc(r.version_no??'—')+
+      ' · '+esc(r.version_status||'—')+'</div></div>'+
+      '<span class="badge '+(reviewed?'ok':'warn')+'">'+esc(r.version_status||'—')+'</span></div>'+
+      '<div class="table-wrap"><table class="data-table"><thead><tr>'+
+      '<th>เกณฑ์</th><th>4 ดีมาก</th><th>3 ดี</th><th>2 พอใช้</th><th>1 ต้องปรับปรุง</th>'+
+      '</tr></thead><tbody>'+rows+'</tbody></table></div>'+
+      '<div class="field"><label>บันทึก Human Review</label>'+
+      '<textarea data-rubric-review-note="'+esc(r.rubric_code)+'" '+(reviewed?'disabled':'')+'>'+
+      (reviewed?'ผ่านการทบทวนโดย Programme Chair แล้ว':
+       'ตรวจเกณฑ์ ระดับคุณภาพ และ descriptor แล้ว เห็นว่าสอดคล้องกับ CLO และกิจกรรมประเมินของ HED2503 สำหรับใช้เป็น reviewed draft ในการจัดทำ TQF3 Version 13')+
+      '</textarea></div>'+
+      '<div class="actions"><button type="button" class="btn primary" data-review-hed2503-rubric="'+esc(r.rubric_code)+'" '+(reviewed?'disabled':'')+'>'+
+      (reviewed?'Reviewed แล้ว':'รับรองผ่าน Human Review')+'</button></div>'+
+    '</div>';
+  }).join('');
+
+  if(createBtn){
+    createBtn.disabled=!ctx.all_reviewed || !ins;
+    createBtn.textContent=ctx.all_reviewed?'สร้าง TQF3 Version 13 Draft':'รอ Rubric Review ให้ครบ 3/3';
+  }
+  const status=$('#hed2503-rubric-review-status');
+  if(status){
+    const reviewed=rubrics.filter(r=>r.version_status==='REVIEWED').length;
+    status.textContent='Rubric reviewed '+reviewed+'/'+rubrics.length+
+      (ctx.all_reviewed?' · พร้อมสร้าง Version 13':'');
+    status.className='badge '+(ctx.all_reviewed?'ok':'warn');
+  }
+}
+
+async function reviewHed2503Rubric(code,btn){
+  const noteEl=document.querySelector('[data-rubric-review-note="'+CSS.escape(code)+'"]');
+  const note=noteEl?.value?.trim();
+  if(!note)throw new Error('REVIEW_NOTE_REQUIRED');
+  if(btn?.dataset.busy==='1')return;
+  if(btn){btn.dataset.busy='1';btn.disabled=true;btn.textContent='กำลังบันทึก Review…';}
+  try{
+    const {data,error}=await client.rpc('hepe_review_hed2503_rubric',{
+      p_rubric_code:code,
+      p_review_note:note
+    });
+    if(error)throw error;
+    say('Rubric '+code+' ผ่าน Human Review แล้ว','ok');
+    await loadHed2503RubricReviewContext();
+  }finally{
+    if(btn){btn.dataset.busy='0';}
+  }
+}
+
+async function createHed2503V13Draft(){
+  const btn=$('#hed2503-create-v13');
+  const out=$('#hed2503-v13-create-status');
+  if(btn?.dataset.busy==='1')return;
+  if(btn){btn.dataset.busy='1';btn.disabled=true;btn.textContent='กำลังสร้าง Version 13…';}
+  if(out){
+    out.hidden=false;out.className='notice info';
+    out.innerHTML='<strong>กำลังสร้าง TQF3 Version 13 Draft</strong><div class="help">Carry-forward Version 12 + controlled instructor + reviewed rubrics โดยคง Final Record เดิมไว้</div>';
+  }
+  try{
+    const {data,error}=await client.rpc('hepe_prepare_hed2503_tqf3_v13_from_reviewed_rubrics');
+    if(error)throw error;
+    if(out){
+      out.className='notice ok';
+      out.innerHTML='<strong>Version 13 Draft พร้อม</strong>'+
+        '<div class="help">Version '+esc(data?.version_no||13)+' · '+esc(data?.version_status||'DRAFT')+
+        ' · source='+esc(data?.source_status||'UNVERIFIED')+
+        ' · instructor='+esc(data?.instructor_count??'—')+
+        ' · rubrics='+esc(data?.rubric_count??'—')+'</div>'+
+        '<div class="help">Version 12 FINAL record ถูกเก็บไว้โดยไม่แก้ไข</div>';
+    }
+    say('TQF3 Version 13 Draft สร้างแล้ว','ok');
+    await loadSelectedCourse();
+  }catch(err){
+    if(out){
+      out.hidden=false;out.className='notice danger';
+      out.innerHTML='<strong>สร้าง Version 13 ไม่สำเร็จ</strong><div class="help">'+esc(friendlyError(err))+'</div>';
+    }
+    throw err;
+  }finally{
+    if(btn){btn.dataset.busy='0';}
   }
 }
 
