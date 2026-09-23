@@ -486,6 +486,26 @@
                   <button id="tqf3-finalize-release" type="button" class="btn primary">Finalize TQF3 Release</button>
                 </div>
                 <div id="tqf3-finalize-release-status" class="notice info" hidden></div>
+              </div>
+
+              <div id="tqf3-controlled-export-panel" class="form-section">
+                <div class="form-section-header">
+                  <div>
+                    <h3>Post-Finalization Controlled Export</h3>
+                    <div class="help">สร้าง export run จาก immutable FINAL record โดยตรง · ไม่ใช่ public publication และไม่ใช่ institutional official release</div>
+                  </div>
+                  <span class="badge ok">FINAL SOURCE</span>
+                </div>
+                <div class="notice info">
+                  ทุก format จะใช้ Final Record ID และ SHA-256 เดียวกัน เพื่อรักษา traceability ของเอกสาร
+                </div>
+                <div class="actions">
+                  <button type="button" class="btn" data-tqf3-controlled-export="HTML">HTML</button>
+                  <button type="button" class="btn" data-tqf3-controlled-export="DOCX">DOCX</button>
+                  <button type="button" class="btn" data-tqf3-controlled-export="PRINT_PDF">PRINT_PDF</button>
+                  <button type="button" class="btn" data-tqf3-controlled-export="XLSX">XLSX</button>
+                </div>
+                <div id="tqf3-controlled-export-status" class="notice info" hidden></div>
               </div>              </div>
             </section>
           </section>
@@ -892,6 +912,6 @@
   <p id="table-scroll-instruction" class="sr-only">ตารางนี้อาจเลื่อนในแนวนอนได้ ใช้ปุ่มลูกศรหรือเลื่อนหน้าจอเพื่อดูคอลัมน์เพิ่มเติม</p></main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./assets/js/portal-v36.js?v=36.28"></script>
+  <script src="./assets/js/portal-v36.js?v=36.29"></script>
 </body>
 </html>
