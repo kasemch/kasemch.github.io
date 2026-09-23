@@ -1,0 +1,15 @@
+{
+  "public_release_code": "HEPE-HED2503-TQF3-2569-1-R2",
+  "lineage_status": "OPEN_R2_CURRENT",
+  "predecessor_release_code": "HEPE-HED2503-TQF3-2569-1-R1",
+  "successor_release_code": null,
+  "document_type": "TQF3",
+  "course_code": "HED2503",
+  "academic_year": "2569",
+  "term_code": "1",
+  "tqf3_version_no": 13,
+  "bundle_sha256": "4a0687da40ca641e6f8b0de1aa96b3f1179dda78a118be664e9e88b5fce29ce3",
+  "mutation_policy": "DO_NOT_MUTATE_R1_OR_R2_IN_PLACE",
+  "next_release_policy": "Publish R3 or later as a new release and set predecessor_release_code to this R2 code.",
+  "public_safe": true
+}
