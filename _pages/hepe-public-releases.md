@@ -51,10 +51,12 @@ classes: wide
 
   <div id="hepe-release-list" data-release-count="{{ release_count }}" data-course-count="{{ course_count }}" data-document-type-count="{{ document_type_count }}">
   {% for release in hepe_releases %}
+  {% assign effective_predecessor = release.registry_predecessor_release_code | default: release.predecessor_release_code %}
+  {% assign effective_successor = release.registry_successor_release_code | default: release.successor_release_code %}
   {% assign is_current = release.current_release %}
   {% if is_current == nil %}
     {% assign is_current = false %}
-    {% if release.successor_release_code == nil or release.successor_release_code == empty %}{% assign is_current = true %}{% endif %}
+    {% if effective_successor == nil or effective_successor == empty %}{% assign is_current = true %}{% endif %}
   {% endif %}
   {% if release.detail_route %}
     {% assign detail_path = release.detail_route %}
@@ -83,7 +85,7 @@ classes: wide
     </div>
 
     <h2 id="release-{{ forloop.index }}-title" style="margin:.4rem 0;"><a href="{{ detail_path | relative_url }}">{{ release.course_code }} — {{ release.course_title_th }}</a></h2>
-    <p>รายละเอียดของกระบวนวิชา ({{ release.document_type }}) · {{ release.programme_title_th }} · ภาคเรียนที่ {{ release.term_code }} ปีการศึกษา {{ release.academic_year }}</p>
+    <p>รายละเอียดของกระบวนวิชา ({{ release.document_type }}){% if release.programme_title_th %} · {{ release.programme_title_th }}{% endif %} · ภาคเรียนที่ {{ release.term_code }} ปีการศึกษา {{ release.academic_year }}</p>
 
     <dl style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.8rem;margin:1.2rem 0;">
       <div><dt style="color:#667085;font-size:.82rem;">Document Type</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.document_type }}</dd></div>
@@ -92,7 +94,7 @@ classes: wide
       {% if release.release_family %}<div><dt style="color:#667085;font-size:.82rem;">Release Family</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.release_family }}</dd></div>{% endif %}
       <div><dt style="color:#667085;font-size:.82rem;">Release Scope</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.release_scope | replace: '_', ' ' }}</dd></div>
       <div><dt style="color:#667085;font-size:.82rem;">Source Provenance</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.source_provenance }}</dd></div>
-      <div><dt style="color:#667085;font-size:.82rem;">Template Scope</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.template_scope }}</dd></div>
+      {% if release.template_scope %}<div><dt style="color:#667085;font-size:.82rem;">Template Scope</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.template_scope }}</dd></div>{% endif %}
       <div><dt style="color:#667085;font-size:.82rem;">Lineage State</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.lineage_status }}</dd></div>
       <div><dt style="color:#667085;font-size:.82rem;">Published</dt><dd style="margin:.2rem 0 0;font-weight:650;">{{ release.published_on }}</dd></div>
       <div><dt style="color:#667085;font-size:.82rem;">Institutional Official Claim</dt><dd style="margin:.2rem 0 0;font-weight:650;">{% if release.institutional_official_claim %}Yes{% else %}No{% endif %}</dd></div>
@@ -101,8 +103,8 @@ classes: wide
     <section style="margin:1.2rem 0;padding:1rem 1.1rem;border-left:4px solid #d0d5dd;background:#f8fafc;" aria-label="Release lineage relationship">
       <strong style="display:block;margin-bottom:.45rem;">Release lineage</strong>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.55rem;">
-        <div><span style="color:#667085;font-size:.82rem;">Predecessor</span><div>{% if release.predecessor_release_code %}<code>{{ release.predecessor_release_code }}</code>{% else %}None — first registered release{% endif %}</div></div>
-        <div><span style="color:#667085;font-size:.82rem;">Successor</span><div>{% if release.successor_release_code %}<code>{{ release.successor_release_code }}</code>{% else %}None registered{% endif %}</div></div>
+        <div><span style="color:#667085;font-size:.82rem;">Predecessor</span><div>{% if effective_predecessor %}<code>{{ effective_predecessor }}</code>{% else %}None — first registered release{% endif %}</div></div>
+        <div><span style="color:#667085;font-size:.82rem;">Successor</span><div>{% if effective_successor %}<code>{{ effective_successor }}</code>{% else %}None registered{% endif %}</div></div>
       </div>
     </section>
 
