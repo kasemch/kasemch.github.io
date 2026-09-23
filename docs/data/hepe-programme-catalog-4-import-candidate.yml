@@ -1,0 +1,54 @@
+schema_version: 1
+status: CONTROLLED_IMPORT_CANDIDATE
+environment: NON_PRODUCTION
+source:
+  provider: GOOGLE_DRIVE
+  file_title: Curricula_4_Import
+  file_id: 1ZS7fukhgHEThtTdX0VBVO67F6kOYT-72uQxWJuHQQP8
+  sheet: Untitled
+  range: A1:G5
+  observed_on: 2026-09-24
+
+programmes:
+  - source_curriculum_id: CUR-001
+    title_th: "หลักสูตรศึกษาศาสตรมหาบัณฑิต สาขาวิชาพลศึกษาและกีฬา"
+    degree_level: "ปริญญาโท"
+    tracks_branches: "พลศึกษาและกีฬา"
+    programme_identity_verified: true
+    course_membership_status: PENDING_CONTROLLED_IMPORT
+    assignment_ready: false
+
+  - source_curriculum_id: CUR-002
+    title_th: "หลักสูตรศึกษาศาสตรบัณฑิต สาขาวิชาพลศึกษา"
+    degree_level: "ปริญญาตรี"
+    tracks_branches: "พลศึกษา (วิชาชีพครู)"
+    programme_identity_verified: true
+    course_membership_status: PENDING_CONTROLLED_IMPORT
+    assignment_ready: false
+
+  - source_curriculum_id: CUR-003
+    title_th: "หลักสูตรศึกษาศาสตรบัณฑิต สาขาวิชาสุขศึกษาและพลศึกษา"
+    degree_level: "ปริญญาตรี"
+    tracks_branches: "สุขศึกษาและพลศึกษา (วิชาชีพครู)"
+    programme_identity_verified: true
+    course_membership_status: ACTIVE_EXISTING_RUNTIME
+    assignment_ready: true
+
+  - source_curriculum_id: CUR-004
+    title_th: "หลักสูตรวิทยาศาสตรบัณฑิต สาขาวิชาวิทยาศาสตร์การกีฬาประยุกต์"
+    degree_level: "ปริญญาตรี"
+    tracks_branches: "1) วิทยาศาสตร์การกีฬาประยุกต์ 2) การบริหารจัดการนันทนาการ"
+    programme_identity_verified: true
+    course_membership_status: PENDING_CONTROLLED_IMPORT
+    assignment_ready: false
+
+governance:
+  do_not_infer_course_membership: true
+  authentication_is_not_authority: true
+  assignment_requires_controlled_programme_and_course_membership: true
+  institutional_official_claim: false
+
+readiness:
+  programme_identity_verified: "4/4"
+  assignment_ready: "1/4"
+  next_gate: COURSE_MEMBERSHIP_CONTROLLED_IMPORT
