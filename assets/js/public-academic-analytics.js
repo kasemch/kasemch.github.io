@@ -6,7 +6,9 @@
   const teachingEl = document.getElementById('paa-teaching-data');
   if (!publicationEl) return;
 
-   const publicationsBase = script?.dataset?.publicationsBase || './publications/';
+  const script = document.currentScript;
+  const researchUrl = script?.dataset?.researchUrl;
+  const publicationsBase = script?.dataset?.publicationsBase || './publications/';
   const teachingBase = script?.dataset?.teachingBase || './teaching/';
   const researchStatusBase = script?.dataset?.researchStatusBase || './research-progress/';
   const projectBase = script?.dataset?.projectBase || './research-project/';
@@ -117,8 +119,6 @@
     });
   });
 
-  const script = document.currentScript;
-  const researchUrl = script?.dataset?.researchUrl;
   const lifecycleTarget = document.getElementById('paa-research-lifecycle');
   const verifiedTarget = document.getElementById('paa-research-verified');
   if (researchUrl && lifecycleTarget) {
