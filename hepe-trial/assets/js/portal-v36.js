@@ -2305,7 +2305,7 @@ document.addEventListener('click',e=>{
 },true);
 
 document.addEventListener('click',e=>{
-  const btn=e.target.closest?.('#tqf3-review-version');
+  const btn=e.target.closest?.('#tqf3-review-version, #tqf3-review-version-top');
   if(!btn)return;
   e.preventDefault();
   e.stopPropagation();
@@ -2760,12 +2760,26 @@ function renderTqf3VersionReviewEligibility(){
   ].map(x=>'<div class="help">'+(x[1]?'✓':'✕')+' <b>'+esc(x[0])+':</b> '+esc(x[2])+'</div>').join('');
 
   const btn=$('#tqf3-review-version');
+  const topBtn=$('#tqf3-review-version-top');
   if(e.already_reviewed||e.version_status==='REVIEWED'){
     btn.disabled=true;
     btn.textContent='Version ผ่าน Human Review แล้ว';
+    if(topBtn){
+      topBtn.hidden=false;
+      topBtn.disabled=true;
+      topBtn.textContent='✓ Version '+(e.version_no??'')+' ผ่าน Human Review แล้ว';
+    }
   }else{
     btn.disabled=!e.eligible;
     btn.textContent='รับรอง Version '+(e.version_no??'')+' ผ่าน Human Review';
+    if(topBtn){
+      topBtn.hidden=false;
+      topBtn.disabled=!e.eligible;
+      topBtn.textContent='✓ Human Gate · Review Version '+(e.version_no??'');
+      topBtn.title=e.eligible
+        ?'การกดนี้เป็น Human Review โดย Programme Chair ภายใน HEPE Project'
+        :'ยังไม่ผ่าน Version Human Review eligibility';
+    }
   }
 
   const note=$('#tqf3-version-review-note');
