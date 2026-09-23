@@ -391,6 +391,32 @@
                 <button id="submit-tqf3-human-review" class="btn" type="button" hidden disabled>ส่งเข้า Human Review</button>
               </div>
               <div id="tqf3-preview-readiness-result" class="notice info" hidden></div>
+
+              <div id="tqf3-human-review-panel" class="form-section" hidden>
+                <div class="form-section-header">
+                  <div>
+                    <h3>Human Review Decision</h3>
+                    <div class="help">ขั้นนี้เป็นการตัดสินใจทางวิชาการผ่าน authority gate และบันทึกใน audit trail</div>
+                  </div>
+                  <span id="tqf3-human-review-status" class="badge">—</span>
+                </div>
+
+                <div class="notice info">
+                  <div><b>Watermark:</b> <span id="tqf3-human-review-watermark">—</span></div>
+                  <div id="tqf3-human-review-export-note" class="help"></div>
+                </div>
+
+                <div class="field">
+                  <label for="tqf3-human-review-note">หมายเหตุการทบทวน</label>
+                  <textarea id="tqf3-human-review-note" placeholder="ระบุเหตุผลหรือข้อเสนอแนะเพิ่มเติม (ถ้ามี)"></textarea>
+                </div>
+
+                <div class="actions">
+                  <button id="tqf3-review-request-revision" type="button" class="btn" data-tqf3-review-decision="REQUEST_REVISION">Request Revision</button>
+                  <button id="tqf3-review-reject" type="button" class="btn" data-tqf3-review-decision="REJECT">Reject</button>
+                  <button id="tqf3-review-approve-export" type="button" class="btn primary" data-tqf3-review-decision="APPROVE_CONTROLLED_EXPORT" disabled>Approve Controlled Export</button>
+                </div>
+              </div>
             </section>
           </section>
 
@@ -796,6 +822,6 @@
   <p id="table-scroll-instruction" class="sr-only">ตารางนี้อาจเลื่อนในแนวนอนได้ ใช้ปุ่มลูกศรหรือเลื่อนหน้าจอเพื่อดูคอลัมน์เพิ่มเติม</p></main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./assets/js/portal-v36.js?v=36.16"></script>
+  <script src="./assets/js/portal-v36.js?v=36.17"></script>
 </body>
 </html>
