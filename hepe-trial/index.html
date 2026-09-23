@@ -506,6 +506,37 @@
                   <button type="button" class="btn" data-tqf3-controlled-export="XLSX">XLSX</button>
                 </div>
                 <div id="tqf3-controlled-export-status" class="notice info" hidden></div>
+              </div>
+
+              <div id="hed2503-rubric-review-panel" class="form-section" hidden>
+                <div class="form-section-header">
+                  <div>
+                    <h3>HED2503 — Rubric Human Review & Version 13 Revision</h3>
+                    <div class="help">ตรวจ rubric ทั้ง 3 ชุดแบบเห็น descriptor ครบก่อนรับรอง และเมื่อครบ 3/3 ระบบจึงอนุญาตสร้าง TQF3 Version 13 Draft</div>
+                  </div>
+                  <span id="hed2503-rubric-review-status" class="badge warn">—</span>
+                </div>
+
+                <div id="hed2503-v13-instructor" class="notice info"></div>
+
+                <div class="notice warn">
+                  การกด Review เป็น Human Academic Review ของ rubric draft เท่านั้น ยังไม่ใช่ APPROVED_OPERATIONAL_USE และ Version 12 FINAL record จะไม่ถูกแก้ไข
+                </div>
+
+                <div id="hed2503-rubric-review-list"></div>
+
+                <div class="form-section">
+                  <div class="form-section-header">
+                    <div>
+                      <h4>สร้าง TQF3 Version 13 Draft</h4>
+                      <div class="help">Carry-forward Version 12 แล้วเพิ่ม controlled instructor assignment และ rubric ที่ผ่าน Human Review ครบ 3 ชุด</div>
+                    </div>
+                  </div>
+                  <div class="actions">
+                    <button id="hed2503-create-v13" type="button" class="btn primary" disabled>รอ Rubric Review ให้ครบ 3/3</button>
+                  </div>
+                  <div id="hed2503-v13-create-status" class="notice info" hidden></div>
+                </div>
               </div>              </div>
             </section>
           </section>
@@ -912,6 +943,6 @@
   <p id="table-scroll-instruction" class="sr-only">ตารางนี้อาจเลื่อนในแนวนอนได้ ใช้ปุ่มลูกศรหรือเลื่อนหน้าจอเพื่อดูคอลัมน์เพิ่มเติม</p></main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./assets/js/portal-v36.js?v=36.29"></script>
+  <script src="./assets/js/portal-v36.js?v=36.30"></script>
 </body>
 </html>
