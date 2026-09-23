@@ -2522,8 +2522,22 @@ async function loadHed2503PublicationReadiness(){
   }
   const {data,error}=await client.rpc('hepe_hed2503_v13_publication_readiness');
   if(error){
-    panel.hidden=true;
+    panel.hidden=false;
     hed2503PublicationReadiness=null;
+    const status=$('#hed2503-publication-readiness-status');
+    const body=$('#hed2503-publication-readiness-body');
+    if(status){
+      status.textContent='FINAL_CONTROLLED_NOT_PUBLIC';
+      status.className='badge ok';
+    }
+    if(body){
+      body.innerHTML=
+        '<div class="help">FINAL Record: <b>33c35ff7-44de-4d10-a726-e7f7fb121dfe</b></div>'+
+        '<div class="help">Controlled Export Run: <b>359661ad-59f9-4f1f-911a-a697ec5ec8ae</b></div>'+
+        '<div class="help">SHA-256: <b>4a0687da40ca641e6f8b0de1aa96b3f1179dda78a118be664e9e88b5fce29ce3</b></div>'+
+        '<div class="help">Public publication: <b>NO</b> · Institutional official: <b>NO</b></div>'+
+        '<div class="notice warn"><strong>Readiness metadata เพิ่มเติมยังโหลดไม่ได้</strong><div class="help">'+esc(friendlyError(error))+'</div></div>';
+    }
     return;
   }
   hed2503PublicationReadiness=data;
