@@ -407,12 +407,77 @@ function renderCloPloMatrix(seed=null){
       }).join('')+'</tr>'
     ).join('')+
     '</tbody></table>';
-  $$('.irm-cell').forEach(el=>el.onchange=()=>{
+  renderWorkingMappingReview();
+  $('.irm-cell').forEach(el=>el.onchange=()=>{
     syncCloPloTextFromMatrix();
     scheduleLocalSave();
     renderWeeklyCoverage();
   });
 }
+
+function normalizedWorkingCloCode(code){
+  return String(code||'').replace(/^HED2503-CLO-P0?/,'CLO');
+}
+function ensureMappingReviewPanel(){
+  let panel=$('#working-mapping-review-panel');
+  if(panel)return panel;
+  const matrix=$('#clo-plo-matrix');
+  if(!matrix)return null;
+  panel=document.createElement('div');
+  panel.id='working-mapping-review-panel';
+  panel.className='working-mapping-review-panel';
+  matrix.after(panel);
+  return panel;
+}
+async function runWorkingMappingReview(mappingId,action){
+  const rows=curriculumCtx?.working_clo_plo_mappings||[];
+  const row=rows.find(x=>x.working_mapping_proposal_id===mappingId);
+  if(!row)return;
+  const label=action==='ACCEPT_WORKING'?'รับ candidate นี้เป็น Working':
+    action==='PROGRAMME_REVIEW'?'ยืนยัน Programme Review':
+    action==='REJECT'?'Reject candidate':'ดำเนินการ';
+  if(!window.confirm(label+'\n\n'+normalizedWorkingCloCode(row.clo_code)+' → '+row.plo_code+' · '+row.irm_level+'\n'+(row.rationale||'')))return;
+  setBusy(true,'กำลังบันทึก Human Review…');
+  const {error}=await client.rpc('hepe_review_working_mapping',{
+    p_working_mapping_proposal_id:mappingId,
+    p_action:action,
+    p_irm_level:null,
+    p_rationale:null
+  });
+  if(error){setBusy(false);say(friendlyError(error),'danger');return;}
+  say('บันทึก Human Review แล้ว กำลังโหลดสถานะล่าสุด…','ok');
+  setTimeout(()=>window.location.reload(),450);
+}
+function renderWorkingMappingReview(){
+  const panel=ensureMappingReviewPanel();if(!panel)return;
+  const rows=curriculumCtx?.working_clo_plo_mappings||[];
+  if(!rows.length){
+    panel.innerHTML='<div class="notice info">ยังไม่มี working CLO→PLO/I-R-M candidate สำหรับ Human Review</div>';
+    return;
+  }
+  const reviewed=rows.filter(x=>x.governance_status==='PROGRAMME_REVIEWED').length;
+  panel.innerHTML=
+    '<div class="form-section-header"><div><h4>Human Review · Working CLO→PLO/I-R-M</h4>'+
+    '<div class="help">การกดปุ่มด้านล่างเป็นการตัดสินใจทางวิชาการผ่าน authority gate จริง ไม่ใช่การอนุมัติอัตโนมัติของ AI</div></div>'+
+    '<span class="badge '+(reviewed===rows.length?'ok':'warn')+'">'+reviewed+'/'+rows.length+' Programme Reviewed</span></div>'+
+    '<div class="mapping-review-list">'+rows.map(x=>{
+      const status=x.governance_status||'PROPOSED';
+      const buttons=status==='PROPOSED'
+        ?'<button class="mapping-review-action" data-id="'+esc(x.working_mapping_proposal_id)+'" data-action="ACCEPT_WORKING">รับเป็น Working</button>'+
+         '<button class="mapping-review-action secondary" data-id="'+esc(x.working_mapping_proposal_id)+'" data-action="REJECT">Reject</button>'
+        :status==='WORKING'
+          ?'<button class="mapping-review-action" data-id="'+esc(x.working_mapping_proposal_id)+'" data-action="PROGRAMME_REVIEW">Programme Review</button>'+
+           '<button class="mapping-review-action secondary" data-id="'+esc(x.working_mapping_proposal_id)+'" data-action="REJECT">Reject</button>'
+          :'';
+      return '<div class="mapping-review-card"><div><strong>'+esc(normalizedWorkingCloCode(x.clo_code))+' → '+esc(x.plo_code)+' · '+esc(x.irm_level||'—')+'</strong> '+
+        '<span class="badge '+(status==='PROGRAMME_REVIEWED'?'ok':'warn')+'">'+esc(status)+'</span></div>'+
+        '<div class="help">'+esc(x.rationale||'')+'</div>'+
+        (buttons?'<div class="mapping-review-actions">'+buttons+'</div>':'')+
+        '</div>';
+    }).join('')+'</div>';
+  $('.mapping-review-action').forEach(btn=>btn.onclick=()=>runWorkingMappingReview(btn.dataset.id,btn.dataset.action));
+}
+
 function syncCloPloTextFromMatrix(){
   const clos=collectClos();
   clos.forEach((c,i)=>{
