@@ -879,7 +879,7 @@ function completionState(section){
   return'IN_PROGRESS';
 }
 function renderSectionCompletionV33(){
-  $('[data-ai-inline-section]').forEach(panel=>{
+  $$('[data-ai-inline-section]').forEach(panel=>{
     const section=panel.dataset.aiInlineSection||panel.getAttribute('data-ai-inline-section'),owner=panel.closest('.form-section'),header=owner?.querySelector('.form-section-header');
     if(!header)return;
     let badge=header.querySelector('[data-section-completion]');
@@ -1047,7 +1047,7 @@ function sectionGapChecksV36(section){
   return checks.filter(x=>re.test((x.target||'')+' '+(x.name||'')+' '+(x.category||'')));
 }
 function ensureFinishSectionControlsV36(){
-  $$('[data-ai-inline-section]').forEach(inline=>{
+  $$$('[data-ai-inline-section]').forEach(inline=>{
     const section=inline.dataset.aiInlineSection||inline.getAttribute('data-ai-inline-section');
     const owner=inline.closest('.form-section')||inline.closest('.card');
     const header=owner?.querySelector('.form-section-header,.section-title');
@@ -1111,7 +1111,7 @@ function templateActivationChecklistV36(label,v2){
     }).join('')+'</div></div>';
 }
 function ensureV33Ui(){
-  $('[data-ai-inline-section]').forEach(ensureInlineV33);
+  $$('[data-ai-inline-section]').forEach(ensureInlineV33);
   ensureStaticFieldQuickActionsV33();
   renderSectionCompletionV33();
   renderReviewQueueV33();
