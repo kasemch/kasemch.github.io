@@ -475,7 +475,7 @@ function renderWorkingMappingReview(){
         (buttons?'<div class="mapping-review-actions">'+buttons+'</div>':'')+
         '</div>';
     }).join('')+'</div>';
-  $('.mapping-review-action').forEach(btn=>btn.onclick=()=>runWorkingMappingReview(btn.dataset.id,btn.dataset.action));
+  $$('.mapping-review-action').forEach(btn=>btn.onclick=()=>runWorkingMappingReview(btn.dataset.id,btn.dataset.action));
 }
 
 function syncCloPloTextFromMatrix(){
