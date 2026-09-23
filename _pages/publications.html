@@ -58,6 +58,60 @@ excerpt: "Verified academic publications by Asst. Prof. Dr. Kasem Chooratna in h
     <p class="pps-boundary-note">These counts describe the journal-publication collection only. Proceedings and degree research are reported separately and are not combined into the journal total.</p>
   </section>
 
+  <section class="pd-shell pps-dashboard-section" aria-labelledby="pps-dashboard-title">
+    <div class="pd-eyebrow">Publication Dashboard</div>
+    <h2 id="pps-dashboard-title">Journal outputs by year, venue and evidence category</h2>
+    <p class="pps-dashboard-intro">The visual summary below is descriptive. It shows the distribution of verified journal-publication metadata and does not imply journal ranking, indexing, impact, citation performance or research quality.</p>
+
+    <div class="pps-dashboard-grid">
+      <article class="pps-panel pps-panel-wide">
+        <div class="pps-panel-head"><div><span class="pd-eyebrow">Outputs by Year</span><h3>Verified journal publication timeline</h3></div><span class="pps-badge">{{ publication_count }} records</span></div>
+        <div class="pps-bar-list">
+          {% for group in publication_years %}
+          {% assign count = group.items | size %}
+          {% assign share = count | times: 100 | divided_by: publication_count %}
+          <div><span>{{ group.name }}</span><i><b style="width:{{ share }}%"></b></i><strong>{{ count }}</strong></div>
+          {% endfor %}
+        </div>
+      </article>
+
+      <article class="pps-panel">
+        <div class="pps-panel-head"><div><span class="pd-eyebrow">Venue Distribution</span><h3>Verified journal venues</h3></div><span class="pps-badge">{{ publication_venue_count }} venues</span></div>
+        <div class="pps-bar-list pps-bar-list--venue">
+          {% for group in publication_venues %}
+          {% if group.name and group.name != "" %}
+          {% assign count = group.items | size %}
+          {% assign share = count | times: 100 | divided_by: publication_count %}
+          <div><span>{{ group.name }}</span><i><b style="width:{{ share }}%"></b></i><strong>{{ count }}</strong></div>
+          {% endif %}
+          {% endfor %}
+        </div>
+      </article>
+
+      <article class="pps-panel">
+        <div class="pps-panel-head"><div><span class="pd-eyebrow">Output Categories</span><h3>Separate academic meanings</h3></div></div>
+        <div class="pps-category-story">
+          <div><strong>Journal publications</strong><span>{{ publication_count }} verified records in the searchable register.</span></div>
+          <div><strong>Conference proceedings</strong><span>{{ proceeding_count }} verified papers maintained separately from journal publications.</span></div>
+          <div><strong>Degree research</strong><span>{{ degree_research_count }} verified works maintained separately from publication counts.</span></div>
+        </div>
+      </article>
+
+      <article class="pps-panel pps-panel-wide pps-evidence-panel">
+        <div class="pps-panel-head"><div><span class="pd-eyebrow">Evidence Story</span><h3>Metadata → Verification → Public Record</h3></div><span class="pps-badge">Evidence-first</span></div>
+        <div class="pps-evidence-flow">
+          <div><b>01</b><span>Metadata</span><strong>Identify the scholarly record</strong><p>Title, date, venue and source metadata establish the candidate publication record.</p></div>
+          <i aria-hidden="true">→</i>
+          <div><b>02</b><span>Verification</span><strong>Confirm a traceable source</strong><p>Only source-supported records are admitted to the public publication collection.</p></div>
+          <i aria-hidden="true">→</i>
+          <div><b>03</b><span>Classification</span><strong>Preserve output type</strong><p>Journal, proceedings and degree research remain separate categories.</p></div>
+          <i aria-hidden="true">→</i>
+          <div><b>04</b><span>Public Record</span><strong>Publish the verified metadata</strong><p>The public site displays the verified record without adding unsupported bibliometric claims.</p></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
   <main class="pd-shell" aria-labelledby="publication-register-title">
     <div class="pd-controls" aria-label="Publication filters">
       <input class="pd-input" type="search" data-pd-search aria-label="Search publications" placeholder="Search title, topic, venue or citation…">
