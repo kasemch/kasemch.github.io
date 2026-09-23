@@ -2258,7 +2258,10 @@ document.addEventListener('click',e=>{
   if(!btn)return;
   e.preventDefault();
   e.stopPropagation();
-  admitTqf3ProjectControlledSource().catch(err=>say(friendlyError(err),'danger'));
+  const action=btn.dataset.mode==='fresh-preview'
+    ? createFreshControlledPreviewAndVerify()
+    : admitTqf3ProjectControlledSource();
+  action.catch(err=>say(friendlyError(err),'danger'));
 },true);
 
 document.addEventListener('click',e=>{
@@ -2388,10 +2391,17 @@ function renderTqf3SourceControlEligibility(){
     '<div class="help">'+(x[1]?'✓':'✕')+' <b>'+esc(x[0])+':</b> '+esc(x[2])+'</div>'
   ).join('');
   const btn=$('#tqf3-admit-controlled-source');
-  btn.disabled=!e.eligible;
-  $('#tqf3-source-control-note').textContent=e.eligible
-    ?'ผ่าน eligibility สำหรับ HEPE Project-Controlled Source · ไม่ใช่ institutional official approval'
-    :'ยังไม่ผ่าน eligibility · ระบบจะไม่อนุญาต source admission';
+  const alreadyControlled=e.source_status==='CONTROLLED_SOURCE';
+  btn.dataset.mode=alreadyControlled?'fresh-preview':'admit';
+  btn.disabled=alreadyControlled?false:!e.eligible;
+  btn.textContent=alreadyControlled
+    ?'สร้าง Fresh Controlled Preview'
+    :'ยืนยันรับรองเป็น HEPE Project-Controlled Source';
+  $('#tqf3-source-control-note').textContent=alreadyControlled
+    ?'Source Admission ผ่านแล้ว · เหลือสร้าง Fresh Controlled Preview สำหรับ current version'
+    :(e.eligible
+      ?'ผ่าน eligibility สำหรับ HEPE Project-Controlled Source · ไม่ใช่ institutional official approval'
+      :'ยังไม่ผ่าน eligibility · ระบบจะไม่อนุญาต source admission');
 
   const basis=$('#tqf3-source-control-basis');
   if(basis&&e.eligible&&!basis.value.trim()){
@@ -2401,6 +2411,69 @@ function renderTqf3SourceControlEligibility(){
       ', CLO–PLO/I-R-M ผ่าน Programme Review '+(e.mapping_reviewed_count??0)+'/'+(e.mapping_total_count??0)+
       ', Preview อยู่ในสถานะ '+(e.latest_preview_status||'SUBMITTED')+
       ' และไม่มี unresolved blocking finding จึงรับรองเป็น HEPE Project-Controlled Source สำหรับการใช้งานภายในโครงการ โดยไม่ถือเป็นการรับรองอย่างเป็นทางการของมหาวิทยาลัย';
+  }
+}
+
+async function createFreshControlledPreviewAndVerify(){
+  const btn=$('#tqf3-admit-controlled-source');
+  const note=$('#tqf3-source-control-action-status');
+  if(btn?.dataset.busy==='1')return;
+  if(btn){
+    btn.dataset.busy='1';
+    btn.disabled=true;
+    btn.textContent='กำลังสร้าง Fresh Preview…';
+  }
+  if(note){
+    note.hidden=false;
+    note.className='notice info';
+    note.innerHTML='<strong>รับคำสั่งแล้ว</strong><div class="help">กำลังสร้าง Fresh Controlled Preview สำหรับ current TQF3 version…</div>';
+  }
+
+  try{
+    const {data:preview,error}=await client.rpc('hepe_create_fresh_tqf3_preview_by_code',{
+      ...courseArgs(),
+      p_target_format:'HTML'
+    });
+    if(error)throw error;
+
+    const {data:verified,error:verifyError}=await client.rpc('hepe_verify_tqf3_source_control_state_by_code',courseArgs());
+    if(verifyError)throw verifyError;
+
+    if(!verified?.verified){
+      throw new Error(
+        'POST_COMMIT_VERIFICATION_FAILED · source_status='+(verified?.source_status||'UNKNOWN')+
+        ' · admission='+(verified?.admission_present?'YES':'NO')+
+        ' · audit='+(verified?.audit_present?'YES':'NO')+
+        ' · preview='+(verified?.latest_preview_provenance||'UNKNOWN')
+      );
+    }
+
+    currentTqf3Preview=preview;
+    if(note){
+      note.className='notice ok';
+      note.innerHTML='<strong>Fresh Controlled Preview ยืนยันแล้ว</strong><div class="help">Version '+esc(verified.version_no)+' · provenance='+esc(verified.latest_preview_provenance)+' · status='+esc(verified.latest_preview_status||'UNKNOWN')+'</div>';
+    }
+    const out=$('#tqf3-preview-readiness-result');
+    if(out){
+      out.hidden=false;
+      out.className='notice ok';
+      out.innerHTML='<strong>Controlled Preview พร้อมใช้งาน</strong><div class="help">Admission + Audit + Fresh Preview ผ่าน post-commit verification แล้ว</div>';
+    }
+    say('Fresh Controlled Preview สร้างและยืนยันจากฐานข้อมูลแล้ว','ok');
+    await loadSelectedCourse();
+  }catch(err){
+    if(note){
+      note.hidden=false;
+      note.className='notice danger';
+      note.innerHTML='<strong>Fresh Controlled Preview ไม่สำเร็จ</strong><div class="help">'+esc(friendlyError(err))+'</div>';
+    }
+    throw err;
+  }finally{
+    if(btn){
+      btn.dataset.busy='0';
+      btn.disabled=false;
+      btn.textContent='สร้าง Fresh Controlled Preview';
+    }
   }
 }
 
