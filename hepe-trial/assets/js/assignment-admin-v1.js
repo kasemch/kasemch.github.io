@@ -4,7 +4,7 @@ const SUPABASE_URL='https://lztxpjsuzqvtgyasfnyj.supabase.co';
 const SUPABASE_KEY='sb_publishable_7bv5GR0-ksXJn91sRHV0Mg_k4nblIGI';
 const client=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,flowType:'implicit'}});
 const $=s=>document.querySelector(s);
-let ctx=null,courses=[];
+let ctx=null,courses=[],selectedCourses=new Set();
 function say(t,k=''){const el=$('#status');el.textContent=t;el.className='status '+k;}
 function opt(v,t){const o=document.createElement('option');o.value=v;o.textContent=t;return o;}
 async function session(){
@@ -33,8 +33,32 @@ async function loadCourses(){
  const {data,error}=await client.rpc('hepe_fast_tqf_course_catalog',{p_programme_code:code,p_academic_year:null,p_term_code:null});
  if(error)throw error;
  courses=Array.isArray(data)?data:(data?.error?[]:[]);
- const cs=$('#course-select');cs.innerHTML='';
- courses.forEach(c=>cs.appendChild(opt(c.course_code,c.course_code+' — '+c.title_th)));
+ selectedCourses=new Set();
+ renderCoursePicker();
+}
+function renderCoursePicker(){
+ const box=$('#course-list');box.innerHTML='';
+ courses.forEach(c=>{
+   const label=document.createElement('label');label.className='course-option';
+   const input=document.createElement('input');input.type='checkbox';input.value=c.course_code;input.checked=selectedCourses.has(c.course_code);
+   input.addEventListener('change',()=>{if(input.checked)selectedCourses.add(c.course_code);else selectedCourses.delete(c.course_code);updateCourseCount();});
+   const text=document.createElement('div');
+   const strong=document.createElement('strong');strong.textContent=c.course_code+' — '+c.title_th;
+   const meta=document.createElement('div');meta.className='help';meta.textContent=(c.credit_value??'')+' หน่วยกิต';
+   text.append(strong,meta);label.append(input,text);box.appendChild(label);
+ });
+ if(!courses.length){box.innerHTML='<div class="help" style="padding:12px">ไม่พบรายวิชาในหลักสูตรนี้</div>';}
+ updateCourseCount();
+}
+function updateCourseCount(){
+ const n=selectedCourses.size;
+ $('#course-selected-count').textContent='เลือก '+n+' วิชา';
+ $('#activate').textContent=n>1?'บันทึก Active '+n+' วิชา':'บันทึก Active';
+ $('#revoke').textContent=n>1?'ยกเลิก Assignment '+n+' วิชา':'ยกเลิก Assignment';
+}
+function setAllCourses(flag){
+ selectedCourses=new Set(flag?courses.map(c=>c.course_code):[]);
+ renderCoursePicker();
 }
 function renderProgrammes(){
  const box=$('#programme-list');box.innerHTML='';
@@ -65,20 +89,24 @@ function syncProgramme(){
  $('#activate').disabled=!allowed;$('#revoke').disabled=!allowed;
 }
 async function save(active){
- const email=$('#user-select').value,display=$('#display-label').value.trim(),programme=$('#programme-select').value,course=$('#course-select').value,role=$('#role-select').value;
- if(!email||!programme||!course||!role)throw new Error('กรุณาเลือกข้อมูลให้ครบ');
- say(active?'กำลังบันทึก assignment…':'กำลังยกเลิก assignment…');
- const {data,error}=await client.rpc('hepe_fast_tqf_assignment_upsert',{
-   p_email:email,p_display_label:display,p_programme_code:programme,p_course_code:course,p_role_code:role,p_active:active
+ const email=$('#user-select').value,display=$('#display-label').value.trim(),programme=$('#programme-select').value,role=$('#role-select').value;
+ const courseCodes=Array.from(selectedCourses);
+ if(!email||!programme||!role||!courseCodes.length)throw new Error('กรุณาเลือกข้อมูลให้ครบ และเลือกรายวิชาอย่างน้อย 1 วิชา');
+ say(active?'กำลังบันทึก '+courseCodes.length+' assignment…':'กำลังยกเลิก '+courseCodes.length+' assignment…');
+ const {data,error}=await client.rpc('hepe_fast_tqf_assignment_upsert_batch',{
+   p_email:email,p_display_label:display,p_programme_code:programme,p_course_codes:courseCodes,p_role_code:role,p_active:active
  });
  if(error)throw error;if(!data?.ok)throw new Error(data?.error||'ASSIGNMENT_FAILED');
- await load();say(active?'บันทึก Active แล้ว':'ยกเลิก Assignment แล้ว','ok');
+ const done=data.count||courseCodes.length;
+ await load();say(active?'บันทึก Active '+done+' วิชาแล้ว':'ยกเลิก Assignment '+done+' วิชาแล้ว','ok');
 }
 $('#login').addEventListener('click',async()=>{try{const {error}=await client.auth.signInWithPassword({email:$('#email').value.trim(),password:$('#password').value});if(error)throw error;await session();}catch(e){say(e.message,'bad');}});
 $('#logout').addEventListener('click',async()=>{await client.auth.signOut();await session();});
 $('#reload').addEventListener('click',()=>load().catch(e=>say(e.message,'bad')));
 $('#user-select').addEventListener('change',syncUser);
 $('#programme-select').addEventListener('change',async()=>{try{syncProgramme();await loadCourses();}catch(e){say(e.message,'bad');}});
+$('#select-all-courses').addEventListener('click',()=>setAllCourses(true));
+$('#clear-all-courses').addEventListener('click',()=>setAllCourses(false));
 $('#activate').addEventListener('click',()=>save(true).catch(e=>say(e.message,'bad')));
 $('#revoke').addEventListener('click',()=>save(false).catch(e=>say(e.message,'bad')));
 client.auth.onAuthStateChange(()=>setTimeout(()=>session().catch(e=>say(e.message,'bad')),0));
