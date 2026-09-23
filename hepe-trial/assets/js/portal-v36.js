@@ -15,7 +15,7 @@ const num=v=>v===''||v==null?null:Number(v);
 
 let cfg={},programmeCatalog=[],courseCatalog=[],termCatalog=[],curriculumCtx=null,docCtx=null;
 let versionHistory=[],evidenceWorkspace=null,cqiContext=null,dashboardCtx=null,evidenceQueueCtx=null;
-let courseResponsibilityCtx=null,programmeResponsibilityCtx=null,templateReviewCtx=null,templateReviewLoaded=false,currentTqf3Preview=null;
+let courseResponsibilityCtx=null,programmeResponsibilityCtx=null,templateReviewCtx=null,templateReviewLoaded=false,currentTqf3Preview=null,tqf3SourceControlEligibility=null;
 let activeTab='tqf3',activeAiSection='curriculum',aiSuggestions=[],aiDecisions=[];
 let saveTimer=null,staticBound=false,aiUndoStack=[],aiSectionRuns={},aiSectionSuggestionCache={},reviewQueueIndex=0,reviewQueueFilter='ALL',reuseLineage=[],changeRationales=[];
 
@@ -31,6 +31,9 @@ function friendlyError(err){
     ['INSUFFICIENT_AUTHORITY','บัญชีนี้ไม่มีสิทธิ์สำหรับรายการที่เลือก'],
     ['PROGRAMME_AUTHORITY_REQUIRED','ต้องใช้สิทธิ์ระดับหลักสูตรเพื่อดูข้อมูลนี้'],
     ['AUTHORITATIVE_EXPORT_NOT_ALLOWED_FOR_CURRENT_PREVIEW','ยังอนุมัติ Controlled Export ไม่ได้ เพราะ Preview ปัจจุบันเป็น DRAFT / UNVERIFIED'],
+    ['SOURCE_CONTROL_ELIGIBILITY_NOT_MET','ยังไม่ผ่านเงื่อนไข Project-Controlled Source'],
+    ['ADMISSION_BASIS_REQUIRED','กรุณาระบุเหตุผลการรับรอง Source Control ก่อน'],
+    ['PROGRAMME_CHAIR_AUTHORITY_REQUIRED','ต้องใช้สิทธิ์ Programme Chair สำหรับ Source Control Admission'],
     ['COURSE_OUT_OF_SCOPE','รายวิชานี้อยู่นอกขอบเขต HED/PED ของระบบ'],
     ['COURSE_OFFERING_NOT_FOUND','ยังไม่พบ Course Offering สำหรับปี/ภาคที่เลือก'],
     ['INVALID_SHA256_FORMAT','SHA-256 ต้องเป็นเลขฐาน 16 จำนวน 64 ตัวอักษร']
@@ -183,6 +186,7 @@ async function loadSelectedCourse(){
     renderCqiCarryForward();
     renderReadiness();
     await loadTqf3HumanReviewState();
+    await loadTqf3SourceControlEligibility();
     renderAiRail();
     ensureV33Ui();
     offerLocalRecovery();
@@ -2250,6 +2254,14 @@ document.addEventListener('click',e=>{
 },true);
 
 document.addEventListener('click',e=>{
+  const btn=e.target.closest?.('#tqf3-admit-controlled-source');
+  if(!btn)return;
+  e.preventDefault();
+  e.stopPropagation();
+  admitTqf3ProjectControlledSource().catch(err=>say(friendlyError(err),'danger'));
+},true);
+
+document.addEventListener('click',e=>{
   const btn=e.target.closest?.('[data-tqf3-review-decision]');
   if(!btn)return;
   e.preventDefault();
@@ -2342,6 +2354,83 @@ async function submitTqf3HumanReview(){
     btn.textContent=original;
     btn.disabled=true;
   }
+}
+
+async function loadTqf3SourceControlEligibility(){
+  const panel=$('#tqf3-source-control-panel');
+  if(!panel)return;
+  const {data,error}=await client.rpc('hepe_tqf3_source_control_eligibility_by_code',courseArgs());
+  if(error){
+    panel.hidden=true;
+    tqf3SourceControlEligibility=null;
+    return;
+  }
+  tqf3SourceControlEligibility=data;
+  renderTqf3SourceControlEligibility();
+}
+
+function renderTqf3SourceControlEligibility(){
+  const panel=$('#tqf3-source-control-panel');
+  if(!panel)return;
+  const e=tqf3SourceControlEligibility;
+  if(!e){panel.hidden=true;return;}
+  panel.hidden=false;
+  $('#tqf3-source-control-version').textContent='Version '+(e.version_no??'—')+' · '+(e.source_status||'—');
+  const checks=[
+    ['Validation',e.validation_result==='PASS',e.validation_result||'—'],
+    ['Credit',e.credit_pattern==='3(3-0-6)',e.credit_pattern||'—'],
+    ['PLO source-bound',Number(e.source_bound_plo_count)>=7,String(e.source_bound_plo_count??0)],
+    ['Mapping review',Number(e.mapping_reviewed_count)===Number(e.mapping_total_count)&&Number(e.mapping_total_count)>0,(e.mapping_reviewed_count??0)+'/'+(e.mapping_total_count??0)],
+    ['Preview',e.latest_preview_status==='SUBMITTED',e.latest_preview_status||'—'],
+    ['Blockers',Number(e.unresolved_blockers)===0,String(e.unresolved_blockers??0)]
+  ];
+  $('#tqf3-source-control-checks').innerHTML=checks.map(x=>
+    '<div class="help">'+(x[1]?'✓':'✕')+' <b>'+esc(x[0])+':</b> '+esc(x[2])+'</div>'
+  ).join('');
+  const btn=$('#tqf3-admit-controlled-source');
+  btn.disabled=!e.eligible;
+  $('#tqf3-source-control-note').textContent=e.eligible
+    ?'ผ่าน eligibility สำหรับ HEPE Project-Controlled Source · ไม่ใช่ institutional official approval'
+    :'ยังไม่ผ่าน eligibility · ระบบจะไม่อนุญาต source admission';
+}
+
+async function admitTqf3ProjectControlledSource(){
+  const e=tqf3SourceControlEligibility;
+  if(!e?.eligible)throw new Error('SOURCE_CONTROL_ELIGIBILITY_NOT_MET');
+  const basis=$('#tqf3-source-control-basis')?.value?.trim();
+  if(!basis)throw new Error('ADMISSION_BASIS_REQUIRED');
+  const ok=window.confirm(
+    'ยืนยันรับรอง TQF3 Version '+e.version_no+' เป็น HEPE Project-Controlled Source หรือไม่?\n\n'+
+    'การรับรองนี้ใช้ภายในโครงการ HEPE เท่านั้น ไม่ใช่การรับรองอย่างเป็นทางการของมหาวิทยาลัย และจะถูกบันทึกใน audit trail'
+  );
+  if(!ok)return;
+
+  const {data,error}=await client.rpc('hepe_admit_tqf3_project_controlled_source_by_code',{
+    ...courseArgs(),
+    p_admission_basis:basis
+  });
+  if(error)throw error;
+
+  say('รับรองเป็น HEPE Project-Controlled Source แล้ว · Version '+data.version_no,'ok');
+
+  const {data:preview,error:previewError}=await client.rpc('hepe_create_fresh_tqf3_preview_by_code',{
+    ...courseArgs(),
+    p_target_format:'HTML'
+  });
+  if(previewError)throw previewError;
+
+  currentTqf3Preview=preview;
+  tqf3SourceControlEligibility={...e,eligible:false,source_status:'CONTROLLED_SOURCE'};
+  renderTqf3SourceControlEligibility();
+
+  const out=$('#tqf3-preview-readiness-result');
+  const session=preview?.session||preview||{};
+  if(out){
+    out.hidden=false;
+    out.className='notice ok';
+    out.innerHTML='<strong>Fresh Controlled Preview สร้างแล้ว</strong><div class="help">Preview status: '+esc(session.preview_status||'UNKNOWN')+' · provenance: CONTROLLED_SOURCE</div>';
+  }
+  await loadSelectedCourse();
 }
 
 async function loadTqf3HumanReviewState(){
