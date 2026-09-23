@@ -12,21 +12,50 @@ excerpt: "Verified academic publications by Asst. Prof. Dr. Kasem Chooratna in h
 {% assign publication_venues = site.publications | group_by: "venue" | sort: "name" %}
 {% assign publication_venue_count = 0 %}
 {% for group in publication_venues %}{% if group.name and group.name != "" %}{% assign publication_venue_count = publication_venue_count | plus: 1 %}{% endif %}{% endfor %}
+{% assign proceeding_count_2023 = site.data.conference_proceedings.items | size %}
+{% assign proceeding_count_2026 = site.data.conference_proceedings_2026.items | size %}
+{% assign proceeding_count = proceeding_count_2023 | plus: proceeding_count_2026 %}
+{% assign degree_research_count = 2 %}
 
 <link rel="stylesheet" href="{{ '/assets/css/publications-dashboard.css' | relative_url }}">
 
-<div class="publications-dashboard">
-  <section class="pd-hero">
-    <div class="pd-shell">
-      <div class="pd-kicker">Option 17A · Research &amp; Publications Dashboard</div>
-      <h1>Publications</h1>
-      <p class="pd-lead">A searchable public register of verified scholarly outputs. Titles, dates, venues and source links are drawn directly from the publication collection used by this website.</p>
-      <div class="pd-metrics" aria-label="Publication summary">
-        <div class="pd-metric"><b>{{ publication_count }}</b><span>verified records currently published on this site</span></div>
-        <div class="pd-metric"><b>{{ publication_years | size }}</b><span>publication years represented in the current register</span></div>
-        <div class="pd-metric"><b>{{ publication_venue_count }}</b><span>journal or publication venues represented</span></div>
+<div class="publications-dashboard pps-studio">
+  <section class="pd-hero pps-hero" aria-labelledby="pps-title">
+    <div class="pd-shell pps-hero-grid">
+      <div class="pps-hero-copy">
+        <div class="pd-kicker">Publications Portfolio Studio</div>
+        <h1 id="pps-title">Scholarly outputs,<br><span>with traceable evidence.</span></h1>
+        <p class="pd-lead">A searchable public register of verified scholarly outputs. Journal publications, conference proceedings and degree research remain distinct so that each category preserves its correct academic meaning.</p>
+        <div class="pps-actions">
+          <a href="#publication-register-title" class="pps-btn pps-btn-primary">Browse journal publications</a>
+          <a href="{{ '/research/#proceedings-title' | relative_url }}" class="pps-btn">Conference proceedings</a>
+          <a href="{{ '/research/#research-degrees-title' | relative_url }}" class="pps-btn">Degree research</a>
+        </div>
+      </div>
+      <div class="pps-hero-visual" aria-hidden="true">
+        <div class="pps-stack-card pps-stack-a"><span>Journal</span><strong>{{ publication_count }}</strong></div>
+        <div class="pps-stack-card pps-stack-b"><span>Proceedings</span><strong>{{ proceeding_count }}</strong></div>
+        <div class="pps-stack-card pps-stack-c"><span>Degree research</span><strong>{{ degree_research_count }}</strong></div>
       </div>
     </div>
+  </section>
+
+  <section class="pd-shell pps-category-strip" aria-label="Scholarly output categories">
+    <a href="#publication-register-title"><span>01</span><strong>Journal Publications</strong><small>{{ publication_count }} verified journal records</small></a>
+    <a href="{{ '/research/#proceedings-title' | relative_url }}"><span>02</span><strong>Conference Proceedings</strong><small>{{ proceeding_count }} verified papers</small></a>
+    <a href="{{ '/research/#research-degrees-title' | relative_url }}"><span>03</span><strong>Degree Research</strong><small>{{ degree_research_count }} verified works</small></a>
+    <a href="#verification-policy-title"><span>04</span><strong>Evidence Policy</strong><small>Traceable metadata before publication</small></a>
+  </section>
+
+  <section class="pd-shell pps-metrics-section" aria-labelledby="pps-overview-title">
+    <div class="pd-eyebrow">Publication Portfolio</div>
+    <h2 id="pps-overview-title">Verified journal publication register at a glance</h2>
+    <div class="pd-metrics" aria-label="Journal publication summary">
+      <div class="pd-metric"><b>{{ publication_count }}</b><span>verified journal publications</span></div>
+      <div class="pd-metric"><b>{{ publication_years | size }}</b><span>publication years represented</span></div>
+      <div class="pd-metric"><b>{{ publication_venue_count }}</b><span>journal publication venues</span></div>
+    </div>
+    <p class="pps-boundary-note">These counts describe the journal-publication collection only. Proceedings and degree research are reported separately and are not combined into the journal total.</p>
   </section>
 
   <main class="pd-shell" aria-labelledby="publication-register-title">
