@@ -2648,6 +2648,25 @@ async function continueHed2503V13ToSourceGate(btn){
           '<div class="help">Version 13 ผ่าน Human Review แล้ว และ Fresh Reviewed Preview ถูกส่งเข้า review แล้ว</div>';
       }
       say('Version 13 พร้อมที่ Controlled Export Review Human Gate','ok');
+    }else if(stop==='CONTROLLED_EXPORT_ALREADY_APPROVED'){
+      if(out){
+        out.className='notice info';
+        out.innerHTML='<strong>Controlled Export Approved แล้ว</strong>'+
+          '<div class="help">กำลังเดินต่อ B03.15 → Finalize → Controlled Export → QA</div>';
+      }
+      const {data:post,error:postError}=await client.rpc('hepe_continue_hed2503_v13_post_export_approval');
+      if(postError)throw postError;
+      const finalRec=post?.final_record||{};
+      const exp=post?.controlled_export||{};
+      if(out){
+        out.className='notice ok';
+        out.innerHTML='<strong>Version 13 Finalization สำเร็จ</strong>'+
+          '<div class="help">FINAL Record: '+esc(finalRec.record_id||'—')+
+          ' · Export Run: '+esc(exp.document_export_run_id||'—')+
+          ' · SHA: '+esc(post?.bundle_sha256||'—')+'</div>'+
+          '<div class="help">หยุดที่ Publication Authority Boundary · institutional official = NO · public publication = NO</div>';
+      }
+      say('Version 13 FINAL + Controlled Export พร้อมแล้ว · หยุดก่อน Publication Gate','ok');
     }else{
       if(out){
         out.className='notice warn';
