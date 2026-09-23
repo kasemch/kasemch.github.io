@@ -11,7 +11,7 @@ author_profile: false
 <div class="knowledge-map-page">
   <section class="km-hero">
     <div class="km-shell">
-      <div class="km-kicker">Option 17A · Connected Academic Domains</div>
+      <div class="km-kicker">Academic Portfolio · Connected Academic Domains</div>
       <h1>Academic Knowledge Map</h1>
       <p class="km-lead">Explore how public academic areas on this website connect across teaching, research, curriculum, quality, evidence and responsible digital innovation. The map is explanatory and uses public website relationships only.</p>
       <div class="km-actions">
