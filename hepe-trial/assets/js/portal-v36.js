@@ -2409,18 +2409,41 @@ async function admitTqf3ProjectControlledSource(){
   if(!e?.eligible)throw new Error('SOURCE_CONTROL_ELIGIBILITY_NOT_MET');
   const basis=$('#tqf3-source-control-basis')?.value?.trim();
   if(!basis)throw new Error('ADMISSION_BASIS_REQUIRED');
-  const ok=window.confirm(
-    'ยืนยันรับรอง TQF3 Version '+e.version_no+' เป็น HEPE Project-Controlled Source หรือไม่?\n\n'+
-    'การรับรองนี้ใช้ภายในโครงการ HEPE เท่านั้น ไม่ใช่การรับรองอย่างเป็นทางการของมหาวิทยาลัย และจะถูกบันทึกใน audit trail'
-  );
-  if(!ok)return;
+  const btn=$('#tqf3-admit-controlled-source');
+  const note=$('#tqf3-source-control-action-status');
+  if(btn?.dataset.busy==='1')return;
+  if(btn){
+    btn.dataset.busy='1';
+    btn.disabled=true;
+    btn.textContent='กำลังรับรอง…';
+  }
+  if(note){
+    note.hidden=false;
+    note.className='notice info';
+    note.innerHTML='<strong>รับคำสั่งแล้ว</strong><div class="help">กำลังบันทึก Source Admission และ audit trail…</div>';
+  }
 
   const {data,error}=await client.rpc('hepe_admit_tqf3_project_controlled_source_by_code',{
     ...courseArgs(),
     p_admission_basis:basis
   });
-  if(error)throw error;
+  if(error){
+    if(note){
+      note.className='notice danger';
+      note.innerHTML='<strong>Source Admission ไม่สำเร็จ</strong><div class="help">'+esc(friendlyError(error))+'</div>';
+    }
+    if(btn){
+      btn.dataset.busy='0';
+      btn.disabled=false;
+      btn.textContent='ยืนยันรับรองเป็น HEPE Project-Controlled Source';
+    }
+    throw error;
+  }
 
+  if(note){
+    note.className='notice info';
+    note.innerHTML='<strong>Source Admission สำเร็จ</strong><div class="help">กำลังสร้าง Fresh Controlled Preview…</div>';
+  }
   say('รับรองเป็น HEPE Project-Controlled Source แล้ว · Version '+data.version_no,'ok');
 
   const {data:preview,error:previewError}=await client.rpc('hepe_create_fresh_tqf3_preview_by_code',{
@@ -2439,6 +2462,15 @@ async function admitTqf3ProjectControlledSource(){
     out.hidden=false;
     out.className='notice ok';
     out.innerHTML='<strong>Fresh Controlled Preview สร้างแล้ว</strong><div class="help">Preview status: '+esc(session.preview_status||'UNKNOWN')+' · provenance: CONTROLLED_SOURCE</div>';
+  }
+  if(note){
+    note.className='notice ok';
+    note.innerHTML='<strong>เสร็จสมบูรณ์</strong><div class="help">Version '+esc(data.version_no)+' = CONTROLLED_SOURCE · Fresh Controlled Preview ถูกสร้างแล้ว</div>';
+  }
+  if(btn){
+    btn.dataset.busy='0';
+    btn.textContent='รับรองแล้ว — CONTROLLED_SOURCE';
+    btn.disabled=true;
   }
   await loadSelectedCourse();
 }
