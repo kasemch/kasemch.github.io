@@ -2457,6 +2457,27 @@ async function admitTqf3ProjectControlledSource(){
   if(previewError)throw previewError;
 
   currentTqf3Preview=preview;
+
+  const {data:verified,error:verifyError}=await client.rpc('hepe_verify_tqf3_source_control_state_by_code',courseArgs());
+  if(verifyError || !verified?.verified){
+    const detail=verifyError
+      ? friendlyError(verifyError)
+      : 'POST_COMMIT_VERIFICATION_FAILED · source_status='+(verified?.source_status||'UNKNOWN')+
+        ' · admission='+(verified?.admission_present?'YES':'NO')+
+        ' · audit='+(verified?.audit_present?'YES':'NO')+
+        ' · preview='+(verified?.latest_preview_provenance||'UNKNOWN');
+    if(note){
+      note.className='notice danger';
+      note.innerHTML='<strong>ยังยืนยัน Source Admission ไม่ได้</strong><div class="help">'+esc(detail)+'</div>';
+    }
+    if(btn){
+      btn.dataset.busy='0';
+      btn.disabled=false;
+      btn.textContent='ยืนยันรับรองเป็น HEPE Project-Controlled Source';
+    }
+    throw new Error(detail);
+  }
+
   tqf3SourceControlEligibility={...e,eligible:false,source_status:'CONTROLLED_SOURCE'};
   renderTqf3SourceControlEligibility();
 
@@ -2465,11 +2486,11 @@ async function admitTqf3ProjectControlledSource(){
   if(out){
     out.hidden=false;
     out.className='notice ok';
-    out.innerHTML='<strong>Fresh Controlled Preview สร้างแล้ว</strong><div class="help">Preview status: '+esc(session.preview_status||'UNKNOWN')+' · provenance: CONTROLLED_SOURCE</div>';
+    out.innerHTML='<strong>Fresh Controlled Preview ยืนยันแล้ว</strong><div class="help">Preview status: '+esc(session.preview_status||'UNKNOWN')+' · provenance: '+esc(verified.latest_preview_provenance||'CONTROLLED_SOURCE')+'</div>';
   }
   if(note){
     note.className='notice ok';
-    note.innerHTML='<strong>เสร็จสมบูรณ์</strong><div class="help">Version '+esc(data.version_no)+' = CONTROLLED_SOURCE · Fresh Controlled Preview ถูกสร้างแล้ว</div>';
+    note.innerHTML='<strong>เสร็จสมบูรณ์และยืนยันจากฐานข้อมูลแล้ว</strong><div class="help">Version '+esc(verified.version_no)+' = '+esc(verified.source_status)+' · Admission + Audit + Controlled Preview = VERIFIED</div>';
   }
   if(btn){
     btn.dataset.busy='0';
