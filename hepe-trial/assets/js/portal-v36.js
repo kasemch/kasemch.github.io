@@ -2266,6 +2266,13 @@ document.addEventListener('click',e=>{
 },true);
 
 document.addEventListener('click',e=>{
+  const btn=e.target.closest?.('#hed2503-v13-long-continue');
+  if(!btn)return;
+  e.preventDefault();e.stopPropagation();
+  continueHed2503V13ToSourceGate(btn).catch(err=>say(friendlyError(err),'danger'));
+},true);
+
+document.addEventListener('click',e=>{
   const btn=e.target.closest?.('[data-review-hed2503-rubric]');
   if(!btn)return;
   e.preventDefault();e.stopPropagation();
@@ -2584,6 +2591,71 @@ function renderHed2503RubricReviewContext(){
     status.textContent='Rubric reviewed '+reviewed+'/'+rubrics.length+
       (ctx.all_reviewed?' · พร้อมสร้าง Version 13':'');
     status.className='badge '+(ctx.all_reviewed?'ok':'warn');
+  }
+}
+
+async function continueHed2503V13ToSourceGate(btn){
+  const out=$('#hed2503-v13-long-continue-status');
+  if(btn?.dataset.busy==='1')return;
+  if(btn){
+    btn.dataset.busy='1';
+    btn.disabled=true;
+    btn.textContent='กำลังประมวลผล Version 13 แบบยาว…';
+  }
+  if(out){
+    out.hidden=false;
+    out.className='notice info';
+    out.innerHTML='<strong>Master Continuation กำลังทำงาน</strong>'+
+      '<div class="help">Validate → Fresh Preview → Submit → Source-Control Eligibility</div>';
+  }
+  try{
+    const {data,error}=await client.rpc('hepe_continue_hed2503_v13_to_source_gate');
+    if(error)throw error;
+
+    const val=data?.validation||{};
+    const elig=data?.source_control_eligibility||{};
+    const stop=data?.stop_reason||'UNKNOWN';
+
+    if(stop==='SOURCE_CONTROL_HUMAN_GATE'){
+      if(out){
+        out.className='notice ok';
+        out.innerHTML=
+          '<strong>หยุดที่ Source-Control Human Gate ตาม Master Instruction</strong>'+
+          '<div class="help">Validation: '+esc(val.result||'—')+
+          ' · Preview: '+esc(elig.latest_preview_status||'—')+
+          ' · blockers='+esc(elig.unresolved_blockers??'—')+'</div>'+
+          '<div class="help">Version '+esc(elig.version_no??'—')+
+          ' · source='+esc(elig.source_status||'—')+
+          ' · eligible=YES</div>'+
+          '<div class="help">ขั้นถัดไปเป็นคำตัดสินของ Programme Chair: Admit HEPE Project-Controlled Source</div>';
+      }
+      say('Version 13 พร้อมที่ Source-Control Human Gate','ok');
+    }else{
+      if(out){
+        out.className='notice warn';
+        out.innerHTML=
+          '<strong>Master Continuation หยุดก่อน Human Gate</strong>'+
+          '<div class="help">Reason: '+esc(stop)+'</div>'+
+          '<div class="help">Validation: '+esc(val.result||'—')+
+          ' · blockers='+esc(elig.unresolved_blockers??'—')+
+          ' · preview='+esc(elig.latest_preview_status||'—')+'</div>';
+      }
+      say('Version 13 ยังมีเงื่อนไขที่ต้องแก้ก่อน Source Control','warn');
+    }
+    await loadSelectedCourse();
+  }catch(err){
+    if(out){
+      out.hidden=false;
+      out.className='notice danger';
+      out.innerHTML='<strong>Master Continuation ไม่สำเร็จ</strong><div class="help">'+esc(friendlyError(err))+'</div>';
+    }
+    throw err;
+  }finally{
+    if(btn){
+      btn.dataset.busy='0';
+      btn.disabled=false;
+      btn.textContent='ดำเนินการ Version 13 จนถึง Human Gate';
+    }
   }
 }
 
