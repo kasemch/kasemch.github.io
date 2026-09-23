@@ -2215,6 +2215,24 @@ function toggleSubmissionMode(){
 }
 
 /* ---------- Save / workflow ---------- */
+async function createTqf3PreviewReadiness(){
+  if(!docCtx?.course?.course_offering_id)throw new Error('ยังไม่พบ Course Offering สำหรับปี/ภาคนี้');
+  say('กำลังสร้าง TQF3 Preview เพื่อตรวจความพร้อม…');
+  const {data,error}=await client.rpc('hepe_create_tqf3_preview_by_code',{
+    ...courseArgs(),
+    p_target_format:'HTML'
+  });
+  if(error)throw error;
+  const status=data?.session?.preview_status||data?.preview_status||'UNKNOWN';
+  const findings=data?.findings||[];
+  const blocking=findings.filter(x=>x.is_blocking&&!x.is_resolved);
+  say(
+    'Preview '+status+' · blocking findings '+blocking.length+
+    (blocking.length?' · '+blocking.map(x=>x.finding_code||x.code||'BLOCKER').join(', '):' · พร้อมสำหรับ human review'),
+    blocking.length?'warn':'ok'
+  );
+  return data;
+}
 async function saveTqf3(){
   if(!docCtx?.course?.course_offering_id)throw new Error('ยังไม่พบ Course Offering สำหรับปี/ภาคนี้ จึงยังบันทึก มคอ.3 ไม่ได้');
   say('กำลังบันทึก มคอ.3 Working Version…');
@@ -2257,7 +2275,7 @@ function bindStatic(){
   $('#bulk-apply-empty').onclick=()=>bulkApplyWeeks(false);$('#bulk-apply-all').onclick=()=>bulkApplyWeeks(true);
   $('#sync-tqf5-from-tqf3').onclick=syncTqf5FromTqf3;
   $('#submission-mode').onclick=toggleSubmissionMode;
-  $('#save-tqf3').onclick=()=>saveTqf3().catch(e=>say(friendlyError(e),'danger'));$('#save-tqf5').onclick=()=>saveTqf5().catch(e=>say(friendlyError(e),'danger'));$('#save-verification-note').onclick=()=>saveVerificationNote().catch(e=>say(friendlyError(e),'danger'));
+  $('#save-tqf3').onclick=()=>saveTqf3().catch(e=>say(friendlyError(e),'danger'));if($('#preview-tqf3-readiness'))$('#preview-tqf3-readiness').onclick=()=>createTqf3PreviewReadiness().catch(e=>say(friendlyError(e),'danger'));$('#save-tqf5').onclick=()=>saveTqf5().catch(e=>say(friendlyError(e),'danger'));$('#save-verification-note').onclick=()=>saveVerificationNote().catch(e=>say(friendlyError(e),'danger'));
   $$('.ai-section').forEach(b=>b.onclick=()=>runSectionAi(b.dataset.section,null,b));
   $('#ai-chatgpt').onclick=()=>openChatGPT().catch(e=>say(friendlyError(e),'danger'));$('#ai-show-prompt').onclick=()=>{$('#ai-prompt-wrap').hidden=!$('#ai-prompt-wrap').hidden;$('#ai-prompt').value=aiPrompt();};
   $('#print-form').onclick=()=>window.print();$('#logout').onclick=()=>logout().catch(e=>say(friendlyError(e),'danger'));
