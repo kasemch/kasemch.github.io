@@ -37,10 +37,20 @@
 
 <section class="registry-card">
 <div class="section-title"><div><h2>ค้นหาและกรองทะเบียนผู้สอน</h2><div class="help">ชื่อที่บันทึกแล้วจะถูกใช้ซ้ำใน dropdown ของ Teaching Team</div></div><span id="count" class="pill">0 คน</span></div>
+<div id="enrichment-summary" class="actions" style="margin-bottom:12px;flex-wrap:wrap"></div>
 <div class="registry-grid">
 <div class="field"><label>ค้นหา</label><input id="search" type="search" placeholder="ชื่อ / ตำแหน่ง / อีเมล / รหัสบุคคล"></div>
 <div class="field"><label>สถานะหลักฐาน</label><select id="verification-filter"><option value="">ทั้งหมด</option><option value="VERIFIED">Verified</option><option value="UNVERIFIED">Unverified</option></select></div>
 <div class="field"><label>บัญชีระบบ</label><select id="account-filter"><option value="">ทั้งหมด</option><option value="BOUND">มีบัญชี</option><option value="UNBOUND">ยังไม่มีบัญชี</option></select></div>
+<div class="field"><label>Auto-Enrichment</label><select id="enrichment-filter">
+<option value="">ทั้งหมด</option>
+<option value="ACCOUNT_BOUND">Account Bound</option>
+<option value="ACCOUNT_MATCH_CANDIDATE">Account Match Candidate</option>
+<option value="EMAIL_VERIFIED">Email Verified</option>
+<option value="EMAIL_UNVERIFIED">Email Unverified</option>
+<option value="EMAIL_MISSING">Email Missing</option>
+<option value="REVIEW_REQUIRED">Review Required</option>
+</select></div>
 </div>
 </section>
 
@@ -57,12 +67,12 @@
 
 <section class="registry-card">
 <div class="table-wrap"><table class="registry-table">
-<thead><tr><th>ผู้สอน</th><th class="hide-mobile">รหัส</th><th>อีเมล</th><th>บัญชี</th><th class="hide-mobile">งานสอนปัจจุบัน</th><th>สถานะ</th></tr></thead>
+<thead><tr><th>ผู้สอน</th><th class="hide-mobile">รหัส</th><th>อีเมล</th><th>บัญชี</th><th class="hide-mobile">งานสอนปัจจุบัน</th><th>Enrichment</th></tr></thead>
 <tbody id="registry-body"></tbody>
 </table></div>
 </section>
 </section>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../assets/js/instructor-registry-v1.js?v=1"></script>
+<script src="../assets/js/instructor-registry-v1.js?v=2"></script>
 </body></html>
