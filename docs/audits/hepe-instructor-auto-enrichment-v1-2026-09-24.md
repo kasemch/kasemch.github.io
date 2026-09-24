@@ -1,56 +1,47 @@
-# HEPE Instructor Registry Auto-Enrichment v1
+# HEPE Instructor Registry Auto-Enrichment v1 — Evidence Audit
 
-Date: 2026-09-24  
-Environment: NON-PRODUCTION / CONTROLLED PILOT  
-Status: ACTIVE BACKEND BASELINE
+Date: 2026-09-24
+Environment: HEPE Sandbox / NON-PRODUCTION
+Status: SOURCE-BASED ENRICHMENT COMPLETED — ACCOUNT BINDING SEPARATE
 
-## Objective
+## Inputs
 
-Enrich instructor registry records automatically from evidence-backed internal sources without fabricating names, email addresses, identity bindings, or authority.
+- Existing public.academic_people and public.academic_person_contacts.
+- Verified academic_person_actor_bindings and exact authenticated-account email, where already present.
+- Google Sheet: RU-HEPE ฐานข้อมูลหลักสูตรและผู้สอน พ.ศ. 2567, sheet 03_อาจารย์ใหม่ (NIV-001, NIV-002, NIV-003) and 50_User_Access.
 
-## Rules
+## Changes applied
 
-- Never infer an email address from a person's name.
-- Keep authentication identity separate from academic-person identity.
-- Never create account binding automatically.
-- Never create academic authority automatically from an email match.
-- Exact verified email + authenticated account creates only an ACCOUNT_MATCH_CANDIDATE.
-- Multiple emails or multiple bindings require REVIEW_REQUIRED.
-- Missing evidence remains EMAIL_MISSING.
+Added exact-source email contact records for three matched existing academic people:
+- ชานน จิตบรรจงจักร — comchanon.c@ru.ac.th (NIV-001).
+- อาทิตย์ เข็มทอง — khemthong_css57@hotmail.com (NIV-002, personal email).
+- ณัฐพงษ์ ทำทาน — nuttapong.t@rumail.ru.ac.th (NIV-003).
 
-## Sources used
+Promoted the pre-existing contact for เกษม ชูรัตน์ to VERIFIED only after exact match with an existing verified person↔actor binding and auth email.
 
-1. public.academic_people
-2. public.academic_person_contacts
-3. public.academic_person_actor_bindings
-4. auth.users
-5. RU-HEPE Google Sheets Master — sheet 50_User_Access
-6. Existing controlled HEPE instructor/curriculum sources
+No academic person, auth account, new verified binding, or authority assignment was created by this enrichment.
 
-## Data actions completed
+## Existing read model and UI
 
-- Added evidence registry: public.hepe_instructor_enrichment_evidence
-- Added live enrichment read model: public.v_hepe_instructor_enrichment_status
-- Extended instructor registry RPC with enrichment status and summary
-- Imported a verified institutional email for Thanida Bhasavanija from the controlled RU-HEPE 50_User_Access source
-- Created evidence queue rows for current instructor records
+The existing public.v_hepe_instructor_enrichment_status and public.hepe_fast_tqf_instructor_registry_context already expose the states and counts. The registry UI has summary badges and filter for enrichment_status. Preserve the existing view's column contract; do not replace it with an incompatible projection.
 
-## Current status counts
+## Post-enrichment reconciliation
 
-- ACCOUNT_BOUND: 1
-- EMAIL_VERIFIED: 4
-- EMAIL_UNVERIFIED: 5
-- EMAIL_MISSING: 20
-- ACCOUNT_MATCH_CANDIDATE: 0
-- REVIEW_REQUIRED: 0
+- 30 real instructor records.
+- ACCOUNT_BOUND: 1.
+- EMAIL_VERIFIED: 6 (email source verified, not account ownership).
+- EMAIL_UNVERIFIED: 4.
+- EMAIL_MISSING: 19.
+- REVIEW_REQUIRED: 0 at time of query.
+- No identical active contact email mapped to multiple academic people at time of query.
 
-## Pilot note
+These are distinct states: email source verification does not create login identity, bind an account, or grant course/system authority.
 
-Orachulee Nirasornp remains EMAIL_MISSING / account unbound. No email was inferred or fabricated.
+## Remaining HED3505 pilot blocker
 
-## Next valid enrichment actions
+อรชุลี นิราศรพ remains EMAIL_MISSING / no verified account binding. Do not invent her address or infer identity from a similar name. Obtain her actual email/sign-in and make a programme-scoped human-confirmed account binding before granting PREPARER.
 
-1. Ingest additional controlled personnel/email sources when available.
-2. Promote only exact evidence-backed contacts to VERIFIED.
-3. When a verified email later matches an authenticated account, surface ACCOUNT_MATCH_CANDIDATE.
-4. Require human confirmation before account binding.
+## Gate
+
+PASS — ENRICHMENT DATA / EXISTING READ MODEL.
+HOLD — REAL CO-INSTRUCTOR SIGN-IN AND ACCOUNT BINDING.
