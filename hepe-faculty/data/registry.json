@@ -2,15 +2,8 @@
   "schemaVersion": "1.0",
   "classification": "NON_PRODUCTION",
   "description": "Controlled registry. Never populate with unverified or private personal information on a public repository.",
-  "academicYears": [
-    {
-      "yearBE": 2568,
-      "start": "2025-06-01",
-      "end": "2026-05-31",
-      "verification": "SOURCE_FOUND",
-      "note": "SAR draft; confirm institution calendar before authoritative reporting"
-    }
-  ],
+  "academicYears": [],
   "staff": [],
-  "works": []
+  "works": [],
+  "note": "Academic-year boundaries must be copied from verified university calendar before reporting."
 }
