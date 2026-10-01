@@ -37,3 +37,13 @@ Status: NON-PRODUCTION
 - Merge: HOLD
 - Production publishing: HOLD
 - Real social APIs: HOLD
+
+## HEPE-COMM-006 CI acceptance
+- HEPE release immutability: PASS
+- AWOS public boundary check: PASS
+- Jekyll build: PASS
+- Jekyll build artifact: generated (`jekyll-site`)
+- GitHub Pages production deployment: NOT EXECUTED
+- Browser/real-device acceptance: pending a non-production hosted preview URL; repository currently provides a build artifact but no branch Pages URL was verified.
+
+Decision: do not merge merely to obtain a Pages URL. Preserve the controlled-preview boundary.
