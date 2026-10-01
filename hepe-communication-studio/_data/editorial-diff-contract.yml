@@ -1,0 +1,6 @@
+version: "0.1"
+status: non_production
+compare: [source, canonical_draft]
+report: [unchanged_facts, wording_changes, removed_information, newly_introduced_wording, potential_new_claim]
+blocking_flag: POTENTIAL_UNSUPPORTED_CLAIM
+requires_human_resolution: true
