@@ -1,0 +1,8 @@
+version: "0.1"
+status: non_production
+classes: [FACT, DATE, PERSON, ORGANIZATION, LOCATION, NUMBER, QUOTE, CLAIM, UNVERIFIED, CONFLICT]
+conflict_states: [OPEN, RESOLVED, REJECTED]
+drafting_eligible: [FACT]
+conflict_drafting_rule: RESOLVED_ONLY
+human_verification_required: true
+confidence_is_not_verification: true
