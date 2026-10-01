@@ -1,0 +1,12 @@
+version: "0.1"
+status: non_production
+modes: [official_news, activity_news, announcement, academic_communication, public_information, urgent_notice, student_information, faculty_information]
+rules:
+  clear: true
+  courteous: true
+  readable: true
+  non_sensational: true
+  preserve_official_names: true
+  preserve_qualifiers: true
+  may_add_new_facts: false
+  unsupported_superlatives: blocked
