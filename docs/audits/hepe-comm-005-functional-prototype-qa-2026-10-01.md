@@ -47,3 +47,12 @@ Status: NON-PRODUCTION
 - Browser/real-device acceptance: pending a non-production hosted preview URL; repository currently provides a build artifact but no branch Pages URL was verified.
 
 Decision: do not merge merely to obtain a Pages URL. Preserve the controlled-preview boundary.
+
+## HEPE-COMM-006C GitHub-native preview pipeline
+- Workflow authored: `.github/workflows/hepe-communication-studio-preview.yml`
+- Scope: Communication Studio paths only.
+- Permissions: contents read.
+- Guards: NON-PRODUCTION markers, direct production=false, real social publish=false.
+- Output: 14-day controlled-preview artifact only; no Pages deployment step.
+- Smoke checks: required HTML/CSS/JS, viewport, aria-label, disabled production control, terminal-state exclusion.
+- First execution: PENDING. GitHub did not schedule the newly introduced workflow from the feature-branch PR commit; existing trusted workflows continue to run successfully. Do not mark this new workflow PASS until an actual run exists.
