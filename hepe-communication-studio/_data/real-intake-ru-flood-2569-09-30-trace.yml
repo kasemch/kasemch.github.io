@@ -1,0 +1,24 @@
+content_id: RU-FLOOD-2569-09-30
+workflow_state: AWAITING_HUMAN_PUBLICATION_APPROVAL
+canonical_channel: website
+institutional_voice_mode: urgent_notice
+fact_review: VERIFIED_FROM_USER_SUPPLIED_OFFICIAL_NOTICE
+editorial_review:
+  result: READY_FOR_HUMAN_REVIEW
+  unsupported_new_claims: false
+  notes:
+    - "ใช้ประกาศฉบับลงนามเป็นหลักฐานหลัก"
+    - "ใช้ภาพประชาสัมพันธ์และภาพโพสต์เป็นหลักฐานประกอบ"
+    - "ไม่ใช้ยอด reaction/comment/share เป็นสาระข่าว"
+channel_variants:
+  website:
+    status: READY_FOR_HUMAN_REVIEW
+  facebook:
+    status: NOT_PREPARED_FOR_REAL_PUBLISH
+  instagram:
+    status: NOT_PREPARED_FOR_REAL_PUBLISH
+  line:
+    status: NOT_PREPARED_FOR_REAL_PUBLISH
+publication:
+  website_publish: BLOCKED_PENDING_HUMAN_APPROVAL
+  real_social_publish: BLOCKED
