@@ -1,0 +1,11 @@
+version: "0.1"
+status: non_production
+media_types: [announcement_image, activity_image, poster, infographic, pdf_announcement, official_document, supporting_image, thumbnail, gallery_image]
+required_metadata: [media_id, media_type, file_reference, source_reference, evidence_id, alt_text, permission_status, verification_status]
+rights_states: [CLEARED, RESTRICTED, UNKNOWN, BLOCKED]
+publish_eligible_rights: [CLEARED]
+accessibility:
+  text_equivalent_required_for_text_heavy_image: true
+  alt_text_required_for_meaningful_image: true
+  decorative_classification_supported: true
+prototype_real_upload: false
