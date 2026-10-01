@@ -1,0 +1,27 @@
+version: "0.1"
+status: non_production
+required_fields:
+  - evidence_id
+  - source_type
+  - source_reference
+  - classification
+  - verification_status
+  - permitted_uses
+  - related_content_id
+verification_statuses:
+  - VERIFIED
+  - UNVERIFIED
+  - CONFLICT
+  - REJECTED
+publish_eligible:
+  - VERIFIED
+publish_blocked:
+  - UNVERIFIED
+  - CONFLICT
+  - REJECTED
+traceability:
+  source_to_evidence: required
+  evidence_to_draft: required
+  draft_to_channel_variant: required
+  channel_variant_to_canonical_revision: required
+  approval_to_revision: required

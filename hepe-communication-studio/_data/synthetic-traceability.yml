@@ -1,0 +1,35 @@
+version: "0.1"
+status: synthetic_test_fixture
+content_id: SYN-CONTENT-001
+canonical_channel: website
+source:
+  source_id: SYN-SRC-001
+  source_type: manual_facts
+  synthetic: true
+evidence:
+  - evidence_id: SYN-EV-001
+    source_id: SYN-SRC-001
+    classification: FACT
+    verification_status: VERIFIED
+    permitted_uses: [prototype_test]
+draft:
+  draft_id: SYN-DRAFT-001
+  evidence_ids: [SYN-EV-001]
+  max_automation_state: APPROVED_FOR_PREVIEW
+channels:
+  website:
+    variant_id: SYN-WEB-001
+    canonical: true
+    draft_id: SYN-DRAFT-001
+  facebook:
+    variant_id: SYN-FB-001
+    canonical_content_id: SYN-CONTENT-001
+    mode: MOCK_ONLY
+  instagram:
+    variant_id: SYN-IG-001
+    canonical_content_id: SYN-CONTENT-001
+    mode: MOCK_ONLY
+  line:
+    variant_id: SYN-LINE-001
+    canonical_content_id: SYN-CONTENT-001
+    mode: MOCK_ONLY

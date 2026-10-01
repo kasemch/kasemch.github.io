@@ -1,0 +1,27 @@
+schema_version: "1.1"
+status: NON_PRODUCTION
+required:
+  - content_id
+  - title_th
+  - source_facts
+  - evidence_refs
+  - editorial_status
+  - channels
+states:
+  - DRAFT
+  - FACT_CHECK
+  - EDITORIAL_REVIEW
+  - AWAITING_APPROVAL
+  - APPROVED_FOR_PREVIEW
+  - APPROVED_FOR_PR
+  - PUBLISHED
+channels:
+  - website
+  - facebook
+  - instagram
+  - line
+publication_policy:
+  canonical_channel: website
+  require_human_approval: true
+  allow_direct_production_publish: false
+  allow_real_social_publish: false

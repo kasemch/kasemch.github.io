@@ -13,22 +13,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Detect prototype payload
-        id: payload
-        shell: bash
-        run: |
-          if [ -f hepe-communication-studio/index.html ]; then echo "present=true" >> "$GITHUB_OUTPUT"; else echo "present=false" >> "$GITHUB_OUTPUT"; fi
       - name: Assert non-production boundary
-        if: steps.payload.outputs.present == 'true'
         shell: bash
         run: |
           set -euo pipefail
+          test -f hepe-communication-studio/index.html
           grep -q "NON-PRODUCTION" hepe-communication-studio/index.html
           grep -q "No real publishing" hepe-communication-studio/index.html
           grep -q "allow_direct_production_publish: false" hepe-communication-studio/_data/content-contract.yml
           grep -q "allow_real_social_publish: false" hepe-communication-studio/_data/content-contract.yml
       - name: Assemble isolated preview
-        if: steps.payload.outputs.present == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -36,7 +30,6 @@ jobs:
           cp -R hepe-communication-studio/. preview/
           touch preview/.nojekyll
       - name: Static smoke checks
-        if: steps.payload.outputs.present == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -52,7 +45,6 @@ jobs:
             exit 1
           fi
       - name: Upload controlled preview artifact
-        if: steps.payload.outputs.present == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: hepe-communication-studio-controlled-preview

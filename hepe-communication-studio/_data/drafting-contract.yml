@@ -1,0 +1,26 @@
+version: "0.1"
+status: non_production
+engine: source_bound_prototype
+input_requirement:
+  classification: FACT
+  intake_gate: eligible
+blocked_inputs:
+  - MISSING
+  - UNVERIFIED
+  - CONFLICT
+canonical_rule:
+  website: source_bound
+  may_add_new_facts: false
+derivatives:
+  facebook: MOCK_ONLY
+  instagram: MOCK_ONLY
+  line: MOCK_ONLY
+  inherit_canonical_facts: true
+  may_add_new_facts: false
+institutional_voice:
+  clear: true
+  courteous: true
+  non_sensational: true
+  preserve_qualifiers: true
+  unsupported_superlatives: blocked
+max_automation_state: APPROVED_FOR_PREVIEW
