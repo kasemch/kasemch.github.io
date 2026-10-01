@@ -1,0 +1,25 @@
+version: "0.1"
+status: non_production
+approval_record:
+  id_pattern: SYN-APR-*
+  requires:
+    - canonical_draft
+    - source_reference
+    - evidence_reference
+    - editorial_review_confirmation
+  optional:
+    - review_note
+workflow:
+  FACT_CHECK:
+    next: EDITORIAL_REVIEW
+  EDITORIAL_REVIEW:
+    next: AWAITING_APPROVAL
+  AWAITING_APPROVAL:
+    next: APPROVED_FOR_PREVIEW
+    requires_approval_record: true
+  APPROVED_FOR_PREVIEW:
+    terminal_for_prototype: true
+forbidden_automated_states:
+  - APPROVED_FOR_PR
+  - PUBLISHED
+production_authority: human_only
