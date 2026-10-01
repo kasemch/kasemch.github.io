@@ -1,0 +1,27 @@
+content_id: RU-FLOOD-2569-09-30
+status: awaiting_human_publication_approval
+source_priority:
+  - id: RU-FLOOD-OFFICIAL-NOTICE
+    type: signed_official_announcement_image
+    role: primary
+    supplied_by_user: true
+  - id: RU-FLOOD-INFOGRAPHIC
+    type: university_public_relations_image
+    role: supporting
+    supplied_by_user: true
+  - id: RU-FLOOD-FACEBOOK-CAPTURE
+    type: public_relations_social_capture
+    role: supporting
+    supplied_by_user: true
+verified_facts:
+  - "งดการเรียนการสอนและปิดทำการเป็นกรณีพิเศษเพิ่มเติม วันที่ 1–2 ตุลาคม 2569"
+  - "ครอบคลุมรามคำแหง 1 และรามคำแหง 2 ตามข้อความประชาสัมพันธ์ที่ให้มา"
+  - "สาเหตุเกี่ยวข้องกับสถานการณ์น้ำท่วมภายในมหาวิทยาลัยและพื้นที่กรุงเทพมหานคร"
+  - "การเรียนการสอนที่หัวหมากและวิทยาเขตบางนาให้งดการสอนในชั้นเรียน และผู้สอน/ประธานโครงการพิจารณาการสอนออนไลน์ตามความเหมาะสม"
+  - "มหาวิทยาลัยคาดการณ์ว่าจะสามารถเปิดทำการได้วันจันทร์ที่ 5 ตุลาคม 2569"
+publication_controls:
+  human_publication_approval_required: true
+  direct_publish: false
+  social_publish: false
+  preserve_official_document: true
+  do_not_invent_missing_details: true
