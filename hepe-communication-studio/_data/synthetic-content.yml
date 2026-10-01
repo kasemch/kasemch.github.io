@@ -1,0 +1,21 @@
+content_id: HEPE-COMM-SYN-001
+synthetic: true
+source_facts:
+  - id: SYN-F01
+    value: "รายการนี้สร้างขึ้นเพื่อทดสอบ workflow เท่านั้น"
+    verification: VERIFIED_SYNTHETIC
+missing_facts: []
+conflicts: []
+evidence:
+  - id: SYN-EV-001
+    type: synthetic_test_fixture
+    admissible_as_real_evidence: false
+channel_variants:
+  website:
+    status: READY_FOR_PREVIEW
+  facebook:
+    status: MOCK_ONLY
+  instagram:
+    status: MOCK_ONLY
+  line:
+    status: MOCK_ONLY
