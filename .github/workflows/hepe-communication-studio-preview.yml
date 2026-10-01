@@ -1,0 +1,53 @@
+name: HEPE Communication Studio controlled preview
+on:
+  pull_request:
+    paths:
+      - 'hepe-communication-studio/**'
+      - 'docs/architecture/hepe-communication-studio-v1.1.md'
+      - 'docs/audits/hepe-comm-005-functional-prototype-qa-2026-10-01.md'
+      - '.github/workflows/hepe-communication-studio-preview.yml'
+permissions:
+  contents: read
+jobs:
+  controlled-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Assert non-production boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f hepe-communication-studio/index.html
+          grep -q "NON-PRODUCTION" hepe-communication-studio/index.html
+          grep -q "No real publishing" hepe-communication-studio/index.html
+          grep -q "allow_direct_production_publish: false" hepe-communication-studio/_data/content-contract.yml
+          grep -q "allow_real_social_publish: false" hepe-communication-studio/_data/content-contract.yml
+      - name: Assemble isolated preview
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p preview
+          cp -R hepe-communication-studio/. preview/
+          touch preview/.nojekyll
+      - name: Static smoke checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s preview/index.html
+          test -s preview/assets/studio.css
+          test -s preview/assets/studio.js
+          grep -q 'viewport' preview/index.html
+          grep -q 'aria-label' preview/index.html
+          grep -q 'disabled' preview/index.html
+          grep -q 'APPROVED_FOR_PREVIEW' preview/assets/studio.js
+          if grep -q "'APPROVED_FOR_PR'\|'PUBLISHED'" preview/assets/studio.js; then
+            echo "Unsafe terminal workflow state found in client simulation"
+            exit 1
+          fi
+      - name: Upload controlled preview artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: hepe-communication-studio-controlled-preview
+          path: preview/
+          if-no-files-found: error
+          retention-days: 14
