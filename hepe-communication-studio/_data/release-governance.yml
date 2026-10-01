@@ -1,0 +1,15 @@
+version: "0.1"
+status: non_production
+workflow: [DRAFT, REVIEW, APPROVED_FOR_PREVIEW, CONTROLLED_PREVIEW, HUMAN_APPROVAL, PR, MERGE, GITHUB_PAGES]
+direct_production_push: false
+automatic_merge: false
+real_social_api: false
+production_authority: human_only
+calendar_fixture:
+  id: SYN-CAL-001
+  type: announcement
+  state: PLANNED
+  synthetic: true
+analytics:
+  real_reach: false
+  real_engagement: false
