@@ -1,0 +1,39 @@
+version: "0.1"
+status: non_production
+canonical_channel: website
+input_classes:
+  - informal_text
+  - announcement_image
+  - pdf_or_official_document
+  - official_notice
+  - activity_news
+  - activity_images
+  - url_reference
+  - structured_form
+  - manual_facts
+fact_classes:
+  - FACT
+  - INTERPRETATION
+  - CLAIM
+  - QUOTE
+  - DATE
+  - PERSON
+  - ORGANIZATION
+  - LOCATION
+  - NUMBER
+  - SOURCE
+  - UNVERIFIED
+  - CONFLICT
+blocking_classes:
+  - UNVERIFIED
+  - CONFLICT
+prototype_max_state: APPROVED_FOR_PREVIEW
+human_gates:
+  - APPROVED_FOR_PR
+  - PRODUCTION_MERGE
+  - REAL_SOCIAL_DISTRIBUTION
+channel_policy:
+  website: canonical
+  facebook: derivative_mock_only
+  instagram: derivative_mock_only
+  line: derivative_mock_only
