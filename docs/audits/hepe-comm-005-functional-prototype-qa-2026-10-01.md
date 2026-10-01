@@ -56,3 +56,16 @@ Decision: do not merge merely to obtain a Pages URL. Preserve the controlled-pre
 - Output: 14-day controlled-preview artifact only; no Pages deployment step.
 - Smoke checks: required HTML/CSS/JS, viewport, aria-label, disabled production control, terminal-state exclusion.
 - First execution: PENDING. GitHub did not schedule the newly introduced workflow from the feature-branch PR commit; existing trusted workflows continue to run successfully. Do not mark this new workflow PASS until an actual run exists.
+
+## HEPE-COMM-007 Functional Acceptance — current HEAD
+- Accepted HEAD: `2d1b770bd44f754a17b3d944a7b45b96f8645452`
+- Controlled Preview: PASS — run 36808845087
+- HEPE release immutability: PASS — run 36808845120
+- AWOS public boundary: PASS — run 36808845094
+- Jekyll build: PASS — run 36808845108
+- Accessibility remediation included: aria-current active navigation, visible focus styling, aria-live status for fact-check and approval state.
+- Publishing guard: production control remains disabled; simulation terminates at APPROVED_FOR_PREVIEW.
+- Controlled preview artifact: `11138254767`, 6,145 bytes, created 2026-10-01T03:05:05Z, expires 2026-10-15T03:05:05Z.
+- Responsive status: CSS mobile breakpoint and viewport metadata verified in source; physical-device acceptance NOT CLAIMED.
+- Security/privacy status: prototype contains synthetic content and no publishing endpoint in the reviewed client files; repository-wide secret scanning is not claimed by this acceptance entry.
+- Decision: technical CI acceptance PASS for current prototype head. Production, social publishing, and merge of PR #130 remain HUMAN GATES.
