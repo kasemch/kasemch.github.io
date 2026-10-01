@@ -1,0 +1,29 @@
+version: "0.1"
+status: controlled_pre_production
+purpose: real_content_intake_preparation
+accepted_sources:
+  - pasted_text
+  - announcement_image_reference
+  - pdf_or_official_document_reference
+  - official_url_reference
+  - activity_news_facts
+required_before_publication:
+  - source_reference
+  - evidence_record
+  - fact_review
+  - editorial_review
+  - human_publication_approval
+rules:
+  ai_may_extract: true
+  ai_may_rewrite: true
+  ai_may_prepare_pull_request: true
+  ai_may_publish_without_human: false
+  unsupported_fact_creation: false
+  unresolved_conflict_publish: false
+  missing_provenance_publish: false
+website:
+  canonical: true
+  publish_via_pull_request: true
+social:
+  real_publish: false
+  separate_human_gate_required: true

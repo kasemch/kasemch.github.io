@@ -1,0 +1,31 @@
+content_id: RU-FLOOD-2569-09-30
+workflow_state: APPROVED_FOR_PR
+canonical_channel: website
+institutional_voice_mode: urgent_notice
+fact_review: VERIFIED_FROM_USER_SUPPLIED_OFFICIAL_NOTICE
+editorial_review:
+  result: READY_FOR_HUMAN_REVIEW
+  unsupported_new_claims: false
+  notes:
+    - "ใช้ประกาศฉบับลงนามเป็นหลักฐานหลัก"
+    - "ใช้ภาพประชาสัมพันธ์และภาพโพสต์เป็นหลักฐานประกอบ"
+    - "ไม่ใช้ยอด reaction/comment/share เป็นสาระข่าว"
+channel_variants:
+  website:
+    status: HUMAN_APPROVED_FOR_PR
+  facebook:
+    status: NOT_PREPARED_FOR_REAL_PUBLISH
+  instagram:
+    status: NOT_PREPARED_FOR_REAL_PUBLISH
+  line:
+    status: NOT_PREPARED_FOR_REAL_PUBLISH
+publication:
+  website_publish: APPROVED_FOR_PR_NOT_YET_PUBLISHED
+  real_social_publish: BLOCKED
+
+human_approval:
+  decision: APPROVE_PUBLICATION_DRAFT
+  recorded: true
+  scope: website_canonical_draft_only
+  merge_authority: separate_human_gate
+  real_social_authority: not_granted
