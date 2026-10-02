@@ -79,3 +79,20 @@
   border-bottom: 2px solid var(--global-text-color);
   /* No need to repeat pointer-events and cursor here */
 }
+
+
+.theme-toggle__button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+  padding: 0;
+  cursor: pointer;
+}
+
+.theme-toggle__button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
