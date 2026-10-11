@@ -4,6 +4,8 @@ title: "Asst. Prof. Dr. Kasem Chooratna"
 description: "Academic portfolio of Asst. Prof. Dr. Kasem Chooratna: Health and Physical Education, research, curriculum development, quality assurance and responsible digital innovation at Ramkhamhaeng University."
 author_profile: false
 classes: wide
+header:
+  overlay_color: "#0b2946"
 ---
 
 {% assign teaching = site.data.teaching_ay2569 %}
