@@ -1,3 +1,5 @@
+@import url("/assets/css/home-visual-fidelity-v2.css");
+
 /* Home Academic Axis — Phase A
    Keeps Education / Research / Community / Impact visually separate from the portrait. */
 .ae-portrait-stage{justify-content:flex-start;padding-right:9.5rem}
@@ -8,6 +10,3 @@
 .ae-portrait-axis span{font-size:.72rem;line-height:1.15;letter-spacing:.2em;color:#f0e6d1;text-shadow:0 1px 10px rgba(5,23,39,.38)}
 @media(max-width:1100px){.ae-portrait-stage{justify-content:center;padding-right:0}.ae-portrait{max-width:560px}.ae-portrait-axis{right:clamp(.5rem,4vw,2rem);top:48%;min-width:8rem;background:rgba(9,34,59,.12)}}
 @media(max-width:720px){.ae-portrait-stage{height:520px;display:grid;grid-template-rows:1fr auto;align-items:end;justify-items:center;padding-right:0}.ae-portrait{grid-row:1;width:min(100%,520px);height:455px}.ae-portrait-axis{position:relative;grid-row:2;right:auto;top:auto;bottom:auto;transform:none;width:min(100%,520px);min-width:0;display:flex;justify-content:center;flex-wrap:wrap;gap:.45rem 1rem;padding:.8rem 0 .65rem;border-left:0;border-top:1px solid rgba(234,217,184,.42);background:transparent;text-align:center}.ae-portrait-axis:before,.ae-portrait-axis:after{display:none}.ae-portrait-axis span{font-size:.62rem;letter-spacing:.17em}}
-
-/* Visual Fidelity Recovery v2 is intentionally loaded last. */
-@import url("/assets/css/home-visual-fidelity-v2.css");
