@@ -1,55 +1,19 @@
 ---
+layout: home-v3
 permalink: /
 title: "Kasem Chooratna, Ph.D."
 description: "Academic portfolio of Kasem Chooratna, Ph.D., Programme Chair of the B.Ed. in Health Education and Physical Education at Ramkhamhaeng University."
 author_profile: false
 classes: wide
 header:
-  image: /images/kc-social-card.svg
+  image: kc-social-card.svg
   image_description: "KC academic identity — Programme Chair, B.Ed. in Health Education and Physical Education"
 ---
 
-<link rel="stylesheet" href="{{ '/assets/css/home-visual-fidelity-v3.css' | relative_url }}">
-
 <main class="kc-v3">
-  <section class="kc-v3-hero" aria-labelledby="home-title">
-    <div class="kc-v3-shell">
-      <div class="kc-v3-topline"><span class="kc-v3-mark">KC</span><span>Education · Health · Movement · Evidence</span></div>
-      <div class="kc-v3-hero-grid">
-        <div class="kc-v3-copy">
-          <div class="kc-v3-eyebrow">Assistant Professor · Faculty of Education · Ramkhamhaeng University</div>
-          <h1 id="home-title">Kasem<br>Chooratna</h1>
-          <p class="kc-v3-role">Programme Chair</p>
-          <p class="kc-v3-programme">Bachelor of Education Program in Health Education and Physical Education</p>
-          <p class="kc-v3-mission">Developing future teachers for healthier people, schools and communities.</p>
-          <div class="kc-v3-links"><a href="{{ '/curriculum-quality/' | relative_url }}">Explore the Programme ↗</a><a href="{{ '/research/' | relative_url }}">Research ↗</a><a href="{{ '/about/' | relative_url }}">About ↗</a></div>
-        </div>
-        <div class="kc-v3-art" aria-label="KC identity artwork representing human movement, education and evidence">
-          <div class="letters" aria-hidden="true"><span>K</span><span>C</span></div><div class="sweep" aria-hidden="true"></div><div class="landscape" aria-hidden="true"></div>
-          <blockquote>Education for healthier people<br>and stronger communities.</blockquote>
-          <div class="words"><span>People</span><span>Curriculum</span><span>Evidence</span><span>Innovation</span><span>Impact</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
+  <section class="kc-v3-hero" aria-labelledby="home-title"><div class="kc-v3-shell"><div class="kc-v3-topline"><span class="kc-v3-mark">KC</span><span>Education · Health · Movement · Evidence</span></div><div class="kc-v3-hero-grid"><div class="kc-v3-copy"><div class="kc-v3-eyebrow">Assistant Professor · Faculty of Education · Ramkhamhaeng University</div><h1 id="home-title">Kasem<br>Chooratna</h1><p class="kc-v3-role">Programme Chair</p><p class="kc-v3-programme">Bachelor of Education Program in Health Education and Physical Education</p><p class="kc-v3-mission">Developing future teachers for healthier people, schools and communities.</p><div class="kc-v3-links"><a href="{{ '/curriculum-quality/' | relative_url }}">Explore the Programme ↗</a><a href="{{ '/research/' | relative_url }}">Research ↗</a><a href="{{ '/about/' | relative_url }}">About ↗</a></div></div><div class="kc-v3-art" aria-label="KC identity artwork representing human movement, education and evidence"><div class="letters" aria-hidden="true"><span>K</span><span>C</span></div><div class="sweep" aria-hidden="true"></div><div class="landscape" aria-hidden="true"></div><blockquote>Education for healthier people<br>and stronger communities.</blockquote><div class="words"><span>People</span><span>Curriculum</span><span>Evidence</span><span>Innovation</span><span>Impact</span></div></div></div></div></section>
   <section class="kc-v3-manifesto"><div class="kc-v3-shell"><div class="kc-v3-index">Academic Direction / 01</div><div><h2>Movement becomes learning. Learning becomes evidence. Evidence becomes impact.</h2><p>My academic work connects health and physical education, curriculum leadership, teaching, quality assurance, research and community engagement. The common purpose is to prepare capable future teachers and translate academic evidence into healthier educational environments.</p></div></div></section>
-
-  <section class="kc-v3-story"><div class="kc-v3-shell">
-    <article class="kc-v3-chapter"><div class="kc-v3-num">01</div><div class="kc-v3-chapter-copy"><h2>Leading the Programme</h2><p>Programme leadership brings curriculum design, learning outcomes, teaching teams, quality processes and student development into one connected educational experience for future Health and Physical Education teachers.</p><a href="{{ '/curriculum-quality/' | relative_url }}">Programme &amp; Curriculum →</a></div><div class="kc-v3-visual"><strong>LEAD</strong></div></article>
-    <article class="kc-v3-chapter"><div class="kc-v3-num">02</div><div class="kc-v3-chapter-copy"><h2>Teaching for Practice</h2><p>Learning is designed around participation, judgment, reflection and application. Students work with authentic health and education problems so knowledge can move beyond the classroom into professional practice.</p><a href="{{ '/teaching/' | relative_url }}">Teaching &amp; Learning →</a></div><div class="kc-v3-visual"><strong>LEARN</strong></div></article>
-    <article class="kc-v3-chapter"><div class="kc-v3-num">03</div><div class="kc-v3-chapter-copy"><h2>Research for Healthier Lives</h2><p>Research focuses on health education, physical education, school health, movement and well-being, with an emphasis on evidence that can inform educational and community practice.</p><a href="{{ '/research/' | relative_url }}">Research →</a></div><div class="kc-v3-visual"><strong>ASK</strong></div></article>
-    <article class="kc-v3-chapter"><div class="kc-v3-num">04</div><div class="kc-v3-chapter-copy"><h2>Quality as Improvement</h2><p>Quality assurance is treated as an evidence-to-improvement process: connecting intended outcomes, learning experiences, assessment, review and collective academic responsibility.</p><a href="{{ '/curriculum-quality/' | relative_url }}">Quality Assurance →</a></div><div class="kc-v3-visual"><strong>IMPROVE</strong></div></article>
-    <article class="kc-v3-chapter"><div class="kc-v3-num">05</div><div class="kc-v3-chapter-copy"><h2>From Classroom to Community</h2><p>Academic work gains meaning when it reaches schools and communities. School health, physical activity and community engagement create the bridge from university learning to public value.</p><a href="{{ '/current-work/' | relative_url }}">Projects &amp; Community →</a></div><div class="kc-v3-visual"><strong>IMPACT</strong></div></article>
-  </div></section>
-
-  <section class="kc-v3-evidence"><div class="kc-v3-shell"><div class="kc-v3-evidence-head"><span class="kc-v3-index">Explore / 02</span><h2>Academic work, organised by evidence rather than decoration.</h2></div><div class="kc-v3-evidence-list">
-    <div class="kc-v3-evidence-row"><span>Research</span><strong>Health, movement, school health and educational practice</strong><a href="{{ '/research/' | relative_url }}">Explore →</a></div>
-    <div class="kc-v3-evidence-row"><span>Publications</span><strong>Scholarly outputs and academic contributions</strong><a href="{{ '/publications/' | relative_url }}">Explore →</a></div>
-    <div class="kc-v3-evidence-row"><span>Teaching</span><strong>Learning design for future health and physical education teachers</strong><a href="{{ '/teaching/' | relative_url }}">Explore →</a></div>
-    <div class="kc-v3-evidence-row"><span>Programme</span><strong>B.Ed. in Health Education and Physical Education</strong><a href="{{ '/curriculum-quality/' | relative_url }}">Explore →</a></div>
-    <div class="kc-v3-evidence-row"><span>Projects</span><strong>Innovation, school health and community engagement</strong><a href="{{ '/current-work/' | relative_url }}">Explore →</a></div>
-  </div></div></section>
-
+  <section class="kc-v3-story"><div class="kc-v3-shell"><article class="kc-v3-chapter"><div class="kc-v3-num">01</div><div class="kc-v3-chapter-copy"><h2>Leading the Programme</h2><p>Programme leadership brings curriculum design, learning outcomes, teaching teams, quality processes and student development into one connected educational experience for future Health and Physical Education teachers.</p><a href="{{ '/curriculum-quality/' | relative_url }}">Programme &amp; Curriculum →</a></div><div class="kc-v3-visual"><strong>LEAD</strong></div></article><article class="kc-v3-chapter"><div class="kc-v3-num">02</div><div class="kc-v3-chapter-copy"><h2>Teaching for Practice</h2><p>Learning is designed around participation, judgment, reflection and application. Students work with authentic health and education problems so knowledge can move beyond the classroom into professional practice.</p><a href="{{ '/teaching/' | relative_url }}">Teaching &amp; Learning →</a></div><div class="kc-v3-visual"><strong>LEARN</strong></div></article><article class="kc-v3-chapter"><div class="kc-v3-num">03</div><div class="kc-v3-chapter-copy"><h2>Research for Healthier Lives</h2><p>Research focuses on health education, physical education, school health, movement and well-being, with an emphasis on evidence that can inform educational and community practice.</p><a href="{{ '/research/' | relative_url }}">Research →</a></div><div class="kc-v3-visual"><strong>ASK</strong></div></article><article class="kc-v3-chapter"><div class="kc-v3-num">04</div><div class="kc-v3-chapter-copy"><h2>Quality as Improvement</h2><p>Quality assurance is treated as an evidence-to-improvement process: connecting intended outcomes, learning experiences, assessment, review and collective academic responsibility.</p><a href="{{ '/curriculum-quality/' | relative_url }}">Quality Assurance →</a></div><div class="kc-v3-visual"><strong>IMPROVE</strong></div></article><article class="kc-v3-chapter"><div class="kc-v3-num">05</div><div class="kc-v3-chapter-copy"><h2>From Classroom to Community</h2><p>Academic work gains meaning when it reaches schools and communities. School health, physical activity and community engagement create the bridge from university learning to public value.</p><a href="{{ '/innovation-projects/' | relative_url }}">Projects &amp; Community →</a></div><div class="kc-v3-visual"><strong>IMPACT</strong></div></article></div></section>
+  <section class="kc-v3-evidence"><div class="kc-v3-shell"><div class="kc-v3-evidence-head"><span class="kc-v3-index">Explore / 02</span><h2>Academic work, organised by evidence rather than decoration.</h2></div><div class="kc-v3-evidence-list"><div class="kc-v3-evidence-row"><span>Research</span><strong>Health, movement, school health and educational practice</strong><a href="{{ '/research/' | relative_url }}">Explore →</a></div><div class="kc-v3-evidence-row"><span>Publications</span><strong>Scholarly outputs and academic contributions</strong><a href="{{ '/publications/' | relative_url }}">Explore →</a></div><div class="kc-v3-evidence-row"><span>Teaching</span><strong>Learning design for future health and physical education teachers</strong><a href="{{ '/teaching/' | relative_url }}">Explore →</a></div><div class="kc-v3-evidence-row"><span>Programme</span><strong>B.Ed. in Health Education and Physical Education</strong><a href="{{ '/curriculum-quality/' | relative_url }}">Explore →</a></div><div class="kc-v3-evidence-row"><span>Projects</span><strong>Innovation, school health and community engagement</strong><a href="{{ '/innovation-projects/' | relative_url }}">Explore →</a></div></div></div></section>
   <section class="kc-v3-close"><div class="kc-v3-shell"><span>People · Education · Evidence · Impact</span><h2>Education for healthier people and a better society.</h2><a href="{{ '/about/' | relative_url }}">About Kasem Chooratna →</a></div></section>
 </main>
