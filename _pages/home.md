@@ -6,41 +6,50 @@ description: "Academic portfolio of Kasem Chooratna, Ph.D., Programme Chair of t
 author_profile: false
 classes: wide
 header:
-  image: kc-social-card.svg
-  image_description: "KC academic identity — Programme Chair, B.Ed. in Health Education and Physical Education"
+  image: profile-selected-2026.webp
+  image_description: "Asst. Prof. Dr. Kasem Chooratna"
 ---
 
-<main class="kc-v3 kc-v3-approved">
-  <section class="kc-v3-hero" aria-labelledby="home-title">
-    <div class="kc-v3-shell kc-v3-hero-grid">
-      <div class="kc-v3-copy">
-        <div class="kc-v3-eyebrow">Kasem</div>
-        <h1 id="home-title">Chooratna <span>Ph.D.</span></h1>
-        <p class="kc-v3-rank">Assistant Professor</p>
-        <div class="kc-v3-roleblock"><strong>Programme Chair</strong><span>B.Ed. in Health Education and Physical Education</span><span>Faculty of Education</span><span>Ramkhamhaeng University</span></div>
-        <p class="kc-v3-script">Movement · Education · People<br><em>Better Society</em></p>
-        <div class="kc-v3-links"><a class="kc-v3-primary" href="{{ '/current-work/' | relative_url }}">Explore My Work →</a><a href="{{ '/about/' | relative_url }}">About Me →</a></div>
+<main class="kc-v4">
+  <section class="kc-v4-hero" aria-labelledby="home-title">
+    <div class="kc-v4-shell kc-v4-hero-grid">
+      <div class="kc-v4-copy">
+        <p class="kc-v4-kicker">KASEM</p>
+        <h1 id="home-title">CHOORATNA <span>Ph.D.</span></h1>
+        <p class="kc-v4-rank">Assistant Professor</p>
+        <div class="kc-v4-rule"></div>
+        <p class="kc-v4-role"><strong>Programme Chair</strong><br>B.Ed. in Health Education and Physical Education<br>Faculty of Education · Ramkhamhaeng University</p>
+        <p class="kc-v4-manifesto">Movement · Education · People<br><em>A Better Society</em></p>
+        <p class="kc-v4-intro">Connecting education, research and community action to create meaningful opportunities for people to move, learn and live healthier lives.</p>
+        <div class="kc-v4-actions"><a class="kc-v4-button" href="{{ '/current-work/' | relative_url }}">Explore My Work →</a><a href="{{ '/about/' | relative_url }}">About Me →</a></div>
       </div>
-      <div class="kc-v3-cinematic" aria-label="Abstract visual representing movement, people, education and community impact"><div class="kc-v3-sun"></div><div class="kc-v3-runner">MOVE</div><div class="kc-v3-city"></div><div class="kc-v3-diagonal"></div><p>Education<br>Movement<br><strong>People</strong><br>A Healthier<br>Society</p></div>
+      <div class="kc-v4-portrait">
+        <div class="kc-v4-ghost">KC</div>
+        <img src="{{ '/images/profile-selected-2026.webp' | relative_url }}" alt="Asst. Prof. Dr. Kasem Chooratna" width="720" height="900" decoding="async" fetchpriority="high">
+        <p class="kc-v4-sideword">PEOPLE · MOVEMENT · EDUCATION · A HEALTHIER SOCIETY</p>
+      </div>
     </div>
   </section>
 
-  <section class="kc-v3-pillars" aria-label="Academic focus areas"><div class="kc-v3-shell">
-    <a href="{{ '/curriculum-quality/' | relative_url }}"><span>01</span><strong>Programme<br>Leadership</strong><small>Developing future health and physical education teachers</small></a>
-    <a href="{{ '/teaching/' | relative_url }}"><span>02</span><strong>Teaching<br>&amp; Learning</strong><small>Active, inclusive and real-world learning experiences</small></a>
-    <a href="{{ '/research/' | relative_url }}"><span>03</span><strong>Research<br>&amp; Innovation</strong><small>Evidence for health, education and movement</small></a>
-    <a href="{{ '/curriculum-quality/' | relative_url }}"><span>04</span><strong>Quality<br>Assurance</strong><small>Continuous improvement in education</small></a>
-    <a href="{{ '/innovation-projects/' | relative_url }}"><span>05</span><strong>Community<br>&amp; Society</strong><small>Working with people for healthier communities</small></a>
+  <section class="kc-v4-focus" aria-label="Academic focus"><div class="kc-v4-shell">
+    <a href="{{ '/curriculum-quality/' | relative_url }}"><span>01</span><strong>Programme Leadership</strong><small>Future health and physical education teachers</small></a>
+    <a href="{{ '/teaching/' | relative_url }}"><span>02</span><strong>Teaching &amp; Learning</strong><small>Active and real-world learning</small></a>
+    <a href="{{ '/research/' | relative_url }}"><span>03</span><strong>Research &amp; Innovation</strong><small>Evidence for health, education and movement</small></a>
+    <a href="{{ '/curriculum-quality/' | relative_url }}"><span>04</span><strong>Quality Assurance</strong><small>Continuous academic improvement</small></a>
+    <a href="{{ '/innovation-service/' | relative_url }}"><span>05</span><strong>Community &amp; Society</strong><small>Healthier communities through education</small></a>
   </div></section>
 
-  <section class="kc-v3-featured"><div class="kc-v3-shell">
-    <div class="kc-v3-commit"><span>My Commitment</span><h2>Creating opportunities for people to move, learn and build a healthier society.</h2><blockquote>“Education, movement and people are powerful forces for a better society.”</blockquote><div class="kc-v3-signature">Kasem Chooratna</div></div>
-    <div class="kc-v3-workgrid">
-      <a class="kc-v3-work kc-v3-work-teaching" href="{{ '/teaching/' | relative_url }}"><span>01</span><strong>Teaching<br>Innovation</strong><small>Active learning for real-world impact</small><b>View More →</b></a>
-      <a class="kc-v3-work kc-v3-work-research" href="{{ '/research/' | relative_url }}"><span>02</span><strong>Research<br>in Action</strong><small>Evidence for healthier people</small><b>View More →</b></a>
-      <a class="kc-v3-work kc-v3-work-programme" href="{{ '/curriculum-quality/' | relative_url }}"><span>03</span><strong>Programme<br>Development</strong><small>Curriculum for future teachers</small><b>View More →</b></a>
-      <a class="kc-v3-work kc-v3-work-quality" href="{{ '/curriculum-quality/' | relative_url }}"><span>04</span><strong>Quality<br>Assurance</strong><small>Continuous improvement and academic quality</small><b>View More →</b></a>
-      <a class="kc-v3-work kc-v3-work-community" href="{{ '/innovation-projects/' | relative_url }}"><span>05</span><strong>Community<br>Engagement</strong><small>Stronger and healthier communities</small><b>View More →</b></a>
+  <section class="kc-v4-statement"><div class="kc-v4-shell"><p>Education, movement and people are powerful forces for <em>a better society.</em></p><span>Kasem Chooratna</span></div></section>
+
+  <section class="kc-v4-work"><div class="kc-v4-shell">
+    <header><div><span>Selected Work</span><h2>Work with purpose.</h2></div><a href="{{ '/current-work/' | relative_url }}">View all →</a></header>
+    <div class="kc-v4-workgrid">
+      <a href="{{ '/teaching/' | relative_url }}"><span>01</span><strong>Teaching Innovation</strong><small>Active learning for real-world impact</small></a>
+      <a href="{{ '/research/' | relative_url }}"><span>02</span><strong>Research in Action</strong><small>Evidence for healthier people</small></a>
+      <a href="{{ '/curriculum-quality/' | relative_url }}"><span>03</span><strong>Programme Development</strong><small>Curriculum for future teachers</small></a>
+      <a href="{{ '/innovation-service/' | relative_url }}"><span>04</span><strong>Community Engagement</strong><small>Stronger and healthier communities</small></a>
     </div>
   </div></section>
+
+  <section class="kc-v4-close"><div class="kc-v4-shell"><p class="kc-v4-label">My Commitment</p><h2>Creating opportunities for people to move, learn and build a healthier society.</h2><div><a href="{{ '/about/' | relative_url }}">About →</a><a href="{{ '/research/' | relative_url }}">Research →</a><a href="{{ '/publications/' | relative_url }}">Publications →</a><a href="{{ '/about/#contact' | relative_url }}">Contact →</a></div></div></section>
 </main>
