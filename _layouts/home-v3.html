@@ -1,0 +1,33 @@
+---
+layout: compress
+---
+{% include base_path %}
+<!doctype html>
+<html lang="{{ site.locale | slice: 0,2 }}" class="no-js">
+<head>
+  {% include head.html %}
+  {% include head/custom.html %}
+  <link rel="stylesheet" href="{{ '/assets/css/home-visual-fidelity-v3.css' | relative_url }}">
+</head>
+<body class="kc-v3-body">
+  {% include browser-upgrade.html %}
+  <a class="kc-v3-skip" href="#kc-v3-main">Skip to content</a>
+  <header class="kc-v3-nav" aria-label="Primary navigation">
+    <div class="kc-v3-shell kc-v3-nav-inner">
+      <a class="kc-v3-nav-mark" href="{{ '/' | relative_url }}" aria-label="Kasem Chooratna home">KC</a>
+      <nav>
+        <a href="{{ '/about/' | relative_url }}">About</a>
+        <a href="{{ '/curriculum-quality/' | relative_url }}">Programme</a>
+        <a href="{{ '/research/' | relative_url }}">Research</a>
+        <a href="{{ '/teaching/' | relative_url }}">Teaching</a>
+        <a href="{{ '/publications/' | relative_url }}">Publications</a>
+        <a href="{{ '/innovation-projects/' | relative_url }}">Projects</a>
+      </nav>
+      <a class="kc-v3-nav-contact" href="{{ '/about/#contact' | relative_url }}">Contact ↗</a>
+    </div>
+  </header>
+  <div id="kc-v3-main">{{ content }}</div>
+  <footer class="kc-v3-footer"><div class="kc-v3-shell"><strong>Kasem Chooratna, Ph.D.</strong><span>Health &amp; Physical Education · Curriculum · Quality · Research</span><a href="{{ '/about/#contact' | relative_url }}">Contact</a></div></footer>
+  {% include scripts.html %}
+</body>
+</html>
