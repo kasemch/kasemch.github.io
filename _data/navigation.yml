@@ -1,28 +1,20 @@
-# Master navigation for the AWOS Public Hub
-# Public navigation exposes read-only academic content only.
-# Specialist routes remain available through contextual hub links.
-
+# Academic homepage navigation — Visual Fidelity v2.1
 main:
   - title: "Home"
     url: /
-
-  - title: "Profile"
+  - title: "About"
     url: /about/
-
-  - title: "Teaching"
-    url: /teaching/
-
+  - title: "Programme"
+    url: /curriculum-quality/
   - title: "Research"
     url: /research/
-
+  - title: "Teaching"
+    url: /teaching/
+  - title: "Quality"
+    url: /curriculum-quality/
   - title: "Publications"
     url: /publications/
-
-  - title: "Curriculum & Quality"
-    url: /curriculum-quality/
-
-  - title: "Innovation & Service"
+  - title: "Projects"
     url: /innovation-projects/
-
-  - title: "Academic Hub"
-    url: /workspace/
+  - title: "Contact"
+    url: /about/#contact
