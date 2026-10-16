@@ -1,0 +1,40 @@
+name: ARM Stats Collector Build
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'arm-jobs/analytics-collector/**'
+      - '.github/workflows/armstats-build.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: arm-jobs/analytics-collector
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: arm-jobs/analytics-collector/package-lock.json
+      - name: Install dependency
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Verify Neon package
+        run: node -e "import('@neondatabase/serverless').then(()=>console.log('dependency-ok'))"
+      - name: Package dependency bundle
+        run: zip -qr armstats-dependencies.zip package.json package-lock.json node_modules
+      - name: Upload bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: armstats-dependencies
+          path: arm-jobs/analytics-collector/armstats-dependencies.zip
+          retention-days: 1
