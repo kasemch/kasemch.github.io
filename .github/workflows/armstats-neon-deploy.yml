@@ -20,6 +20,7 @@ jobs:
     env:
       NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
       NEON_PROJECT_ID: shy-firefly-97065051
+      ARMSTATS_URL: https://br-gentle-voice-b3op1wfq-armstats.compute.c-4.ap-southeast-1.aws.neon.tech
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -51,3 +52,15 @@ jobs:
 
       - name: Deploy ARM stats function
         run: neon deploy
+
+      - name: Synthetic collector test
+        shell: bash
+        run: |
+          code=$(curl --silent --show-error --output /tmp/armstats-response.json --write-out '%{http_code}' \
+            --request POST "$ARMSTATS_URL/visit" \
+            --header 'Origin: https://kasemch.github.io' \
+            --header 'Content-Type: application/json' \
+            --data '{"visitor_id":"synthetic_armstats_20261016","page_path":"/arm-jobs/"}')
+          cat /tmp/armstats-response.json
+          echo
+          test "$code" = "201"
