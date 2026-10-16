@@ -1,0 +1,53 @@
+name: ARM Stats Neon Deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [master]
+    paths:
+      - 'arm-jobs/analytics-collector/**'
+      - '.github/workflows/armstats-neon-deploy.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: arm-jobs/analytics-collector
+    env:
+      NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
+      NEON_PROJECT_ID: shy-firefly-97065051
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Validate Neon secret
+        shell: bash
+        run: |
+          if [ -z "$NEON_API_KEY" ]; then
+            echo "NEON_API_KEY repository secret is required."
+            exit 2
+          fi
+
+      - name: Install dependencies
+        run: npm install --ignore-scripts --no-audit --no-fund
+
+      - name: Install Neon CLI
+        run: npm install --global neon@latest
+
+      - name: Link Neon project
+        run: neon link --project-id "$NEON_PROJECT_ID" --yes
+
+      - name: Deployment plan
+        run: neon config plan
+
+      - name: Deploy ARM stats function
+        run: neon deploy
