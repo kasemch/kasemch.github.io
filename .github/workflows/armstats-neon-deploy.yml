@@ -3,7 +3,7 @@ name: ARM Stats Neon Deploy
 on:
   workflow_dispatch:
   push:
-    branches: [master]
+    branches: [master, arm-job-scout-v3-hybrid]
     paths:
       - 'arm-jobs/analytics-collector/**'
       - '.github/workflows/armstats-neon-deploy.yml'
@@ -53,14 +53,40 @@ jobs:
       - name: Deploy ARM stats function
         run: neon deploy
 
-      - name: Synthetic collector test
+      - name: Synthetic page-view test
         shell: bash
         run: |
-          code=$(curl --silent --show-error --output /tmp/armstats-response.json --write-out '%{http_code}' \
+          code=$(curl --silent --show-error --output /tmp/armstats-visit.json --write-out '%{http_code}' \
             --request POST "$ARMSTATS_URL/visit" \
             --header 'Origin: https://kasemch.github.io' \
             --header 'Content-Type: application/json' \
-            --data '{"visitor_id":"synthetic_armstats_20261016","page_path":"/arm-jobs/"}')
-          cat /tmp/armstats-response.json
+            --data '{"visitor_id":"synthetic_armstats_v3_visit","page_path":"/arm-jobs/"}')
+          cat /tmp/armstats-visit.json
           echo
           test "$code" = "201"
+
+      - name: Synthetic interaction test
+        shell: bash
+        run: |
+          for event in job_source_click prepare_application cv_builder; do
+            code=$(curl --silent --show-error --output "/tmp/armstats-${event}.json" --write-out '%{http_code}' \
+              --request POST "$ARMSTATS_URL/event" \
+              --header 'Origin: https://kasemch.github.io' \
+              --header 'Content-Type: application/json' \
+              --data "{\"visitor_id\":\"synthetic_armstats_v3_event\",\"page_path\":\"/arm-jobs/\",\"event\":\"${event}\",\"detail\":\"synthetic_qa\"}")
+            cat "/tmp/armstats-${event}.json"
+            echo
+            test "$code" = "201"
+          done
+
+      - name: Reject unknown interaction event
+        shell: bash
+        run: |
+          code=$(curl --silent --show-error --output /tmp/armstats-reject.json --write-out '%{http_code}' \
+            --request POST "$ARMSTATS_URL/event" \
+            --header 'Origin: https://kasemch.github.io' \
+            --header 'Content-Type: application/json' \
+            --data '{"visitor_id":"synthetic_armstats_v3_reject","page_path":"/arm-jobs/","event":"unknown_event"}')
+          cat /tmp/armstats-reject.json
+          echo
+          test "$code" = "400"
