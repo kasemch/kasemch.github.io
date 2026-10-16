@@ -12,10 +12,13 @@
     }
     return id;
   }
-  function send(event,detail=''){
-    const body={visitor_id:sessionId(),page_path:PAGE,event:String(event||'').slice(0,40),detail:String(detail||'').slice(0,120)};
+  function pageView(){
+    const body={visitor_id:sessionId(),page_path:PAGE};
     try{fetch(ENDPOINT,{method:'POST',mode:'cors',keepalive:true,headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}).catch(()=>{});}catch(_){/* analytics must never block UX */}
   }
-  window.ARMStats={track:send};
-  window.addEventListener('DOMContentLoaded',()=>send('page_view'));
+  // The current backend stores page visits only. Interaction events remain gated
+  // until a dedicated event store exists, so clicks cannot inflate Total Views.
+  function track(event){ if(event==='page_view') pageView(); }
+  window.ARMStats={track};
+  window.addEventListener('DOMContentLoaded',()=>track('page_view'));
 })();
