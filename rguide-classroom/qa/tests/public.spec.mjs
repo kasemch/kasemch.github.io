@@ -15,7 +15,7 @@ test.describe('R-GUIDE public readiness and safety', () => {
   test('Classroom login is privacy-minimal and invalid credentials fail closed', async ({ page }) => {
     const response = await page.goto('./', { waitUntil: 'domcontentloaded' });
     expect(response?.status()).toBe(200);
-    await expect(page.getByRole('heading', { name: 'R-GUIDE Classroom' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'R-GUIDE Classroom', exact: true })).toBeVisible();
     await expect(page.locator('#loginCode')).toBeVisible();
     await expect(page.locator('#loginPin')).toBeVisible();
     await expect(page.getByText(/ไม่ต้องกรอกชื่อจริง/)).toBeVisible();
