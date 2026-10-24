@@ -12,10 +12,16 @@ test.describe('R-GUIDE public readiness and safety', () => {
     await expect(page.getByRole('link', { name: /คู่มือ/ })).toHaveAttribute('href', './guide.html');
   });
 
-  test('Verified-email registration collects only the approved identity fields and requires consent', async ({ page }) => {
+  test('Verified-email registration is Thai-first, guided, privacy-minimal, and requires consent', async ({ page }) => {
     const response = await page.goto('./register.html', { waitUntil: 'domcontentloaded' });
     expect(response?.status()).toBe(200);
-    await expect(page.getByRole('heading', { name: 'R-GUIDE Student Registration' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /ลงทะเบียน R-GUIDE/ })).toBeVisible();
+    await expect(page.getByText(/ชื่อ · First name/)).toBeVisible();
+    await expect(page.getByText(/นามสกุล · Last name/)).toBeVisible();
+    await expect(page.getByText(/รหัสนักศึกษา · Student ID/)).toBeVisible();
+    await expect(page.getByText(/อีเมล · Email/)).toBeVisible();
+    await expect(page.getByText(/กรอกชื่อจริง ไม่ต้องใส่คำนำหน้าชื่อ/)).toBeVisible();
+    await expect(page.getByText(/ระบบจะส่งลิงก์ยืนยันไปที่อีเมลนี้/)).toBeVisible();
     await expect(page.locator('#firstName')).toBeVisible();
     await expect(page.locator('#lastName')).toBeVisible();
     await expect(page.locator('#studentId')).toBeVisible();
@@ -31,10 +37,13 @@ test.describe('R-GUIDE public readiness and safety', () => {
     await expect(page.getByText(/Identity Vault/)).toBeVisible();
   });
 
-  test('Classroom login is privacy-minimal and invalid credentials fail closed', async ({ page }) => {
+  test('Classroom login is Thai-first, privacy-minimal, and invalid credentials fail closed', async ({ page }) => {
     const response = await page.goto('./', { waitUntil: 'domcontentloaded' });
     expect(response?.status()).toBe(200);
     await expect(page.getByRole('heading', { name: 'R-GUIDE Classroom', exact: true })).toBeVisible();
+    await expect(page.getByText(/รหัสผู้เรียน · Student Code/)).toBeVisible();
+    await expect(page.getByText(/รหัสเข้าใช้ · Access PIN/)).toBeVisible();
+    await expect(page.getByText(/เลือกรหัสที่อาจารย์มอบให้/)).toBeVisible();
     await expect(page.locator('#loginCode')).toBeVisible();
     await expect(page.locator('#loginPin')).toBeVisible();
     await expect(page.getByText(/ไม่ต้องกรอกชื่อจริง/)).toBeVisible();
@@ -46,10 +55,13 @@ test.describe('R-GUIDE public readiness and safety', () => {
     await expect(page.locator('#app')).toHaveClass(/hidden/);
   });
 
-  test('Coach page exposes governed Evidence Inspector without VERIFIED student option', async ({ page }) => {
+  test('Coach page uses Thai-first research language and governed Evidence Inspector without VERIFIED student option', async ({ page }) => {
     const response = await page.goto('./coach.html', { waitUntil: 'domcontentloaded' });
     expect(response?.status()).toBe(200);
-    await expect(page.getByRole('heading', { name: 'Research Coach + Evidence Inspector' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'ผู้ช่วยวิจัย AI + ตัวตรวจหลักฐาน' })).toBeVisible();
+    await expect(page.getByText(/รหัสผู้เรียน · Student Code/)).toBeVisible();
+    await expect(page.getByText(/หลักฐานความตรง · Validity Evidence/)).toBeAttached();
+    await expect(page.getByText(/หลักฐานความเที่ยง · Reliability Evidence/)).toBeAttached();
     await expect(page.locator('#login')).toBeVisible();
     await expect(page.locator('#app')).toHaveClass(/hidden/);
     const statuses = await page.locator('#evStatus option').allTextContents();
