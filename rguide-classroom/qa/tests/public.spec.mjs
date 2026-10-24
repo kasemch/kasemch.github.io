@@ -24,6 +24,7 @@ test.describe('R-GUIDE public readiness and safety', () => {
     await expect(register.getByText(/อีเมล · Email/)).toBeVisible();
     await expect(register.getByText(/กรอกชื่อจริง ไม่ต้องใส่คำนำหน้าชื่อ/)).toBeVisible();
     await expect(register.getByText(/ระบบจะส่งลิงก์ยืนยันไปที่อีเมลนี้/)).toBeVisible();
+    await expect(register.getByRole('link', { name: /Privacy Notice รุ่น RPE6701-PRIVACY-v1/ })).toHaveAttribute('href', './privacy.html');
     await expect(page.locator('#firstName')).toBeVisible();
     await expect(page.locator('#lastName')).toBeVisible();
     await expect(page.locator('#studentId')).toBeVisible();
@@ -37,6 +38,18 @@ test.describe('R-GUIDE public readiness and safety', () => {
     await expect(page.locator('#msg')).toContainText(/Privacy Notice/);
     await expect(page.locator('.h').getByText(/Passwordless/)).toBeVisible();
     await expect(page.getByText(/Identity Vault/)).toBeVisible();
+  });
+
+  test('Privacy Notice v1 states purpose, identity separation, AI boundary, retention, and no participant data rule', async ({ page }) => {
+    const response = await page.goto('./privacy.html', { waitUntil: 'domcontentloaded' });
+    expect(response?.status()).toBe(200);
+    await expect(page.getByRole('heading', { name: /ประกาศความเป็นส่วนตัว/ })).toBeVisible();
+    await expect(page.getByText(/RPE6701-PRIVACY-v1/)).toBeVisible();
+    await expect(page.getByText(/Identity Vault/)).toBeVisible();
+    await expect(page.getByText(/AI Coach ไม่จำเป็นต้องได้รับชื่อจริง/)).toBeVisible();
+    await expect(page.getByText(/ไม่ใช้พื้นที่นี้เก็บข้อมูลผู้เข้าร่วมวิจัยจริง/)).toBeVisible();
+    await expect(page.getByRole('heading', { name: /การเก็บรักษา · Retention/ })).toBeVisible();
+    await expect(page.getByText(/ไม่ใช่เอกสารอนุมัติจริยธรรมการวิจัย/)).toBeVisible();
   });
 
   test('Classroom login is Thai-first, privacy-minimal, and invalid credentials fail closed', async ({ page }) => {
