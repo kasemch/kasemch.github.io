@@ -23,7 +23,7 @@ test.describe('R-GUIDE authenticated E2E', () => {
   test.skip(!hasQaIdentity, 'Set RGUIDE_QA_CODE and RGUIDE_QA_PIN as GitHub Actions secrets to enable authenticated E2E.');
 
   test('student can load assignments without exposing PII', async ({ page }) => {
-    await login(page, '/');
+    await login(page, './');
     await expect(page.locator('#identity')).toContainText(code);
     await expect(page.locator('#assignmentList')).toContainText('PREP0');
     await expect(page.locator('#assignmentList')).toContainText('SESSION1');
@@ -31,7 +31,7 @@ test.describe('R-GUIDE authenticated E2E', () => {
   });
 
   test('Research Coach returns governed structured feedback', async ({ page }) => {
-    await login(page, '/coach.html');
+    await login(page, './coach.html');
     await page.locator('#assignment').selectOption('PREP0');
     await page.locator('#component').selectOption('RESEARCH_QUESTION');
     await page.locator('#studentContent').fill('QA synthetic question: What is the relationship between sociometric status and participation among university students?');
@@ -47,7 +47,7 @@ test.describe('R-GUIDE authenticated E2E', () => {
   });
 
   test('Evidence Inspector prevents student VERIFIED selection', async ({ page }) => {
-    await login(page, '/coach.html');
+    await login(page, './coach.html');
     const statuses = await page.locator('#evStatus option').allTextContents();
     expect(statuses).not.toContain('VERIFIED');
     await expect(page.getByText(/นักศึกษาไม่สามารถตั้งสถานะ VERIFIED เองได้/)).toBeVisible();
