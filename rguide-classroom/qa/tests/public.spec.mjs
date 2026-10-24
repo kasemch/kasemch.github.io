@@ -27,7 +27,7 @@ test.describe('R-GUIDE public readiness and safety', () => {
     await page.locator('#email').fill('qa@example.invalid');
     await page.locator('#sendLink').click();
     await expect(page.locator('#msg')).toContainText(/Privacy Notice/);
-    await expect(page.getByText(/Passwordless/)).toBeVisible();
+    await expect(page.locator('.h').getByText(/Passwordless/)).toBeVisible();
     await expect(page.getByText(/Identity Vault/)).toBeVisible();
   });
 
