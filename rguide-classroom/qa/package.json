@@ -1,0 +1,14 @@
+{
+  "name": "rguide-classroom-qa",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "playwright test",
+    "test:public": "playwright test tests/public.spec.mjs",
+    "test:auth": "playwright test tests/auth.spec.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1"
+  }
+}
