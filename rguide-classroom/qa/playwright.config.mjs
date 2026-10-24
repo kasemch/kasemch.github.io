@@ -1,5 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 
+const configuredBase = process.env.RGUIDE_BASE_URL || 'https://kasemch.github.io/rguide-classroom/';
+const baseURL = configuredBase.endsWith('/') ? configuredBase : configuredBase + '/';
+
 export default defineConfig({
   testDir: './tests',
   timeout: 45_000,
@@ -12,7 +15,7 @@ export default defineConfig({
     ['html', { outputFolder: 'playwright-report', open: 'never' }]
   ],
   use: {
-    baseURL: process.env.RGUIDE_BASE_URL || 'https://kasemch.github.io/rguide-classroom',
+    baseURL,
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure'
