@@ -24,7 +24,7 @@ test.describe('R-GUIDE public readiness and safety', () => {
     await expect(register.getByText(/อีเมล · Email/)).toBeVisible();
     await expect(register.getByText(/กรอกชื่อจริง ไม่ต้องใส่คำนำหน้าชื่อ/)).toBeVisible();
     await expect(register.getByText(/ระบบจะส่งลิงก์ยืนยันไปที่อีเมลนี้/)).toBeVisible();
-    await expect(register.getByRole('link', { name: /Privacy Notice รุ่น RPE6701-PRIVACY-v1/ })).toHaveAttribute('href', './privacy.html');
+    await expect(register.locator('a[href="./privacy.html"]')).toContainText('RPE6701-PRIVACY-v1');
     await expect(page.locator('#firstName')).toBeVisible();
     await expect(page.locator('#lastName')).toBeVisible();
     await expect(page.locator('#studentId')).toBeVisible();
@@ -44,8 +44,8 @@ test.describe('R-GUIDE public readiness and safety', () => {
     const response = await page.goto('./privacy.html', { waitUntil: 'domcontentloaded' });
     expect(response?.status()).toBe(200);
     await expect(page.getByRole('heading', { name: /ประกาศความเป็นส่วนตัว/ })).toBeVisible();
-    await expect(page.getByText(/RPE6701-PRIVACY-v1/)).toBeVisible();
-    await expect(page.getByText(/Identity Vault/)).toBeVisible();
+    await expect(page.getByText('รุ่น RPE6701-PRIVACY-v1', { exact: false }).first()).toBeVisible();
+    await expect(page.getByText(/Identity Vault/).first()).toBeVisible();
     await expect(page.getByText(/AI Coach ไม่จำเป็นต้องได้รับชื่อจริง/)).toBeVisible();
     await expect(page.getByText(/ไม่ใช้พื้นที่นี้เก็บข้อมูลผู้เข้าร่วมวิจัยจริง/)).toBeVisible();
     await expect(page.getByRole('heading', { name: /การเก็บรักษา · Retention/ })).toBeVisible();
@@ -91,8 +91,6 @@ test.describe('R-GUIDE public readiness and safety', () => {
     await expect(page.getByText(/รหัสเข้าใช้อาจารย์ · Instructor PIN/)).toBeVisible();
     await expect(page.getByText(/มอบหมายงาน → ส่งงาน → ให้ข้อเสนอแนะ → แก้ไขและส่งใหม่/)).toBeVisible();
 
-    // The review controls are intentionally hidden until instructor authentication.
-    // Verify their governed wording from the delivered page source without bypassing access control.
     const source = await page.content();
     expect(source).toContain('ส่งกลับเพื่อแก้ไข · Revision Required');
     expect(source).toContain('ขอหลักฐานเพิ่มเติม · Evidence Required');
