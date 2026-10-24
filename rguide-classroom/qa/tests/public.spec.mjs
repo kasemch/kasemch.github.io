@@ -27,11 +27,12 @@ test.describe('R-GUIDE public readiness and safety', () => {
     await expect(page.locator('#app')).toHaveClass(/hidden/);
   });
 
-  test('Coach page exposes governed feedback and Evidence Inspector without VERIFIED student option', async ({ page }) => {
+  test('Coach page exposes governed Evidence Inspector without VERIFIED student option', async ({ page }) => {
     const response = await page.goto('/coach.html', { waitUntil: 'domcontentloaded' });
     expect(response?.status()).toBe(200);
     await expect(page.getByRole('heading', { name: 'Research Coach + Evidence Inspector' })).toBeVisible();
-    await expect(page.getByText(/ยังไม่ใช่ Live Gemini/)).toHaveCount(0); // only visible after login
+    await expect(page.locator('#login')).toBeVisible();
+    await expect(page.locator('#app')).toHaveClass(/hidden/);
     const statuses = await page.locator('#evStatus option').allTextContents();
     expect(statuses).toEqual(['TO VERIFY', 'CANDIDATE', 'PARTIAL', 'CONTRADICTORY']);
     expect(statuses).not.toContain('VERIFIED');
