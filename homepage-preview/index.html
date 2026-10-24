@@ -1,0 +1,24 @@
+---
+layout: single
+title: "Academic Journey — Design Preview"
+permalink: /homepage-preview/
+author_profile: false
+classes: wide
+sitemap: false
+---
+{% assign publication_count = site.publications | size %}
+{% assign proceeding_count = site.data.conference_proceedings.items | size | plus: site.data.conference_proceedings_2026.items.size %}
+{% assign teaching = site.data.teaching_ay2569 %}
+{% assign output_total = publication_count | plus: proceeding_count | at_least: 1 %}
+{% assign journal_percent = publication_count | times: 100 | divided_by: output_total %}
+{% assign proceeding_percent = proceeding_count | times: 100 | divided_by: output_total %}
+<link rel="stylesheet" href="{{ '/assets/css/homepage-journey-preview.css' | relative_url }}">
+<main class="journey-preview">
+ <header class="jp-head"><a href="{{ '/' | relative_url }}" aria-label="Current site home">K <span>KASEM CHOORATNA<small>Academic Portfolio · Design preview</small></span></a><nav aria-label="Portfolio sections"><a href="{{ '/about/' | relative_url }}">Profile</a><a href="{{ '/research/' | relative_url }}">Research</a><a href="{{ '/teaching/' | relative_url }}">Teaching</a><a href="{{ '/publications/' | relative_url }}">Publications</a></nav></header>
+ <section class="jp-hero" aria-labelledby="jp-title"><div class="jp-copy"><p class="jp-eyebrow">EDUCATION · MOVEMENT · EVIDENCE</p><h1 id="jp-title">ผศ.ดร.เกษม ชูรัตน์</h1><p>Asst. Prof. Dr. Kasem Chooratna</p><p>ภาควิชาพลานามัย · คณะศึกษาศาสตร์<br>มหาวิทยาลัยรามคำแหง</p><blockquote>การศึกษาและการเคลื่อนไหว เพื่อสุขภาพที่ยั่งยืนในสังคมไทย</blockquote><a class="jp-btn" href="{{ '/about/' | relative_url }}">สำรวจประวัติและผลงาน →</a></div><div class="jp-portrait"><img src="{{ '/images/profile-selected-2026.webp' | relative_url }}" alt="ภาพถ่ายบุคคลจากเว็บไซต์เดิมของอาจารย์เกษม" loading="eager"><span>Academic Journey<br>Learning · Research · Impact</span></div></section>
+ <section class="jp-metrics" aria-label="Counts derived from current site records"><article><strong>{{ publication_count }}</strong><span>Journal records</span></article><article><strong>{{ proceeding_count }}</strong><span>Proceedings records</span></article><article><strong>{{ teaching.summary.retained }}</strong><span>AY2569 retained teaching records</span></article></section>
+ <section class="jp-grid"><article class="jp-panel"><p class="jp-eyebrow">01 / ACADEMIC JOURNEY</p><h2>เส้นทางวิชาการ</h2><div class="jp-steps"><span>เรียนรู้</span><span>สอน</span><span>วิจัย</span><span>พัฒนาหลักสูตร</span><span>สร้างประโยชน์ต่อสังคม</span></div><a href="{{ '/cv/' | relative_url }}">Academic CV →</a></article><article class="jp-panel"><p class="jp-eyebrow">02 / EVIDENCE</p><h2>ผลงานวิชาการ</h2><div class="jp-bars" role="img" aria-label="Journal and proceedings record counts"><div><span>Journal</span><b style="width:{{ journal_percent }}%"></b><em>{{ publication_count }}</em></div><div><span>Proceedings</span><b style="width:{{ proceeding_percent }}%"></b><em>{{ proceeding_count }}</em></div></div><a href="{{ '/publications/' | relative_url }}">ดูหลักฐานผลงาน →</a></article></section>
+ <section class="jp-section"><p class="jp-eyebrow">03 / TEACHING & RESEARCH</p><h2>การสอน งานวิจัย และการพัฒนา</h2><div class="jp-links"><a href="{{ '/teaching/' | relative_url }}"><b>Teaching</b><span>การเรียนรู้และพัฒนานักศึกษา</span>↗</a><a href="{{ '/research/' | relative_url }}"><b>Research</b><span>หลักฐานเพื่อสุขภาพและสังคม</span>↗</a><a href="{{ '/curriculum-quality/' | relative_url }}"><b>Curriculum & QA</b><span>พัฒนาคุณภาพการศึกษา</span>↗</a><a href="{{ '/innovation-projects/' | relative_url }}"><b>Innovation</b><span>นวัตกรรมทางวิชาการ</span>↗</a></div></section>
+ <section class="jp-section"><p class="jp-eyebrow">04 / PORTFOLIO</p><h2>สำรวจผลงานตามหมวดหมู่</h2><div class="jp-links"><a href="{{ '/publications/' | relative_url }}">Publications ↗</a><a href="{{ '/research-progress/' | relative_url }}">Research projects ↗</a><a href="{{ '/academic-leadership-service/' | relative_url }}">Academic service ↗</a><a href="{{ '/workspace/' | relative_url }}">Academic hub ↗</a></div></section>
+ <footer>Design preview · Existing content remains authoritative · No illustrative counts</footer>
+</main>
