@@ -12,6 +12,25 @@ test.describe('R-GUIDE public readiness and safety', () => {
     await expect(page.getByRole('link', { name: /คู่มือ/ })).toHaveAttribute('href', './guide.html');
   });
 
+  test('Verified-email registration collects only the approved identity fields and requires consent', async ({ page }) => {
+    const response = await page.goto('./register.html', { waitUntil: 'domcontentloaded' });
+    expect(response?.status()).toBe(200);
+    await expect(page.getByRole('heading', { name: 'R-GUIDE Student Registration' })).toBeVisible();
+    await expect(page.locator('#firstName')).toBeVisible();
+    await expect(page.locator('#lastName')).toBeVisible();
+    await expect(page.locator('#studentId')).toBeVisible();
+    await expect(page.locator('#email')).toBeVisible();
+    await expect(page.locator('#consent')).not.toBeChecked();
+    await page.locator('#firstName').fill('QA');
+    await page.locator('#lastName').fill('Student');
+    await page.locator('#studentId').fill('QA0001');
+    await page.locator('#email').fill('qa@example.invalid');
+    await page.locator('#sendLink').click();
+    await expect(page.locator('#msg')).toContainText(/Privacy Notice/);
+    await expect(page.getByText(/Passwordless/)).toBeVisible();
+    await expect(page.getByText(/Identity Vault/)).toBeVisible();
+  });
+
   test('Classroom login is privacy-minimal and invalid credentials fail closed', async ({ page }) => {
     const response = await page.goto('./', { waitUntil: 'domcontentloaded' });
     expect(response?.status()).toBe(200);
