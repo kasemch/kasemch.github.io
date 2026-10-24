@@ -15,13 +15,14 @@ test.describe('R-GUIDE public readiness and safety', () => {
   test('Verified-email registration is Thai-first, guided, privacy-minimal, and requires consent', async ({ page }) => {
     const response = await page.goto('./register.html', { waitUntil: 'domcontentloaded' });
     expect(response?.status()).toBe(200);
-    await expect(page.getByRole('heading', { name: /ลงทะเบียน R-GUIDE/ })).toBeVisible();
-    await expect(page.getByText(/ชื่อ · First name/)).toBeVisible();
-    await expect(page.getByText(/นามสกุล · Last name/)).toBeVisible();
-    await expect(page.getByText(/รหัสนักศึกษา · Student ID/)).toBeVisible();
-    await expect(page.getByText(/อีเมล · Email/)).toBeVisible();
-    await expect(page.getByText(/กรอกชื่อจริง ไม่ต้องใส่คำนำหน้าชื่อ/)).toBeVisible();
-    await expect(page.getByText(/ระบบจะส่งลิงก์ยืนยันไปที่อีเมลนี้/)).toBeVisible();
+    const register = page.locator('#registerCard');
+    await expect(register.getByRole('heading', { name: /ลงทะเบียน R-GUIDE/ })).toBeVisible();
+    await expect(register.getByText(/ชื่อ · First name/)).toBeVisible();
+    await expect(register.getByText(/นามสกุล · Last name/)).toBeVisible();
+    await expect(register.getByText(/รหัสนักศึกษา · Student ID/)).toBeVisible();
+    await expect(register.getByText(/อีเมล · Email/)).toBeVisible();
+    await expect(register.getByText(/กรอกชื่อจริง ไม่ต้องใส่คำนำหน้าชื่อ/)).toBeVisible();
+    await expect(register.getByText(/ระบบจะส่งลิงก์ยืนยันไปที่อีเมลนี้/)).toBeVisible();
     await expect(page.locator('#firstName')).toBeVisible();
     await expect(page.locator('#lastName')).toBeVisible();
     await expect(page.locator('#studentId')).toBeVisible();
@@ -75,12 +76,15 @@ test.describe('R-GUIDE public readiness and safety', () => {
     await expect(page.getByRole('heading', { name: /ห้องควบคุมอาจารย์/ })).toBeVisible();
     await expect(page.getByText(/รหัสเข้าใช้อาจารย์ · Instructor PIN/)).toBeVisible();
     await expect(page.getByText(/มอบหมายงาน → ส่งงาน → ให้ข้อเสนอแนะ → แก้ไขและส่งใหม่/)).toBeVisible();
-    const html = await page.locator('body').innerText();
-    expect(html).toContain('ส่งกลับเพื่อแก้ไข · Revision Required');
-    expect(html).toContain('ขอหลักฐานเพิ่มเติม · Evidence Required');
-    expect(html).toContain('ต้องการผู้เชี่ยวชาญทบทวน · Expert Review Required');
-    expect(html).toContain('การเลือก Completed ไม่ใช่การอนุมัติจริยธรรม เครื่องมือวิจัย หรือผลการเรียนขั้นสุดท้าย');
-    expect(html).toContain('WHAT → WHY → WHERE → HOW → NEXT ACTION');
+
+    // The review controls are intentionally hidden until instructor authentication.
+    // Verify their governed wording from the delivered page source without bypassing access control.
+    const source = await page.content();
+    expect(source).toContain('ส่งกลับเพื่อแก้ไข · Revision Required');
+    expect(source).toContain('ขอหลักฐานเพิ่มเติม · Evidence Required');
+    expect(source).toContain('ต้องการผู้เชี่ยวชาญทบทวน · Expert Review Required');
+    expect(source).toContain('การเลือก Completed ไม่ใช่การอนุมัติจริยธรรม เครื่องมือวิจัย หรือผลการเรียนขั้นสุดท้าย');
+    expect(source).toContain('WHAT → WHY → WHERE → HOW → NEXT ACTION');
   });
 
   test('Classroom API rejects unauthenticated assignment access', async ({ request }) => {
