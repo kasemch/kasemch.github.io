@@ -4,7 +4,7 @@ const API = 'https://zimbrsdvxogsfmpflxcr.supabase.co/functions/v1/classroom-api
 
 test.describe('R-GUIDE public readiness and safety', () => {
   test('Student Start exposes the three canonical entry points', async ({ page }) => {
-    const response = await page.goto('/start.html', { waitUntil: 'domcontentloaded' });
+    const response = await page.goto('./start.html', { waitUntil: 'domcontentloaded' });
     expect(response?.status()).toBe(200);
     await expect(page.getByRole('heading', { name: 'R-GUIDE Student Start' })).toBeVisible();
     await expect(page.getByRole('link', { name: /Classroom/ })).toHaveAttribute('href', './');
@@ -13,7 +13,7 @@ test.describe('R-GUIDE public readiness and safety', () => {
   });
 
   test('Classroom login is privacy-minimal and invalid credentials fail closed', async ({ page }) => {
-    const response = await page.goto('/', { waitUntil: 'domcontentloaded' });
+    const response = await page.goto('./', { waitUntil: 'domcontentloaded' });
     expect(response?.status()).toBe(200);
     await expect(page.getByRole('heading', { name: 'R-GUIDE Classroom' })).toBeVisible();
     await expect(page.locator('#loginCode')).toBeVisible();
@@ -28,7 +28,7 @@ test.describe('R-GUIDE public readiness and safety', () => {
   });
 
   test('Coach page exposes governed Evidence Inspector without VERIFIED student option', async ({ page }) => {
-    const response = await page.goto('/coach.html', { waitUntil: 'domcontentloaded' });
+    const response = await page.goto('./coach.html', { waitUntil: 'domcontentloaded' });
     expect(response?.status()).toBe(200);
     await expect(page.getByRole('heading', { name: 'Research Coach + Evidence Inspector' })).toBeVisible();
     await expect(page.locator('#login')).toBeVisible();
