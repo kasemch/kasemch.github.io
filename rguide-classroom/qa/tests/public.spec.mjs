@@ -16,7 +16,8 @@ test.describe('R-GUIDE public readiness and safety', () => {
     const response = await page.goto('./register.html', { waitUntil: 'domcontentloaded' });
     expect(response?.status()).toBe(200);
     const register = page.locator('#registerCard');
-    await expect(register.getByRole('heading', { name: /ลงทะเบียน R-GUIDE/ })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /ลงทะเบียน R-GUIDE/ })).toBeVisible();
+    await expect(register.getByRole('heading', { name: 'สร้างบัญชี R-GUIDE', exact: true })).toBeVisible();
     await expect(register.getByText(/ชื่อ · First name/)).toBeVisible();
     await expect(register.getByText(/นามสกุล · Last name/)).toBeVisible();
     await expect(register.getByText(/รหัสนักศึกษา · Student ID/)).toBeVisible();
