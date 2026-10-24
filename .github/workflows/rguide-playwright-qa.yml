@@ -1,0 +1,68 @@
+name: R-GUIDE Playwright QA
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [master]
+    paths:
+      - 'rguide-classroom/**'
+      - '.github/workflows/rguide-playwright-qa.yml'
+  pull_request:
+    paths:
+      - 'rguide-classroom/**'
+      - '.github/workflows/rguide-playwright-qa.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rguide-playwright-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  e2e:
+    name: Playwright · Chromium + WebKit
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: rguide-classroom/qa
+    env:
+      RGUIDE_BASE_URL: https://kasemch.github.io/rguide-classroom
+      RGUIDE_QA_CODE: ${{ secrets.RGUIDE_QA_CODE }}
+      RGUIDE_QA_PIN: ${{ secrets.RGUIDE_QA_PIN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install isolated QA dependencies
+        run: npm install --ignore-scripts --no-audit --no-fund
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium webkit
+
+      - name: Public readiness + safety + optional authenticated E2E
+        run: npm test
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rguide-playwright-report-${{ github.run_number }}
+          path: rguide-classroom/qa/playwright-report/
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Upload failure traces
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rguide-playwright-traces-${{ github.run_number }}
+          path: rguide-classroom/qa/test-results/
+          if-no-files-found: ignore
+          retention-days: 14
