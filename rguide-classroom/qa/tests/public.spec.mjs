@@ -69,6 +69,20 @@ test.describe('R-GUIDE public readiness and safety', () => {
     expect(statuses).not.toContain('VERIFIED');
   });
 
+  test('Instructor console is Thai-first and preserves Human Academic Authority wording', async ({ page }) => {
+    const response = await page.goto('./instructor.html', { waitUntil: 'domcontentloaded' });
+    expect(response?.status()).toBe(200);
+    await expect(page.getByRole('heading', { name: /ห้องควบคุมอาจารย์/ })).toBeVisible();
+    await expect(page.getByText(/รหัสเข้าใช้อาจารย์ · Instructor PIN/)).toBeVisible();
+    await expect(page.getByText(/มอบหมายงาน → ส่งงาน → ให้ข้อเสนอแนะ → แก้ไขและส่งใหม่/)).toBeVisible();
+    const html = await page.locator('body').innerText();
+    expect(html).toContain('ส่งกลับเพื่อแก้ไข · Revision Required');
+    expect(html).toContain('ขอหลักฐานเพิ่มเติม · Evidence Required');
+    expect(html).toContain('ต้องการผู้เชี่ยวชาญทบทวน · Expert Review Required');
+    expect(html).toContain('การเลือก Completed ไม่ใช่การอนุมัติจริยธรรม เครื่องมือวิจัย หรือผลการเรียนขั้นสุดท้าย');
+    expect(html).toContain('WHAT → WHY → WHERE → HOW → NEXT ACTION');
+  });
+
   test('Classroom API rejects unauthenticated assignment access', async ({ request }) => {
     const response = await request.post(API, { data: { action: 'listAssignments' } });
     expect(response.status()).toBeGreaterThanOrEqual(400);
